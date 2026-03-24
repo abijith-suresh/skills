@@ -1,0 +1,98 @@
+---
+name: prd-to-issues
+description: Break a PRD or approved implementation plan into independently grabbable GitHub issues with clear scope, dependencies, acceptance criteria, and verification steps. Use when the user wants to convert a PRD or plan into actionable work items.
+---
+
+# PRD to Issues
+
+Break approved planning work into issue-sized slices that are easy to execute,
+review, and track.
+
+## Goals
+
+- Produce atomic, independently understandable issues
+- Preserve end-to-end vertical slicing
+- Make dependencies obvious
+- Prefer GitHub-ready output with markdown fallback
+
+## Workflow
+
+1. Start from the best planning artifact available.
+
+   Prefer an approved implementation plan. If only a PRD exists, derive the
+   slice breakdown from the PRD and state that the issue set is based directly
+   on the PRD.
+
+2. Reconfirm the codebase context if needed.
+
+   Use the repository to verify system boundaries, naming, risks, and testing
+   conventions before locking issue scope.
+
+3. Break the work into independently grabbable slices.
+
+   Each issue should:
+
+   - represent one meaningful unit of value
+   - have a clear finish line
+   - be reviewable on its own
+   - avoid mixing unrelated refactors or follow-on polish
+
+4. Mark dependencies explicitly.
+
+   Sequence blockers first. If two issues can move in parallel, say so.
+
+5. Review the issue set with the user.
+
+   Before finalizing, confirm:
+
+   - granularity
+   - dependency direction
+   - where human review is required
+   - whether any slices should be merged or split
+
+6. Produce GitHub-ready issue bodies.
+
+   If the user wants actual issues created and the environment supports it,
+   create them in dependency order. Otherwise return markdown bodies ready to
+   paste.
+
+## Issue Template
+
+```md
+# <Issue Title>
+
+## Why
+
+Why this slice exists and what part of the parent PRD or plan it unlocks.
+
+## What to Build
+
+Describe the end-to-end behavior this issue should deliver.
+
+## Acceptance Criteria
+
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
+
+## Verification
+
+- Test or validation step
+- Manual check if needed
+
+## Dependencies
+
+- None
+
+## Parent Context
+
+- PRD: <title or link>
+- Plan phase: <phase name if available>
+```
+
+## Guardrails
+
+- Prefer more small issues over fewer large issues
+- Keep refactors separate from behavior changes unless inseparable
+- Do not bury blockers inside issue descriptions
+- If the plan is still ambiguous, resolve that before creating issues
