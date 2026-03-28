@@ -1,6 +1,6 @@
 ---
 name: prd-to-issues
-description: Break a PRD or approved implementation plan into independently grabbable GitHub issues with clear scope, dependencies, acceptance criteria, and verification steps. Use when the user wants to convert a PRD or plan into actionable work items.
+description: Break a PRD or, preferably, an approved implementation plan into independently grabbable GitHub issues with clear scope, dependencies, acceptance criteria, and verification steps. Use whenever the user wants planning work turned into actionable execution slices. Prefer this after `prd-to-plan` when the phase design is done and the next step is issue breakdown.
 ---
 
 # PRD to Issues
@@ -13,6 +13,7 @@ review, and track.
 - Produce atomic, independently understandable issues
 - Preserve end-to-end vertical slicing
 - Make dependencies obvious
+- Make each issue something one person or agent can realistically pick up
 - Prefer GitHub-ready output with markdown fallback
 
 ## Workflow
@@ -23,6 +24,9 @@ review, and track.
    slice breakdown from the PRD and state that the issue set is based directly
    on the PRD.
 
+   Treat the approved plan as the default source of truth when both artifacts
+   exist. The plan usually contains the right sequencing and slice boundaries.
+
 2. Reconfirm the codebase context if needed.
 
    Use the repository to verify system boundaries, naming, risks, and testing
@@ -32,14 +36,24 @@ review, and track.
 
    Each issue should:
 
-   - represent one meaningful unit of value
-   - have a clear finish line
-   - be reviewable on its own
-   - avoid mixing unrelated refactors or follow-on polish
+    - represent one meaningful unit of value
+    - have a clear finish line
+    - be reviewable on its own
+    - avoid mixing unrelated refactors or follow-on polish
+
+   Default to issue sizes that one engineer or agent could pick up without
+   needing the whole project re-explained.
 
 4. Mark dependencies explicitly.
 
    Sequence blockers first. If two issues can move in parallel, say so.
+
+   Be very explicit about:
+
+   - what blocks what
+   - what can start immediately
+   - what can proceed in parallel after a dependency lands
+   - which issues are better deferred until later validation is complete
 
 5. Review the issue set with the user.
 
@@ -55,6 +69,19 @@ review, and track.
    If the user wants actual issues created and the environment supports it,
    create them in dependency order. Otherwise return markdown bodies ready to
    paste.
+
+   Draft by default. Do not create live GitHub issues unless the user explicitly
+   asks for that step.
+
+## Output
+
+Return:
+
+- a recommended issue order
+- GitHub-ready issue bodies in markdown
+- acceptance criteria and verification steps for each issue
+- explicit dependency notes, including blockers and parallelizable work
+- any scope boundaries or follow-up slices that should stay out of the current set
 
 ## Issue Template
 
@@ -96,3 +123,4 @@ Describe the end-to-end behavior this issue should deliver.
 - Keep refactors separate from behavior changes unless inseparable
 - Do not bury blockers inside issue descriptions
 - If the plan is still ambiguous, resolve that before creating issues
+- Do not create live issues by default when draft markdown is sufficient
