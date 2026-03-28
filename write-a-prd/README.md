@@ -35,7 +35,6 @@ npx skills@latest add abijith-suresh/skills
 
 - A PRD with problem, goals, non-goals, users, requirements, and risks
 - Clear constraints and dependencies
-- Light but useful challenge to fuzzy scope before the document is finalized
 - A planning artifact that pairs naturally with the next skills in the repo
 
 ## Works Well With
@@ -48,4 +47,4 @@ npx skills@latest add abijith-suresh/skills
 
 - This skill is for implementation-ready planning, not a lightweight brainstorm.
 - It works best when the relevant parts of the repository can be inspected before the PRD is finalized.
-- It can do light de-risking itself; use `grill-me` when you want a much more aggressive challenge session before drafting.
+- Use `grill-me` before this when you want a more forceful challenge session before drafting.

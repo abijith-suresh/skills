@@ -1,6 +1,6 @@
 ---
 name: write-a-prd
-description: Turn a feature request into a clear, implementation-ready PRD by interviewing the user, inspecting the relevant parts of the codebase, and making scope, constraints, user stories, and success criteria explicit. Use whenever the user wants a PRD, feature spec, or GitHub-ready planning artifact that should be strong enough to feed `prd-to-plan` or `prd-to-issues` without major ambiguity.
+description: Turn a feature request into a clear, implementation-ready PRD by interviewing the user, inspecting the relevant parts of the codebase, and making scope, constraints, user stories, and success criteria explicit. Use whenever the user wants a PRD, feature spec, or GitHub-ready planning artifact that should be strong enough to feed `prd-to-plan` or `prd-to-issues` without major ambiguity. If the user wants a harder challenge pass before drafting, prefer `grill-me` first.
 ---
 
 # Write a PRD
@@ -22,9 +22,6 @@ implementation, planning, and issue breakdown.
 
    Ask for the feature request, desired outcome, and any initial constraints or
    solution ideas.
-
-   Light grilling is part of this skill. Challenge fuzzy scope, hidden
-   assumptions, and untested solution ideas when they would weaken the PRD.
 
 2. Inspect the relevant parts of the repository before locking the PRD.
 
@@ -161,3 +158,4 @@ What problem exists today and who feels it.
 - Keep the document implementation-aware, but not implementation-bound
 - Do not invent product constraints that the user did not confirm
 - Do not settle for a PRD that still needs major clarification before planning
+- Use `grill-me` first when the user wants a stronger de-risking pass than this workflow provides
