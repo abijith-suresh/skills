@@ -1,6 +1,6 @@
 ---
 name: prd-to-issues
-description: Break a PRD or, preferably, an approved implementation plan into independently grabbable GitHub issues with clear scope, dependencies, acceptance criteria, and verification steps. Use whenever the user wants planning work turned into actionable execution slices. Prefer this after `prd-to-plan` when the phase design is done and the next step is issue breakdown.
+description: Break a PRD or, preferably, an approved implementation plan into independently grabbable GitHub issues with clear scope, dependencies, acceptance criteria, and verification steps. Use whenever the user wants planning work turned into actionable execution slices. Prefer this after `prd-to-plan` when the phase design is done and the next step is issue breakdown, and create the issues in GitHub as part of the workflow.
 ---
 
 # PRD to Issues
@@ -66,18 +66,15 @@ review, and track.
 
 6. Produce GitHub-ready issue bodies.
 
-   If the user wants actual issues created and the environment supports it,
-   create them in dependency order. Otherwise return markdown bodies ready to
-   paste.
-
-   Draft by default. Do not create live GitHub issues unless the user explicitly
-   asks for that step.
+   Create the issues in dependency order when the environment supports it.
+   Return the created issue links along with the issue bodies.
 
 ## Output
 
 Return:
 
 - a recommended issue order
+- created GitHub issues and their links
 - GitHub-ready issue bodies in markdown
 - acceptance criteria and verification steps for each issue
 - explicit dependency notes, including blockers and parallelizable work
@@ -123,4 +120,4 @@ Describe the end-to-end behavior this issue should deliver.
 - Keep refactors separate from behavior changes unless inseparable
 - Do not bury blockers inside issue descriptions
 - If the plan is still ambiguous, resolve that before creating issues
-- Do not create live issues by default when draft markdown is sufficient
+- Do not silently skip issue creation when the environment supports it

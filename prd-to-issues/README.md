@@ -32,6 +32,7 @@ npx skills@latest add abijith-suresh/skills
 ## What It Produces
 
 - Issue-ready markdown bodies
+- Created GitHub issues when the environment supports it
 - Acceptance criteria and verification steps
 - Explicit dependency notes between slices
 - A recommended issue order instead of just an unordered task dump
@@ -46,3 +47,4 @@ npx skills@latest add abijith-suresh/skills
 - This skill is GitHub-friendly, but the output still works as plain markdown.
 - It is meant to create clean execution slices, not a generic task dump.
 - It prefers an approved implementation plan as input; go straight from a PRD only when no plan exists yet.
+- In this repo's preferred workflow, it should create the issues rather than stopping at drafts.
