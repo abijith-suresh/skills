@@ -1,9 +1,11 @@
 # Abijith's Agent Skills
 
-Practical agent skills for personal projects and work projects.
+Practical AI agent skills I use for planning, onboarding, debugging, TDD,
+review, refactoring, and clean git workflows.
 
-Each skill lives in its own root-level folder so the repo works cleanly with
-`skills.sh` and is easy to install on a fresh machine.
+This repo is personal-first, but each skill lives in its own root-level folder
+so other people can copy only the ones they want and install them cleanly on a
+fresh machine.
 
 ## Install Everything
 
@@ -11,20 +13,14 @@ Each skill lives in its own root-level folder so the repo works cleanly with
 npx skills@latest add abijith-suresh/skills
 ```
 
-## Install Individual Skills
-
-Copy and paste any of these on a new laptop:
+## Install One Skill
 
 ```bash
-npx skills@latest add abijith-suresh/skills/grill-me
-npx skills@latest add abijith-suresh/skills/write-a-prd
-npx skills@latest add abijith-suresh/skills/prd-to-plan
-npx skills@latest add abijith-suresh/skills/prd-to-issues
-npx skills@latest add abijith-suresh/skills/commit-atomically
-npx skills@latest add abijith-suresh/skills/repo-onboarding
-npx skills@latest add abijith-suresh/skills/triage-issue
-npx skills@latest add abijith-suresh/skills/tdd
+npx skills@latest add abijith-suresh/skills/<skill-name>
 ```
+
+Each skill folder also has its own `README.md` with the localized install
+command, example prompts, and notes.
 
 ## Suggested Workflow
 
@@ -34,50 +30,52 @@ npx skills@latest add abijith-suresh/skills/tdd
 4. `prd-to-plan`
 5. `prd-to-issues`
 6. `tdd`
-7. `commit-atomically`
+7. `code-review`
+8. `commit-atomically`
 
-## Skills
+For work repos with ticket-based git rules, swap in
+`ticketed-git-workflow` at the end.
 
-### grill-me
+## Skill Catalog
 
-Stress-test a feature idea, design, or implementation plan until assumptions,
-constraints, risks, and missing decisions are explicit.
+- [`repo-onboarding`](repo-onboarding/README.md) - Explore a repo before making
+  changes so the agent understands the stack, commands, architecture,
+  conventions, and risk areas.
+- [`write-a-prd`](write-a-prd/README.md) - Turn a feature request into a clear,
+  implementation-ready PRD.
+- [`grill-me`](grill-me/README.md) - Stress-test an idea or plan until the real
+  decisions, assumptions, and risks are explicit.
+- [`prd-to-plan`](prd-to-plan/README.md) - Convert an approved PRD into thin,
+  demoable implementation phases.
+- [`prd-to-issues`](prd-to-issues/README.md) - Break a PRD or plan into
+  independently understandable work items.
+- [`triage-issue`](triage-issue/README.md) - Investigate a bug report and turn
+  it into an evidence-backed diagnosis and fix plan.
+- [`tdd`](tdd/README.md) - Implement or fix behavior with a red-green-refactor
+  loop.
+- [`refactor`](refactor/README.md) - Improve structure safely without changing
+  externally visible behavior.
+- [`code-review`](code-review/README.md) - Review a diff, branch, or PR for
+  correctness, regression risk, and missing validation.
+- [`commit-atomically`](commit-atomically/README.md) - Split mixed changes into
+  small, honest, conventional commits.
+- [`ticketed-git-workflow`](ticketed-git-workflow/README.md) - Apply atomic git
+  hygiene in repos that require ticket-based branch and commit conventions.
 
-### write-a-prd
+## Personal and Work Use
 
-Interview the user, inspect the codebase, and turn a feature request into a
-GitHub-ready product requirements document with goals, non-goals, user stories,
-constraints, and rollout notes.
+- The current set is optimized for my day-to-day use first.
+- The skills are still written to be portable and reusable in other repos.
+- Repo- or team-specific workflows, especially git conventions, are better as
+  separate overlay skills instead of making the base skills noisy.
+- `commit-atomically` is the generic default; `ticketed-git-workflow` is the
+  work-focused overlay when ticket IDs drive git history.
 
-### prd-to-plan
+## Attribution
 
-Convert an approved PRD into a phased implementation plan built from thin,
-demoable vertical slices.
-
-### prd-to-issues
-
-Break a PRD or approved plan into independently grabbable GitHub issues with
-clear dependencies, acceptance criteria, and verification steps.
-
-### commit-atomically
-
-Coach the agent toward conventional, atomic commits by detecting mixed intent,
-proposing safer split points, and writing better commit messages.
-
-### repo-onboarding
-
-Explore a repository before making changes so the agent understands the stack,
-commands, architecture, conventions, and risk areas.
-
-### triage-issue
-
-Turn a bug report into an evidence-backed diagnosis, reproduction notes, and a
-smallest-safe fix plan.
-
-### tdd
-
-Implement or fix behavior using a red-green-refactor loop with one small,
-verifiable slice at a time.
+Some skills in this repo are adapted from or inspired by public skills. When a
+skill has meaningful upstream influence, the attribution lives in that skill's
+local `README.md`.
 
 ## License
 
