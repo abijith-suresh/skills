@@ -9,6 +9,8 @@ specific enough to guide planning, issue breakdown, and implementation.
 - You want goals, non-goals, constraints, and user stories captured in one
   place.
 - You want something GitHub-ready instead of a loose planning chat.
+- You want the result to be strong enough for the next planning step, not just
+  a brainstorm summary.
 
 ## Install This Skill
 
@@ -27,11 +29,13 @@ npx skills@latest add abijith-suresh/skills
 - "Use the write-a-prd skill for this feature request."
 - "Turn this rough idea into a PRD I can paste into GitHub."
 - "Use write-a-prd and interview me until the scope is clear."
+- "Read the relevant code first, then help me turn this feature into an implementation-ready PRD."
 
 ## What It Produces
 
 - A PRD with problem, goals, non-goals, users, requirements, and risks
 - Clear constraints and dependencies
+- Light but useful challenge to fuzzy scope before the document is finalized
 - A planning artifact that pairs naturally with the next skills in the repo
 
 ## Works Well With
@@ -43,4 +47,5 @@ npx skills@latest add abijith-suresh/skills
 ## Notes
 
 - This skill is for implementation-ready planning, not a lightweight brainstorm.
-- It works best when the repository can be inspected before the PRD is finalized.
+- It works best when the relevant parts of the repository can be inspected before the PRD is finalized.
+- It can do light de-risking itself; use `grill-me` when you want a much more aggressive challenge session before drafting.

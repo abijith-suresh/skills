@@ -1,6 +1,6 @@
 ---
 name: write-a-prd
-description: Turn a feature request into a clear, implementation-ready PRD by interviewing the user, exploring the codebase, and making scope, constraints, user stories, and success criteria explicit. Use when the user wants a PRD, feature spec, or structured planning artifact.
+description: Turn a feature request into a clear, implementation-ready PRD by interviewing the user, inspecting the relevant parts of the codebase, and making scope, constraints, user stories, and success criteria explicit. Use whenever the user wants a PRD, feature spec, or GitHub-ready planning artifact that should be strong enough to feed `prd-to-plan` or `prd-to-issues` without major ambiguity.
 ---
 
 # Write a PRD
@@ -11,6 +11,7 @@ implementation, planning, and issue breakdown.
 ## Goals
 
 - Capture the real problem, not just the proposed solution
+- Drive the conversation until the PRD is implementation-ready
 - Make scope and non-goals explicit
 - Record the decisions that matter later
 - Produce a GitHub-ready artifact with markdown fallback
@@ -22,14 +23,20 @@ implementation, planning, and issue breakdown.
    Ask for the feature request, desired outcome, and any initial constraints or
    solution ideas.
 
-2. Explore the repository before locking the PRD.
+   Light grilling is part of this skill. Challenge fuzzy scope, hidden
+   assumptions, and untested solution ideas when they would weaken the PRD.
 
-   Inspect the codebase to understand:
+2. Inspect the relevant parts of the repository before locking the PRD.
+
+   Do a targeted repo read to understand:
 
    - current product behavior
    - existing modules and boundaries
    - relevant data models and integrations
    - similar features and testing patterns
+
+   Stay focused on the areas that shape the requested feature. This is not a
+   full repo-onboarding pass unless the feature spans the whole system.
 
 3. Resolve ambiguity through targeted questions.
 
@@ -42,6 +49,10 @@ implementation, planning, and issue breakdown.
    - edge cases and failure modes
    - rollout expectations
    - how success will be judged
+
+   Ask one focused question at a time when possible. Explain why the question
+   matters, give a recommended default when useful, and keep pushing until the
+   PRD can drive planning without major guesswork.
 
 4. Convert wishes into requirements.
 
@@ -57,10 +68,23 @@ implementation, planning, and issue breakdown.
    boundaries, migration concerns, and testing strategy, but avoid brittle file
    paths or low-level code instructions.
 
+   If an uncertainty belongs in later planning, record it explicitly as an open
+   question instead of pretending it is resolved.
+
 6. Write the PRD.
 
    Default to a GitHub issue body when the repo uses GitHub. Otherwise produce
    clean markdown the user can save anywhere.
+
+## Output
+
+Return:
+
+- a GitHub-ready PRD in markdown
+- clearly separated goals, non-goals, and requirements
+- implementation-shaping constraints and technical considerations
+- open questions or risks that still need resolution
+- the recommended next planning skill, usually `prd-to-plan` or `prd-to-issues`
 
 ## PRD Template
 
@@ -136,3 +160,4 @@ What problem exists today and who feels it.
 - Prefer explicit tradeoffs over fuzzy requirements
 - Keep the document implementation-aware, but not implementation-bound
 - Do not invent product constraints that the user did not confirm
+- Do not settle for a PRD that still needs major clarification before planning
