@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: Review a diff, branch, or pull request for correctness, regressions, missing tests, and maintainability. Use when the user says "review this code", "review this diff", "do a code review", or wants a high-signal pre-merge review.
+description: Review a diff, branch, or pull request for correctness, regressions, missing tests, and maintainability. Use whenever the user asks for a code review, review of a diff or PR, or wants a high-signal pre-merge pass that separates blockers from non-blocking concerns.
 ---
 
 # Code Review
@@ -14,6 +14,7 @@ off, or committed.
 - Distinguish blockers from suggestions
 - Use evidence from the diff and surrounding context
 - Recommend the smallest useful follow-up actions
+- Surface maintainability risks that are likely to matter after merge
 
 ## Workflow
 
@@ -36,6 +37,7 @@ off, or committed.
    - backward compatibility and migrations
    - security, auth, and data handling
    - performance or operability concerns
+   - maintainability issues that materially raise future change risk
 
 4. Separate findings by severity.
 
@@ -44,6 +46,9 @@ off, or committed.
    - blocking issue
    - significant suggestion
    - minor note
+
+   Bias toward a few important findings. If something would not change whether
+   the code should move forward, do not inflate it into a blocker.
 
 5. Explain each finding concretely.
 
@@ -56,6 +61,9 @@ off, or committed.
 6. Close with an overall assessment.
 
    Summarize readiness, missing validation, and the most important next step.
+
+   Keep the review moderately detailed: enough explanation to justify each
+   finding, but not so much that the signal gets buried.
 
 ## Output
 
@@ -73,3 +81,4 @@ Return:
 - Do not nitpick style that tooling already enforces
 - Prefer a few high-value findings over many shallow comments
 - Distinguish confirmed defects from speculative risk
+- Keep this skill review-focused; do not drift into deep issue triage unless the user asks
