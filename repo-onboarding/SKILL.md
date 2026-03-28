@@ -1,6 +1,6 @@
 ---
 name: repo-onboarding
-description: Explore a repository before planning or coding so the agent understands the stack, commands, architecture, conventions, and risk areas. Use when entering a new codebase or resuming work after a long gap.
+description: Explore a repository before planning or coding so the agent understands the stack, commands, architecture, conventions, and risk areas. Use whenever entering a new codebase or resuming work after a long gap, especially before using deeper skills that assume repo context. Build a strong working mental model, then hand off to the next best skill instead of drifting into implementation, diagnosis, or review.
 ---
 
 # Repo Onboarding
@@ -13,6 +13,7 @@ Build a reliable mental model of the repository before making changes.
 - Identify the real architecture and boundaries
 - Learn the repo's conventions before proposing changes
 - Surface risky areas early
+- Set up the next task with the minimum context needed to move safely
 
 ## Workflow
 
@@ -20,6 +21,9 @@ Build a reliable mental model of the repository before making changes.
 
    Review the README, package manifests, workspace config, lockfiles, and any
    tool or framework configuration that reveals how the project works.
+
+   Keep the pass targeted but solid. The goal is enough understanding to work
+   safely and quickly, not a full audit of every directory.
 
 2. Identify the key commands.
 
@@ -52,6 +56,10 @@ Build a reliable mental model of the repository before making changes.
 
 6. Summarize the repository for the next task.
 
+   End with a next-step-oriented handoff. Recommend the next skill or workflow
+   that best fits the user's likely task, such as `write-a-prd`, `triage-issue`,
+   `tdd`, `refactor`, or `code-review`.
+
 ## Output
 
 Return:
@@ -69,3 +77,4 @@ Return:
 - Distinguish confirmed facts from inferred conclusions
 - Prefer reading before editing
 - Use the repo's conventions unless the user asks to change them
+- Do not drift into deep bug triage, implementation planning, or code review unless the user asks
