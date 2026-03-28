@@ -9,6 +9,7 @@ and missing decisions are explicit.
 - A plan feels hand-wavy and you want sharper decisions.
 - You want the agent to ask focused follow-up questions instead of agreeing too
   quickly.
+- You want the main de-risking workflow before `write-a-prd` or `prd-to-plan`.
 
 ## Install This Skill
 
@@ -27,6 +28,7 @@ npx skills@latest add abijith-suresh/skills
 - "Use the grill-me skill on this feature idea before we write code."
 - "Grill this rollout plan and tell me what decisions are still missing."
 - "Use grill-me on this architecture sketch until the risky parts are clear."
+- "Before we write a PRD, grill this idea hard and force the missing decisions out."
 
 ## What It Produces
 
@@ -34,6 +36,7 @@ npx skills@latest add abijith-suresh/skills
 - Open questions
 - Top risks
 - A recommended next step
+- A durable decision log instead of a loose challenge session transcript
 
 ## Works Well With
 
@@ -44,6 +47,7 @@ npx skills@latest add abijith-suresh/skills
 
 - This skill is intentionally challenging; use it when you want pushback, not a
   quick validation pass.
+- It is the main deep-grilling workflow in this repo.
 - It works best when there is at least a rough artifact to review.
 
 ## Attribution
