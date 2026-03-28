@@ -1,6 +1,6 @@
 ---
 name: refactor
-description: Safely improve code structure without changing externally visible behavior. Use when the user says "refactor this", "clean this up", "simplify this module", or wants a behavior-preserving cleanup plan or implementation.
+description: Safely improve code structure without changing externally visible behavior. Use whenever the user says "refactor this", "clean this up", "simplify this module", or wants a behavior-preserving cleanup plan or implementation. Prefer `tdd` instead when the task includes adding or fixing behavior.
 ---
 
 # Refactor
@@ -13,6 +13,7 @@ Use this skill to improve the structure of code while preserving behavior.
 - Shrink risk through small, reversible steps
 - Build or use a safety net before deeper changes
 - Prevent cleanup work from quietly turning into feature work
+- Push hard for protection when the area is fragile or weakly tested
 
 ## Workflow
 
@@ -31,10 +32,17 @@ Use this skill to improve the structure of code while preserving behavior.
    If the area is fragile or weakly tested, add the smallest practical safety
    net before making structural changes.
 
+   Strongly prefer adding protection first. A small safety net is usually
+   cheaper than debugging a broken refactor later.
+
 4. Choose the smallest sequence of steps.
 
    Prefer small extractions, renames, isolations, and boundary cleanups over a
    broad rewrite.
+
+   Keep the task behavior-preserving by default. If the work starts requiring
+   new behavior, bug fixes, or contract changes, stop and switch to `tdd` or a
+   more appropriate workflow.
 
 5. Validate after each meaningful step.
 
@@ -54,6 +62,7 @@ Return:
 - Safety net or missing protection
 - Recommended step sequence
 - Risks and stop conditions
+- Any reason the task should be handed off to `tdd` instead
 
 ## Guardrails
 
@@ -61,3 +70,4 @@ Return:
 - Do not attempt a broad rewrite without a safety net
 - Keep public contracts stable unless changing them is part of the request
 - Prefer clarity and reversibility over cleverness
+- Do not use refactor as a back door for behavior changes
