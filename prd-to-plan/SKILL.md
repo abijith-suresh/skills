@@ -1,6 +1,6 @@
 ---
 name: prd-to-plan
-description: Turn an approved PRD into a phased implementation plan built from thin, demoable vertical slices with durable architectural decisions, dependencies, validation steps, and rollout considerations. Use when the user wants a plan from a PRD.
+description: Turn an approved PRD into a phased implementation plan built from thin, demoable vertical slices with durable architectural decisions, dependencies, validation steps, and rollout considerations. Use whenever the user wants a PRD translated into an execution plan, especially before creating implementation issues. Prefer this before `prd-to-issues` when the team still needs phase design and ordering.
 ---
 
 # PRD to Plan
@@ -12,6 +12,7 @@ can execute in small, reviewable slices.
 
 - Preserve the intent of the PRD
 - De-risk implementation by sequencing thin vertical slices
+- Keep phases demoable and meaningful, not just technically tidy
 - Make dependencies and validation explicit
 - Produce a plan that works for GitHub-first teams and markdown-first teams
 
@@ -22,10 +23,18 @@ can execute in small, reviewable slices.
    Start from an approved PRD in the conversation, a local file, or a GitHub
    issue. If the PRD is incomplete, stop and resolve the gaps first.
 
+   If only a few details are unresolved, separate blockers from non-blockers.
+   Do not pretend the plan is settled when key planning assumptions are still
+   open.
+
 2. Re-read the codebase with planning in mind.
 
-   Identify the actual architecture, integration points, testing layers, and
-   operational constraints that will shape the plan.
+   Do a targeted architecture read to identify the actual integration points,
+   testing layers, boundaries, and operational constraints that will shape the
+   plan.
+
+   Stay focused on the systems touched by the PRD unless the feature clearly
+   crosses the whole repo.
 
 3. Extract durable decisions.
 
@@ -44,9 +53,12 @@ can execute in small, reviewable slices.
 
    Prefer:
 
-   - thin slices over large batches
-   - end-to-end behavior over layer-by-layer tasks
-   - early slices that validate the riskiest assumptions
+    - thin slices over large batches
+    - end-to-end behavior over layer-by-layer tasks
+    - early slices that validate the riskiest assumptions
+
+   Aim for demoable slices by default. A phase should unlock a believable proof
+   of progress, not just hidden plumbing.
 
 5. Check the plan with the user before finalizing it.
 
@@ -57,6 +69,20 @@ can execute in small, reviewable slices.
 
    Default to markdown that can be pasted into GitHub issues, PR descriptions,
    or internal docs.
+
+   Keep the output at the phase-and-slice level. If the user wants issue-sized
+   execution items, hand off to `prd-to-issues` after the plan is accepted.
+
+## Output
+
+Return:
+
+- a phased implementation plan in markdown
+- durable decisions that should remain stable across phases
+- ordered, demoable vertical slices with acceptance criteria
+- validation steps, dependencies, and rollout notes
+- blocking unknowns that must be resolved before implementation
+- the recommended next step, usually `prd-to-issues`
 
 ## Plan Template
 
@@ -109,3 +135,4 @@ Repeat until the PRD is fully covered.
 - Do not include brittle file paths or function names unless the user asks
 - Call out unknowns that block planning instead of pretending they are solved
 - Prefer a plan that can survive normal implementation changes
+- Do not collapse phase planning into issue writing unless the user asks
