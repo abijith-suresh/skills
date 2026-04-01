@@ -18,12 +18,6 @@ specific enough to guide planning, issue breakdown, and implementation.
 npx skills@latest add abijith-suresh/skills/write-a-prd
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the write-a-prd skill for this feature request."

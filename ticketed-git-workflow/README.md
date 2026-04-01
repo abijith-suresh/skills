@@ -17,12 +17,6 @@ like `feature/RE-1234` and commit messages like `feat(RE-1234): summary`.
 npx skills@latest add abijith-suresh/skills/ticketed-git-workflow
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the ticketed-git-workflow skill and commit this for RE-1234."

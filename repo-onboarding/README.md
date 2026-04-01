@@ -16,12 +16,6 @@ commands, architecture, conventions, and risk areas.
 npx skills@latest add abijith-suresh/skills/repo-onboarding
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use repo-onboarding on this repository before we make changes."

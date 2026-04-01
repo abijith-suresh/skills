@@ -16,12 +16,6 @@ demoable vertical slices.
 npx skills@latest add abijith-suresh/skills/prd-to-plan
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the prd-to-plan skill on this PRD."

@@ -16,12 +16,6 @@ work items with clear scope, dependencies, and verification steps.
 npx skills@latest add abijith-suresh/skills/prd-to-issues
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the prd-to-issues skill on this implementation plan."

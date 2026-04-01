@@ -16,12 +16,6 @@ smallest-safe fix plan.
 npx skills@latest add abijith-suresh/skills/triage-issue
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the triage-issue skill on this bug report."

@@ -16,12 +16,6 @@ commits with one clear intent each.
 npx skills@latest add abijith-suresh/skills/commit-atomically
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the commit-atomically skill and commit this cleanly."

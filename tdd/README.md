@@ -16,12 +16,6 @@ behavior slice at a time.
 npx skills@latest add abijith-suresh/skills/tdd
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the tdd skill to implement this behavior."

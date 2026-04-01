@@ -16,12 +16,6 @@ tests, and maintainability before the work moves forward.
 npx skills@latest add abijith-suresh/skills/code-review
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the code-review skill on this diff."

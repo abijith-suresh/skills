@@ -17,12 +17,6 @@ and missing decisions are explicit.
 npx skills@latest add abijith-suresh/skills/grill-me
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the grill-me skill on this feature idea before we write code."

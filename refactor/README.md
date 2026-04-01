@@ -16,12 +16,6 @@ small-step and safety-net-first workflow.
 npx skills@latest add abijith-suresh/skills/refactor
 ```
 
-## Install the Full Collection
-
-```bash
-npx skills@latest add abijith-suresh/skills
-```
-
 ## Example Prompts
 
 - "Use the refactor skill on this module."
