@@ -13,14 +13,14 @@ commits with one clear intent each.
 ## Install This Skill
 
 ```bash
-npx skills@latest add abijith-suresh/skills/commit-atomically
+npx skills@latest add abijith-suresh/skills/auto-commit
 ```
 
 ## Example Prompts
 
-- "Use the commit-atomically skill and commit this cleanly."
+- "Use the auto-commit skill and commit this cleanly."
 - "Split these changes into atomic commits."
-- "Use commit-atomically and write the right conventional commit message."
+- "Use auto-commit and write the right conventional commit message."
 - "This is my side project. Split this diff into clean commits and stop if any part is not ready yet."
 
 ## What It Produces

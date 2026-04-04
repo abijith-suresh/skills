@@ -35,7 +35,9 @@ command, example prompts, and notes.
 | [`tdd`](tdd/README.md) | Implement or fix behavior with a red-green-refactor loop. |
 | [`refactor`](refactor/README.md) | Improve structure safely without changing externally visible behavior. |
 | [`code-review`](code-review/README.md) | Review a diff, branch, or PR for correctness, regression risk, and missing validation. |
-| [`commit-atomically`](commit-atomically/README.md) | Split mixed changes into small, honest, conventional commits. |
+| [`auto-commit`](auto-commit/README.md) | Split mixed changes into small, honest, conventional commits and optionally perform safe local commits. |
+| [`cut-a-branch`](cut-a-branch/README.md) | Create a new branch from the latest main, suggest safe branch names, and show or run the exact git commands. |
+| [`create-a-pr`](create-a-pr/README.md) | Open a pull request on GitHub with a preview; requires gh CLI or GITHUB_TOKEN. |
 | [`ticketed-git-workflow`](ticketed-git-workflow/README.md) | Apply atomic git hygiene in repos that require ticket-based branch and commit conventions. |
 
 ## Attribution
