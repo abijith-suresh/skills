@@ -1,5 +1,5 @@
 ---
-name: plan-feature
+name: plan-a-feature
 description: >-
   Use this skill when planning a new feature, project change, or idea before
   writing any code. Triggers on: "let's plan out X", "I want to add Y, help
@@ -13,7 +13,7 @@ metadata:
   version: "1.0"
 ---
 
-# Feature Planning
+# Plan a Feature
 
 Inspired by the pi coding agent philosophy: plans are files, not modes.
 Visible, editable, persistent across sessions, versionable with your code.
