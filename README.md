@@ -26,19 +26,9 @@ command, example prompts, and notes.
 
 | Skill | Description |
 | --- | --- |
-| [`repo-onboarding`](repo-onboarding/README.md) | Explore a repo before making changes so the agent understands the stack, commands, architecture, conventions, and risk areas. |
-| [`write-a-prd`](write-a-prd/README.md) | Turn a feature request into a clear, implementation-ready PRD. |
-| [`grill-me`](grill-me/README.md) | Stress-test an idea or plan until the real decisions, assumptions, and risks are explicit. |
-| [`prd-to-plan`](prd-to-plan/README.md) | Convert an approved PRD into thin, demoable implementation phases. |
-| [`prd-to-issues`](prd-to-issues/README.md) | Break a PRD or plan into independently understandable work items. |
-| [`triage-issue`](triage-issue/README.md) | Investigate a bug report and turn it into an evidence-backed diagnosis and fix plan. |
-| [`tdd`](tdd/README.md) | Implement or fix behavior with a red-green-refactor loop. |
-| [`refactor`](refactor/README.md) | Improve structure safely without changing externally visible behavior. |
-| [`code-review`](code-review/README.md) | Review a diff, branch, or PR for correctness, regression risk, and missing validation. |
-| [`auto-commit`](auto-commit/README.md) | Split mixed changes into small, honest, conventional commits and optionally perform safe local commits. |
-| [`cut-a-branch`](cut-a-branch/README.md) | Create a new branch from the latest main, suggest safe branch names, and show or run the exact git commands. |
-| [`create-a-pr`](create-a-pr/README.md) | Open a pull request on GitHub with a preview; requires gh CLI or GITHUB_TOKEN. |
-| [`ticketed-git-workflow`](ticketed-git-workflow/README.md) | Apply atomic git hygiene in repos that require ticket-based branch and commit conventions. |
+| [`auto-commit`](auto-commit/README.md) | Create small, conventional commits with one clear intent each for personal or repository-agnostic workflows. |
+| [`plan-feature`](plan-feature/README.md) | Plan a new feature or project change before writing code and produce a settled PLAN.md. |
+| [`plan-to-issues`](plan-to-issues/README.md) | Turn a settled PLAN.md into GitHub issues (one parent tracking issue and child issues per step). |
 
 ## Attribution
 
