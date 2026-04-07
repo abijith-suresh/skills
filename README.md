@@ -1,5 +1,8 @@
 # Agent Skills
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Skills: 3](https://img.shields.io/badge/Skills-3-green.svg)](#skill-catalog)
+
 Practical AI agent skills I use for planning, onboarding, debugging, TDD,
 review, refactoring, and clean git workflows.
 
@@ -27,11 +30,5 @@ command, example prompts, and notes.
 | Skill | Description |
 | --- | --- |
 | [`auto-commit`](auto-commit/README.md) | Create small, conventional commits with one clear intent each for personal or repository-agnostic workflows. |
-| [`plan-feature`](plan-feature/README.md) | Plan a new feature or project change before writing code and produce a settled PLAN.md. |
+| [`plan-a-feature`](plan-a-feature/README.md) | Plan a new feature or project change before writing code and produce a settled PLAN.md. |
 | [`plan-to-issues`](plan-to-issues/README.md) | Turn a settled PLAN.md into GitHub issues (one parent tracking issue and child issues per step). |
-
-## Attribution
-
-Some skills in this repo are adapted from or inspired by public skills. When a
-skill has meaningful upstream influence, the attribution lives in that skill's
-local `README.md`.
