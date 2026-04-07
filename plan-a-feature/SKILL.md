@@ -10,7 +10,7 @@ description: >-
   whenever they describe something new they want to make or change.
 metadata:
   author: abijith-suresh
-  version: "1.0"
+  version: "0.1.0"
 ---
 
 # Plan a Feature

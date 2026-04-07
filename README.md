@@ -3,8 +3,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Skills: 3](https://img.shields.io/badge/Skills-3-green.svg)](#skill-catalog)
 
-Practical AI agent skills I use for planning, onboarding, debugging, TDD,
-review, refactoring, and clean git workflows.
+Practical AI agent skills I use for planning features, tracking work, and
+maintaining clean git workflows.
 
 This repo is personal-first, but each skill lives in its own root-level folder
 so people can copy only the ones they want and install them cleanly on a

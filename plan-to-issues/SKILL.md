@@ -9,7 +9,7 @@ description: >-
 compatibility: Requires gh CLI authenticated to the repo
 metadata:
   author: abijith-suresh
-  version: "1.0"
+  version: "0.1.0"
 ---
 
 # Plan to GitHub Issues

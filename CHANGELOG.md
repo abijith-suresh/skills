@@ -1,0 +1,16 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [0.1.0] - 2026-04-07
+
+### Added
+
+- `auto-commit` skill: Create small, conventional commits with one clear intent each
+- `plan-a-feature` skill: Plan new features or project changes before writing code, producing a settled PLAN.md
+- `plan-to-issues` skill: Convert a settled PLAN.md into GitHub issues with parent-child hierarchy
