@@ -30,5 +30,5 @@ command, example prompts, and notes.
 | Skill | Description |
 | --- | --- |
 | [`auto-commit`](auto-commit/README.md) | Create small, conventional commits with one clear intent each for personal or repository-agnostic workflows. |
-| [`plan-a-feature`](plan-a-feature/README.md) | Plan a new feature or project change before writing code and produce a settled PLAN.md. |
+| [`create-a-plan`](create-a-plan/README.md) | Create a plan for a new feature or project change before writing code and produce a settled PLAN.md. |
 | [`plan-to-issues`](plan-to-issues/README.md) | Turn a settled PLAN.md into GitHub issues (one parent tracking issue and child issues per step). |

@@ -1,11 +1,12 @@
 ---
-name: plan-a-feature
+name: create-a-plan
 description: >-
-  Use this skill when planning a new feature, project change, or idea before
-  writing any code. Triggers on: "let's plan out X", "I want to add Y, help
+  Use this skill when the user asks you to create a plan for a new feature,
+  project change, or idea before writing any code. Triggers on: "create a
+  plan", "plan this out", "help me plan", "let's plan out X", "I want to add Y, help
   me think through it", "new project idea: Z", "help me think through this
-  change", "I want to build X", or any request to explore and plan something
-  before building it. Always use this skill at the start of a planning
+  change", "I want to build X", or any request to explore and produce a
+  settled PLAN.md. Always use this skill at the start of a planning
   conversation — even if the user doesn't say "plan" explicitly, use it
   whenever they describe something new they want to make or change.
 metadata:
@@ -13,7 +14,7 @@ metadata:
   version: "0.1.0"
 ---
 
-# Plan a Feature
+# Create a Plan
 
 Inspired by the pi coding agent philosophy: plans are files, not modes.
 Visible, editable, persistent across sessions, versionable with your code.

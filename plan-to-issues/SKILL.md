@@ -5,7 +5,7 @@ description: >-
   GitHub issues from it. Triggers on: "create issues from the plan", "turn
   this into issues", "file this as issues", "let's track this in GitHub",
   or any request to convert a settled plan into GitHub issues. Always use
-  after plan-a-feature produces a PLAN.md and the user is ready to build.
+  after create-a-plan produces a PLAN.md and the user is ready to build.
 compatibility: Requires gh CLI authenticated to the repo
 metadata:
   author: abijith-suresh
@@ -33,7 +33,7 @@ checked) and every child is navigable back to context.
 ### 1. Read PLAN.md
 
 Read PLAN.md from the project root. If it doesn't exist, tell the user to
-run the plan-a-feature skill first.
+run the create-a-plan skill first.
 
 Confirm the goal and steps with the user before creating anything:
 "I'm going to create 1 parent issue and N child issues. Parent: '[Goal]'.
