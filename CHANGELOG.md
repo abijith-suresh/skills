@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.1.0] - 2026-04-07
+### Changed
+
+- Renamed `plan-a-feature` skill to `create-a-plan`
+- Renamed `auto-commit` skill to `create-a-commit`
+- Removed `metadata` (author, version) from all skills — optional per spec, adds no value for consumers
 
 ### Added
 

@@ -1,12 +1,9 @@
 ---
-name: auto-commit
+name: create-a-commit
 description: Create small, conventional commits with one clear intent each for personal projects and repository-agnostic workflows. Use whenever the user wants help staging, splitting, and committing local changes cleanly, especially when a diff mixes multiple reasons to change.
-metadata:
-  author: abijith-suresh
-  version: "0.1.0"
 ---
 
-# Auto Commit
+# Create a Commit
 
 Use this skill when the goal is a clean, reviewable git history instead of one
 large mixed commit.
