@@ -7,9 +7,6 @@ description: >-
   or any request to convert a settled plan into GitHub issues. Always use
   after create-a-plan produces a PLAN.md and the user is ready to build.
 compatibility: Requires gh CLI authenticated to the repo
-metadata:
-  author: abijith-suresh
-  version: "0.1.0"
 ---
 
 # Plan to GitHub Issues

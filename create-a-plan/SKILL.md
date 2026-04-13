@@ -9,9 +9,6 @@ description: >-
   settled PLAN.md. Always use this skill at the start of a planning
   conversation — even if the user doesn't say "plan" explicitly, use it
   whenever they describe something new they want to make or change.
-metadata:
-  author: abijith-suresh
-  version: "0.1.0"
 ---
 
 # Create a Plan
