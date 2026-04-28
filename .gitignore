@@ -1,3 +1,14 @@
+# Agent planning files
+PLAN.md
+IMPROVE.md
+REVIEW.md
+
+# Local reference repos (use research skill to clone these as needed)
+addyosmani-skills/
+context-engineering-skills/
+vercel-agent-skills/
+visual-explainer/
+
 # Logs
 logs
 *.log
