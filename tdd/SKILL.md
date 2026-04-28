@@ -4,7 +4,7 @@ description: >-
   Build features test-first using red-green-refactor. One failing test,
   minimal code to pass, repeat. Use when the user says "let's do TDD",
   "write tests first", "red-green-refactor", "build this test-first",
-  or "TDD this". Includes Java Spring Boot test layer guidance.
+  or "TDD this".
 ---
 
 # TDD
@@ -15,8 +15,8 @@ One test. Minimal code. Never the other way around.
 
 Tests verify behavior through public interfaces. They describe *what* the
 system does, not *how*. A good test survives a complete internal refactor —
-if you rename a private method and a test breaks, that test was testing
-implementation, not behavior.
+if you rename a private method or restructure an implementation and a test
+breaks, that test was testing implementation, not behavior.
 
 Bad signals:
 - Mocks internal collaborators or private methods
@@ -27,8 +27,6 @@ Good signals:
 - Reads like a spec: "user can checkout with a valid cart"
 - Exercises a real code path end-to-end
 - Survives refactors
-
-See [tests.md](tests.md) for examples.
 
 ## The anti-pattern: horizontal slicing
 
@@ -91,24 +89,49 @@ Once all tests are green:
 
 Run the full test suite after every refactor step. Never refactor while RED.
 
-## Java Spring Boot test layers
+## Test pyramid
 
-| What to test | Annotation | Notes |
-|---|---|---|
-| Full API behavior end-to-end | `@SpringBootTest` + `MockMvc` | Best coverage, slower |
-| Controller layer only | `@WebMvcTest` | Fast, catches request/response issues |
-| Repository queries | `@DataJpaTest` | Spins up only JPA context |
-| Real DB integration | `@SpringBootTest` + Testcontainers | Use for critical paths |
-| Pure domain logic | Plain JUnit, no Spring | No context needed |
+Invest testing effort according to the pyramid — most tests should be
+small and fast, with progressively fewer at each higher level:
 
-Prefer `@SpringBootTest` + `MockMvc` for behavior that crosses layers.
-Use Testcontainers when the test needs a real database. Do not mock the
-DB in integration tests — it defeats the purpose.
+- **Small (unit):** pure logic, no I/O, no network, milliseconds each — the majority
+- **Medium (integration):** crosses a boundary (database, API, file system, external service)
+- **Large (end-to-end):** critical user flows only — keep these few
+
+A suite of slow end-to-end tests is expensive to run and expensive to
+maintain. Push coverage down to the smallest layer where it makes sense.
+
+## What to test at each layer
+
+**Small tests:** pure functions, domain rules, validation logic, data
+transforms. No infrastructure involved. The fastest feedback loop.
+
+**Medium tests:** behavior that crosses a layer boundary — a method that
+reads from real storage, an endpoint that writes to a real database. Use
+real infrastructure where practical. Avoid mocking what you own.
+
+**Large tests:** flows a real user would run end-to-end. Reserve for the
+most critical paths. Lower-layer tests should cover everything else.
+
+## Using mocks and fakes
+
+Prefer real implementations over test doubles. The more your tests use
+real code, the more confidence they provide.
+
+Use a mock or fake only when the real dependency is:
+- Too slow (external network call, heavy process)
+- Non-deterministic (time, randomness)
+- Has side effects you cannot control (email sending, payment processing)
+
+Never mock what you own. If you own the code, test it. Mocking internals
+creates tests that pass while production breaks.
 
 ## Checklist per cycle
 
 - [ ] Test describes behavior, not implementation
 - [ ] Test uses public interface only
 - [ ] Test would survive an internal refactor
-- [ ] Code is the minimum needed to pass this test
+- [ ] RED confirmed: test fails for the right reason
+- [ ] GREEN: code is the minimum needed to pass this test
 - [ ] No speculative code added
+- [ ] Refactor complete: no duplication, clear names, full suite still green
