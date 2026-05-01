@@ -1,4 +1,136 @@
-# Project Overview
+# AGENTS.md
 
-- This is a collection of AI agent skills (Markdown SKILL.md files), not executable code
-- Follows the Agent Skills specification (<https://agentsagents.io/specification>)
+## What this repo is
+
+This is a personal collection of AI agent skills. Each skill is a
+`SKILL.md` file that instructs an AI coding agent how to perform a
+specific workflow — planning, committing, reviewing, testing, researching,
+and so on.
+
+Skills follow the Agent Skills specification:
+https://agentskills.io/specification
+
+---
+
+## Understanding how agent skills work
+
+Before writing or significantly updating a skill, use the `research` skill
+to clone a reference collection and read how mature skills are structured.
+Good starting points:
+
+- `anthropics/skills` — canonical templates and specification-aligned examples
+- `mattpocock/skills` — strong workflow and architecture language patterns
+- `addyosmani/agent-skills` — broad engineering workflow collection
+- `muratcankoylan/Agent-Skills-for-Context-Engineering` — context-engineering patterns
+- `vercel-labs/agent-skills` — product and engineering skill examples
+
+Clone whichever is most relevant to the task, read the skill files, then
+apply those patterns here.
+
+---
+
+## Skill structure
+
+Each skill lives in its own directory at the repo root:
+
+```
+<skill-name>/
+  SKILL.md      ← the skill definition (required)
+  README.md     ← install instructions and example prompts (required)
+  references/   ← optional supporting docs
+  scripts/      ← optional deterministic helper scripts
+  assets/       ← optional templates/resources
+```
+
+Prefer `references/` over loose top-level `.md` files when a skill needs
+supporting documentation.
+
+Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
+`review`, `tdd`, `research`. No namespacing.
+
+---
+
+## SKILL.md format
+
+```markdown
+---
+name: <skill-name>
+description: >-
+  One sentence describing when to use this skill. Include trigger phrases.
+  This is what the agent reads to decide whether this skill applies.
+---
+
+# Title
+
+[Content: intent, workflow, rules]
+```
+
+Frontmatter: `name` and `description` only. No `metadata` block. The
+description is the most important field — it must be specific enough that
+an agent can decide at a glance whether this skill applies.
+
+---
+
+## README.md format
+
+```markdown
+# <skill-name>
+
+[One line description]
+
+## Install
+
+\```bash
+npx skills@latest add abijith-suresh/skills/<skill-name>
+\```
+
+## Use
+
+- "[trigger phrase]"
+- "[trigger phrase]"
+```
+
+---
+
+## Design principles
+
+- **Atomic**: each skill does one thing. No skill orchestrates another
+  by name.
+- **Self-contained**: a skill should make sense and be useful without
+  any other skill in this collection.
+- **Platform-agnostic**: skills detect context (GitHub vs GitLab,
+  language, framework) at runtime rather than being pre-configured.
+- **Intent over implementation**: skills describe what to do and why,
+  not how to do it in a specific language or framework.
+
+---
+
+## Creating a new skill
+
+1. Use the `research` skill to read reference implementations if the
+   workflow is non-trivial
+2. Create `<skill-name>/SKILL.md` with the correct frontmatter
+3. Create `<skill-name>/README.md` with install instructions and trigger
+   phrases
+4. Update the catalog table in the root `README.md`
+5. Update the badge count in the root `README.md`
+6. Add an entry to `CHANGELOG.md` under `[Unreleased]`
+7. Install the skill locally by replacing the whole directory at
+   `~/.agents/skills/<skill-name>/`
+
+## Updating an existing skill
+
+1. Edit `SKILL.md` (and any supporting files)
+2. If the description or trigger phrases changed, update `README.md`
+3. Add an entry to `CHANGELOG.md` under `[Unreleased]`
+4. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
+   so stale files are removed
+
+---
+
+## Committing and pushing
+
+Use the `commit` skill to create clean conventional commits. Push to a
+feature branch and open a PR — never push directly to `main`. Branch
+protection is enabled on `main`: linear history required, force pushes
+blocked, PRs required, PR title must follow conventional commit format.
