@@ -1,6 +1,6 @@
 # commit
 
-Inspect the diff, split by intent, and create clean conventional commits. Automatically adds ticket scope for GitLab repos.
+Inspect the diff, split by intent, and create clean conventional commits. Requires ticket scope for GitLab/work repos.
 
 ## Install
 
@@ -12,4 +12,5 @@ npx skills@latest add abijith-suresh/skills/commit
 
 - "commit these changes"
 - "make a commit"
-- "create commits for this"
+- "commit this"
+- "create commits"

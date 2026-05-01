@@ -31,13 +31,46 @@ whether the changes fully address every aspect of that intent.
 
 ---
 
+## Shared setup
+
+### 1. Determine the base branch
+
+Before diffing, detect the comparison base:
+
+1. If an open PR exists for the current branch, use:
+
+```bash
+gh pr view --json baseRefName --jq .baseRefName
+```
+
+2. Otherwise detect the remote default branch with one of:
+
+```bash
+git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
+git remote show origin | sed -n '/HEAD branch/s/.*: //p'
+```
+
+Call the result `<base>` and use it everywhere below:
+
+```bash
+git diff origin/<base>...HEAD
+git log origin/<base>..HEAD --oneline
+```
+
+If you cannot determine the base branch automatically, ask the user
+before reviewing.
+
+---
+
 ## Standard review workflow
 
 ### 1. Get the diff
 
-```
-git diff origin/main...HEAD
-git log origin/main..HEAD --oneline
+Use the detected base branch:
+
+```bash
+git diff origin/<base>...HEAD
+git log origin/<base>..HEAD --oneline
 ```
 
 Read every changed file in full, not just the diff lines. Diff lines show
@@ -129,8 +162,14 @@ clarifying question.
 
 ### 2. Get the diff
 
-Same as standard review: `git diff origin/main...HEAD`, read every
-changed file in full.
+Use the same detected base branch:
+
+```bash
+git diff origin/<base>...HEAD
+git log origin/<base>..HEAD --oneline
+```
+
+Read every changed file in full, not just the diff hunks.
 
 ### 3. Map intent to code
 

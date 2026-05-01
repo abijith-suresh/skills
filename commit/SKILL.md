@@ -2,9 +2,9 @@
 name: commit
 description: >-
   Inspect the diff, split changes by intent, and create clean conventional
-  commits. Detects GitLab repos and adds the ticket number to every commit
-  scope automatically. Use after implementation is done: "commit these
-  changes", "make a commit", "commit this", "create commits". Stops after
+  commits. Detects GitLab repos and requires a ticket number in every work
+  commit scope. Use after implementation is done: "commit these changes",
+  "make a commit", "commit this", "create commits". Stops after
   committing — does not push or open a PR.
 ---
 
@@ -17,72 +17,129 @@ Split by intent. One commit per reason to change.
 - One intent per commit
 - Conventional commit messages, imperative mood
 - Honest splits — never bundle unrelated changes behind a broad message
-- For GitLab repos: ticket number in every commit scope
+- Branch safety — never commit directly on `main`, `master`, `develop`, or
+  the remote default branch
+- For GitLab/work repos: ticket number in every commit scope
 
 ## Workflow
 
-### 1. Detect platform
+### 1. Check branch safety first
 
-Run `git remote -v`. If the remote URL contains `gitlab`, this is a
-work repo. If not, this is a personal repo.
+Run:
 
-For work repos: check whether a ticket number has been mentioned in
-this conversation. If not, ask for it now before doing anything else:
-"What's the ticket number for this?"
+- `git branch --show-current`
+- `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'`
+- or `git remote show origin` if `origin/HEAD` is unavailable
 
-### 2. Inspect the diff
+If the current branch is `main`, `master`, `develop`, or the remote
+default branch, stop.
+
+Warn the user and ask whether to create or switch to a feature branch
+before committing. Do not commit on those branches unless the user
+explicitly overrides the guardrail.
+
+### 2. Detect platform
+
+Run `git remote -v`.
+
+- Remote URL contains `gitlab` → work repo
+- Otherwise → personal repo
+
+For work repos, a ticket number is required in every commit scope:
+`type(TICKET-123): summary`
+
+If the ticket number is not already known from the branch, PR, or
+conversation, ask for it before continuing.
+
+### 3. Inspect the diff
 
 Run `git status` and `git diff HEAD`. Read every changed file.
 
-### 3. Plan the split
+Never include these agent-generated working files unless the user
+explicitly asks:
+
+- `PLAN.md`
+- `IMPROVE.md`
+- `REVIEW.md`
+- `INVESTIGATION.md`
+
+### 4. Plan the split
 
 Group changes by intent. A good split separates things like:
 
-- A new feature from the refactoring that made room for it
-- A bug fix from unrelated formatting changes
-- Generated files from hand-written code
-- Changes in unrelated modules with different reasons to change
+- a new feature from the refactoring that made room for it
+- a bug fix from unrelated formatting or cleanup changes
+- generated files from hand-written code
+- changes in unrelated modules with different reasons to change
 
-When in doubt, split. A slightly smaller commit is always easier to
-review and safer to revert.
+When in doubt, split. A slightly smaller commit is easier to review and
+safer to revert.
 
 Present the proposed split to the user before committing:
-"I'm going to make N commits: [list]. Go ahead?"
 
-### 4. Stage and commit each group
+> I'm going to make N commits: [list]. Go ahead?
+
+### 5. Stage and commit each group
 
 For each group in order:
 
 1. Stage only the relevant files: `git add <files>`
 2. Write the commit message
+3. Commit: `git commit -m "message"` (or add a body when the why is not obvious)
 
-**Personal format:**
-`type: imperative summary`
+**Personal format**
 
-**Work format:**
-`type(TICKET-NO): imperative summary`
+`type(scope?): imperative summary`
 
-Available types: feat, fix, refactor, docs, test, chore, ci, build, perf
+Examples:
+
+- `feat: add investigation workflow`
+- `fix(open-pr): correct GitLab target option`
+
+**Work format**
+
+`type(TICKET-123): imperative summary`
+
+Examples:
+
+- `feat(PROJ-214): add investigation workflow`
+- `fix(PROJ-214): correct GitLab target option`
+
+Common types:
+
+- `feat`
+- `fix`
+- `docs`
+- `style`
+- `refactor`
+- `perf`
+- `test`
+- `build`
+- `ci`
+- `chore`
+
+Conventional Commits gives semantic meaning primarily to `feat`, `fix`,
+and `BREAKING CHANGE`. The rest are common types used by convention, not
+a hard mandatory list from the spec.
 
 Message rules:
-- Imperative mood: "add X" not "added X" or "adding X"
+
+- Imperative mood: `add X`, not `added X` or `adding X`
 - Lowercase summary, no period at the end
-- No scope for personal unless it meaningfully narrows the message
-- Body only when the *why* isn't obvious from the summary alone
-- If the message needs "and" to connect unrelated things, split the commit
+- Scope is optional on personal commits; use it only when it sharpens meaning
+- Use a body only when the why is not obvious from the summary alone
+- If the message needs `and` to connect unrelated ideas, split the commit
 
-3. Commit: `git commit -m "message"` (or with `-m` body for multi-line)
+### 6. Report
 
-### 5. Report
-
-After all commits: show the list of commits made and confirm there are
-no leftover staged or unstaged changes that need another commit.
+After all commits, show the list of commits made and confirm whether any
+staged or unstaged changes remain.
 
 ## Rules
 
 - Never commit unrelated changes together
 - Never push — that is a separate step
-- Never include PLAN.md or any agent-generated planning files in
-  commits unless the user explicitly asks
+- Never include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md`
+  unless the user explicitly asks
 - Always confirm the proposed split before committing
 - Call out risky git operations before taking them

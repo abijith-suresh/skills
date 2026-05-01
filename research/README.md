@@ -1,6 +1,6 @@
 # research
 
-Clone remote repositories into a temp directory and use them as source-of-truth reference material when implementing against a framework, library, or pattern.
+Clone external repositories into `/tmp/research/` and use them as source-of-truth reference material when implementing against a framework, library, or pattern.
 
 ## Install
 

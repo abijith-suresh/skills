@@ -2,15 +2,15 @@
 name: open-pr
 description: >-
   Push the current branch and open a pull request or merge request.
-  Detects GitHub vs GitLab from the remote URL and uses the right
-  method and description format for each. Use after committing: "open
-  a PR", "open an MR", "create a PR", "create an MR", "push and open
-  a PR", "submit for review".
+  Detects GitHub vs GitLab from the remote URL and uses the right title
+  format and creation flow for each. Use after committing: "open a PR",
+  "open an MR", "create a PR", "create an MR", "push and open a PR",
+  "submit for review".
 ---
 
 # Open PR
 
-Detect platform. Push. Open PR or MR with the right format.
+Detect platform. Push safely. Open the PR or MR with the right title and body.
 
 ## Workflow
 
@@ -21,93 +21,125 @@ Run `git remote -v`.
 - Remote URL contains `github.com` → GitHub
 - Remote URL contains `gitlab` → GitLab
 
-For GitLab: check whether a ticket number is in the conversation.
-If not, ask: "What's the ticket number?"
+For GitLab/work repos, a ticket number is required for the MR title:
+`TICKET-123: Title`
 
-### 2. Check branch state
+If the ticket number is not already known from the branch, issue, or
+conversation, ask for it before continuing.
 
-Run `git status` and confirm:
-- There are no uncommitted changes (if there are, stop and tell the user)
-- The current branch is not main, master, or the repo's default branch
-  (if it is, stop and ask which branch to push to)
+### 2. Check branch and working tree state
 
-### 3. Push and open
+Run `git status`, `git branch --show-current`, and detect the remote
+default branch with `origin/HEAD` or `git remote show origin`.
 
-**GitHub:**
+Stop and tell the user if:
 
-```bash
-# Push branch
-git push -u origin <branch-name>
+- there are uncommitted changes
+- the current branch is `main`, `master`, or the remote default branch
 
-# Open PR
-gh pr create \
-  --title "<title>" \
-  --body "<body>"
+Ask which feature branch to use instead. Never push directly to the
+default branch.
+
+### 3. Decide the target branch
+
+Default the PR/MR target to the remote default branch unless the user
+specifies another branch.
+
+### 4. Write the title
+
+**GitHub / personal PR title**
+
+`type(scope?): summary`
+
+Examples:
+
+- `feat: add investigation workflow`
+- `fix(open-pr): correct GitLab target option`
+
+**GitLab / work MR title**
+
+`TICKET-123: Title`
+
+Examples:
+
+- `PROJ-214: Add investigation workflow`
+- `PROJ-214: Correct GitLab target option`
+
+### 5. Write one shared body
+
+Use this structure for both GitHub PRs and GitLab MRs:
+
+```markdown
+## Summary
+[What changed and why. 2–3 concise sentences.]
+
+## Changes
+- [Specific action]
+- [Specific action]
+
+## Testing
+- [ ] [Specific verification step]
+- [ ] [Edge case or regression check]
+
+## Notes
+[Any risks, follow-ups, rollout notes, or reviewer context. Omit this
+section if there is nothing useful to say.]
+
+## References
+- Ticket/Issue: [ticket, issue, or N/A]
 ```
 
-**GitLab:**
+Rules for the body:
+
+- Keep it specific to the actual branch scope
+- Derive the testing checklist from the real changes, not a generic template
+- Each `Changes` bullet should describe an action, not just name a file
+- Omit `Notes` if there is nothing useful to say
+
+### 6. Push and open
+
+**GitHub**
+
+```bash
+git push -u origin <branch-name>
+
+gh pr create \
+  --title "<title>" \
+  --body "<body>" \
+  --assignee @me
+```
+
+Only request reviewers if the user names someone.
+
+**GitLab**
 
 ```bash
 git push \
   -o merge_request.create \
-  -o "merge_request.title=TICKET-NO: <title>" \
+  -o "merge_request.title=TICKET-123: <title>" \
   -o "merge_request.description=<body>" \
-  -o "merge_request.target_branch=<target>" \
+  -o "merge_request.target=<target>" \
   origin <branch-name>
 ```
 
-The target branch defaults to the repo's default branch unless the
-user specifies otherwise.
+If assignment is desired and the GitLab username is known, add:
 
-### 4. Write the description
-
-**GitHub PR format:**
-
-Title: short imperative sentence describing what the PR does.
-
-Body:
-```
-[2–3 sentences describing what changed and why. Plain language. What
-problem does this solve and what approach was taken?]
-
-**Preview Testing**
-- [ ] [Specific user-facing scenario to verify in preview]
-- [ ] [Edge case or error state to check]
-- [ ] [Any regression scenario relevant to what changed]
+```bash
+-o "merge_request.assign=<username>"
 ```
 
-Derive the testing checklist from the actual changes — specific flows
-tied to what was modified, not generic items.
+If the GitLab username is unknown, ask for it or tell the user how to
+assign the MR after creation.
 
-**GitLab MR format:**
+### 7. Report
 
-Title: `TICKET-NO: What this is about`
-(Plain sentence after the ticket prefix, no brackets, no "feat:")
-
-Body:
-```
-[One paragraph: what this change does and why it was needed. 2–3
-sentences. Answer what and why in plain language.]
-
-**Changes**
-- [Specific action — "add validation for X", not just "update Z"]
-- [Another specific change]
-
-**Ticket:** TICKET-NO
-```
-
-Rules for both:
-- No filler sections unless the user asks
-- Each Changes bullet is a distinct action, not a file name
-- Total body is scannable in 15 seconds
-
-### 5. Report
-
-Print the PR or MR URL. Done.
+Print the PR or MR URL and note any follow-up the user still needs to do
+manually.
 
 ## Rules
 
-- Never push to main, master, or the default branch directly
+- Never push to `main`, `master`, or the remote default branch directly
 - Never open a PR/MR if there are uncommitted changes
-- Always derive the testing checklist from what actually changed
-- For GitLab: always include the ticket in the title and body
+- Keep the title and body aligned with the real branch scope
+- Use the shared body structure for both platforms
+- Keep platform-specific mechanics separate from the body format

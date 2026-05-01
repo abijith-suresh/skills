@@ -1,6 +1,6 @@
 # plan
 
-Explore the codebase and produce a settled PLAN.md before writing any code.
+Explore the relevant codebase state and produce a settled PLAN.md before writing any code.
 
 ## Install
 

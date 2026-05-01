@@ -1,6 +1,6 @@
 # investigate
 
-Deep investigation and structured analysis of a codebase, system, or problem. Produces a written analysis with findings and recommendations.
+Analyze the current repository in a read-only way before deciding what to change. Useful for tracing stories, bug paths, and existing implementations.
 
 ## Install
 
@@ -10,7 +10,7 @@ npx skills@latest add abijith-suresh/skills/investigate
 
 ## Use
 
-- "investigate X"
-- "analyze X"
-- "do a deep dive into X"
-- "help me understand how X works"
+- "investigate how this story is implemented"
+- "analyze this bug path"
+- "trace how X currently works"
+- "help me understand the existing implementation"

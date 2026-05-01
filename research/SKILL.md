@@ -1,17 +1,27 @@
 ---
 name: research
 description: >-
-  Clone one or more remote repositories into a temporary directory and use
-  them as source-of-truth reference material. Use when implementing something
-  that benefits from reading a real implementation rather than relying on
-  training knowledge: "research how X is done", "look at how Y implements Z",
-  "use [repo] as reference", "clone [repo] for context", "I need to understand
-  how [library/framework] works before implementing".
+  Clone one or more external repositories into a temporary directory and
+  use them as source-of-truth reference material. Use when implementing
+  against a framework, library, or pattern that benefits from reading a
+  real external implementation: "research how X is done", "look at how Y
+  implements Z", "use [repo] as reference", "clone [repo] for context",
+  "I need to understand how [library/framework] works before implementing".
 ---
 
 # Research
 
 Clone the source. Read the real thing. Apply what you learn.
+
+## What this is for
+
+Use this skill for external reference repositories — frameworks,
+libraries, tools, starter kits, or other source-of-truth implementations
+outside the current project.
+
+Do not use this workflow as the default way to understand the current
+repo. Stay in the project and analyze the existing code directly when the
+question is about what already exists here.
 
 ## Why this exists
 
@@ -28,19 +38,18 @@ the clone available for follow-up reference.
 
 ### 1. Identify what to clone
 
-From the user's request or the task at hand, determine what needs to be
-researched. This could be:
+From the user's request or the task at hand, determine what external
+source needs to be researched. This could be:
 
-- A specific repo URL the user provides
-- The canonical source for a framework or library (e.g., the official
-  tailwindlabs/tailwindcss repo for Tailwind v4 configuration patterns,
-  sveltejs/svelte for Svelte idioms)
-- Multiple repos if the task benefits from comparing implementations
+- a specific repo URL the user provides
+- the canonical source for a framework or library
+- multiple repos if the task benefits from comparing implementations
 
 If the URL is not provided, identify the canonical repo:
-- Prefer the official org (the maintainer's GitHub org, not a fork)
-- Verify it is actively maintained (recent commits, not archived)
-- Use the default branch unless a specific version is needed
+
+- prefer the official org, not a fork
+- verify it is actively maintained
+- use the default branch unless a specific version is needed
 
 If there is any ambiguity about which repo is the right reference, ask
 the user before cloning.
@@ -54,8 +63,8 @@ ls /tmp/research/<task-slug>/<repo-name>/
 ```
 
 If it does, skip the clone and use what is there. The task slug should
-be descriptive enough to avoid collisions (e.g., `tailwind-v4-setup`,
-`svelte-routing`, `spring-security-oauth`).
+be descriptive enough to avoid collisions (for example `tailwind-v4-setup`,
+`svelte-routing`, or `spring-security-oauth`).
 
 ### 3. Clone to temp
 
@@ -80,27 +89,26 @@ Path structure:
 You are answering a specific question, not reading documentation for its
 own sake. Orient yourself first:
 
-- Read the README
-- Look at the directory structure (`ls -la`, `find . -name "*.md" | head -20`)
-- Locate entry points, configuration files, and key modules relevant
-  to the task
+- read the README
+- look at the directory structure (`ls -la`, `find . -name "*.md" | head -20`)
+- locate entry points, configuration files, and key modules relevant to the task
 
 Then go deep on the parts that answer the question. Trace patterns, read
-examples, understand the conventions the project uses.
+examples, and understand the conventions the project uses.
 
-Narrate what you are finding in chat as you go. Think out loud — what
-you read, what surprised you, what applies directly to the task.
+Narrate what you are finding in chat as you go: what you read, what
+surprised you, and what applies directly to the task.
 
 ### 5. Summarize and apply
 
 After exploring, summarize findings concretely:
 
-- What are the key patterns, conventions, or configurations?
-- What does the canonical implementation do that is non-obvious?
-- What should be applied to the current task, and how?
+- what are the key patterns, conventions, or configurations?
+- what does the canonical implementation do that is non-obvious?
+- what should be applied to the current task, and how?
 
-Apply findings directly to the task at hand, or hand them off as a
-clear set of decisions for the user if choices need to be made.
+Apply findings directly to the task at hand, or hand them off as a clear
+set of decisions for the user if choices need to be made.
 
 ### 6. Leave the clone in place
 
@@ -120,10 +128,10 @@ rm -rf /tmp/research/<task-slug>/
 ## Rules
 
 - Always `--depth 1` — never clone full history unless the task
-  explicitly requires it (e.g., researching git history patterns)
+  explicitly requires it
 - Never clone into the project directory — always use `/tmp/research/`
 - Check before cloning — do not re-clone if already present
-- Read with purpose — you are answering a specific question
+- Read with purpose — answer a specific question
 - Prefer official maintainer repos over forks or mirrors
 - Leave the clone in place unless asked to clean up
 - When the right repo is ambiguous, ask before cloning

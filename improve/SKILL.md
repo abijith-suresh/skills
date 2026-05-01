@@ -2,10 +2,11 @@
 name: improve
 description: >-
   Holistic codebase health audit for codebases developed with fast agentic
-  iteration. Surfaces accumulated technical debt across the whole codebase,
-  produces a prioritized IMPROVE.md, and heals issues incrementally. Use
-  periodically or before major new work: "improve the codebase", "health
-  check the codebase", "let's address technical debt", "audit the codebase".
+  iteration. Surfaces accumulated technical debt across the whole
+  codebase, produces a prioritized IMPROVE.md, and heals issues
+  incrementally. Use periodically or before major new work: "improve the
+  codebase", "health check the codebase", "let's address technical debt",
+  "audit the codebase".
 ---
 
 # Improve
@@ -15,20 +16,20 @@ Step back. Look at the whole picture. Heal what has accumulated.
 ## Why this exists
 
 Agentic development ships at inference speed. Features land fast, but the
-codebase accumulates issues that no single PR review catches: patterns that
-drifted apart, abstractions that stopped making sense, test coverage that
-thinned out, dead code that nobody removed. No individual change looks
-wrong — the problems are in the gaps and the accumulation.
+codebase accumulates issues that no single PR review catches: patterns
+that drift apart, abstractions that stopped making sense, test coverage
+that thins out, dead code that nobody removes. No individual change looks
+terrible in isolation — the problems are in the gaps and the accumulation.
 
 This skill is for doing that work deliberately: not reviewing a PR, not
-planning a feature, but auditing the whole codebase and healing it before
-the accumulated debt starts breaking things.
+planning a feature, but auditing the whole codebase and deciding what to
+heal before the accumulated debt starts breaking things.
 
 ## When to use
 
 - Periodically, as regular codebase maintenance
 - Before starting a major new feature or refactor
-- When things feel fragile or when understanding the codebase takes more
+- When things feel fragile or understanding the codebase takes more
   effort than it should
 - After a period of rapid agentic development
 
@@ -38,68 +39,98 @@ the accumulated debt starts breaking things.
 
 Before forming any opinions, read the codebase broadly:
 
-- Read the entry points, main modules, and key interfaces
-- Trace how data flows through the system
-- Note the patterns: how things are named, how they are organized,
-  what conventions appear consistently
+- read the entry points, main modules, and key interfaces
+- trace how data flows through the system
+- note the patterns: how things are named, organized, and layered
 
-Do not focus on any single file. The goal at this stage is a
-whole-system picture, not a detailed audit of one area.
+Do not focus on one file too early. Start with a whole-system picture,
+then zoom in.
 
-### 2. Survey for health issues
+### 2. Survey for codebase health issues
 
-Scan every module and surface issues across these dimensions:
+Scan the codebase across these dimensions:
 
 **Consistency**
 - Are naming conventions applied uniformly, or have they drifted?
-- Are similar problems solved in different ways in different parts
-  of the codebase?
-- Do module boundaries make sense, or has logic leaked across them?
+- Are similar problems solved in different ways in different areas?
+- Do module boundaries still make sense, or has logic leaked across them?
 
 **Dead weight**
-- Unused variables, functions, classes, imports
-- Commented-out code that was never removed
+- Unused variables, functions, classes, or imports
+- Commented-out code that should have been removed
 - Deprecated dependencies or APIs still in use
-- Code that was left "for later" and never revisited
+- Code left "for later" and never revisited
 
-**Test coverage**
+**Tests**
 - Are critical paths tested?
-- Are there behaviors that have no test and would break silently?
-- Are there tests that test implementation rather than behavior
-  (and would break on refactor even when nothing is wrong)?
+- Are there behaviors that could break silently with no coverage?
+- Are tests verifying behavior through useful public interfaces, or only
+  implementation details?
 
 **Abstractions**
 - Are there abstractions that are over-engineered for what they do?
-- Is there logic repeated in three places that should be shared?
-- Are interfaces clear? Can you understand what a module does from
-  its public surface alone?
+- Is there duplication that should be shared?
+- Are interfaces clear, or do callers have to know too much?
 
 **Naming and readability**
-- Variables, functions, and classes named in ways that require
-  context to understand
+- Variables, functions, and classes named in ways that require too much context
 - Long functions that do more than one thing
-- Nesting that could be flattened with early returns or guard clauses
+- Nesting that could be flattened with guard clauses or early returns
 
 **Coupling**
 - Modules that know too much about each other's internals
 - Circular dependencies
 - Logic that belongs in one layer but has spread into another
 
-### 3. Prioritize
+### 3. Run a lightweight architecture-health pass
+
+Use this small shared vocabulary while reviewing architecture health:
+
+- **Module** — anything with an interface and an implementation: a function,
+  class, package, feature slice, or subsystem
+- **Interface** — what callers or tests need to know to use a module
+  correctly: inputs, outputs, invariants, errors, ordering, and configuration
+- **Deep module** — a module that provides a lot of useful behavior behind
+  a small, understandable interface
+- **Shallow module** — a wrapper or pass-through whose interface is almost
+  as complex as its implementation
+- **Deletion test** — imagine deleting a module. If complexity disappears,
+  it was probably shallow. If complexity spreads into callers, it was
+  probably earning its keep
+- **Locality** — related change, bugs, knowledge, and tests are concentrated
+  in one place
+- **Leverage** — callers and tests get more useful behavior per unit of
+  interface they need to understand
+
+Do not require `CONTEXT.md`, ADRs, domain docs, or any separate
+architecture files. Use the codebase in front of you.
+
+Ask these questions:
+
+- Where does understanding one concept require jumping through many small modules?
+- Which wrappers are pass-through abstractions that do not hide complexity?
+- Where is logic extracted only for testability, but real behavior is still
+  hard to test through a useful public interface?
+- Which modules have interfaces nearly as complex as their implementation?
+- Where would a deeper module improve locality and leverage?
+- Where is coupling real and harmful versus simply necessary collaboration?
+
+### 4. Prioritize
 
 Assign each issue a severity:
 
-**High** — Likely to cause bugs, data problems, or broken behavior.
-Missing tests on critical paths, logic errors, leaky abstractions
-causing incorrect behavior. Address first.
+**High** — likely to cause bugs, broken behavior, or unsafe changes soon.
+Missing tests on critical paths, logic errors, or architecture that is
+already creating defects.
 
-**Medium** — Hurts future development but nothing is broken yet.
-Inconsistent patterns, dead code, unclear names, poor module boundaries.
+**Medium** — hurts future development but nothing is obviously broken yet.
+Inconsistent patterns, dead code, unclear names, poor module boundaries,
+or shallow abstractions that slow the team down.
 
-**Low** — Minor polish. Small naming improvements, minor duplication,
+**Low** — minor polish. Small naming improvements, minor duplication, or
 cosmetic inconsistencies.
 
-### 4. Write IMPROVE.md
+### 5. Write IMPROVE.md
 
 Write findings to `IMPROVE.md` in the project root:
 
@@ -107,55 +138,57 @@ Write findings to `IMPROVE.md` in the project root:
 # Codebase Health — [YYYY-MM-DD]
 
 ## Summary
-[2–3 sentences: overall health assessment, main themes in what was
-found, rough estimate of remediation effort]
+[2–3 sentences: overall health assessment, main themes, and rough
+remediation effort]
 
 ## Findings
 
 ### High
-- [ ] [module/file] — [description of issue and why it matters]
+- [ ] [architecture] `path/to/file` — [description of issue and why it matters]
 
 ### Medium
-- [ ] [module/file] — [description]
+- [ ] [tests] `path/to/file` — [description]
 
 ### Low
-- [ ] [module/file] — [description]
+- [ ] [naming] `path/to/file` — [description]
 
 ## Recommended Order
-[Short paragraph or numbered list: which issues to tackle first and
-why — usually high-severity first, but sometimes a medium-severity
-foundation issue should come before a high-severity symptom]
+[Short paragraph or numbered list explaining what to tackle first and why]
 ```
 
-### 5. Confirm before acting
+Architecture findings should appear naturally alongside the rest of the
+audit. Use tags such as `[architecture]`, `[tests]`, `[dead-code]`, or
+`[naming]` when they help the reader scan the list.
 
-After writing IMPROVE.md, present the summary to the user:
+### 6. Confirm before acting
+
+After writing `IMPROVE.md`, summarize the result and ask whether to
+continue fixing:
 
 > IMPROVE.md is written with [N] findings: [X] high, [Y] medium, [Z] low.
-> Ready to start working through them, or do you want to review and
-> adjust priorities first?
+> Ready to start working through them, or do you want to review and adjust
+> priorities first?
 
 Do not start fixing until the user confirms.
 
-### 6. Heal incrementally
+### 7. Heal incrementally if confirmed
 
-Work through IMPROVE.md one issue at a time, in priority order:
+Work through `IMPROVE.md` one issue at a time, in priority order:
 
-- Address one issue
-- Run the test suite to confirm nothing broke
-- Mark the item done in IMPROVE.md (`- [x]`)
-- Commit the change (use the `commit` skill)
+- address one issue
+- run relevant tests after each fix when possible
+- mark the item done in `IMPROVE.md` (`- [x]`)
+- commit each unrelated fix separately
 
-Never batch multiple unrelated fixes into one commit. Each fix is its
-own commit with a clear reason to change.
+If a fix would change observable behavior, stop and confirm that decision
+with the user instead of folding it into a structural cleanup.
 
 ## Rules
 
 - Never skip the broad survey — do not jump straight to known problems
-- Never batch fixes — one issue, one commit
-- Never modify behavior while healing structure; if a fix requires
-  changing observable behavior, stop and flag it to the user as a
-  separate decision
-- Always run the test suite after each fix before moving to the next
-- Keep IMPROVE.md updated as you work — it is the record of what
-  was found and what was done
+- Never require `CONTEXT.md`, ADRs, or extra architecture docs to do the audit
+- Never start fixing until `IMPROVE.md` is written and the user confirms
+- Never batch unrelated fixes into one commit
+- Always run relevant tests after each fix when possible
+- Keep `IMPROVE.md` updated as you work — it is the record of what was
+  found and what was done

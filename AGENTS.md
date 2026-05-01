@@ -8,7 +8,7 @@ specific workflow — planning, committing, reviewing, testing, researching,
 and so on.
 
 Skills follow the Agent Skills specification:
-https://agentsagents.io/specification
+https://agentskills.io/specification
 
 ---
 
@@ -18,10 +18,11 @@ Before writing or significantly updating a skill, use the `research` skill
 to clone a reference collection and read how mature skills are structured.
 Good starting points:
 
-- `addyosmani/skills` — large, well-documented collection covering many
-  engineering workflows
-- `context-engineering/skills` — skills focused on agentic and multi-agent
-  patterns
+- `anthropics/skills` — canonical templates and specification-aligned examples
+- `mattpocock/skills` — strong workflow and architecture language patterns
+- `addyosmani/agent-skills` — broad engineering workflow collection
+- `muratcankoylan/Agent-Skills-for-Context-Engineering` — context-engineering patterns
+- `vercel-labs/agent-skills` — product and engineering skill examples
 
 Clone whichever is most relevant to the task, read the skill files, then
 apply those patterns here.
@@ -34,10 +35,15 @@ Each skill lives in its own directory at the repo root:
 
 ```
 <skill-name>/
-  SKILL.md    ← the skill definition (required)
-  README.md   ← install instructions and example prompts (required)
-  *.md        ← supporting reference files (optional)
+  SKILL.md      ← the skill definition (required)
+  README.md     ← install instructions and example prompts (required)
+  references/   ← optional supporting docs
+  scripts/      ← optional deterministic helper scripts
+  assets/       ← optional templates/resources
 ```
+
+Prefer `references/` over loose top-level `.md` files when a skill needs
+supporting documentation.
 
 Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
 `review`, `tdd`, `research`. No namespacing.
@@ -51,7 +57,7 @@ Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
 name: <skill-name>
 description: >-
   One sentence describing when to use this skill. Include trigger phrases.
-  This is what the agent reads to decide whether to activate the skill.
+  This is what the agent reads to decide whether this skill applies.
 ---
 
 # Title
@@ -109,15 +115,16 @@ npx skills@latest add abijith-suresh/skills/<skill-name>
 4. Update the catalog table in the root `README.md`
 5. Update the badge count in the root `README.md`
 6. Add an entry to `CHANGELOG.md` under `[Unreleased]`
-7. Install the skill locally by copying the directory to
+7. Install the skill locally by replacing the whole directory at
    `~/.agents/skills/<skill-name>/`
 
 ## Updating an existing skill
 
-1. Edit `SKILL.md` (and any supporting `.md` files)
+1. Edit `SKILL.md` (and any supporting files)
 2. If the description or trigger phrases changed, update `README.md`
 3. Add an entry to `CHANGELOG.md` under `[Unreleased]`
-4. Update the locally installed copy at `~/.agents/skills/<skill-name>/`
+4. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
+   so stale files are removed
 
 ---
 

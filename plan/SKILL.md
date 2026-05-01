@@ -1,12 +1,12 @@
 ---
 name: plan
 description: >-
-  Explore the codebase and produce a settled PLAN.md before writing any
-  code. Use when the user wants to plan a feature, think through a change,
-  or start something new. Triggers on: "create a plan", "plan this out",
-  "help me plan", "let's plan X", "I want to build X", "help me think
-  through this". Ask all open questions at once with labeled options —
-  never one question at a time.
+  Explore the relevant codebase state and produce a settled PLAN.md before
+  writing any code. Use when the user wants to plan a feature, think
+  through a change, or start something new. Triggers on: "create a plan",
+  "plan this out", "help me plan", "let's plan X", "I want to build X",
+  "help me think through this". Ask all open questions at once with
+  labeled options — never one question at a time.
 ---
 
 # Plan
@@ -15,12 +15,16 @@ Explore first. Ask everything at once. Write last.
 
 ## Philosophy
 
-Read the codebase before forming any opinion. Once you understand the
-current state, identify every genuinely open decision and surface them
-all in one message — grouped by topic, each question with labeled options
-and a clear recommendation. Never drip questions one at a time. The user
-picks by letter or overrides with a free-form answer. Iterate only if
-first-round answers open new decisions.
+Inspect the current implementation before asking the user to decide
+anything the codebase can answer for you. The only exception: if the
+request is so ambiguous that you cannot tell which part of the repo to
+inspect, ask one focused clarifying question first.
+
+Once you understand the current state, identify every genuinely open
+decision and surface them all in one message — grouped by topic, each
+question with labeled options and a clear recommendation. Never drip
+questions one at a time. The user picks by letter or overrides with a
+free-form answer. Iterate only if first-round answers open new decisions.
 
 Do not modify any source files. Write only to PLAN.md at the end.
 
@@ -28,14 +32,19 @@ Do not modify any source files. Write only to PLAN.md at the end.
 
 ### 1. Understand the goal
 
-If the intent is clear, go straight to exploration. Ask one focused
-question only if the goal is genuinely ambiguous — not a list, one.
+If you can identify the relevant part of the repo, go straight to
+exploration.
 
-### 2. Explore
+Ask one focused clarifying question only if the request is genuinely too
+ambiguous to know what area of the codebase to inspect.
 
-Read relevant files. Grep for related symbols. Trace dependencies.
-Narrate what you find in chat as you go — what you read, what you
-skipped, what surprised you. Think out loud.
+### 2. Explore before asking
+
+Read relevant files. Grep for related symbols. Trace dependencies. Build
+an implementation-aware picture of the current state before asking the
+user to make design choices.
+
+Do not ask questions yet if the codebase can answer them.
 
 ### 3. Ask all open questions at once
 
@@ -93,6 +102,8 @@ After writing: "Ready to start implementing, or anything to adjust?"
 ## Rules
 
 - Never ask questions one at a time
+- Never skip exploration unless the request is too ambiguous to identify
+  where to look
 - Never write PLAN.md until all decisions are resolved
 - Never modify source files during planning
 - Never stage or commit PLAN.md — it is a working document, not a deliverable

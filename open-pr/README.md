@@ -1,6 +1,6 @@
 # open-pr
 
-Push the current branch and open a pull request or merge request. Detects GitHub vs GitLab automatically and uses the right format for each.
+Push the current branch and open a pull request or merge request. Detects GitHub vs GitLab automatically and uses the right title and creation flow for each.
 
 ## Install
 
