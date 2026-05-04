@@ -130,9 +130,9 @@ or shallow abstractions that slow the team down.
 **Low** — minor polish. Small naming improvements, minor duplication, or
 cosmetic inconsistencies.
 
-### 5. Write IMPROVE.md
+### 5. Present findings in chat
 
-Write findings to `IMPROVE.md` in the project root:
+Present the full findings in chat using this structure:
 
 ```markdown
 # Codebase Health — [YYYY-MM-DD]
@@ -160,14 +160,23 @@ Architecture findings should appear naturally alongside the rest of the
 audit. Use tags such as `[architecture]`, `[tests]`, `[dead-code]`, or
 `[naming]` when they help the reader scan the list.
 
-### 6. Confirm before acting
+### 6. Ask whether to write IMPROVE.md
 
-After writing `IMPROVE.md`, summarize the result and ask whether to
+The findings are already in chat. IMPROVE.md is only needed when handing
+off to another agent or returning to the task later. Ask:
+
+> Should I write this to IMPROVE.md? Only needed if you plan to hand off to
+> another agent.
+
+If the user says yes, write the findings to `IMPROVE.md` in the project root.
+
+### 7. Confirm before acting
+
+After presenting (or writing), summarize the result and ask whether to
 continue fixing:
 
-> IMPROVE.md is written with [N] findings: [X] high, [Y] medium, [Z] low.
-> Ready to start working through them, or do you want to review and adjust
-> priorities first?
+> [N] findings: [X] high, [Y] medium, [Z] low. Ready to start working
+> through them, or do you want to review and adjust priorities first?
 
 Do not start fixing until the user confirms.
 
@@ -190,5 +199,7 @@ with the user instead of folding it into a structural cleanup.
 - Never start fixing until `IMPROVE.md` is written and the user confirms
 - Never batch unrelated fixes into one commit
 - Always run relevant tests after each fix when possible
-- Keep `IMPROVE.md` updated as you work — it is the record of what was
-  found and what was done
+- Never write IMPROVE.md without asking first — display the findings in
+  chat and only write the file if the user confirms
+- Keep `IMPROVE.md` updated as you work — if it was written, it is the
+  record of what was found and what was done

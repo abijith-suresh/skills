@@ -238,9 +238,16 @@ is ready as-is]
 
 ---
 
-## After writing REVIEW.md
+## After presenting findings
 
-Tell the user:
+Present the full findings in chat. Then ask:
+
+> Should I write this to REVIEW.md? Only needed if you plan to hand off to
+> another agent to fix the issues.
+
+If the user says yes, write the findings to `REVIEW.md` in the project root.
+
+If REVIEW.md is written, tell the user:
 
 > REVIEW.md is written. To work through the findings, start a new agent
 > session, point it at REVIEW.md, and ask it to address the issues in

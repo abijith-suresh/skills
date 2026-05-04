@@ -9,6 +9,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed — 2026-05-04
 
 - `commit` skill: removed the confirmation step before committing; the skill now plans the split and executes without asking for permission
+- `plan` skill: plan content is displayed in chat first; only writes `PLAN.md` if the user confirms
+- `improve` skill: findings are displayed in chat first; only writes `IMPROVE.md` if the user confirms
+- `review` skill: findings are displayed in chat first; only writes `REVIEW.md` if the user confirms
 
 ### Added — 2026-05-01
 

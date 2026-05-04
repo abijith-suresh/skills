@@ -72,9 +72,10 @@ ask questions the codebase cannot answer.
 The user replies with letters or free text. If a question goes
 unanswered, use the recommended option and note it in PLAN.md.
 
-### 4. Write PLAN.md
+### 4. Present the plan in chat
 
-Once all decisions are settled, write PLAN.md to the project root:
+Once all decisions are settled, present the full plan in chat using this
+structure:
 
 ```
 # Plan: [Feature Name]
@@ -95,9 +96,19 @@ Once all decisions are settled, write PLAN.md to the project root:
 regressions. Derived from what actually changed.]
 ```
 
-### 5. Confirm
+### 5. Ask whether to write PLAN.md
 
-After writing: "Ready to start implementing, or anything to adjust?"
+The plan is already in chat. PLAN.md is only needed when handing off to
+another agent or returning to the task later. Ask:
+
+> Should I write this to PLAN.md? Only needed if you plan to hand off to
+> another agent.
+
+If the user says yes, write the plan to `PLAN.md` in the project root.
+
+### 6. Confirm
+
+After presenting (or writing): "Ready to start implementing, or anything to adjust?"
 
 ## Rules
 
@@ -106,4 +117,5 @@ After writing: "Ready to start implementing, or anything to adjust?"
   where to look
 - Never write PLAN.md until all decisions are resolved
 - Never modify source files during planning
-- Never stage or commit PLAN.md — it is a working document, not a deliverable
+- Never write PLAN.md without asking first — display the plan in chat and
+  only write the file if the user confirms
