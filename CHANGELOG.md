@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-05-04
+
+- `commit` skill: removed the confirmation step before committing; the skill now plans the split and executes without asking for permission
+
 ### Added — 2026-05-01
 
 - `investigate` skill: expanded from a stub into a full current-repo analysis workflow with read-only defaults, evidence-based findings, optional `INVESTIGATION.md`, and an explicit handoff into implementation only after confirmation

@@ -75,9 +75,8 @@ Group changes by intent. A good split separates things like:
 When in doubt, split. A slightly smaller commit is easier to review and
 safer to revert.
 
-Present the proposed split to the user before committing:
-
-> I'm going to make N commits: [list]. Go ahead?
+Plan the split, then proceed directly to committing. Do not ask for
+permission — make a good judgement call and execute.
 
 ### 5. Stage and commit each group
 
@@ -141,5 +140,5 @@ staged or unstaged changes remain.
 - Never push — that is a separate step
 - Never include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md`
   unless the user explicitly asks
-- Always confirm the proposed split before committing
+- Do not ask for permission to commit — plan the split, make a judgement call, and execute
 - Call out risky git operations before taking them
