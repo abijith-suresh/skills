@@ -1,137 +1,100 @@
 ---
 name: research
 description: >-
-  Clone one or more external repositories into a temporary directory and
-  use them as source-of-truth reference material. Use when implementing
-  against a framework, library, or pattern that benefits from reading a
-  real external implementation: "research how X is done", "look at how Y
-  implements Z", "use [repo] as reference", "clone [repo] for context",
-  "I need to understand how [library/framework] works before implementing".
+  Clone and reference external repositories as source-of-truth when implementing
+  against frameworks, libraries, or tools where memory alone is unreliable. Use
+  when implementing non-trivial integrations, unfamiliar APIs, or version-specific
+  patterns. If a repo URL is provided, use it. Otherwise infer the right repo from
+  context.
 ---
 
 # Research
 
-Clone the source. Read the real thing. Apply what you learn.
+Clone the source. Pull fresh. Implement from truth — not memory.
 
-## What this is for
+## Store
 
-Use this skill for external reference repositories — frameworks,
-libraries, tools, starter kits, or other source-of-truth implementations
-outside the current project.
+All repos live at `~/.research/<username>/<repo-name>/`.
 
-Do not use this workflow as the default way to understand the current
-repo. Stay in the project and analyze the existing code directly when the
-question is about what already exists here.
+```
+~/.research/
+  vercel/
+    next.js/
+  tailwindlabs/
+    tailwindcss/
+  facebook/
+    react/
+```
 
-## Why this exists
+This persists across sessions. Repos are never deleted automatically.
 
-Training knowledge has a cutoff and can be imprecise on specifics.
-Canonical repos do not have this problem. When implementing against a
-framework, library, or pattern that has a reference implementation,
-reading that implementation is more reliable than guessing from memory.
+## Repo Resolution
 
-This skill handles the mechanics: find the right repo, clone it to a
-temp directory, explore it with purpose, summarize findings, and leave
-the clone available for follow-up reference.
+**If the user provides a URL** — use it directly.
 
-## Workflow
+**If no URL is provided** — infer from context:
+- Identify the framework, library, or tool being implemented against
+- Find the canonical repo (official org, actively maintained, default branch)
+- If genuinely ambiguous between multiple repos, ask before cloning
 
-### 1. Identify what to clone
+## Core Workflow
 
-From the user's request or the task at hand, determine what external
-source needs to be researched. This could be:
-
-- a specific repo URL the user provides
-- the canonical source for a framework or library
-- multiple repos if the task benefits from comparing implementations
-
-If the URL is not provided, identify the canonical repo:
-
-- prefer the official org, not a fork
-- verify it is actively maintained
-- use the default branch unless a specific version is needed
-
-If there is any ambiguity about which repo is the right reference, ask
-the user before cloning.
-
-### 2. Check if already cloned
-
-Before cloning, check whether the repo already exists at the target path:
+### 1. Check what is already cloned
 
 ```bash
-ls /tmp/research/<task-slug>/<repo-name>/
+ls ~/.research/<username>/
 ```
 
-If it does, skip the clone and use what is there. The task slug should
-be descriptive enough to avoid collisions (for example `tailwind-v4-setup`,
-`svelte-routing`, or `spring-security-oauth`).
+If `~/.research/<username>/<repo-name>/` exists, skip to step 3.
 
-### 3. Clone to temp
+### 2. Clone
 
 ```bash
-git clone --depth 1 <repo-url> /tmp/research/<task-slug>/<repo-name>
+git clone <repo-url> ~/.research/<username>/<repo-name>/
 ```
 
-Always use `--depth 1`. Full history is not needed for reference reading
-and adds significant time and disk usage.
+Notify the user briefly:
+> Cloning `<username>/<repo-name>` for reference…
 
-Path structure:
+### 3. Pull latest
 
-```
-/tmp/research/
-  <task-slug>/
-    <repo-name>/       ← cloned here
-    <repo-name-2>/     ← additional repos if needed
-```
-
-### 4. Explore with purpose
-
-You are answering a specific question, not reading documentation for its
-own sake. Orient yourself first:
-
-- read the README
-- look at the directory structure (`ls -la`, `find . -name "*.md" | head -20`)
-- locate entry points, configuration files, and key modules relevant to the task
-
-Then go deep on the parts that answer the question. Trace patterns, read
-examples, and understand the conventions the project uses.
-
-Narrate what you are finding in chat as you go: what you read, what
-surprised you, and what applies directly to the task.
-
-### 5. Summarize and apply
-
-After exploring, summarize findings concretely:
-
-- what are the key patterns, conventions, or configurations?
-- what does the canonical implementation do that is non-obvious?
-- what should be applied to the current task, and how?
-
-Apply findings directly to the task at hand, or hand them off as a clear
-set of decisions for the user if choices need to be made.
-
-### 6. Leave the clone in place
-
-Do not delete the temp directory. The clone may be needed for follow-up
-questions or to verify details during implementation. Note the path in
-the summary so it can be referenced later:
-
-> Cloned to `/tmp/research/<task-slug>/<repo-name>` — available for
-> follow-up reference.
-
-If the user explicitly asks to clean up:
+Pull once per repo, the first time it is accessed in a task. Not on every file read.
 
 ```bash
-rm -rf /tmp/research/<task-slug>/
+git -C ~/.research/<username>/<repo-name> pull
 ```
+
+Notify the user briefly:
+> Pulling latest `<username>/<repo-name>`…
+
+If pull fails, note it briefly and continue with existing state.
+
+### 4. Read with purpose
+
+Orient first, then go deep on what the task needs:
+
+```bash
+cat ~/.research/<username>/<repo-name>/README.md
+ls -la ~/.research/<username>/<repo-name>/
+find ~/.research/<username>/<repo-name> -name "*.md" | head -20
+```
+
+Then read the specific files, modules, and examples directly relevant to the implementation.
+
+### 5. Implement
+
+Apply findings directly. Do not summarize or present findings unless the user explicitly asks.
 
 ## Rules
 
-- Always `--depth 1` — never clone full history unless the task
-  explicitly requires it
-- Never clone into the project directory — always use `/tmp/research/`
-- Check before cloning — do not re-clone if already present
-- Read with purpose — answer a specific question
-- Prefer official maintainer repos over forks or mirrors
-- Leave the clone in place unless asked to clean up
-- When the right repo is ambiguous, ask before cloning
+- **Inform, never ask** — say "Cloning…" or "Pulling latest…" then act immediately
+- **Pull once per repo per task** — not on every file read, not never
+- **Full clone only** — no `--depth 1`
+- **Never clone into the project directory** — always use `~/.research/`
+- **Never delete repos** — the store is persistent; cleanup is always a manual user action
+- **Implement, don't narrate** — the output of this skill is working code, not a report
+
+## Extensions
+
+See [references/list.md](references/list.md) for the `/research list` command.
+See [references/citations.md](references/citations.md) for presenting findings when the user asks.
