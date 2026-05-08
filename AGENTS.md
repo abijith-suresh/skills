@@ -114,7 +114,10 @@ npx skills@latest add abijith-suresh/skills/<skill-name>
    phrases
 4. Update the catalog table in the root `README.md`
 5. Update the badge count in the root `README.md`
-6. Add an entry to `CHANGELOG.md` under `[Unreleased]`
+6. Add an entry to `CHANGELOG.md` under `[Unreleased]`. If a `### Changed — YYYY-MM-DD`
+   section with today's date already exists, add the entry there instead of
+   creating a duplicate section. If it doesn't exist, create a new section
+   with `### Changed — YYYY-MM-DD`.
 7. Install the skill locally by replacing the whole directory at
    `~/.agents/skills/<skill-name>/`
 
@@ -122,7 +125,9 @@ npx skills@latest add abijith-suresh/skills/<skill-name>
 
 1. Edit `SKILL.md` (and any supporting files)
 2. If the description or trigger phrases changed, update `README.md`
-3. Add an entry to `CHANGELOG.md` under `[Unreleased]`
+3. Add an entry to `CHANGELOG.md` under `[Unreleased]`. If a
+   `### Changed — YYYY-MM-DD` section with today's date already exists,
+   add the entry there instead of creating a duplicate section.
 4. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
    so stale files are removed
 
