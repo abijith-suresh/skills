@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-05-08
 
+- `open-pr` skill: split into a routing shell (`SKILL.md`) with platform-specific workflows extracted into `references/github-workflow.md` and `references/gitlab-workflow.md`; GitLab flow now uses two-step push + manual description paste instead of push options; removed shared body template in favor of platform-specific ones
 - `research` skill: redesigned with a persistent `~/.research/` store (replaces per-task `/tmp/research/`), full clones instead of `--depth 1`, pull-once-per-task semantics, silent implementation mode, and new `references/list.md` and `references/citations.md` extensions
 
 ### Changed — 2026-05-04

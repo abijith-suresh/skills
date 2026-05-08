@@ -1,6 +1,6 @@
 # open-pr
 
-Push the current branch and open a pull request or merge request. Detects GitHub vs GitLab automatically and uses the right title and creation flow for each.
+Push the current branch and open a pull request on GitHub or merge request on GitLab. Detects the platform automatically and routes to the right workflow.
 
 ## Install
 
@@ -11,7 +11,7 @@ npx skills@latest add abijith-suresh/skills/open-pr
 ## Use
 
 - "open a PR"
-- "open an MR"
 - "create a PR"
+- "open an MR"
+- "create an MR"
 - "push and open a PR"
-- "submit for review"
