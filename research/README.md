@@ -1,6 +1,7 @@
 # research
 
-Clone external repositories into `/tmp/research/` and use them as source-of-truth reference material when implementing against a framework, library, or pattern.
+Clone and reference external repositories as source-of-truth from `~/.research/`
+when implementing against frameworks, libraries, or tools where memory alone is unreliable.
 
 ## Install
 
@@ -15,3 +16,4 @@ npx skills@latest add abijith-suresh/skills/research
 - "use [repo URL] as reference"
 - "clone [repo] for context"
 - "I need to understand how [library/framework] works before implementing"
+- "/research list" — list all cached repos

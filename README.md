@@ -34,5 +34,5 @@ Each skill folder has its own `README.md` with the install command and example p
 | [`tdd`](tdd/README.md) | Build features test-first with red-green-refactor. Language and framework agnostic. |
 | [`review`](review/README.md) | Review code changes and write a structured `REVIEW.md` using standard or story-aware review. |
 | [`improve`](improve/README.md) | Audit overall codebase health, write a prioritized `IMPROVE.md`, and then decide whether to fix issues. |
-| [`research`](research/README.md) | Clone external reference repos into `/tmp/research/` and read real implementations before building. |
+| [`research`](research/README.md) | Clone and reference external repositories as source-of-truth from `~/.research/` when implementing against frameworks, libraries, or tools. |
 | [`investigate`](investigate/README.md) | Analyze the current repo in a read-only way to understand stories, bug paths, and existing behavior. |
