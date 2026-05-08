@@ -30,7 +30,7 @@ Each skill folder has its own `README.md` with the install command and example p
 | --- | --- |
 | [`plan`](plan/README.md) | Explore the codebase first and produce a settled `PLAN.md` before writing any code. |
 | [`commit`](commit/README.md) | Inspect the diff, split changes by intent, and create clean conventional commits. |
-| [`open-pr`](open-pr/README.md) | Push the current branch and open a PR or MR with platform-specific title rules and a shared body format. |
+| [`open-pr`](open-pr/README.md) | Push the current branch and open a pull request on GitHub or merge request on GitLab. Detects the platform and routes to the right workflow. |
 | [`tdd`](tdd/README.md) | Build features test-first with red-green-refactor. Language and framework agnostic. |
 | [`review`](review/README.md) | Review code changes and write a structured `REVIEW.md` using standard or story-aware review. |
 | [`improve`](improve/README.md) | Audit overall codebase health, write a prioritized `IMPROVE.md`, and then decide whether to fix issues. |
