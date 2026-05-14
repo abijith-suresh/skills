@@ -1,32 +1,26 @@
 ---
 name: plan
 description: >-
-  Explore the relevant codebase state and produce a settled PLAN.md before
-  writing any code. Use when the user wants to plan a feature, think
-  through a change, or start something new. Triggers on: "create a plan",
-  "plan this out", "help me plan", "let's plan X", "I want to build X",
-  "help me think through this". Ask all open questions at once with
-  labeled options — never one question at a time.
+  Explore the codebase, ask all open questions at once with labeled
+  options, and present an implementation plan in chat before any code
+  is written. Only writes PLAN.md if the user explicitly asks for a
+  durable file. Use when the user says "plan", "make a plan", "plan this
+  out", "let's think through this", or "I want to build X".
+  Do NOT trigger when the user simply asks to "present a plan" or
+  "come up with a plan" — that means chat only, not a file.
 ---
 
 # Plan
 
-Explore first. Ask everything at once. Write last.
+## Understanding this skill
 
-## Philosophy
+This skill is for **planning** — exploring the codebase, asking questions,
+and presenting a plan **in chat**. It does NOT write to PLAN.md unless the
+user explicitly asks for a file. Presenting in chat is always the default.
 
-Inspect the current implementation before asking the user to decide
-anything the codebase can answer for you. The only exception: if the
-request is so ambiguous that you cannot tell which part of the repo to
-inspect, ask one focused clarifying question first.
-
-Once you understand the current state, identify every genuinely open
-decision and surface them all in one message — grouped by topic, each
-question with labeled options and a clear recommendation. Never drip
-questions one at a time. The user picks by letter or overrides with a
-free-form answer. Iterate only if first-round answers open new decisions.
-
-Do not modify any source files. Write only to PLAN.md at the end.
+> If the user says "present a plan", "tell me your plan", or "come up
+> with a plan", they mean chat only. Do not write a file unless they
+> explicitly say "write it to PLAN.md" or "save it to a file".
 
 ## Steps
 
@@ -44,14 +38,20 @@ Read relevant files. Grep for related symbols. Trace dependencies. Build
 an implementation-aware picture of the current state before asking the
 user to make design choices.
 
-Do not ask questions yet if the codebase can answer them.
+Do not ask questions yet if the codebase can answer them. Do not skip
+this step.
 
-### 3. Ask all open questions at once
+### 3. Ask all open questions at once (mandatory)
+
+**You MUST do this before presenting any plan or writing anything to a
+file.**
 
 After exploring, collect every decision that is still genuinely open.
-Group them by topic and present them in a single message:
+Group them by topic and present them in a single message with labeled
+options and a recommended choice for each. Never drip questions one at
+a time.
 
----
+```
 **[Topic name]**
 
 **Q1. [Question]**
@@ -63,19 +63,23 @@ Group them by topic and present them in a single message:
 - A) [Option] ← recommended
 - B) [Option]
 - C) Other — describe
----
+```
 
 Mark one option as recommended on each question. Base recommendations
 on what the codebase already does or what fits its patterns best. Only
 ask questions the codebase cannot answer.
 
 The user replies with letters or free text. If a question goes
-unanswered, use the recommended option and note it in PLAN.md.
+unanswered, use the recommended option and note it in the plan.
 
-### 4. Present the plan in chat
+If there are genuinely no open questions (everything is determined by
+the codebase or prior conversation), you may skip this step — but note
+in your presentation that there were no open decisions.
 
-Once all decisions are settled, present the full plan in chat using this
-structure:
+### 4. Present the plan in chat (not to a file)
+
+Once all decisions are settled, present the full plan **in chat**. Do not
+write to a file yet.
 
 ```
 # Plan: [Feature Name]
@@ -96,15 +100,18 @@ structure:
 regressions. Derived from what actually changed.]
 ```
 
-### 5. Ask whether to write PLAN.md
+### 5. Ask whether to persist to PLAN.md (do not skip)
 
 The plan is already in chat. PLAN.md is only needed when handing off to
-another agent or returning to the task later. Ask:
+another agent or returning to the task later.
+
+**Ask explicitly:**
 
 > Should I write this to PLAN.md? Only needed if you plan to hand off to
 > another agent.
 
 If the user says yes, write the plan to `PLAN.md` in the project root.
+If they say no, do not write it. If they do not answer, do not write it.
 
 ### 6. Confirm
 
@@ -112,10 +119,10 @@ After presenting (or writing): "Ready to start implementing, or anything to adju
 
 ## Rules
 
-- Never ask questions one at a time
+- **Never write PLAN.md without asking first.** Default is chat-only.
+- **Never present a plan without asking all open questions first.**
+  The only exception is when there are genuinely zero open decisions.
+- Never ask questions one at a time.
 - Never skip exploration unless the request is too ambiguous to identify
-  where to look
-- Never write PLAN.md until all decisions are resolved
-- Never modify source files during planning
-- Never write PLAN.md without asking first — display the plan in chat and
-  only write the file if the user confirms
+  where to look.
+- Never modify source files during planning.
