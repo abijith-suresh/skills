@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-05-14
+
+- `plan` skill: strengthened wording to prevent writing PLAN.md without
+  explicit user confirmation; made Step 3 (ask all open questions) mandatory
+  before presenting any plan; added warning about chat-only default; refined
+  description to not trigger on "present a plan" or "come up with a plan"
+  (those are chat-only)
+- `open-pr` skill: split into `open-pr` (GitHub-only) and `open-mr`
+  (GitLab-only); both skills now detect whether a PR/MR already exists for
+  the current branch and update it instead of creating a duplicate; removed
+  the routing shell and `references/` folder; `open-pr` uses `gh pr edit`
+  for updates, `open-mr` uses `glab mr update`
+
 ### Changed — 2026-05-08
 
 - `AGENTS.md`: clarified changelog guidance — when adding an entry under `[Unreleased]`, merge into an existing date section rather than creating a duplicate

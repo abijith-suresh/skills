@@ -1,7 +1,7 @@
 # Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 8](https://img.shields.io/badge/Skills-8-green.svg)](#skill-catalog)
+[![Skills: 9](https://img.shields.io/badge/Skills-9-green.svg)](#skill-catalog)
 
 Practical AI agent skills for planning, investigation, research, review,
 codebase improvement, clean commits, PRs, and TDD.
@@ -30,7 +30,8 @@ Each skill folder has its own `README.md` with the install command and example p
 | --- | --- |
 | [`plan`](plan/README.md) | Explore the codebase first and produce a settled `PLAN.md` before writing any code. |
 | [`commit`](commit/README.md) | Inspect the diff, split changes by intent, and create clean conventional commits. |
-| [`open-pr`](open-pr/README.md) | Push the current branch and open a pull request on GitHub or merge request on GitLab. Detects the platform and routes to the right workflow. |
+| [`open-pr`](open-pr/README.md) | Push the current branch and open or update a pull request on GitHub using the `gh` CLI. Detects if a PR already exists and updates it instead of creating a duplicate. |
+| [`open-mr`](open-mr/README.md) | Push the current branch and open or update a merge request on GitLab using the `glab` CLI. Detects if an MR already exists and updates it instead of creating a duplicate. |
 | [`tdd`](tdd/README.md) | Build features test-first with red-green-refactor. Language and framework agnostic. |
 | [`review`](review/README.md) | Review code changes and write a structured `REVIEW.md` using standard or story-aware review. |
 | [`improve`](improve/README.md) | Audit overall codebase health, write a prioritized `IMPROVE.md`, and then decide whether to fix issues. |
