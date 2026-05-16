@@ -39,21 +39,12 @@ gh pr list --head <branch-name> --state open --json number,url --jq '.[0] // emp
 
 ### 3. Run tests
 
-Detect the test setup from project files. For JavaScript/TypeScript projects, check
-lockfiles to determine the correct package manager before running the test script:
+Detect the test setup from project files:
 
-- `pnpm-lock.yaml` → `pnpm test`
-- `bun.lockb` → `bun test`
-- `yarn.lock` → `yarn test`
-- A `package.json` with a `test` script and no supported lockfile → `npm test`
-
-For other languages and build systems:
-
+- `package.json` with a `test` script → identify the test command and run it
 - `pytest.ini`, `pyproject.toml`, or `setup.py` → `pytest`
 - `Makefile` with a `test` target → `make test`
-
-If none of these apply → skip tests entirely; omit the Automated sub-section
-from the PR body.
+- If none found → skip tests entirely; omit the Automated sub-section from the PR body
 
 Run the detected command and capture the result (pass/fail, test count).
 
