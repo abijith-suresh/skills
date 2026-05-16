@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-05-16
+
+- `open-pr` skill: split into `open-pr` (create-only) and `update-pr` (update-only);
+  `open-pr` now stops with a pointer to `update-pr` if a PR already exists, adds
+  automated test-running before creation, and provides a structured PR body with
+  conditional sections; `update-pr` runs tests and regenerates title and body from
+  scratch on the existing PR
+- `README.md`: added `update-pr` to the catalog, bumped badge count to 10
+
 ### Changed — 2026-05-14
 
 - `plan` skill: strengthened wording to prevent writing PLAN.md without
