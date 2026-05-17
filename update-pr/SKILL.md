@@ -1,19 +1,21 @@
 ---
-name: open-pr
+name: update-pr
 description: >-
-  Push the current branch and open a new pull request on GitHub.
-  Use when asked to "open a PR" or "create a PR".
+  Regenerate and update an existing pull request's title and body on GitHub.
+  Use when asked to "update the PR" or "update the pull request".
 ---
 
-# Open PR
+# Update PR
 
-Push the current branch, run tests, and create a new pull request on GitHub.
+Run tests and update the title and body of the existing pull request for the current branch.
 
 ## Prerequisites
 
 - `git` must be available
 - `gh` CLI must be installed and authenticated — verify with `gh auth status`
 - If `gh` is missing: "gh CLI is required. Install it from https://cli.github.com/."
+- The current branch must already have an open PR on GitHub
+- Any new commits should already be pushed before invoking this skill
 
 ## Steps
 
@@ -22,29 +24,20 @@ Push the current branch, run tests, and create a new pull request on GitHub.
 ```bash
 git branch --show-current
 git remote show origin | grep "HEAD branch"
-git status --porcelain
 ```
 
-- If current branch is `main`, `master`, or the remote default branch — stop: "Cannot open a PR from the default branch. Switch to a feature branch first."
-- If `git status --porcelain` returns any output — stop: "Uncommitted changes detected. Commit or stash them before opening a PR."
+- If current branch is `main`, `master`, or the remote default branch — stop: "Cannot update a PR from the default branch. Switch to the correct feature branch first."
 
-### 2. Check for existing PR
+### 2. Detect existing PR
 
 ```bash
 gh pr list --head <branch-name> --state open --json number,url --jq '.[0] // empty'
 ```
 
-- If a PR is found — stop: "A PR already exists for this branch: <url>. Use update-pr to modify it."
+- If no PR is found — stop: "No open PR found for this branch. Use open-pr to create one."
+- If a PR is found — note the PR number and URL, proceed.
 
-### 3. Push the branch
-
-```bash
-git push -u origin <branch-name>
-```
-
-- If push fails — stop and show the exact error.
-
-### 4. Run tests
+### 3. Run tests
 
 Detect the test setup from project files:
 
@@ -55,9 +48,9 @@ Detect the test setup from project files:
 
 Run the detected command and capture the result (pass/fail, test count).
 
-- If tests fail — stop: "Tests failed. Fix the failures before opening a PR." Show the output.
+- If tests fail — stop: "Tests failed. Fix the failures before updating the PR." Show the output.
 
-### 5. Derive title and body
+### 4. Derive title and body
 
 Run the following to gather branch data:
 
@@ -75,22 +68,19 @@ type(scope?): summary
 
 Infer `type` from commit messages. Common types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`. Infer `scope` from the files changed if it adds clarity. Keep the summary under 72 characters.
 
-**Body** — follow the Output Format section below. Derive every field from the git data. Leave no unfilled placeholders.
+**Body** — follow the Output Format section below. Derive every field from the git data. Regenerate from scratch — do not fetch or preserve the existing PR body. Leave no unfilled placeholders.
 
-### 6. Create the PR
+### 5. Update the PR
 
 ```bash
-gh pr create \
+gh pr edit <number> \
   --title "<title>" \
-  --body "<body>" \
-  --assignee @me
+  --body "<body>"
 ```
 
-Only add `--reviewer <username>` if the user explicitly names a reviewer.
+### 6. Report
 
-### 7. Report
-
-Print the PR URL returned by `gh pr create`. Note any follow-up the user still needs to do manually.
+Print the PR URL and explicitly state that the existing PR was updated, not a new one created. Note any follow-up the user still needs to do manually.
 
 ---
 
@@ -133,8 +123,6 @@ Closes #[issue-number]
 |---|---|
 | `gh` CLI not installed | "gh CLI is required. Install it from https://cli.github.com/." |
 | Not authenticated | "gh CLI is not authenticated. Run gh auth login first." |
-| On default branch | "Cannot open a PR from the default branch. Switch to a feature branch first." |
-| Uncommitted changes | "Uncommitted changes detected. Commit or stash them before opening a PR." |
-| PR already exists | "A PR already exists for this branch: <url>. Use update-pr to modify it." |
-| Push failed | Show the exact git error and stop. |
-| Tests failed | "Tests failed. Fix the failures before opening a PR." Show test output. |
+| On default branch | "Cannot update a PR from the default branch. Switch to the correct feature branch first." |
+| No open PR found | "No open PR found for this branch. Use open-pr to create one." |
+| Tests failed | "Tests failed. Fix the failures before updating the PR." Show test output. |

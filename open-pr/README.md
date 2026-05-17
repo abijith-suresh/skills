@@ -1,6 +1,6 @@
 # open-pr
 
-Push the current branch and open a pull request on GitHub or merge request on GitLab. Detects the platform automatically and routes to the right workflow.
+Push the current branch and open a new pull request on GitHub using the `gh` CLI.
 
 ## Install
 
@@ -12,6 +12,5 @@ npx skills@latest add abijith-suresh/skills/open-pr
 
 - "open a PR"
 - "create a PR"
-- "open an MR"
-- "create an MR"
-- "push and open a PR"
+
+Requires the [GitHub CLI (`gh`)](https://cli.github.com/) to be installed and authenticated.
