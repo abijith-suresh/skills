@@ -1,0 +1,100 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+
+import CommandCopy from '../components/CommandCopy.astro';
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { buildSkillSummaries } from '../lib/skill-catalog';
+import { buildCatalogPath } from '../lib/site-paths';
+
+export async function getStaticPaths() {
+  const definitions = await getCollection('skillDefinitions');
+
+  return definitions.map((definition) => ({
+    params: { skill: definition.id },
+  }));
+}
+
+const slug = Astro.params.skill;
+if (!slug) {
+  throw new Error('Expected a skill slug.');
+}
+
+const definition = await getEntry('skillDefinitions', slug);
+if (!definition) {
+  throw new Error(`Missing skill definition for ${slug}.`);
+}
+
+const readme = await getEntry('skillReadmes', slug);
+const [summary] = buildSkillSummaries([definition]);
+const { Content: DefinitionContent } = await render(definition);
+const readmeRender = readme ? await render(readme) : null;
+const ReadmeContent = readmeRender?.Content;
+const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
+---
+
+<SiteLayout title={`${summary.name} | Skills`} description={summary.description}>
+  <div class="flex flex-wrap items-center justify-between gap-4">
+    <a href={catalogPath} class="inline-flex items-center gap-2 text-sm font-medium text-slate-300 transition hover:text-white">
+      <span aria-hidden="true">←</span>
+      Back to all skills
+    </a>
+
+    <a
+      href={summary.sourceUrl}
+      target="_blank"
+      rel="noreferrer"
+      class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900/70 px-4 py-2 text-sm text-slate-200 transition hover:border-slate-500 hover:text-white"
+    >
+      View source ↗
+    </a>
+  </div>
+
+  <section class="mt-6 rounded-[2rem] border border-slate-800/80 bg-slate-900/70 p-8 shadow-2xl shadow-slate-950/30 backdrop-blur md:p-10">
+    <p class="text-sm font-semibold uppercase tracking-[0.28em] text-indigo-300">{summary.slug}</p>
+    <h1 class="mt-4 text-4xl font-semibold tracking-tight text-white md:text-5xl">{summary.name}</h1>
+    <p class="mt-5 max-w-3xl text-base leading-8 text-slate-300 md:text-lg">{summary.description}</p>
+
+    <div class="mt-8 grid gap-4 lg:grid-cols-[minmax(0,1fr)_14rem] lg:items-end">
+      <CommandCopy
+        command={summary.installCommand}
+        caption="Install this skill"
+        buttonLabel="Copy install"
+      />
+
+      <div class="rounded-2xl border border-slate-800 bg-slate-950/55 p-4 text-sm text-slate-300">
+        <p class="font-medium text-white">Compatible with skills.sh installs</p>
+        <p class="mt-2 leading-7 text-slate-400">
+          The detail page keeps the install command close to the skill docs so it is easy to review before copying.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mt-8 grid gap-6 xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+    <article class="rounded-[2rem] border border-slate-800/80 bg-slate-900/70 p-6 shadow-lg shadow-slate-950/25 backdrop-blur md:p-8">
+      <div class="mb-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">README</p>
+        <h2 class="mt-3 text-2xl font-semibold text-white">Usage, install, and prompts</h2>
+      </div>
+
+      {ReadmeContent ? (
+        <div class="markdown">
+          <ReadmeContent />
+        </div>
+      ) : (
+        <p class="text-sm leading-7 text-slate-300">This skill does not currently include a README.</p>
+      )}
+    </article>
+
+    <article class="rounded-[2rem] border border-slate-800/80 bg-slate-900/70 p-6 shadow-lg shadow-slate-950/25 backdrop-blur md:p-8">
+      <div class="mb-6">
+        <p class="text-xs font-semibold uppercase tracking-[0.24em] text-slate-400">SKILL.md</p>
+        <h2 class="mt-3 text-2xl font-semibold text-white">Definition read by the agent</h2>
+      </div>
+
+      <div class="markdown">
+        <DefinitionContent />
+      </div>
+    </article>
+  </section>
+</SiteLayout>

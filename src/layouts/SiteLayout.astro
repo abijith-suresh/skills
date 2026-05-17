@@ -1,0 +1,51 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230f172a'/%3E%3Cpath d='M18 24h28v4H18zm0 12h18v4H18z' fill='%23a5b4fc'/%3E%3C/svg%3E" />
+    <title>{title}</title>
+  </head>
+  <body class="text-slate-100 antialiased">
+    <main class="mx-auto min-h-screen w-full max-w-7xl px-6 py-8 md:px-10 md:py-10">
+      <slot />
+    </main>
+
+    <script is:inline>
+      document.addEventListener('click', async (event) => {
+        const target = event.target instanceof Element ? event.target.closest('[data-copy-command]') : null;
+        if (!target) return;
+
+        const command = target.getAttribute('data-copy-command');
+        if (!command) return;
+
+        try {
+          await navigator.clipboard.writeText(command);
+        } catch {
+          window.prompt('Copy this command:', command);
+          return;
+        }
+
+        const defaultLabel = target.getAttribute('data-copy-default') ?? 'Copy';
+        target.textContent = 'Copied';
+        window.clearTimeout(Number(target.getAttribute('data-copy-timeout') || '0'));
+        const timeout = window.setTimeout(() => {
+          target.textContent = defaultLabel;
+        }, 1600);
+        target.setAttribute('data-copy-timeout', String(timeout));
+      });
+    </script>
+  </body>
+</html>
