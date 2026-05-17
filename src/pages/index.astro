@@ -49,8 +49,8 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
   </section>
 
   <section class="site-container mt-24 pb-24">
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6 items-stretch">
-      <div class="lg:col-span-12">
+    <div class="grid grid-cols-1 gap-4 items-stretch">
+      <div>
         <SectionHeader
           eyebrow="Collection"
           heading="Available skills"
@@ -60,7 +60,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 
       {
         skills.map((skill) => (
-          <div class="lg:col-span-4 h-full">
+          <div class="h-full">
             <SkillCard skill={skill} />
           </div>
         ))
