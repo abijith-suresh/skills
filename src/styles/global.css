@@ -176,7 +176,7 @@ body {
   flex: 1 1 auto;
   min-width: 0;
   gap: 0.5rem;
-  background: color-mix(in srgb, var(--text) 5%, transparent);
+  background: color-mix(in srgb, var(--text) 5%, var(--base));
   padding: 0.875rem 0 0.875rem 1rem;
   overflow: hidden;
 }
