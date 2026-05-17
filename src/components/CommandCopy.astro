@@ -1,25 +1,21 @@
 ---
 interface Props {
   command: string;
-  caption?: string;
   buttonLabel?: string;
 }
 
-const { command, caption, buttonLabel = 'Copy' } = Astro.props;
+const { command, buttonLabel = 'Copy' } = Astro.props;
 ---
 
-<div>
-  {caption && <p class="eyebrow mb-3">{caption}</p>}
-
-  <div class="flex flex-col gap-3 lg:flex-row lg:items-stretch">
-    <div class="code-block">{command}</div>
-    <button
-      type="button"
-      data-copy-command={command}
-      data-copy-default={buttonLabel}
-      class="btn shrink-0"
-    >
-      {buttonLabel}
-    </button>
-  </div>
+<div class="install-block">
+  <span class="install-prompt" aria-hidden="true">$</span>
+  <code class="install-command">{command}</code>
+  <button
+    type="button"
+    data-copy-command={command}
+    data-copy-default={buttonLabel}
+    class="install-copy"
+  >
+    {buttonLabel}
+  </button>
 </div>
