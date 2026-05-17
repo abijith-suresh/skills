@@ -49,3 +49,30 @@ export function findSkillSummary(
 ): SkillSummary | undefined {
   return summaries.find((summary) => summary.slug === slug);
 }
+
+export function parseReadmeBody(body: string): {
+  name: string;
+  description: string;
+} {
+  const lines = body.split('\n');
+  let name = '';
+  const descParts: string[] = [];
+  let afterH1 = false;
+
+  for (const line of lines) {
+    if (line.startsWith('# ')) {
+      name = line.replace(/^# /, '').trim();
+      afterH1 = true;
+      continue;
+    }
+    if (afterH1) {
+      if (line.startsWith('## ') || line.trim() === '') {
+        if (descParts.length > 0) break;
+        continue;
+      }
+      descParts.push(line.trim());
+    }
+  }
+
+  return { name, description: descParts.join(' ') };
+}

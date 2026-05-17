@@ -6,7 +6,10 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import DocSection from '../components/DocSection.astro';
 import PageHero from '../components/PageHero.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { buildSkillSummaries } from '../lib/skill-catalog';
+import {
+  buildSkillSummaries,
+  parseReadmeBody,
+} from '../lib/skill-catalog';
 import { buildCatalogPath } from '../lib/site-paths';
 
 export async function getStaticPaths() {
@@ -27,15 +30,22 @@ if (!definition) {
   throw new Error(`Missing skill definition for ${slug}.`);
 }
 
-const readme = await getEntry('skillReadmes', slug);
+const readmeEntry = await getEntry('skillReadmes', slug);
 const [summary] = buildSkillSummaries([definition]);
+
+// Parse hero info from README body, fall back to SKILL.md frontmatter
+const readmeBody = readmeEntry?.body ?? '';
+const { name: heroName, description: heroDescription } = readmeBody
+  ? parseReadmeBody(readmeBody)
+  : { name: summary.name, description: summary.description };
+
 const { Content: DefinitionContent } = await render(definition);
-const readmeRender = readme ? await render(readme) : null;
+const readmeRender = readmeEntry ? await render(readmeEntry) : null;
 const ReadmeContent = readmeRender?.Content;
 const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
 ---
 
-<SiteLayout title={`${summary.name} | Skills`} description={summary.description}>
+<SiteLayout title={`${heroName} | Skills`} description={heroDescription}>
   <div class="site-container pt-8 pb-4">
     <Breadcrumb
       crumbs={[
@@ -46,8 +56,8 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
   </div>
 
   <PageHero
-    title={summary.name}
-    description={summary.description}
+    title={heroName}
+    description={heroDescription}
     sectionClass="pt-8 pb-16"
     titleClass="max-w-4xl"
     descriptionClass="max-w-3xl"
@@ -68,7 +78,7 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
   <section class="site-container pt-16 pb-24">
     <div class="max-w-4xl">
       <DocSection
-        eyebrow="README"
+        eyebrow="Documentation"
         heading="Usage, install, and prompts"
         fallbackText="This skill does not currently include a README."
         hasContent={!!ReadmeContent}
@@ -79,7 +89,7 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
       <div class="mt-16">
         <DocSection
           eyebrow="SKILL.md"
-          heading="Definition read by the agent"
+          heading="Instructions read by the agent"
         >
           <DefinitionContent />
         </DocSection>

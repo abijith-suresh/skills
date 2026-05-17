@@ -339,8 +339,8 @@ body {
 
 .markdown pre {
   overflow-x: auto;
-  background: color-mix(in srgb, var(--text) 5%, transparent);
   padding: 1rem;
+  /* background intentionally removed — Shiki handles it via inline style */
 }
 
 .markdown pre code {

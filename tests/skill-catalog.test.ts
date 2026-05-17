@@ -4,6 +4,7 @@ import {
   buildInstallCommand,
   buildSkillSummaries,
   directorySlugFromEntry,
+  parseReadmeBody,
 } from '../src/lib/skill-catalog';
 
 describe('directorySlugFromEntry', () => {
@@ -61,5 +62,47 @@ describe('buildSkillSummaries', () => {
         sourceUrl: 'https://github.com/abijith-suresh/skills/tree/main/skills/review',
       },
     ]);
+  });
+});
+
+describe('parseReadmeBody', () => {
+  it('extracts the h1 and first paragraph from a README', () => {
+    const body = `# commit
+
+Inspect the diff, split by intent, and create clean conventional commits.
+Requires ticket scope for GitLab/work repos.
+
+## Install
+
+\`\`\`bash
+npx skills add abijith-suresh/skills --skill commit
+\`\`\`
+`;
+
+    expect(parseReadmeBody(body)).toEqual({
+      name: 'commit',
+      description:
+        'Inspect the diff, split by intent, and create clean conventional commits. Requires ticket scope for GitLab/work repos.',
+    });
+  });
+
+  it('returns empty strings when body is empty', () => {
+    expect(parseReadmeBody('')).toEqual({ name: '', description: '' });
+  });
+
+  it('stops description collection at the next heading', () => {
+    const body = `# review
+
+Review code changes.
+
+## Usage
+
+Do the thing.
+`;
+
+    expect(parseReadmeBody(body)).toEqual({
+      name: 'review',
+      description: 'Review code changes.',
+    });
   });
 });
