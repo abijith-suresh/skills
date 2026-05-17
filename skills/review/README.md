@@ -3,11 +3,6 @@
 Review code changes and write a structured REVIEW.md. Supports standard
 diff review and story-aware review.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill review
-```
 
 ## Use
 

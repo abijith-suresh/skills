@@ -4,11 +4,6 @@ Holistic codebase health audit for codebases developed with fast agentic
 iteration. Surfaces accumulated technical debt, produces a prioritized
 IMPROVE.md, and heals issues incrementally.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill improve
-```
 
 ## Use
 

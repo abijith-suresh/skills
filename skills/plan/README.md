@@ -3,11 +3,6 @@
 Explore the relevant codebase state and produce a settled PLAN.md
 before writing any code.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill plan
-```
 
 ## Use
 

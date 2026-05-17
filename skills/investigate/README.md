@@ -4,11 +4,6 @@ Analyze the current repository in a read-only way before deciding what
 to change. Useful for tracing stories, bug paths, and existing
 implementations.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill investigate
-```
 
 ## Use
 

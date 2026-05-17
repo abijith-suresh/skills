@@ -4,11 +4,6 @@ Clone and reference external repositories as source-of-truth when
 implementing against frameworks, libraries, or tools where memory alone
 is unreliable.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill research
-```
 
 ## Use
 

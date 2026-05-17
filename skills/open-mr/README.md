@@ -4,11 +4,6 @@ Push the current branch and open or update a merge request on GitLab
 using the `glab` CLI. Detects if an MR already exists for the current
 branch and updates it instead of creating a duplicate.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill open-mr
-```
 
 ## Use
 

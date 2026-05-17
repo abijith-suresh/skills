@@ -3,11 +3,6 @@
 Regenerate and update an existing pull request's title and body on
 GitHub using the `gh` CLI.
 
-## Install
-
-```bash
-npx skills add abijith-suresh/skills --skill update-pr
-```
 
 ## Use
 
