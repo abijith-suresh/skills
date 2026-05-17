@@ -7,14 +7,16 @@ interface Props {
 const { command, buttonLabel = 'Copy' } = Astro.props;
 ---
 
-<div class="install-block">
-  <span class="install-prompt" aria-hidden="true">$</span>
-  <code class="install-command">{command}</code>
+<div class="flex flex-col gap-3 lg:flex-row lg:items-stretch">
+  <div class="install-code-block">
+    <span class="install-prompt" aria-hidden="true">$</span>
+    <code>{command}</code>
+  </div>
   <button
     type="button"
     data-copy-command={command}
     data-copy-default={buttonLabel}
-    class="install-copy"
+    class="btn shrink-0"
   >
     {buttonLabel}
   </button>
