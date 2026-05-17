@@ -12,7 +12,8 @@ import {
 } from '../lib/skill-catalog';
 
 const definitions = await getCollection('skillDefinitions');
-const skills = buildSkillSummaries(definitions);
+const readmes = await getCollection('skillReadmes');
+const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY, readmes);
 const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 ---
 

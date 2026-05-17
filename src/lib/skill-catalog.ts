@@ -28,18 +28,33 @@ export function buildInstallCommand(repository: string, skillSlug?: string): str
   return `npx skills add ${repository} --skill ${skillSlug}`;
 }
 
+export interface ReadmeLike {
+  id: string;
+  body: string;
+}
+
 export function buildSkillSummaries(
   definitions: SkillDefinitionLike[],
   repository = SKILLS_REPOSITORY,
+  readmes?: ReadmeLike[],
 ): SkillSummary[] {
+  const readmeMap = new Map(readmes?.map((r) => [r.id, r]) ?? []);
+
   return definitions
-    .map((definition) => ({
-      slug: definition.id,
-      name: definition.data.name,
-      description: definition.data.description,
-      installCommand: buildInstallCommand(repository, definition.id),
-      sourceUrl: `https://github.com/${repository}/tree/main/skills/${definition.id}`,
-    }))
+    .map((definition) => {
+      const readme = readmeMap.get(definition.id);
+      const { name, description } = readme?.body
+        ? parseReadmeBody(readme.body)
+        : { name: definition.data.name, description: definition.data.description };
+
+      return {
+        slug: definition.id,
+        name,
+        description,
+        installCommand: buildInstallCommand(repository, definition.id),
+        sourceUrl: `https://github.com/${repository}/tree/main/skills/${definition.id}`,
+      };
+    })
     .sort((left, right) => left.name.localeCompare(right.name));
 }
 
