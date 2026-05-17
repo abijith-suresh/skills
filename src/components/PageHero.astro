@@ -1,6 +1,6 @@
 ---
 interface Props {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description: string;
   /** Override the default section padding classes */
@@ -22,7 +22,7 @@ const {
 ---
 
 <section class={`site-container ${sectionClass}`}>
-  <p class="eyebrow">{eyebrow}</p>
+  {eyebrow && <p class="eyebrow">{eyebrow}</p>}
   <h1 class={`heading-xl mt-4 ${titleClass}`}>{title}</h1>
   <p class={`body-copy mt-6 ${descriptionClass}`}>{description}</p>
 

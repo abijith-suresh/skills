@@ -39,14 +39,13 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
   <div class="site-container pt-8 pb-4">
     <Breadcrumb
       crumbs={[
-        { label: 'abijith-suresh/skills', href: catalogPath },
+        { label: 'skills', href: catalogPath },
         { label: slug },
       ]}
     />
   </div>
 
   <PageHero
-    eyebrow={summary.slug}
     title={summary.name}
     description={summary.description}
     sectionClass="pt-8 pb-16"
