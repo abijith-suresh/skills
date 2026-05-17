@@ -21,67 +21,52 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 >
   <section class="site-container pt-16 pb-8">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-6">
-      <div class="lg:col-span-4">
-        <p class="eyebrow">abijith-suresh/skills</p>
-      </div>
-
-      <div class="lg:col-span-4 lg:col-start-9">
-        <div class="flex gap-8">
-          <div>
-            <p class="eyebrow">Skills</p>
-            <p class="heading-md mt-2">{skills.length}</p>
-          </div>
-          <div>
-            <p class="eyebrow">Hosted for</p>
-            <p class="body-sm mt-2 font-medium">GitHub Pages</p>
-          </div>
-        </div>
-      </div>
-
+      <!-- Row 1: eyebrow above heading -->
       <div class="lg:col-span-8">
-        <h1 class="heading-xl mt-2 lg:mt-0">
+        <p class="eyebrow">abijith-suresh/skills</p>
+        <h1 class="heading-xl mt-4">
           Personal AI agent skills, documented and ready to install.
         </h1>
       </div>
 
+      <!-- Row 2: description -->
       <div class="lg:col-span-6">
-        <p class="body-copy mt-6">
-          This site is a lightweight catalog for the skills I refine in personal
-          projects and then reuse everywhere else. Browse the collection, inspect
-          each skill, and copy the latest install command straight into any
-          machine where you want the same workflow.
+        <p class="body-copy">
+          A lightweight catalog of AI agent skills I reuse across projects.
+          Browse, inspect, and install on any machine.
         </p>
       </div>
 
-      <div class="lg:col-span-8 lg:mt-8">
-        <CommandCopy
-          command={installEverythingCommand}
-          caption="Install the full collection"
-          buttonLabel="Copy all"
-        />
-      </div>
-
-      <div class="lg:col-span-3 lg:col-start-10 flex items-end lg:mt-8">
-        <a
-          href="https://github.com/abijith-suresh/skills"
-          target="_blank"
-          rel="noreferrer"
-          class="btn w-full justify-center"
-        >
-          View repository ↗
-        </a>
+      <!-- Row 3: action row with equal-height copy + view -->
+      <div class="lg:col-span-12 lg:mt-6">
+        <p class="eyebrow mb-3">Install the full collection</p>
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+          <div class="flex-1 min-w-0">
+            <CommandCopy
+              command={installEverythingCommand}
+              buttonLabel="Copy"
+            />
+          </div>
+          <a
+            href="https://github.com/abijith-suresh/skills"
+            target="_blank"
+            rel="noreferrer"
+            class="btn justify-center"
+          >
+            View repository ↗
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="site-container mt-24 pb-24">
-    <div class="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6 items-stretch">
       <div class="lg:col-span-12">
         <p class="eyebrow">Collection</p>
         <h2 class="heading-lg mt-3">Available skills</h2>
         <p class="body-sm mt-2 max-w-xl">
-          Each card links to a skill detail page and exposes a copy-ready install
-          command.
+          Click any card to view the skill's full documentation and install command.
         </p>
       </div>
 

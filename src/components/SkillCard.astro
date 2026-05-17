@@ -1,7 +1,6 @@
 ---
 import type { SkillSummary } from '../lib/skill-catalog';
 import { buildSkillPath } from '../lib/site-paths';
-import CommandCopy from './CommandCopy.astro';
 
 interface Props {
   skill: SkillSummary;
@@ -11,25 +10,18 @@ const { skill } = Astro.props;
 const detailPath = buildSkillPath(import.meta.env.BASE_URL, skill.slug);
 ---
 
-<article class="card h-full accent-hover">
+<a
+  href={detailPath}
+  class="card h-full accent-hover flex flex-col no-underline"
+  style="color: inherit;"
+>
   <div class="flex items-start justify-between gap-4">
     <div class="min-w-0">
       <p class="eyebrow">skill</p>
-      <h2 class="heading-md mt-2">
-        <a href={detailPath}>{skill.name}</a>
-      </h2>
+      <h2 class="heading-md mt-2">{skill.name}</h2>
     </div>
     <span class="eyebrow shrink-0">{skill.slug}</span>
   </div>
 
   <p class="body-sm mt-4">{skill.description}</p>
-
-  <div class="mt-6">
-    <CommandCopy command={skill.installCommand} buttonLabel="Copy" />
-  </div>
-
-  <div class="mt-6 flex flex-wrap items-center gap-6">
-    <a href={detailPath} class="link body-sm font-medium">Read docs →</a>
-    <a href={skill.sourceUrl} target="_blank" rel="noreferrer" class="link body-sm">View source ↗</a>
-  </div>
-</article>
+</a>
