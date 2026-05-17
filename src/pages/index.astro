@@ -1,7 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 
-import CommandCopy from '../components/CommandCopy.astro';
+import ActionBar from '../components/ActionBar.astro';
+import SectionHeader from '../components/SectionHeader.astro';
 import SkillCard from '../components/SkillCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import {
@@ -21,7 +22,6 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 >
   <section class="site-container pt-16 pb-8">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-6">
-      <!-- Row 1: eyebrow above heading -->
       <div class="lg:col-span-8">
         <p class="eyebrow">abijith-suresh/skills</p>
         <h1 class="heading-xl mt-4">
@@ -29,7 +29,6 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
         </h1>
       </div>
 
-      <!-- Row 2: description -->
       <div class="lg:col-span-6">
         <p class="body-copy">
           A lightweight catalog of AI agent skills I reuse across projects.
@@ -37,25 +36,14 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
         </p>
       </div>
 
-      <!-- Row 3: action row with equal-height copy + view -->
       <div class="lg:col-span-12 lg:mt-6">
         <p class="eyebrow mb-3">Install the full collection</p>
-        <div class="flex flex-col gap-4 lg:flex-row lg:items-stretch">
-          <div class="flex-1 min-w-0">
-            <CommandCopy
-              command={installEverythingCommand}
-              buttonLabel="Copy"
-            />
-          </div>
-          <a
-            href="https://github.com/abijith-suresh/skills"
-            target="_blank"
-            rel="noreferrer"
-            class="btn justify-center"
-          >
-            View repository ↗
-          </a>
-        </div>
+        <ActionBar
+          command={installEverythingCommand}
+          buttonLabel="Copy"
+          href="https://github.com/abijith-suresh/skills"
+          linkLabel="View repository ↗"
+        />
       </div>
     </div>
   </section>
@@ -63,11 +51,11 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
   <section class="site-container mt-24 pb-24">
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-12 lg:gap-6 items-stretch">
       <div class="lg:col-span-12">
-        <p class="eyebrow">Collection</p>
-        <h2 class="heading-lg mt-3">Available skills</h2>
-        <p class="body-sm mt-2 max-w-xl">
-          Click any card to view the skill's full documentation and install command.
-        </p>
+        <SectionHeader
+          eyebrow="Collection"
+          heading="Available skills"
+          description="Click any card to view the skill's full documentation and install command."
+        />
       </div>
 
       {

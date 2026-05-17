@@ -1,7 +1,9 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 
-import CommandCopy from '../components/CommandCopy.astro';
+import ActionBar from '../components/ActionBar.astro';
+import DocSection from '../components/DocSection.astro';
+import PageHero from '../components/PageHero.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { buildSkillSummaries } from '../lib/skill-catalog';
 import { buildCatalogPath } from '../lib/site-paths';
@@ -33,72 +35,49 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
 ---
 
 <SiteLayout title={`${summary.name} | Skills`} description={summary.description}>
-  <!-- Navigation -->
   <div class="site-container pt-8 pb-4">
     <a href={catalogPath} class="nav-pill">← Back to all skills</a>
   </div>
 
-  <!-- Hero -->
-  <section class="site-container pt-8 pb-16">
-    <p class="eyebrow">{summary.slug}</p>
-    <h1 class="heading-xl mt-4 max-w-4xl">{summary.name}</h1>
-    <p class="body-copy mt-6 max-w-3xl">{summary.description}</p>
-
-    <!-- Action bar: install + view source, equal height -->
-    <div class="mt-8">
+  <PageHero
+    eyebrow={summary.slug}
+    title={summary.name}
+    description={summary.description}
+    sectionClass="pt-8 pb-16"
+    titleClass="max-w-4xl"
+    descriptionClass="max-w-3xl"
+  >
+    <div slot="actions">
       <p class="eyebrow mb-3">Install this skill</p>
-      <div class="flex flex-col gap-4 lg:flex-row lg:items-stretch">
-        <div class="flex-1 min-w-0">
-          <CommandCopy
-            command={summary.installCommand}
-            buttonLabel="Copy"
-          />
-        </div>
-        <a
-          href={summary.sourceUrl}
-          target="_blank"
-          rel="noreferrer"
-          class="btn justify-center"
-        >
-          View source ↗
-        </a>
-      </div>
+      <ActionBar
+        command={summary.installCommand}
+        buttonLabel="Copy"
+        href={summary.sourceUrl}
+        linkLabel="View source ↗"
+      />
     </div>
-  </section>
+  </PageHero>
 
   <hr class="site-container !border-t !border-t-[color-mix(in_srgb,var(--text)_12%,transparent)]" />
 
-  <!-- Content: README then SKILL.md (stacked vertically) -->
   <section class="site-container pt-16 pb-24">
     <div class="max-w-4xl">
-      <!-- README -->
-      <div>
-        <p class="eyebrow">README</p>
-        <h2 class="heading-md mt-3">Usage, install, and prompts</h2>
-        <div class="card mt-6">
-          {
-            ReadmeContent ? (
-              <div class="markdown">
-                <ReadmeContent />
-              </div>
-            ) : (
-              <p class="body-sm">
-                This skill does not currently include a README.
-              </p>
-            )
-          }
-        </div>
-      </div>
+      <DocSection
+        eyebrow="README"
+        heading="Usage, install, and prompts"
+        fallbackText="This skill does not currently include a README."
+        hasContent={!!ReadmeContent}
+      >
+        {ReadmeContent && <ReadmeContent />}
+      </DocSection>
 
-      <!-- SKILL.md -->
       <div class="mt-16">
-        <p class="eyebrow">SKILL.md</p>
-        <h2 class="heading-md mt-3">Definition read by the agent</h2>
-        <div class="card mt-6">
-          <div class="markdown">
-            <DefinitionContent />
-          </div>
-        </div>
+        <DocSection
+          eyebrow="SKILL.md"
+          heading="Definition read by the agent"
+        >
+          <DefinitionContent />
+        </DocSection>
       </div>
     </div>
   </section>

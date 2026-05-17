@@ -1,0 +1,26 @@
+---
+import CommandCopy from './CommandCopy.astro';
+
+interface Props {
+  command: string;
+  buttonLabel: string;
+  href: string;
+  linkLabel: string;
+}
+
+const { command, buttonLabel, href, linkLabel } = Astro.props;
+---
+
+<div class="flex flex-col gap-4 lg:flex-row lg:items-stretch">
+  <div class="flex-1 min-w-0">
+    <CommandCopy command={command} buttonLabel={buttonLabel} />
+  </div>
+  <a
+    href={href}
+    target="_blank"
+    rel="noreferrer"
+    class="btn justify-center"
+  >
+    {linkLabel}
+  </a>
+</div>

@@ -1,0 +1,32 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  description: string;
+  /** Override the default section padding classes */
+  sectionClass?: string;
+  /** Override the default title class */
+  titleClass?: string;
+  /** Override the default description class */
+  descriptionClass?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  sectionClass = 'pt-16 pb-8',
+  titleClass = '',
+  descriptionClass = '',
+} = Astro.props;
+---
+
+<section class={`site-container ${sectionClass}`}>
+  <p class="eyebrow">{eyebrow}</p>
+  <h1 class={`heading-xl mt-4 ${titleClass}`}>{title}</h1>
+  <p class={`body-copy mt-6 ${descriptionClass}`}>{description}</p>
+
+  <div class="mt-8">
+    <slot name="actions" />
+  </div>
+</section>
