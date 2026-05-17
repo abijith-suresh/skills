@@ -5,7 +5,7 @@ Explore the relevant codebase state and produce a settled PLAN.md before writing
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/plan
+npx skills add abijith-suresh/skills --skill plan
 ```
 
 ## Use

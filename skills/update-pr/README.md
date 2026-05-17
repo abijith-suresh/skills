@@ -5,7 +5,7 @@ Regenerate and update an existing pull request's title and body on GitHub using 
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/update-pr
+npx skills add abijith-suresh/skills --skill update-pr
 ```
 
 ## Use

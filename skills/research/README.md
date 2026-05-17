@@ -6,7 +6,7 @@ when implementing against frameworks, libraries, or tools where memory alone is 
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/research
+npx skills add abijith-suresh/skills --skill research
 ```
 
 ## Use

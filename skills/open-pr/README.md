@@ -5,7 +5,7 @@ Push the current branch and open a new pull request on GitHub using the `gh` CLI
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/open-pr
+npx skills add abijith-suresh/skills --skill open-pr
 ```
 
 ## Use

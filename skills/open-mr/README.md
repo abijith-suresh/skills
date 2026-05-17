@@ -5,7 +5,7 @@ Push the current branch and open or update a merge request on GitLab using the `
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/open-mr
+npx skills add abijith-suresh/skills --skill open-mr
 ```
 
 ## Use

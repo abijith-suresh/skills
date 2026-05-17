@@ -5,7 +5,7 @@ Inspect the diff, split by intent, and create clean conventional commits. Requir
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/commit
+npx skills add abijith-suresh/skills --skill commit
 ```
 
 ## Use

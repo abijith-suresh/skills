@@ -5,7 +5,7 @@ Review code changes and write a structured REVIEW.md. Supports standard diff rev
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/review
+npx skills add abijith-suresh/skills --skill review
 ```
 
 ## Use

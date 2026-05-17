@@ -5,7 +5,7 @@ Holistic codebase health audit for codebases developed with fast agentic iterati
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/improve
+npx skills add abijith-suresh/skills --skill improve
 ```
 
 ## Use

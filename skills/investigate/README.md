@@ -5,7 +5,7 @@ Analyze the current repository in a read-only way before deciding what to change
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/investigate
+npx skills add abijith-suresh/skills --skill investigate
 ```
 
 ## Use

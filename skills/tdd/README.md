@@ -5,7 +5,7 @@ Build features test-first using red-green-refactor. One failing test, minimal co
 ## Install
 
 ```bash
-npx skills@latest add abijith-suresh/skills/tdd
+npx skills add abijith-suresh/skills --skill tdd
 ```
 
 ## Use
