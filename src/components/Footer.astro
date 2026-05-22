@@ -1,0 +1,25 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="mt-auto" style="border-top: 1px solid var(--color-border);">
+  <div class="site-container py-8">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
+        <a
+          href="https://github.com/abijith-suresh/skills"
+          target="_blank"
+          rel="noreferrer"
+          class="footer-link"
+        >
+          GitHub
+          <span class="footer-link-arrow-external" aria-hidden="true">↗</span>
+        </a>
+      </div>
+
+      <p class="eyebrow">
+        &copy; {currentYear} Abijith Suresh
+      </p>
+    </div>
+  </div>
+</footer>
