@@ -175,6 +175,39 @@
       color 150ms ease;
   }
 
+  /* ── Footer Link ──────────────────────────────────────────────────────── */
+  .footer-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 150ms ease;
+  }
+
+  .footer-link:hover {
+    border-bottom-color: var(--color-accent);
+  }
+
+  .footer-link-arrow-internal,
+  .footer-link-arrow-external {
+    font-size: 12px;
+    transition: transform 150ms ease;
+    display: inline-block;
+  }
+
+  .footer-link:hover .footer-link-arrow-internal {
+    transform: translateX(4px);
+  }
+
+  .footer-link:hover .footer-link-arrow-external {
+    transform: translate(2px, -2px);
+  }
+
   /* ── Navigation ───────────────────────────────────────────────────────── */
   .nav-link {
     font-size: 13px;

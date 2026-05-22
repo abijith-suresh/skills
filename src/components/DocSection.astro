@@ -13,7 +13,7 @@ const { eyebrow, heading, fallbackText, hasContent = true } = Astro.props;
 <div>
   <p class="eyebrow">{eyebrow}</p>
   <h2 class="heading-md mt-3">{heading}</h2>
-  <div class="card-hover mt-6">
+  <div class="card-hover mt-6 p-6">
     {hasContent ? (
       <div class="markdown">
         <slot />

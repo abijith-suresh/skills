@@ -49,6 +49,12 @@
     observer = initScrollReveal();
   }
 
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+
   document.addEventListener("astro:page-load", init);
   document.addEventListener("astro:after-swap", init);
   document.addEventListener("astro:before-swap", () => observer?.disconnect());
