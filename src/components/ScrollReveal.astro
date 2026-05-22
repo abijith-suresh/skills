@@ -1,0 +1,55 @@
+---
+---
+
+<script>
+  function initScrollReveal() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.querySelectorAll("[data-scroll-reveal]").forEach((el) => {
+        el.classList.add("scroll-revealed");
+      });
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const parent = entry.target.parentElement;
+            const siblings = parent
+              ? Array.from(parent.querySelectorAll("[data-scroll-reveal]:not(.scroll-revealed)"))
+              : [entry.target];
+
+            if (siblings.includes(entry.target)) {
+              siblings.forEach((sibling, index) => {
+                const stagger = Math.min(index + 1, 4);
+                sibling.classList.add("scroll-revealed", `scroll-stagger-${stagger}`);
+              });
+            } else {
+              entry.target.classList.add("scroll-revealed", "scroll-stagger-1");
+            }
+
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+
+    document.querySelectorAll("[data-scroll-reveal]").forEach((el) => {
+      observer.observe(el);
+    });
+
+    return observer;
+  }
+
+  let observer: IntersectionObserver | undefined;
+
+  function init() {
+    observer?.disconnect();
+    observer = initScrollReveal();
+  }
+
+  document.addEventListener("astro:page-load", init);
+  document.addEventListener("astro:after-swap", init);
+  document.addEventListener("astro:before-swap", () => observer?.disconnect());
+</script>
