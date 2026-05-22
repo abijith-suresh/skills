@@ -1,10 +1,7 @@
 ---
 import { getCollection, getEntry, render } from 'astro:content';
 
-import ActionBar from '../components/ActionBar.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
-import DocSection from '../components/DocSection.astro';
-import PageHero from '../components/PageHero.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import {
   buildSkillSummaries,
@@ -33,7 +30,6 @@ if (!definition) {
 const readmeEntry = await getEntry('skillReadmes', slug);
 const [summary] = buildSkillSummaries([definition]);
 
-// Parse hero info from README body, fall back to SKILL.md frontmatter
 const readmeBody = readmeEntry?.body ?? '';
 const { name: heroName, description: heroDescription } = readmeBody
   ? parseReadmeBody(readmeBody)
@@ -46,7 +42,7 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
 ---
 
 <SiteLayout title={`${heroName} | Skills`} description={heroDescription}>
-  <div class="site-container pt-4 pb-4">
+  <div class="site-container pt-6 pb-4">
     <Breadcrumb
       crumbs={[
         { label: 'skills', href: catalogPath },
@@ -55,47 +51,58 @@ const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
     />
   </div>
 
-  <PageHero
-    title={heroName}
-    description={heroDescription}
-    sectionClass="pt-4 pb-16"
-    titleClass="max-w-4xl"
-    descriptionClass="max-w-3xl"
-  >
-    <div slot="actions">
-      <p class="eyebrow mb-3">Install this skill</p>
-      <ActionBar
-        command={summary.installCommand}
-        buttonLabel="Copy"
+  <section class="site-container pt-2 pb-16">
+    <h1 class="skill-title">{heroName}</h1>
+    <p class="body-copy mt-4" style="max-width: 60ch; color: var(--color-muted-foreground);">
+      {heroDescription}
+    </p>
+
+    <div class="mt-8">
+      <p class="eyebrow mb-2">Installation</p>
+      <div class="install-block">
+        <code>{summary.installCommand}</code>
+        <button
+          type="button"
+          class="copy-btn"
+          data-copy-command={summary.installCommand}
+          data-copy-default="Copy"
+        >
+          Copy
+        </button>
+      </div>
+      <a
         href={summary.sourceUrl}
-        linkLabel="View source ↗"
-      />
+        target="_blank"
+        rel="noreferrer"
+        class="link mt-3 inline-block"
+        style="font-size: 0.875rem;"
+      >
+        View source ↗
+      </a>
     </div>
-  </PageHero>
+  </section>
 
-  <hr class="site-container" style="border: none; border-top: 1px solid var(--color-border);" />
-
-  <section class="site-container pt-16 pb-24">
-    <div class="max-w-4xl">
-      <div data-scroll-reveal>
-        <DocSection
-          eyebrow="Documentation"
-          heading="Usage, install, and prompts"
-          fallbackText="This skill does not currently include a README."
-          hasContent={!!ReadmeContent}
-        >
-          {ReadmeContent && <ReadmeContent />}
-        </DocSection>
-      </div>
-
-      <div class="mt-16" data-scroll-reveal>
-        <DocSection
-          eyebrow="SKILL.md"
-          heading="Instructions read by the agent"
-        >
-          <DefinitionContent />
-        </DocSection>
-      </div>
+  <section class="site-container pb-24">
+    <div class="section-label">
+      <p class="eyebrow">Overview</p>
     </div>
+
+    <div class="markdown" style="max-width: 72ch;">
+      {ReadmeContent ? (
+        <ReadmeContent />
+      ) : (
+        <p style="color: var(--color-muted-foreground);">This skill does not currently include a README.</p>
+      )}
+    </div>
+
+    <details class="details-collapse mt-12">
+      <summary>
+        <span class="chevron" aria-hidden="true">▸</span>
+        SKILL.md
+      </summary>
+      <div class="markdown mt-4" style="max-width: 72ch;">
+        <DefinitionContent />
+      </div>
+    </details>
   </section>
 </SiteLayout>

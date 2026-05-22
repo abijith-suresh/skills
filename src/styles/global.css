@@ -668,6 +668,185 @@
     transition-delay: 240ms;
   }
 
+  /* ── Skill Name (monospace identifier) ──────────────────────────────── */
+  .skill-name {
+    font-family:
+      ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono",
+      monospace;
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-text);
+  }
+
+  /* ── Skill List Item ─────────────────────────────────────────────────── */
+  .skill-list-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 768px) {
+    .skill-list-item {
+      grid-template-columns: auto 1fr;
+      gap: 0;
+      align-items: center;
+    }
+  }
+
+  .skill-list-item:last-child {
+    border-bottom: none;
+  }
+
+  .skill-list-item .skill-name a {
+    color: var(--color-text);
+    text-decoration: none;
+  }
+
+  .skill-list-item .skill-name a:hover {
+    color: var(--color-accent);
+  }
+
+  .skill-list-item .skill-desc {
+    font-size: 0.925rem;
+    line-height: 1.5;
+    color: var(--color-muted-foreground);
+  }
+
+  @media (min-width: 768px) {
+    .skill-list-item .skill-desc {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .skill-list-item .skill-install {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family:
+      ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono",
+      monospace;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .skill-list-item .skill-install .copy-btn {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    flex-shrink: 0;
+    transition: color 150ms ease;
+  }
+
+  .skill-list-item .skill-install .copy-btn:hover {
+    color: var(--color-accent);
+  }
+
+  /* ── Detail page skill name ──────────────────────────────────────────── */
+  .skill-title {
+    font-family:
+      ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono",
+      monospace;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--color-text);
+  }
+
+  /* ── Collapsible SKILL.MD ────────────────────────────────────────────── */
+  .details-collapse {
+    border-top: 1px solid var(--color-border);
+  }
+
+  .details-collapse summary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    font-weight: 500;
+    font-size: 0.925rem;
+    color: var(--color-text);
+    cursor: pointer;
+    list-style: none;
+    user-select: none;
+  }
+
+  .details-collapse summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .details-collapse summary .chevron {
+    display: inline-block;
+    transition: transform 150ms ease;
+  }
+
+  .details-collapse[open] summary .chevron {
+    transform: rotate(90deg);
+  }
+
+  .details-collapse summary:hover {
+    color: var(--color-accent);
+  }
+
+  /* ── Section divider (eyebrow + accent line) ─────────────────────────── */
+  .section-label {
+    padding-top: 2rem;
+    margin-bottom: 1rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  /* ── Install block on detail page ────────────────────────────────────── */
+  .install-block {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: color-mix(in srgb, var(--color-text) 5%, var(--color-base));
+    padding: 0.875rem 1rem;
+    margin-top: 0.5rem;
+  }
+
+  .install-block code {
+    flex: 1;
+    font-family:
+      ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono",
+      monospace;
+    font-size: 0.875rem;
+    color: var(--color-text);
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+
+  .install-block .copy-btn {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.2rem 0.4rem;
+    flex-shrink: 0;
+    transition: color 150ms ease;
+  }
+
+  .install-block .copy-btn:hover {
+    color: var(--color-accent);
+  }
+
   /* ── Page Enter Animation ─────────────────────────────────────────────── */
   .page-enter {
     animation: pageEnter 0.3s ease-out both;

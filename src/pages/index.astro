@@ -1,15 +1,13 @@
 ---
 import { getCollection } from 'astro:content';
 
-import ActionBar from '../components/ActionBar.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import SkillCard from '../components/SkillCard.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import {
   buildInstallCommand,
   buildSkillSummaries,
   SKILLS_REPOSITORY,
 } from '../lib/skill-catalog';
+import { buildSkillPath } from '../lib/site-paths';
 
 const definitions = await getCollection('skillDefinitions');
 const readmes = await getCollection('skillReadmes');
@@ -22,50 +20,57 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
   description="Browse personal AI agent skills, copy install commands, and inspect each skill's docs before installing it on another machine."
 >
   <section class="site-container pt-12 pb-8">
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-6">
-      <div class="lg:col-span-8">
-        <p class="eyebrow">abijith-suresh/skills</p>
-        <h1 class="heading-xl mt-4">
-          Personal AI agent skills, documented and ready to install.
-        </h1>
-      </div>
-
-      <div class="lg:col-span-6">
-        <p class="body-copy">
-          A lightweight catalog of AI agent skills I reuse across projects.
-          Browse, inspect, and install on any machine.
-        </p>
-      </div>
-
-      <div class="lg:col-span-12 lg:mt-6">
-        <p class="eyebrow mb-3">Install the full collection</p>
-        <ActionBar
-          command={installEverythingCommand}
-          buttonLabel="Copy"
-          href="https://github.com/abijith-suresh/skills"
-          linkLabel="View repository ↗"
-        />
+    <p class="eyebrow">abijith-suresh/skills</p>
+    <h1 class="heading-xl mt-4" style="max-width: 20ch;">
+      Personal AI agent skills.
+    </h1>
+    <p class="body-copy mt-6" style="max-width: 55ch;">
+      A lightweight catalog of AI agent skills I reuse across projects.
+      Browse, inspect, and install on any machine.
+    </p>
+    <div class="mt-8">
+      <p class="eyebrow mb-3">Install the full collection</p>
+      <div class="install-block">
+        <code>{installEverythingCommand}</code>
+        <button
+          type="button"
+          class="copy-btn"
+          data-copy-command={installEverythingCommand}
+          data-copy-default="Copy"
+        >
+          Copy
+        </button>
       </div>
     </div>
   </section>
 
-  <section class="site-container mt-24 pb-24">
-    <div class="grid grid-cols-1 gap-4 items-stretch">
-      <div data-scroll-reveal>
-        <SectionHeader
-          eyebrow="Collection"
-          heading="Available skills"
-          description="Click any card to view the skill's full documentation and install command."
-        />
-      </div>
+  <section class="site-container pb-24">
+    <div class="section-label">
+      <p class="eyebrow">Skills</p>
+    </div>
 
-      {
-        skills.map((skill) => (
-          <div class="h-full" data-scroll-reveal>
-            <SkillCard skill={skill} />
+    <div>
+      {skills.map((skill) => (
+        <div class="skill-list-item">
+          <div class="skill-name">
+            <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)}>
+              {skill.name}
+            </a>
           </div>
-        ))
-      }
+          <p class="skill-desc">{skill.description}</p>
+          <div class="skill-install">
+            <code>{skill.installCommand}</code>
+            <button
+              type="button"
+              class="copy-btn"
+              data-copy-command={skill.installCommand}
+              data-copy-default="Copy"
+            >
+              Copy
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 </SiteLayout>
