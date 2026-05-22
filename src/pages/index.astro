@@ -21,7 +21,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
   title="Skills"
   description="Browse personal AI agent skills, copy install commands, and inspect each skill's docs before installing it on another machine."
 >
-  <section class="site-container pt-16 pb-8">
+  <section class="site-container pt-12 pb-8">
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-6">
       <div class="lg:col-span-8">
         <p class="eyebrow">abijith-suresh/skills</p>
@@ -51,7 +51,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 
   <section class="site-container mt-24 pb-24">
     <div class="grid grid-cols-1 gap-4 items-stretch">
-      <div>
+      <div data-scroll-reveal>
         <SectionHeader
           eyebrow="Collection"
           heading="Available skills"
@@ -61,7 +61,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 
       {
         skills.map((skill) => (
-          <div class="h-full">
+          <div class="h-full" data-scroll-reveal>
             <SkillCard skill={skill} />
           </div>
         ))
