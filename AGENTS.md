@@ -77,7 +77,12 @@ an agent can decide at a glance whether this skill applies.
 ```markdown
 # <skill-name>
 
-[One line description]
+[One sentence description]
+
+## What This Skill Covers
+
+- **Capability 1** — brief explanation
+- **Capability 2** — brief explanation
 
 ## Install
 
@@ -89,7 +94,23 @@ npx skills add abijith-suresh/skills --skill <skill-name>
 
 - "[trigger phrase]"
 - "[trigger phrase]"
+
+## Requirements (optional)
+
+- [External tool or precondition, with link if applicable]
+
+## How it works
+
+1. **Step name** — description.
+2. **Step name** — description.
+
+## Resources (optional)
+
+- [External doc link]
+- [Related file in this skill]
 ```
+
+Sections **must** appear in this order. `## What This Skill Covers`, `## Install`, `## Use`, and `## How it works` are mandatory. `## Requirements` and `## Resources` are optional — include them only when relevant.
 
 ---
 

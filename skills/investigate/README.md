@@ -1,9 +1,19 @@
 # investigate
 
-Analyze the current repository in a read-only way before deciding what
-to change. Useful for tracing stories, bug paths, and existing
-implementations.
+Analyze the current repository in a read-only way before deciding what to change.
 
+## What This Skill Covers
+
+- **Read-only analysis** — traces code paths and behavior without modifying files
+- **Evidence-based findings** — collects facts from symbols, configs, tests, and git history
+- **Structured reporting** — produces INVESTIGATION.md with summary, evidence, and recommendations
+- **Safe exploration** — asks before running tests, builds, or any tree-modifying commands
+
+## Install
+
+```bash
+npx skills add abijith-suresh/skills --skill investigate
+```
 
 ## Use
 

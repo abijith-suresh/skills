@@ -65,15 +65,25 @@ export function findSkillSummary(
   return summaries.find((summary) => summary.slug === slug);
 }
 
-export function parseReadmeBody(body: string): {
+export interface ReadmeSection {
+  heading: string;
+  slug: string;
+  content: string;
+}
+
+export interface ParsedReadme {
   name: string;
   description: string;
-} {
+  sections: ReadmeSection[];
+}
+
+export function parseReadmeBody(body: string): ParsedReadme {
   const lines = body.split('\n');
   let name = '';
   const descParts: string[] = [];
   let afterH1 = false;
 
+  // Pass 1: extract name and description
   for (const line of lines) {
     if (line.startsWith('# ')) {
       name = line.replace(/^# /, '').trim();
@@ -89,5 +99,40 @@ export function parseReadmeBody(body: string): {
     }
   }
 
-  return { name, description: descParts.join(' ') };
+  // Pass 2: extract H2 sections
+  const sections: ReadmeSection[] = [];
+  let currentHeading: string | null = null;
+  let currentLines: string[] = [];
+
+  const flushSection = () => {
+    if (currentHeading && currentLines.length > 0) {
+      sections.push({
+        heading: currentHeading,
+        slug: currentHeading
+          .toLowerCase()
+          .replace(/[^\w\s-]/g, '')
+          .replace(/\s+/g, '-'),
+        content: currentLines.join('\n').trim(),
+      });
+    }
+    currentLines = [];
+  };
+
+  for (const line of lines) {
+    if (line.startsWith('## ')) {
+      flushSection();
+      currentHeading = line.replace(/^## /, '').trim();
+      continue;
+    }
+    if (currentHeading !== null) {
+      currentLines.push(line);
+    }
+  }
+  flushSection();
+
+  return {
+    name,
+    description: descParts.join(' '),
+    sections,
+  };
 }

@@ -1,17 +1,15 @@
 ---
+import { marked } from 'marked';
 import { getCollection, getEntry, render } from 'astro:content';
 
-import Breadcrumb from '../components/Breadcrumb.astro';
+import InstallCommandBlock from '../components/InstallCommandBlock.astro';
+import SkillPageNav from '../components/SkillPageNav.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import {
-  buildSkillSummaries,
-  parseReadmeBody,
-} from '../lib/skill-catalog';
+import { buildInstallCommand, buildSkillSummaries, parseReadmeBody, SKILLS_REPOSITORY } from '../lib/skill-catalog';
 import { buildCatalogPath } from '../lib/site-paths';
 
 export async function getStaticPaths() {
   const definitions = await getCollection('skillDefinitions');
-
   return definitions.map((definition) => ({
     params: { skill: definition.id },
   }));
@@ -31,78 +29,153 @@ const readmeEntry = await getEntry('skillReadmes', slug);
 const [summary] = buildSkillSummaries([definition]);
 
 const readmeBody = readmeEntry?.body ?? '';
-const { name: heroName, description: heroDescription } = readmeBody
+const parsed = readmeBody
   ? parseReadmeBody(readmeBody)
-  : { name: summary.name, description: summary.description };
+  : { name: summary.name, description: summary.description, sections: [] };
 
 const { Content: DefinitionContent } = await render(definition);
-const readmeRender = readmeEntry ? await render(readmeEntry) : null;
-const ReadmeContent = readmeRender?.Content;
+const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
+
+const installSection = parsed.sections.find((s) => s.heading === 'Install');
+const useSection = parsed.sections.find((s) => s.heading === 'Use');
+const whatItCoversSection = parsed.sections.find((s) => s.heading === 'What This Skill Covers');
+const howItWorksSection = parsed.sections.find((s) => s.heading === 'How it works');
+const requirementsSection = parsed.sections.find((s) => s.heading === 'Requirements');
+const resourcesSection = parsed.sections.find((s) => s.heading === 'Resources');
+
+function renderMarkdown(content: string): string {
+  return marked.parse(content, { async: false }) as string;
+}
 ---
 
-<SiteLayout title={`${heroName} | Skills`} description={heroDescription}>
-  <div class="site-container pt-6 pb-4">
-    <Breadcrumb
-      crumbs={[
-        { label: 'skills', href: catalogPath },
-        { label: slug },
-      ]}
-    />
-  </div>
+<SiteLayout title={`${parsed.name} | Skills`} description={parsed.description}>
+  <SkillPageNav catalogPath={catalogPath} />
 
-  <section class="site-container pt-2 pb-16">
-    <h1 class="skill-title">{heroName}</h1>
-    <p class="body-copy mt-4" style="max-width: 60ch; color: var(--color-muted-foreground);">
-      {heroDescription}
+  <!-- Hero: skill name, description, install block -->
+  <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pt-10 pb-12">
+    <h1
+      class="font-mono text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.02em]"
+    >
+      {parsed.name}
+    </h1>
+    <p class="text-[color:var(--color-muted-foreground)] mt-4 max-w-[68ch] leading-[1.65]">
+      {parsed.description}
     </p>
 
     <div class="mt-8">
-      <p class="eyebrow mb-2">Installation</p>
-      <div class="install-block">
-        <code>{summary.installCommand}</code>
-        <button
-          type="button"
-          class="copy-btn"
-          data-copy-command={summary.installCommand}
-          data-copy-default="Copy"
-        >
-          Copy
-        </button>
-      </div>
-      <a
-        href={summary.sourceUrl}
-        target="_blank"
-        rel="noreferrer"
-        class="link mt-3 inline-block"
-        style="font-size: 0.875rem;"
-      >
-        View source ↗
-      </a>
+      <InstallCommandBlock command={installCommand} />
     </div>
   </section>
 
-  <section class="site-container pb-24">
-    <div class="section-label">
-      <p class="eyebrow">Overview</p>
-    </div>
+  <!-- What This Skill Covers -->
+  {
+    whatItCoversSection && (
+      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
+        <div class="border-t border-border pt-8 mb-4">
+          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">What This Skill Covers</p>
+        </div>
+        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(whatItCoversSection.content)} />
+      </section>
+    )
+  }
 
-    <div class="markdown" style="max-width: 72ch;">
-      {ReadmeContent ? (
-        <ReadmeContent />
-      ) : (
-        <p style="color: var(--color-muted-foreground);">This skill does not currently include a README.</p>
-      )}
-    </div>
+  <!-- Use -->
+  {
+    useSection && (
+      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
+        <div class="border-t border-border pt-8 mb-4">
+          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Use</p>
+        </div>
+        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(useSection.content)} />
+      </section>
+    )
+  }
 
-    <details class="details-collapse mt-12">
-      <summary>
-        <span class="chevron" aria-hidden="true">▸</span>
-        SKILL.md
-      </summary>
-      <div class="markdown mt-4" style="max-width: 72ch;">
+  <!-- How It Works -->
+  {
+    howItWorksSection && (
+      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
+        <div class="border-t border-border pt-8 mb-4">
+          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">How It Works</p>
+        </div>
+        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(howItWorksSection.content)} />
+      </section>
+    )
+  }
+
+  <!-- Requirements -->
+  {
+    requirementsSection && (
+      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
+        <div class="border-t border-border pt-8 mb-4">
+          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Requirements</p>
+        </div>
+        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(requirementsSection.content)} />
+      </section>
+    )
+  }
+
+  <!-- Resources -->
+  {
+    resourcesSection && (
+      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
+        <div class="border-t border-border pt-8 mb-4">
+          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Resources</p>
+        </div>
+        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(resourcesSection.content)} />
+      </section>
+    )
+  }
+
+  <!-- Agent Reference: SKILL.md -->
+  <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-24">
+    <div
+      class="bg-[color-mix(in_srgb,var(--color-text)_5%,var(--color-base))] px-6 md:px-8 py-10"
+    >
+      <div class="mb-8">
+        <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Agent Reference</p>
+        <h2
+          class="font-mono text-[clamp(1.5rem,3vw,2.5rem)] font-bold leading-[1.1] tracking-[-0.02em] mt-2"
+        >
+          SKILL.md
+        </h2>
+      </div>
+      <div class="prose prose-custom max-w-[72ch]">
         <DefinitionContent />
       </div>
-    </details>
+    </div>
   </section>
 </SiteLayout>
+
+<style>
+  /* Ensure inline code in prose sections matches design system */
+  .prose code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+    padding: 0.125rem 0.375rem;
+  }
+  .prose pre {
+    background: color-mix(in srgb, var(--color-text) 5%, var(--color-base));
+    border: none;
+    border-radius: 0;
+    padding: 0.875rem 1rem;
+    margin-top: 0.5rem;
+  }
+  .prose pre code {
+    background: none;
+    padding: 0;
+  }
+  .prose a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color 150ms ease;
+  }
+  .prose a:hover {
+    text-decoration-color: var(--color-accent);
+  }
+</style>
