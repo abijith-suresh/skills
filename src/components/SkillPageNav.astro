@@ -8,8 +8,8 @@ interface Props {
 const { catalogPath } = Astro.props;
 ---
 
-<div class="max-w-[1200px] mx-auto px-6 py-5 md:px-8">
-  <a href={catalogPath} class="group inline-flex items-center gap-[0.4rem] text-[0.8rem] font-medium leading-none text-muted no-underline uppercase tracking-[0.04em] transition-colors duration-150 py-[0.35rem] hover:text-text">
+<div class="container-site py-5">
+  <a href={catalogPath} class="group inline-flex items-center gap-[0.4rem] text-[var(--text-caption)] font-medium leading-none text-muted no-underline uppercase tracking-[var(--tracking-wide)] transition-colors duration-150 py-[0.35rem] hover:text-text focus-visible:text-text">
     <ArrowLeft size={14} stroke-width={2} class="transition-transform duration-150 group-hover:-translate-x-1" />
     Back to Skills
   </a>

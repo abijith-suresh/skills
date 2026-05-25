@@ -17,6 +17,35 @@
   --tw-prose-pre-code: var(--color-text);
   --tw-prose-th-borders: var(--color-border);
   --tw-prose-td-borders: var(--color-border);
+
+  & code {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    background: color-mix(in srgb, var(--color-text) 6%, transparent);
+    padding: 0.125rem 0.375rem;
+  }
+  & pre {
+    background: color-mix(in srgb, var(--color-text) 5%, var(--color-base));
+    border: none;
+    border-radius: 0;
+    padding: 0.875rem 1rem;
+    margin-top: 0.5rem;
+    & code {
+      background: none;
+      padding: 0;
+    }
+  }
+  & a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-decoration-color: var(--color-border);
+    text-underline-offset: 0.2em;
+    transition: text-decoration-color var(--duration-fast) ease;
+    &:hover {
+      text-decoration-color: var(--color-accent);
+    }
+  }
 }
 
 /* ==========================================================================
@@ -33,25 +62,60 @@
   --color-text: #f4f4f4;
   --color-accent: #f5a623;
 
-  --color-background: var(--color-base);
-  --color-foreground: var(--color-text);
-
-  --color-card: var(--color-base);
-  --color-card-foreground: var(--color-text);
-
   --color-muted: #888888;
-  --color-muted-foreground: #999999;
+  --color-muted-foreground: #999999; /* semantically distinct: muted is for backgrounds/UI chrome, muted-foreground is for dimmed text */
   --color-border: #2a2a2a;
-  --color-warning: #e67e22;
-  --color-danger: #e74c3c;
+
+  --color-card-hover-text: var(--color-base);
+
+  /* Typography scale */
+  --text-hero: clamp(2.5rem, 5vw, 4rem);
+  --text-page-title: clamp(2rem, 5vw, 3.5rem);
+  --text-section-title: clamp(1.5rem, 3vw, 2.5rem);
+  --text-body-lg: 1.05rem;
+  --text-body-sm: 0.9rem;
+  --text-caption: 0.8rem;
+
+  /* Line heights */
+  --leading-tighter: 1.05;
+  --leading-tight: 1.1;
+  --leading-compact: 1.3;
+  --leading-relaxed: 1.6;
+  --leading-loose: 1.65;
+
+  /* Letter spacing */
+  --tracking-tight: -0.02em;
+  --tracking-wide: 0.04em;
+
+  /* Animation */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 400ms;
+  --duration-instant: 0.01ms;
+
+  /* Z-index */
+  --z-noise: 9999;
+
+  /* Max widths / measures */
+  --measure-narrow: 68ch;
+  --measure-wide: 72ch;
+  --container-max: 1200px;
+
+  /* Code block spacing */
+  --space-code-block-y: 0.875rem;
+  --space-copy-btn-x: 0.4rem;
+  --space-copy-btn-y: 0.2rem;
 }
 
 /* ==========================================================================
    Theme — dark only
    ========================================================================== */
 :root {
-  --color-card-hover-text: #111111;
   color-scheme: dark;
+}
+
+html {
+  scrollbar-color: var(--color-muted) var(--color-base);
 }
 
 /* ==========================================================================
@@ -73,10 +137,67 @@
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 9999;
-    opacity: 1;
+    z-index: var(--z-noise);
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
     background-repeat: repeat;
+  }
+
+  /* ── View Transitions ─────────────────────────────────────────────── */
+
+  ::view-transition-old(page-main),
+  ::view-transition-new(page-main),
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: var(--duration-normal);
+    animation-timing-function: ease-out;
+  }
+
+  ::view-transition-old(page-main),
+  ::view-transition-old(root) {
+    animation-name: viewFadeOut;
+    animation-fill-mode: both;
+  }
+
+  ::view-transition-new(page-main),
+  ::view-transition-new(root) {
+    animation-name: viewFadeIn;
+    animation-fill-mode: both;
+  }
+
+  /* ── Keyframes ─────────────────────────────────────────────────── */
+
+  @keyframes viewFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes viewFadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  /* ── Focus styles — Accent focus rings for accessibility ───────── */
+
+  :focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
 }
 
@@ -90,8 +211,8 @@
     opacity: 0;
     transform: translateY(16px);
     transition:
-      opacity 0.4s ease-out,
-      transform 0.4s ease-out;
+      opacity var(--duration-slow) ease-out,
+      transform var(--duration-slow) ease-out;
   }
 
   [data-scroll-reveal].scroll-revealed {
@@ -111,57 +232,39 @@
   [data-scroll-reveal].scroll-stagger-4 {
     transition-delay: 240ms;
   }
-}
 
-/* ==========================================================================
-   View Transitions
-   ========================================================================== */
-
-@layer base {
-  ::view-transition-old(page-main),
-  ::view-transition-new(page-main) {
-    animation-duration: 200ms;
-    animation-timing-function: ease-out;
+  /* Eyebrow */
+  .eyebrow {
+    @apply text-xs font-medium uppercase text-muted;
+    letter-spacing: var(--tracking-wide);
   }
 
-  ::view-transition-old(page-main) {
-    animation-name: viewFadeOut;
+  /* Code Block Shell */
+  .code-block-shell {
+    @apply flex items-center gap-2 px-4;
+    background-color: color-mix(in srgb, var(--color-text) 5%, var(--color-base));
+    padding-top: var(--space-code-block-y);
+    padding-bottom: var(--space-code-block-y);
   }
 
-  ::view-transition-new(page-main) {
-    animation-name: viewFadeIn;
+  /* Site Container */
+  .container-site {
+    @apply mx-auto w-full px-6 md:px-8;
+    max-width: var(--container-max);
   }
 
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
-    animation-duration: 200ms;
-    animation-timing-function: ease-out;
+  /* Copy Button */
+  .copy-button {
+    @apply font-sans text-xs font-medium uppercase text-muted bg-none border-0 cursor-pointer shrink-0 transition-colors;
+    letter-spacing: var(--tracking-wide);
+    padding-left: var(--space-copy-btn-x);
+    padding-right: var(--space-copy-btn-x);
+    padding-top: var(--space-copy-btn-y);
+    padding-bottom: var(--space-copy-btn-y);
+    transition-duration: var(--duration-fast);
   }
-
-  ::view-transition-old(root) {
-    animation-name: viewFadeOut;
-  }
-
-  ::view-transition-new(root) {
-    animation-name: viewFadeIn;
-  }
-}
-
-@keyframes viewFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes viewFadeOut {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
+  .copy-button:hover {
+    color: var(--color-accent);
   }
 }
 
@@ -170,12 +273,16 @@
    ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   ::before,
   ::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: var(--duration-instant) !important;
     animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: var(--duration-instant) !important;
   }
 
   [data-scroll-reveal] {
@@ -185,15 +292,6 @@
 
   ::view-transition-old(root),
   ::view-transition-new(root) {
-    animation-duration: 0.01ms !important;
+    animation-duration: var(--duration-instant) !important;
   }
-}
-
-/* ==========================================================================
-   Focus styles — Accent focus rings for accessibility
-   ========================================================================== */
-
-:focus-visible {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
 }

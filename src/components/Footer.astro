@@ -3,21 +3,22 @@ const currentYear = new Date().getFullYear();
 ---
 
 <footer class="mt-auto border-t border-border">
-  <div class="mx-auto w-full max-w-[1200px] px-6 md:px-8 py-8">
+  <div class="container-site py-8">
     <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
       <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
         <a
           href="https://github.com/abijith-suresh/skills"
           target="_blank"
           rel="noreferrer"
-          class="group inline-flex items-center gap-1 text-sm font-medium text-text no-underline pb-0.5 border-b-2 border-transparent hover:border-accent transition-colors duration-150"
+          aria-label="GitHub repository (opens in new tab)"
+          class="group inline-flex items-center gap-1 text-sm font-medium text-text no-underline pb-0.5 border-b-2 border-transparent hover:border-accent focus-visible:border-accent transition-colors duration-150"
         >
           GitHub
           <span class="inline-block text-xs transition-transform duration-150 group-hover:translate-x-[2px] group-hover:-translate-y-[2px]" aria-hidden="true">↗</span>
         </a>
       </div>
 
-      <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">
+      <p class="eyebrow">
         &copy; {currentYear} Abijith Suresh
       </p>
     </div>

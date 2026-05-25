@@ -2,6 +2,12 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import expressiveCode from 'astro-expressive-code';
 
+const COLORS = {
+  base: '#111111',
+  text: '#f4f4f4',
+  border: '#2a2a2a',
+};
+
 export default defineConfig({
   site: 'https://abijith-suresh.github.io',
   base: '/skills',
@@ -14,19 +20,19 @@ export default defineConfig({
       },
       styleOverrides: {
         borderRadius: '0',
-        borderColor: '#2a2a2a',
+        borderColor: COLORS.border,
         codeFontFamily:
           'ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace',
         codeFontSize: '0.875rem',
         codeLineHeight: '1.6',
-        codeBackground: '#111111',
-        codeForeground: '#f4f4f4',
+        codeBackground: COLORS.base,
+        codeForeground: COLORS.text,
         frames: {
           frameBoxShadowCssValue: 'none',
-          editorBackground: '#111111',
-          terminalBackground: '#111111',
-          terminalTitlebarBackground: '#111111',
-          terminalTitlebarBorderBottomColor: '#2a2a2a',
+          editorBackground: COLORS.base,
+          terminalBackground: COLORS.base,
+          terminalTitlebarBackground: COLORS.base,
+          terminalTitlebarBorderBottomColor: COLORS.border,
           terminalTitlebarDotsOpacity: '0.15',
         },
       },
