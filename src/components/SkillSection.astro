@@ -1,0 +1,37 @@
+---
+interface Props {
+  heading: string;
+  content?: string;
+  variant?: 'default' | 'tinted';
+  subtitle?: string;
+}
+
+const { heading, content, variant = 'default', subtitle } = Astro.props;
+---
+
+{
+  variant === 'tinted' ? (
+    <section class="container-site pb-24">
+      <div class="bg-[color-mix(in_srgb,var(--color-text)_5%,var(--color-base))] px-6 md:px-8 py-10">
+        <div class="mb-8">
+          <p class="eyebrow">{heading}</p>
+          {subtitle && (
+            <h2 class="font-mono text-[var(--text-section-title)] font-bold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)] mt-2">
+              {subtitle}
+            </h2>
+          )}
+        </div>
+        <div class="prose prose-custom max-w-[var(--measure-wide)]">
+          <slot />
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section class="container-site pb-12">
+      <div class="border-t border-border pt-8 mb-4">
+        <p class="eyebrow">{heading}</p>
+      </div>
+      <div class="prose prose-custom max-w-[var(--measure-wide)]" set:html={content} />
+    </section>
+  )
+}

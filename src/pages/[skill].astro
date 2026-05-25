@@ -4,6 +4,7 @@ import { getCollection, getEntry, render } from 'astro:content';
 
 import InstallCommandBlock from '../components/InstallCommandBlock.astro';
 import SkillPageNav from '../components/SkillPageNav.astro';
+import SkillSection from '../components/SkillSection.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { buildInstallCommand, buildSkillSummaries, parseReadmeBody, SKILLS_REPOSITORY } from '../lib/skill-catalog';
 import { buildCatalogPath } from '../lib/site-paths';
@@ -53,13 +54,13 @@ function renderMarkdown(content: string): string {
   <SkillPageNav catalogPath={catalogPath} />
 
   <!-- Hero: skill name, description, install block -->
-  <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pt-10 pb-12">
+  <section class="container-site pt-10 pb-12">
     <h1
-      class="font-mono text-[clamp(2rem,5vw,3.5rem)] font-bold leading-[1.1] tracking-[-0.02em]"
+      class="font-mono text-[var(--text-page-title)] font-bold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)]"
     >
       {parsed.name}
     </h1>
-    <p class="text-[color:var(--color-muted-foreground)] mt-4 max-w-[68ch] leading-[1.65]">
+    <p class="text-muted-foreground mt-4 max-w-[var(--measure-narrow)] leading-[var(--leading-loose)]">
       {parsed.description}
     </p>
 
@@ -68,84 +69,35 @@ function renderMarkdown(content: string): string {
     </div>
   </section>
 
-  <!-- What This Skill Covers -->
   {
     whatItCoversSection && (
-      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
-        <div class="border-t border-border pt-8 mb-4">
-          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">What This Skill Covers</p>
-        </div>
-        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(whatItCoversSection.content)} />
-      </section>
+      <SkillSection heading="What This Skill Covers" content={renderMarkdown(whatItCoversSection.content)} />
     )
   }
-
-  <!-- Use -->
   {
     useSection && (
-      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
-        <div class="border-t border-border pt-8 mb-4">
-          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Use</p>
-        </div>
-        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(useSection.content)} />
-      </section>
+      <SkillSection heading="Use" content={renderMarkdown(useSection.content)} />
     )
   }
-
-  <!-- How It Works -->
   {
     howItWorksSection && (
-      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
-        <div class="border-t border-border pt-8 mb-4">
-          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">How It Works</p>
-        </div>
-        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(howItWorksSection.content)} />
-      </section>
+      <SkillSection heading="How It Works" content={renderMarkdown(howItWorksSection.content)} />
     )
   }
-
-  <!-- Requirements -->
   {
     requirementsSection && (
-      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
-        <div class="border-t border-border pt-8 mb-4">
-          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Requirements</p>
-        </div>
-        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(requirementsSection.content)} />
-      </section>
+      <SkillSection heading="Requirements" content={renderMarkdown(requirementsSection.content)} />
     )
   }
-
-  <!-- Resources -->
   {
     resourcesSection && (
-      <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-12">
-        <div class="border-t border-border pt-8 mb-4">
-          <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Resources</p>
-        </div>
-        <div class="prose prose-custom max-w-[72ch]" set:html={renderMarkdown(resourcesSection.content)} />
-      </section>
+      <SkillSection heading="Resources" content={renderMarkdown(resourcesSection.content)} />
     )
   }
 
-  <!-- Agent Reference: SKILL.md -->
-  <section class="mx-auto w-full max-w-[1200px] px-6 md:px-8 pb-24">
-    <div
-      class="bg-[color-mix(in_srgb,var(--color-text)_5%,var(--color-base))] px-6 md:px-8 py-10"
-    >
-      <div class="mb-8">
-        <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted">Agent Reference</p>
-        <h2
-          class="font-mono text-[clamp(1.5rem,3vw,2.5rem)] font-bold leading-[1.1] tracking-[-0.02em] mt-2"
-        >
-          SKILL.md
-        </h2>
-      </div>
-      <div class="prose prose-custom max-w-[72ch]">
-        <DefinitionContent />
-      </div>
-    </div>
-  </section>
+  <SkillSection heading="Agent Reference" subtitle="SKILL.md" variant="tinted">
+    <DefinitionContent />
+  </SkillSection>
 </SiteLayout>
 
 <style>
