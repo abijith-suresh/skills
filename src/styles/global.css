@@ -203,6 +203,40 @@ html {
   [data-scroll-reveal].scroll-stagger-4 {
     transition-delay: 240ms;
   }
+
+  /* Eyebrow */
+  .eyebrow {
+    @apply text-xs font-medium uppercase text-muted;
+    letter-spacing: var(--tracking-wide);
+  }
+
+  /* Code Block Shell */
+  .code-block-shell {
+    @apply flex items-center gap-2 px-4;
+    background-color: color-mix(in srgb, var(--color-text) 5%, var(--color-base));
+    padding-top: var(--space-code-block-y);
+    padding-bottom: var(--space-code-block-y);
+  }
+
+  /* Site Container */
+  .container-site {
+    @apply mx-auto w-full px-6 md:px-8;
+    max-width: var(--container-max);
+  }
+
+  /* Copy Button */
+  .copy-button {
+    @apply font-sans text-xs font-medium uppercase text-muted bg-none border-0 cursor-pointer shrink-0 transition-colors;
+    letter-spacing: var(--tracking-wide);
+    padding-left: var(--space-copy-btn-x);
+    padding-right: var(--space-copy-btn-x);
+    padding-top: var(--space-copy-btn-y);
+    padding-bottom: var(--space-copy-btn-y);
+    transition-duration: var(--duration-fast);
+  }
+  .copy-button:hover {
+    color: var(--color-accent);
+  }
 }
 
 /* ==========================================================================
