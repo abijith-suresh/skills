@@ -31,15 +31,16 @@ apply those patterns here.
 
 ## Skill structure
 
-Each skill lives in its own directory at the repo root:
+Each skill lives in its own directory under `skills/` at the repo root:
 
 ```
-<skill-name>/
-  SKILL.md      ← the skill definition (required)
-  README.md     ← install instructions and example prompts (required)
-  references/   ← optional supporting docs
-  scripts/      ← optional deterministic helper scripts
-  assets/       ← optional templates/resources
+skills/
+  <skill-name>/
+    SKILL.md      ← the skill definition (required)
+    README.md     ← install instructions and example prompts (required)
+    references/   ← optional supporting docs
+    scripts/      ← optional deterministic helper scripts
+    assets/       ← optional templates/resources
 ```
 
 Prefer `references/` over loose top-level `.md` files when a skill needs
@@ -76,19 +77,40 @@ an agent can decide at a glance whether this skill applies.
 ```markdown
 # <skill-name>
 
-[One line description]
+[One sentence description]
+
+## What This Skill Covers
+
+- **Capability 1** — brief explanation
+- **Capability 2** — brief explanation
 
 ## Install
 
 \```bash
-npx skills@latest add abijith-suresh/skills/<skill-name>
+npx skills add abijith-suresh/skills --skill <skill-name>
 \```
 
 ## Use
 
 - "[trigger phrase]"
 - "[trigger phrase]"
+
+## Requirements (optional)
+
+- [External tool or precondition, with link if applicable]
+
+## How it works
+
+1. **Step name** — description.
+2. **Step name** — description.
+
+## Resources (optional)
+
+- [External doc link]
+- [Related file in this skill]
 ```
+
+Sections **must** appear in this order. `## What This Skill Covers`, `## Install`, `## Use`, and `## How it works` are mandatory. `## Requirements` and `## Resources` are optional — include them only when relevant.
 
 ---
 
@@ -109,8 +131,8 @@ npx skills@latest add abijith-suresh/skills/<skill-name>
 
 1. Use the `research` skill to read reference implementations if the
    workflow is non-trivial
-2. Create `<skill-name>/SKILL.md` with the correct frontmatter
-3. Create `<skill-name>/README.md` with install instructions and trigger
+2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter
+3. Create `skills/<skill-name>/README.md` with install instructions and trigger
    phrases
 4. Update the catalog table in the root `README.md`
 5. Update the badge count in the root `README.md`
@@ -123,8 +145,8 @@ npx skills@latest add abijith-suresh/skills/<skill-name>
 
 ## Updating an existing skill
 
-1. Edit `SKILL.md` (and any supporting files)
-2. If the description or trigger phrases changed, update `README.md`
+1. Edit `skills/<skill-name>/SKILL.md` (and any supporting files)
+2. If the description or trigger phrases changed, update `skills/<skill-name>/README.md`
 3. Add an entry to `CHANGELOG.md` under `[Unreleased]`. If a
    `### Changed — YYYY-MM-DD` section with today's date already exists,
    add the entry there instead of creating a duplicate section.

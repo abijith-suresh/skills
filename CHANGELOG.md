@@ -6,6 +6,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-05-25
+
+- Redesigned expressive-code terminal blocks on skill detail pages to align with the Swiss Style Design System: minimal header with subtle 15% opacity dots, unified `color-mix` surface background, sharp corners, and a text-based "Copy" button matching the index page install command
+- Added `terminalTitlebarDotsOpacity`, `terminalTitlebarBorderBottomColor`, and `terminalTitlebarBackground` overrides to the expressive-code global config
+
+### Added — 2026-05-17
+
+- Astro-powered docs site with a GitHub Pages-friendly `/skills/` base route, a catalog landing page, per-skill detail pages, and copy-ready skills install commands sourced directly from the repository
+- Bun-based frontend tooling (`bun.lock`, `mise.toml`, Astro/Tailwind/TypeScript setup) plus targeted tests for catalog metadata and route generation
+- GitHub Pages deployment workflow using the official Astro action
+
+### Changed — 2026-05-17
+
+- skill source files now live under `skills/<skill-name>/` so the repository cleanly separates installable skills from the Astro site implementation
+- install instructions now use the current `npx skills add <repo> --skill <name>` syntax throughout the repository
+- `README.md` and `AGENTS.md` now document the new project layout, local Bun-based development flow, and the `/skills/` routing model used for GitHub Pages
+
 ### Changed — 2026-05-16
 
 - `open-pr` skill: split into `open-pr` (create-only) and `update-pr` (update-only);
