@@ -16,6 +16,7 @@ const { command, label = 'Install' } = Astro.props;
     <button
       type="button"
       class="copy-button"
+      aria-label="Copy install command to clipboard"
       data-copy-command={command}
       data-copy-default="Copy"
     >
