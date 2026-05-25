@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHero from '../components/PageHero.astro';
+import InstallCommandBlock from '../components/InstallCommandBlock.astro';
 import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from '../lib/skill-catalog';
 import { buildSkillPath } from '../lib/site-paths';
 
@@ -23,18 +24,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
     titleClass="[max-width:20ch]"
   >
     <div slot="actions">
-      <p class="text-xs font-medium tracking-[0.04em] uppercase text-muted mb-2">Install the full collection</p>
-      <div class="flex items-center gap-2 bg-[color-mix(in_srgb,var(--color-text)_5%,var(--color-base))] px-4 py-[0.875rem] mt-2">
-        <code class="flex-1 font-mono text-sm text-text whitespace-nowrap overflow-x-auto">{installEverythingCommand}</code>
-        <button
-          type="button"
-          class="font-sans text-xs font-medium tracking-[0.04em] uppercase text-muted bg-none border-0 cursor-pointer px-[0.4rem] py-[0.2rem] shrink-0 transition-colors duration-150 hover:text-accent"
-          data-copy-command={installEverythingCommand}
-          data-copy-default="Copy"
-        >
-          Copy
-        </button>
-      </div>
+      <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />
     </div>
   </PageHero>
 
