@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 import expressiveCode from 'astro-expressive-code';
 
+// Colors synced with src/styles/global.css @theme inline
 const COLORS = {
   base: '#111111',
   text: '#f4f4f4',
@@ -22,7 +23,7 @@ export default defineConfig({
         borderRadius: '0',
         borderColor: COLORS.border,
         codeFontFamily:
-          'ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace',
+          '"JetBrains Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace',
         codeFontSize: '0.875rem',
         codeLineHeight: '1.6',
         codeBackground: COLORS.base,

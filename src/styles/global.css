@@ -295,6 +295,52 @@ html {
   }
 
 /* ==========================================================================
+   Forced Colors (High Contrast Mode)
+   ========================================================================== */
+
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+  .code-block-shell {
+    border: 1px solid ButtonBorder;
+  }
+  .prose pre {
+    border: 1px solid ButtonBorder;
+  }
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+@media print {
+  :root {
+    color-scheme: light;
+  }
+  body {
+    background: #fff;
+    color: #000;
+  }
+  body::before {
+    display: none;
+  }
+  .code-block-shell,
+  .prose pre {
+    border: 1px solid #ccc;
+    background: #f5f5f5;
+  }
+  [data-scroll-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  html {
+    scrollbar-color: auto;
+  }
+}
+
+/* ==========================================================================
    Accessibility
    ========================================================================== */
 
