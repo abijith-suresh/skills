@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-05-28
+
+- Fixed CSS bugs, consolidated design tokens, improved accessibility (color contrast, focus indicators, reduced-motion support), and migrated to Tailwind v4 syntax across the docs site
+
+### Changed — 2026-05-26
+
+- Consolidated docs-site CSS into a token-driven system: extracted `SectionHeader` component, replaced raw values with design tokens, added utility classes (`section`, `card`, `tag`, `prose`), and slimmed per-page styles
+
 ### Changed — 2026-05-25
 
 - Redesigned expressive-code terminal blocks on skill detail pages to align with the Swiss Style Design System: minimal header with subtle 15% opacity dots, unified `color-mix` surface background, sharp corners, and a text-based "Copy" button matching the index page install command
