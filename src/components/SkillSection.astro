@@ -1,4 +1,6 @@
 ---
+import SectionHeader from './SectionHeader.astro';
+
 interface Props {
   heading: string;
   content?: string;
@@ -12,7 +14,7 @@ const { heading, content, variant = 'default', subtitle } = Astro.props;
 {
   variant === 'tinted' ? (
     <section class="container-site pb-24">
-      <div class="bg-[var(--color-surface-tinted)] px-6 md:px-8 py-10">
+      <div class="bg-[var(--color-surface-tinted)] py-10">
         <div class="mb-8">
           <p class="eyebrow">{heading}</p>
           {subtitle && (
@@ -28,9 +30,7 @@ const { heading, content, variant = 'default', subtitle } = Astro.props;
     </section>
   ) : (
     <section class="container-site pb-12">
-      <div class="border-t border-border pt-8 mb-4">
-        <p class="eyebrow">{heading}</p>
-      </div>
+      <SectionHeader eyebrow={heading} as="h2" />
       <div class="prose prose-custom max-w-[var(--measure-wide)]" set:html={content} />
     </section>
   )

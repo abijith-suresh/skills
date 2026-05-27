@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import SiteLayout from '../layouts/SiteLayout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
 import PageHero from '../components/PageHero.astro';
 import InstallCommandBlock from '../components/InstallCommandBlock.astro';
 import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from '../lib/skill-catalog';
@@ -29,9 +30,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
   </PageHero>
 
   <section class="container-site pb-24">
-    <div class="border-t border-border pt-8 mb-4">
-      <p class="eyebrow">Skills</p>
-    </div>
+    <SectionHeader eyebrow="Skills" as="h2" />
 
     <div>
       {skills.map((skill) => (
