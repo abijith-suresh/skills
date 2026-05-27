@@ -39,11 +39,11 @@ const { title, description } = Astro.props;
     />
     <title>{title}</title>
   </head>
-  <body class="flex min-h-screen flex-col font-sans bg-base text-text leading-[1.6] relative">
-    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[var(--z-noise)] focus:px-4 focus:py-2 focus:bg-accent focus:text-[var(--color-card-hover-text)] focus:no-underline focus:font-medium">
+  <body class="flex min-h-screen flex-col font-sans bg-base text-text leading-[var(--leading-relaxed)] relative">
+    <a href="#main-content" class="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-4 focus-visible:left-4 focus-visible:z-[var(--z-noise)] focus-visible:px-4 focus-visible:py-2 focus-visible:bg-accent focus-visible:text-[var(--color-card-hover-text)] focus-visible:no-underline focus-visible:font-medium">
       Skip to content
     </a>
-    <main id="main-content" class="flex-grow" style="view-transition-name: page-main;">
+    <main id="main-content" class="grow" style="view-transition-name: page-main;">
       <slot />
     </main>
     <Footer />
