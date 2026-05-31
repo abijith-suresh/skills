@@ -1,13 +1,13 @@
 # research
 
-Clone and reference external repositories as source-of-truth when implementing against frameworks, libraries, or tools.
+Research-first implementation gate. Before writing code, clone the canonical source as a shallow reference and read the actual API docs, types, and examples.
 
 ## What This Skill Covers
 
-- **Persistent repo cache** — stores clones in ~/.research/ and pulls latest once per session
+- **Target identification** — determines what framework/library/tool the implementation depends on before cloning
+- **Shallow clone cache** — stores depth-1 clones in `~/.research/` and refreshes on every access
 - **Reference-first implementation** — reads canonical source code instead of relying on memory
-- **Direct application** — applies findings immediately without unnecessary summarization
-- **Repository resolution** — infers canonical repos from context when no URL is provided
+- **Direct application** — applies findings immediately without summarization
 
 ## Install
 
@@ -17,22 +17,15 @@ npx skills add abijith-suresh/skills --skill research
 
 ## Use
 
-- "research how X is done"
-- "look at how Y implements Z"
+- "research how X is implemented"
+- "look at how Y does Z"
 - "use [repo URL] as reference"
 - "clone [repo] for context"
-- "I need to understand how [library/framework] works before implementing"
-- "/research list" — list all cached repos
 
 ## How it works
 
-1. **Locate** — checks if the repo is already cloned in `~/.research/`.
-2. **Clone** — if not found, clones the full repo (no shallow copies).
-3. **Pull** — fetches latest changes once per session.
-4. **Read** — reads README, directory structure, and relevant source files.
-5. **Implement** — applies findings directly without summarization.
-
-## Resources
-
-- [references/list.md](references/list.md) — the `/research list` command
-- [references/citations.md](references/citations.md) — presenting findings when the user asks
+1. **Identify** — determines what framework/library/tool the task depends on.
+2. **Clone** — shallow clones (`--depth 1`) into `~/.research/` if not already cached.
+3. **Refresh** — fetches the latest HEAD on every access.
+4. **Read** — orients on the project structure, then reads relevant source files.
+5. **Implement** — writes code grounded in the patterns found.
