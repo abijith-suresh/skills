@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `open-mr` now stops with a pointer to `update-mr` if an MR already exists;
   `update-mr` regenerates title and body from scratch on the existing MR
 - `README.md`: added `update-mr` to the catalog, bumped badge count to 11
+- `research` skill: redesigned as a shallow-clone research-first implementation gate;
+  replaced full clones with `git clone --depth 1` and refresh via
+  `git fetch --depth 1 origin HEAD && git reset --hard FETCH_HEAD`;
+  added explicit "identify target" step before cloning;
+  removed `references/list.md` and `references/citations.md` extensions;
+  updated README to match the new workflow
 
 ### Changed — 2026-05-28
 

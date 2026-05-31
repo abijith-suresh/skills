@@ -1,16 +1,17 @@
 ---
 name: research
 description: >-
-  Clone and reference external repositories as source-of-truth when implementing
-  against frameworks, libraries, or tools where memory alone is unreliable. Use
-  when implementing non-trivial integrations, unfamiliar APIs, or version-specific
-  patterns. If a repo URL is provided, use it. Otherwise infer the right repo from
-  context.
+  Research-first implementation gate. Before writing code against a
+  framework, library, or tool, clone the canonical source as a shallow
+  reference and read the actual API docs, types, and examples. Use when
+  implementing non-trivial integrations, unfamiliar APIs, or
+  version-specific patterns. If a repo URL is provided, use it. Otherwise
+  infer the right repo from context.
 ---
 
 # Research
 
-Clone the source. Pull fresh. Implement from truth — not memory.
+Clone the source shallow. Read the actual docs. Implement from truth.
 
 ## Store
 
@@ -33,45 +34,52 @@ This persists across sessions. Repos are never deleted automatically.
 **If the user provides a URL** — use it directly.
 
 **If no URL is provided** — infer from context:
+
 - Identify the framework, library, or tool being implemented against
 - Find the canonical repo (official org, actively maintained, default branch)
 - If genuinely ambiguous between multiple repos, ask before cloning
 
 ## Core Workflow
 
-### 1. Check what is already cloned
+### 1. Identify target
+
+Determine what framework, library, or tool the implementation depends on.
+
+- If the user gives a URL, that is the target.
+- Otherwise, inspect project files (`package.json`, imports, config files) to
+  identify dependencies the implementation will interact with.
+- Be explicit about what you are researching before you clone.
+
+### 2. Clone shallow
 
 ```bash
-ls ~/.research/<username>/
+git clone --depth 1 <repo-url> ~/.research/<username>/<repo-name>/
 ```
 
-If `~/.research/<username>/<repo-name>/` exists, skip to step 3.
-
-### 2. Clone
-
-```bash
-git clone <repo-url> ~/.research/<username>/<repo-name>/
-```
+If it already exists, skip to step 3.
 
 Notify the user briefly:
 > Cloning `<username>/<repo-name>` for reference…
 
-### 3. Pull latest
+### 3. Refresh
 
-Pull once per repo, the first time it is accessed in a task. Not on every file read.
+On every access, refresh to the latest commit:
 
 ```bash
-git -C ~/.research/<username>/<repo-name> pull
+git -C ~/.research/<username>/<repo-name> fetch --depth 1 origin HEAD
+git -C ~/.research/<username>/<repo-name> reset --hard FETCH_HEAD
 ```
 
+This keeps the clone at depth 1 forever — no history bloat.
+
 Notify the user briefly:
-> Pulling latest `<username>/<repo-name>`…
+> Refreshing `<username>/<repo-name>`…
 
-If pull fails, note it briefly and continue with existing state.
+If refresh fails, note it briefly and continue with the existing state.
 
-### 4. Read with purpose
+### 4. Orient
 
-Orient first, then go deep on what the task needs:
+Build a mental map of the project:
 
 ```bash
 cat ~/.research/<username>/<repo-name>/README.md
@@ -79,22 +87,31 @@ ls -la ~/.research/<username>/<repo-name>/
 find ~/.research/<username>/<repo-name> -name "*.md" | head -20
 ```
 
-Then read the specific files, modules, and examples directly relevant to the implementation.
+Focus on:
 
-### 5. Implement
+- What does the project export or expose?
+- Where are the source files (src/, lib/, packages/)?
+- Are there examples or tests that show real usage patterns?
 
-Apply findings directly. Do not summarize or present findings unless the user explicitly asks.
+### 5. Read with intent
+
+Read the specific files, modules, types, tests, or examples directly relevant
+to the code you are about to write. Not browsing — targeted reading driven by
+what the implementation needs.
+
+### 6. Implement
+
+Write code that mirrors the patterns found. This is the implicit output of the
+skill — the research exists to ground implementation in source truth.
 
 ## Rules
 
-- **Inform, never ask** — say "Cloning…" or "Pulling latest…" then act immediately
-- **Pull once per repo per task** — not on every file read, not never
-- **Full clone only** — no `--depth 1`
+- **Inform, never ask** — say "Cloning…" or "Refreshing…" then act immediately
+- **Shallow clone only** — always `--depth 1`. Full clones waste disk space.
+- **Refresh on every access** — always fetch the latest HEAD before reading.
+  A stale reference is worse than no reference.
 - **Never clone into the project directory** — always use `~/.research/`
-- **Never delete repos** — the store is persistent; cleanup is always a manual user action
-- **Implement, don't narrate** — the output of this skill is working code, not a report
-
-## Extensions
-
-See [references/list.md](references/list.md) for the `/research list` command.
-See [references/citations.md](references/citations.md) for presenting findings when the user asks.
+- **Never delete repos** — the store is persistent; cleanup is always a manual
+  user action
+- **Implement from truth** — the output of this skill is working code grounded
+  in the source, not a summary or report
