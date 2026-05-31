@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-05-31
+
+- `open-mr` skill: split into `open-mr` (create-only) and `update-mr` (update-only);
+  `open-mr` now stops with a pointer to `update-mr` if an MR already exists;
+  `update-mr` regenerates title and body from scratch on the existing MR
+- `README.md`: added `update-mr` to the catalog, bumped badge count to 11
+
 ### Changed — 2026-05-28
 
 - Fixed CSS bugs, consolidated design tokens, improved accessibility (color contrast, focus indicators, reduced-motion support), and migrated to Tailwind v4 syntax across the docs site

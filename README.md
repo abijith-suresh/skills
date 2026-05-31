@@ -1,7 +1,7 @@
 # Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
+[![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
 
 Practical AI agent skills for planning, investigation, research, review,
 codebase improvement, clean commits, PRs, and TDD.
@@ -94,7 +94,8 @@ src/
 | `commit` | [README](skills/commit/README.md) | Inspect the diff, split changes by intent, and create clean conventional commits. |
 | `open-pr` | [README](skills/open-pr/README.md) | Push the current branch and open a new pull request on GitHub using the `gh` CLI. Detects if a PR already exists and directs the user to use `update-pr` instead. |
 | `update-pr` | [README](skills/update-pr/README.md) | Regenerate and update an existing pull request's title and body on GitHub using the `gh` CLI. |
-| `open-mr` | [README](skills/open-mr/README.md) | Push the current branch and open or update a merge request on GitLab using the `glab` CLI. Detects if an MR already exists and updates it instead of creating a duplicate. |
+| `open-mr` | [README](skills/open-mr/README.md) | Push the current branch and open a new merge request on GitLab using the `glab` CLI. Detects if an MR already exists and directs the user to use `update-mr` instead. |
+| `update-mr` | [README](skills/update-mr/README.md) | Regenerate and update an existing merge request's title and body on GitLab using the `glab` CLI. |
 | `tdd` | [README](skills/tdd/README.md) | Build features test-first with red-green-refactor. Language and framework agnostic. |
 | `review` | [README](skills/review/README.md) | Review code changes and write a structured `REVIEW.md` using standard or story-aware review. |
 | `improve` | [README](skills/improve/README.md) | Audit overall codebase health, write a prioritized `IMPROVE.md`, and then decide whether to fix issues. |
