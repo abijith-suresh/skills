@@ -2,8 +2,7 @@
 name: investigate
 description: >-
   Read-only codebase analysis. Use when asked to "investigate X", "analyze
-  X", "deep dive into X", or "help me understand how X works". Never
-  modifies files.
+  X", "deep dive into X", or "help me understand how X works".
 ---
 
 # Investigate

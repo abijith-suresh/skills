@@ -3,7 +3,7 @@ name: commit
 description: >-
   Create clean conventional commits from the current diff. Use when asked
   to "commit these changes", "make a commit", "commit this", or "create
-  commits". Stops after committing — does not push or open a PR.
+  commits".
 ---
 
 # Commit

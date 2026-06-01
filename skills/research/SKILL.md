@@ -1,10 +1,10 @@
 ---
 name: research
 description: >-
-  Before implementing against an unfamiliar framework or library, clone
-  the canonical source and read the actual API. Use when implementing
-  non-trivial integrations, unfamiliar APIs, or version-specific patterns.
-  If a repo URL is given, use it; otherwise infer from context.
+  Before implementing against a framework or library, clone the canonical
+  source and read the actual API. Use when implementing non-trivial
+  integrations, unfamiliar APIs, or version-specific patterns. If a repo
+  URL is given, use it; otherwise infer from context.
 ---
 
 # Research

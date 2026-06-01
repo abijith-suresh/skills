@@ -1,6 +1,6 @@
 # research
 
-Before implementing against an unfamiliar framework or library, clone the canonical source and read the actual API.
+Before implementing against a framework or library, clone the canonical source and read the actual API.
 
 ## What This Skill Covers
 

@@ -1,6 +1,6 @@
 # investigate
 
-Read-only codebase analysis. Never modifies files.
+Read-only codebase analysis.
 
 ## What This Skill Covers
 
