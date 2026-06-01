@@ -98,6 +98,7 @@ src/
 | `open-mr` | [README](skills/open-mr/README.md) | Push the current branch and open a new merge request on GitLab using the `glab` CLI. Detects if an MR already exists and directs the user to use `update-mr` instead. |
 | `update-mr` | [README](skills/update-mr/README.md) | Regenerate and update an existing merge request's title and body on GitLab using the `glab` CLI. |
 | `tdd` | [README](skills/tdd/README.md) | Build features test-first with red-green-refactor. Language and framework agnostic. |
+| `to-issues` | [README](skills/to-issues/README.md) | Convert a plan into flat, vertical-slice GitHub issues using the gh CLI. |
 | `review` | [README](skills/review/README.md) | Review code changes and write a structured `REVIEW.md` using standard or story-aware review. |
 | `improve` | [README](skills/improve/README.md) | Audit overall codebase health, write a prioritized `IMPROVE.md`, and then decide whether to fix issues. |
 | `research` | [README](skills/research/README.md) | Clone and reference external repositories as source-of-truth from `~/.research/` when implementing against frameworks, libraries, or tools. |

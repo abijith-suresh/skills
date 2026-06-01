@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-06-01
+
+- `skills/grill-me/SKILL.md`: new grill-me skill — interviews the user
+  one question at a time until shared understanding is reached, then
+  hands off a decisions summary to the plan skill
+- `skills/grill-me/README.md`: install instructions, trigger phrases,
+  and workflow overview for grill-me
+- `skills/to-issues/SKILL.md`: new to-issues skill — converts plans into
+  flat vertical-slice GitHub issues using the gh CLI, with preview before
+  creation and a three-label vocabulary (bug, feature, chore)
+- `skills/to-issues/README.md`: install instructions, trigger phrases,
+  and workflow overview for to-issues
+
 ### Changed — 2026-06-01
 
 - `AGENTS.md`: replaced bloated description pattern guide with a concise
@@ -21,14 +34,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   the grill-me-paired workflow
 - `README.md`: added `grill-me` to catalog, bumped badge count to 12,
   updated `plan` catalog description
-
-### Added — 2026-06-01
-
-- `skills/grill-me/SKILL.md`: new grill-me skill — interviews the user
-  one question at a time until shared understanding is reached, then
-  hands off a decisions summary to the plan skill
-- `skills/grill-me/README.md`: install instructions, trigger phrases,
-  and workflow overview for grill-me
+- `README.md`: added `to-issues` to catalog, bumped badge count to 12
 
 ### Changed — 2026-05-31
 
