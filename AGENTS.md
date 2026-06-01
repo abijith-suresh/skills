@@ -57,8 +57,10 @@ Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
 ---
 name: <skill-name>
 description: >-
-  One sentence describing when to use this skill. Include trigger phrases.
-  This is what the agent reads to decide whether this skill applies.
+  [One-line what the skill does]
+  Use when [trigger scenario A].
+  Use when [trigger scenario B].
+  [Do NOT trigger when [anti-trigger].]
 ---
 
 # Title
@@ -69,6 +71,15 @@ description: >-
 Frontmatter: `name` and `description` only. No `metadata` block. The
 description is the most important field — it must be specific enough that
 an agent can decide at a glance whether this skill applies.
+
+### Description pattern
+
+The `description` field follows a consistent trigger-first format.
+See any SKILL.md under `skills/` for real examples: first sentence
+says what the skill does (active voice, no branding), then "Use when"
+clauses enumerate trigger phrases the agent matches on. A "Do NOT
+trigger" clause is added only when a common phrasing could cause
+a false positive.
 
 ---
 

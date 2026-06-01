@@ -1,6 +1,6 @@
 # update-mr
 
-Regenerate and update an existing merge request's title and body on GitLab using the `glab` CLI.
+Update an existing GitLab MR's title and body via glab CLI.
 
 ## What This Skill Covers
 

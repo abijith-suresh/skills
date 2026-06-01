@@ -1,6 +1,6 @@
 # open-mr
 
-Push the current branch and open a new merge request on GitLab using the `glab` CLI.
+Push the current branch and open a new GitLab MR via glab CLI. Requires a ticket number.
 
 ## What This Skill Covers
 

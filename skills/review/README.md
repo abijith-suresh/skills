@@ -1,6 +1,6 @@
 # review
 
-Review code changes and write a structured REVIEW.md. Supports standard diff review and story-aware review.
+Review the current diff and produce a structured REVIEW.md.
 
 ## What This Skill Covers
 

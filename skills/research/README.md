@@ -1,6 +1,6 @@
 # research
 
-Research-first implementation gate. Before writing code, clone the canonical source as a shallow reference and read the actual API docs, types, and examples.
+Before implementing against a framework or library, clone the canonical source and read the actual API.
 
 ## What This Skill Covers
 

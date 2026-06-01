@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-06-01
+
+- `AGENTS.md`: replaced bloated description pattern guide with a concise
+  pointer to examples under `skills/`
+- `skills/*/SKILL.md`: trimmed all 11 skill descriptions to follow
+  agent-oriented trigger-first format
+- `skills/*/README.md`: trimmed first-sentence in all 11 readmes to
+  match SKILL.md descriptions
+
 ### Changed — 2026-05-31
 
 - `open-mr` skill: split into `open-mr` (create-only) and `update-mr` (update-only);

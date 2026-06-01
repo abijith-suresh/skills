@@ -1,11 +1,9 @@
 ---
 name: review
 description: >-
-  Review code changes and write a structured REVIEW.md. Two modes: standard
-  (check documentation, clean code, logging, and tests against the diff) and
-  story-aware (check whether the changes fully address a bug or story). Use
-  after implementation: "review my changes", "do a code review", "review
-  this branch", "review against the story".
+  Review the current diff and produce a structured REVIEW.md. Use when
+  asked to "review my changes", "do a code review", "review this branch",
+  or "review against the [story]".
 ---
 
 # Review

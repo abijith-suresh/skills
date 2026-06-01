@@ -1,12 +1,10 @@
 ---
 name: research
 description: >-
-  Research-first implementation gate. Before writing code against a
-  framework, library, or tool, clone the canonical source as a shallow
-  reference and read the actual API docs, types, and examples. Use when
-  implementing non-trivial integrations, unfamiliar APIs, or
-  version-specific patterns. If a repo URL is provided, use it. Otherwise
-  infer the right repo from context.
+  Before implementing against a framework or library, clone the canonical
+  source and read the actual API. Use when implementing non-trivial
+  integrations, unfamiliar APIs, or version-specific patterns. If a repo
+  URL is given, use it; otherwise infer from context.
 ---
 
 # Research
