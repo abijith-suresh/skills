@@ -1,82 +1,30 @@
 ---
 name: plan
 description: >-
-  Produce an implementation plan before writing code. Use when the user
-  says "plan", "make a plan", "plan this out", "let's think through this",
-  or "I want to build X". Do NOT trigger for "come up with a plan" or
-  "present a plan" — those are chat only, not a file.
+  Present a concrete implementation plan in chat based on the grill-me
+  decisions summary. Use when the user invokes the plan skill after a
+  grill-me session, says "present the plan", "use the plan skill", or
+  "now make the plan". Always runs after grill-me. Does not explore the
+  codebase or ask clarifying questions — grill-me already handled both.
 ---
 
 # Plan
 
-## Understanding this skill
-
-This skill is for **planning** — exploring the codebase, asking questions,
-and presenting a plan **in chat**. It does NOT write to PLAN.md unless the
-user explicitly asks for a file. Presenting in chat is always the default.
-
-> If the user says "present a plan", "tell me your plan", or "come up
-> with a plan", they mean chat only. Do not write a file unless they
-> explicitly say "write it to PLAN.md" or "save it to a file".
+## What this skill does
+Reads the grill-me decisions summary from the conversation and produces a
+concrete, human-readable implementation plan in chat. Does not re-explore
+the codebase. Does not ask clarifying questions. Writes to a file only if
+explicitly asked.
 
 ## Steps
 
-### 1. Understand the goal
+### 1. Read the decisions summary
+Find the decisions summary written by grill-me earlier in the conversation.
+Use it as the sole source of truth for what to build and how. Do not
+re-derive decisions from scratch.
 
-If you can identify the relevant part of the repo, go straight to
-exploration.
-
-Ask one focused clarifying question only if the request is genuinely too
-ambiguous to know what area of the codebase to inspect.
-
-### 2. Explore before asking
-
-Read relevant files. Grep for related symbols. Trace dependencies. Build
-an implementation-aware picture of the current state before asking the
-user to make design choices.
-
-Do not ask questions yet if the codebase can answer them. Do not skip
-this step.
-
-### 3. Ask all open questions at once (mandatory)
-
-**You MUST do this before presenting any plan or writing anything to a
-file.**
-
-After exploring, collect every decision that is still genuinely open.
-Group them by topic and present them in a single message with labeled
-options and a recommended choice for each. Never drip questions one at
-a time.
-
-```
-**[Topic name]**
-
-**Q1. [Question]**
-- A) [Option]
-- B) [Option] ← recommended
-- C) Other — describe
-
-**Q2. [Question]**
-- A) [Option] ← recommended
-- B) [Option]
-- C) Other — describe
-```
-
-Mark one option as recommended on each question. Base recommendations
-on what the codebase already does or what fits its patterns best. Only
-ask questions the codebase cannot answer.
-
-The user replies with letters or free text. If a question goes
-unanswered, use the recommended option and note it in the plan.
-
-If there are genuinely no open questions (everything is determined by
-the codebase or prior conversation), you may skip this step — but note
-in your presentation that there were no open decisions.
-
-### 4. Present the plan in chat (not to a file)
-
-Once all decisions are settled, present the full plan **in chat**. Do not
-write to a file yet.
+### 2. Present the plan in chat
+Write the plan directly in chat using this structure:
 
 ```
 # Plan: [Feature Name]
@@ -84,42 +32,34 @@ write to a file yet.
 ## Goal
 [One sentence: what this achieves and why.]
 
-## Approach
-[The key decisions made and why. Reference choices from the Q&A.]
-
 ## Steps
-1. [Concrete implementation step]
-2. [Concrete implementation step]
-...
+1. [Concrete step — name the file(s) to touch, the function or component
+   involved, and what changes. Not line-by-line, but specific enough that
+   a capable agent can act without ambiguity.]
+2. ...
 
 ## Testing Notes
-[What to check after implementing — specific flows, edge cases,
-regressions. Derived from what actually changed.]
+[Exact flows to verify, specific edge cases to check, and commands to run
+— all derived from what actually changed in the steps above. No generic
+advice, no boilerplate.]
 ```
 
-### 5. Ask whether to persist to PLAN.md (do not skip)
+### 3. Ask whether to save to PLAN.md
+After presenting the plan in chat, ask:
+> Should I save this to `PLAN.md`? Useful if you plan to run to-issues
+> or continue in a new session.
 
-The plan is already in chat. PLAN.md is only needed when handing off to
-another agent or returning to the task later.
+Write to `PLAN.md` in the project root only if the user says yes.
+If the user says no, or does not answer, do not write it.
 
-**Ask explicitly:**
-
-> Should I write this to PLAN.md? Only needed if you plan to hand off to
-> another agent.
-
-If the user says yes, write the plan to `PLAN.md` in the project root.
-If they say no, do not write it. If they do not answer, do not write it.
-
-### 6. Confirm
-
-After presenting (or writing): "Ready to start implementing, or anything to adjust?"
+### 4. Confirm
+End with: "Ready to start implementing, or anything to adjust?"
 
 ## Rules
-
-- **Never write PLAN.md without asking first.** Default is chat-only.
-- **Never present a plan without asking all open questions first.**
-  The only exception is when there are genuinely zero open decisions.
-- Never ask questions one at a time.
-- Never skip exploration unless the request is too ambiguous to identify
-  where to look.
-- Never modify source files during planning.
+- No codebase exploration — grill-me already did it
+- No clarifying questions — grill-me already resolved them
+- Steps must name the files and components to be touched, not just
+  describe actions at a high level
+- Testing notes must be specific and derived from this plan — never generic
+- Never write PLAN.md without asking first — chat is always the default
+- Never run without a grill-me decisions summary present in the conversation

@@ -14,6 +14,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   agent-oriented trigger-first format
 - `skills/*/README.md`: trimmed first-sentence in all 11 readmes to
   match SKILL.md descriptions
+- `skills/plan/SKILL.md`: redesigned to pair with grill-me — plan no longer
+  explores the codebase or asks questions; reads the grill-me decisions
+  summary and produces the implementation plan
+- `skills/plan/README.md`: updated description and how-it-works to match
+  the grill-me-paired workflow
+- `README.md`: added `grill-me` to catalog, bumped badge count to 12,
+  updated `plan` catalog description
+
+### Added — 2026-06-01
+
+- `skills/grill-me/SKILL.md`: new grill-me skill — interviews the user
+  one question at a time until shared understanding is reached, then
+  hands off a decisions summary to the plan skill
+- `skills/grill-me/README.md`: install instructions, trigger phrases,
+  and workflow overview for grill-me
 
 ### Changed — 2026-05-31
 
