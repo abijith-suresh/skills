@@ -1,8 +1,8 @@
 ---
 name: update-pr
 description: >-
-  Regenerate and update an existing pull request's title and body on GitHub.
-  Use when asked to "update the PR" or "update the pull request".
+  Update an existing GitHub PR's title and body. Use when asked to
+  "update the PR" or "update the pull request".
 ---
 
 # Update PR

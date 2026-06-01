@@ -1,11 +1,9 @@
 ---
 name: commit
 description: >-
-  Inspect the diff, split changes by intent, and create clean conventional
-  commits. Detects GitLab repos and requires a ticket number in every work
-  commit scope. Use after implementation is done: "commit these changes",
-  "make a commit", "commit this", "create commits". Stops after
-  committing — does not push or open a PR.
+  Create clean conventional commits from the current diff. Use when asked
+  to "commit these changes", "make a commit", "commit this", or "create
+  commits". Stops after committing — does not push or open a PR.
 ---
 
 # Commit

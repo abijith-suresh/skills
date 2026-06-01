@@ -1,6 +1,6 @@
 # tdd
 
-Build features test-first using red-green-refactor. One failing test, minimal code to pass, repeat.
+Build features test-first using red-green-refactor.
 
 ## What This Skill Covers
 

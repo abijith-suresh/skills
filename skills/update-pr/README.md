@@ -1,6 +1,6 @@
 # update-pr
 
-Regenerate and update an existing pull request's title and body on GitHub using the `gh` CLI.
+Update an existing GitHub PR's title and body.
 
 ## What This Skill Covers
 

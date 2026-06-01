@@ -1,11 +1,9 @@
 ---
 name: investigate
 description: >-
-  Analyze the current repository or system in a read-only way before
-  deciding what to change. Use when you need to understand a story, trace
-  an existing implementation, investigate a bug path, or explain how a
-  feature currently works: "investigate X", "analyze X", "do a deep dive
-  into X", "help me understand how X works".
+  Read-only codebase analysis. Use when asked to "investigate X", "analyze
+  X", "deep dive into X", or "help me understand how X works". Never
+  modifies files.
 ---
 
 # Investigate

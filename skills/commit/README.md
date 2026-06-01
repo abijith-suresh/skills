@@ -1,6 +1,6 @@
 # commit
 
-Inspect the diff, split by intent, and create clean conventional commits.
+Create clean conventional commits from the current diff.
 
 ## What This Skill Covers
 

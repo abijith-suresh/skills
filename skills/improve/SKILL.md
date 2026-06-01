@@ -1,12 +1,9 @@
 ---
 name: improve
 description: >-
-  Holistic codebase health audit for codebases developed with fast agentic
-  iteration. Surfaces accumulated technical debt across the whole
-  codebase, produces a prioritized IMPROVE.md, and heals issues
-  incrementally. Use periodically or before major new work: "improve the
-  codebase", "health check the codebase", "let's address technical debt",
-  "audit the codebase".
+  Audit the codebase for technical debt and fix issues incrementally. Use
+  when asked to "improve the codebase", "health check", "address technical
+  debt", or "audit the codebase".
 ---
 
 # Improve

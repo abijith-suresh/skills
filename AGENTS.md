@@ -57,8 +57,10 @@ Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
 ---
 name: <skill-name>
 description: >-
-  One sentence describing when to use this skill. Include trigger phrases.
-  This is what the agent reads to decide whether this skill applies.
+  [One-line what the skill does]
+  Use when [trigger scenario A].
+  Use when [trigger scenario B].
+  [Do NOT trigger when [anti-trigger].]
 ---
 
 # Title
@@ -69,6 +71,58 @@ description: >-
 Frontmatter: `name` and `description` only. No `metadata` block. The
 description is the most important field — it must be specific enough that
 an agent can decide at a glance whether this skill applies.
+
+### Description pattern
+
+Descriptions must follow this structure **exactly**:
+
+1. **First sentence** — one-line what the skill does, in active voice.
+   No branding, no philosophy, no framing. Just the verb and its object.
+2. **"Use when" clauses** — one or more trigger scenarios that tell the
+   agent exactly when to load this skill. Lead with the most specific
+   trigger phrases the user might say. Repeat "Use when" for each group
+   of related triggers rather than cramming everything into one sentence.
+3. **"Do NOT trigger" clause** (optional) — only when a common phrasing
+   could trigger a false positive.
+
+Examples of good descriptions (trimmed for agent consumption):
+
+```markdown
+description: >-
+  Create clean conventional commits from the current diff. Use when asked
+  to "commit these changes", "make a commit", "commit this", or "create
+  commits". Stops after committing — does not push or open a PR.
+```
+
+```markdown
+description: >-
+  Audit the codebase for technical debt and fix issues incrementally.
+  Use when asked to "improve the codebase", "health check", "address
+  technical debt", or "audit the codebase".
+```
+
+```markdown
+description: >-
+  Produce an implementation plan before writing code. Use when the user
+  says "plan", "make a plan", "plan this out", "let's think through this",
+  or "I want to build X". Do NOT trigger for "come up with a plan" or
+  "present a plan" — those are chat only, not a file.
+```
+
+Guidelines:
+
+- **Agent-oriented, not human-oriented.** The description is matched at
+  runtime by an AI agent deciding whether to load this skill. Write for
+  that reader: trigger phrases first, background never.
+- **No branding or marketing.** "Holistic codebase health audit" and
+  "Research-first implementation gate" are human copy, not agent triggers.
+- **Use "Use when" consistently.** It is the clearest introduction for a
+  trigger condition. Every skill description should contain at least one
+  "Use when" clause.
+- **Wrap trigger phrases in quotes.** Agents match on literal user
+  utterances. Quote the exact phrases that should trigger the skill.
+- **Keep under 50 words.** If the description needs more, prioritize
+  trigger scenarios over background context.
 
 ---
 

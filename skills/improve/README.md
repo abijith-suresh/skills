@@ -1,6 +1,6 @@
 # improve
 
-Holistic codebase health audit for codebases developed with fast agentic iteration.
+Audit the codebase for technical debt and fix issues incrementally.
 
 ## What This Skill Covers
 

@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-06-01
+
+- All 11 skills: trimmed `description` in SKILL.md and first-sentence in
+  README.md to follow agent-oriented format (trigger-first "Use when"
+  pattern, removed human-facing branding and workflow descriptions)
+- `AGENTS.md`: added detailed description pattern guide with examples
+  to the SKILL.md format section
+
 ### Changed — 2026-05-31
 
 - `open-mr` skill: split into `open-mr` (create-only) and `update-mr` (update-only);

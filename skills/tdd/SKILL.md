@@ -1,10 +1,9 @@
 ---
 name: tdd
 description: >-
-  Build features test-first using red-green-refactor. One failing test,
-  minimal code to pass, repeat. Use when the user says "let's do TDD",
-  "write tests first", "red-green-refactor", "build this test-first",
-  or "TDD this".
+  Build features test-first using red-green-refactor. Use when asked to
+  "do TDD", "write tests first", "red-green-refactor", "build this
+  test-first", or "TDD this".
 ---
 
 # TDD

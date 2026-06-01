@@ -1,6 +1,6 @@
 # investigate
 
-Analyze the current repository in a read-only way before deciding what to change.
+Read-only codebase analysis. Never modifies files.
 
 ## What This Skill Covers
 

@@ -1,10 +1,8 @@
 ---
 name: update-mr
 description: >-
-  Regenerate and update an existing merge request's title and body on
-  GitLab using the glab CLI. Requires a ticket number in the branch name
-  or conversation. Use when asked to "update the MR" or "update the merge
-  request".
+  Update an existing GitLab MR's title and body via glab CLI. Use when
+  asked to "update the MR" or "update the merge request".
 ---
 
 # Update MR (GitLab)

@@ -1,13 +1,10 @@
 ---
 name: plan
 description: >-
-  Explore the codebase, ask all open questions at once with labeled
-  options, and present an implementation plan in chat before any code
-  is written. Only writes PLAN.md if the user explicitly asks for a
-  durable file. Use when the user says "plan", "make a plan", "plan this
-  out", "let's think through this", or "I want to build X".
-  Do NOT trigger when the user simply asks to "present a plan" or
-  "come up with a plan" — that means chat only, not a file.
+  Produce an implementation plan before writing code. Use when the user
+  says "plan", "make a plan", "plan this out", "let's think through this",
+  or "I want to build X". Do NOT trigger for "come up with a plan" or
+  "present a plan" — those are chat only, not a file.
 ---
 
 # Plan

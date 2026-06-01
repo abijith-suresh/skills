@@ -1,6 +1,6 @@
 # plan
 
-Explore the relevant codebase state and produce a settled PLAN.md before writing any code.
+Produce an implementation plan before writing code.
 
 ## What This Skill Covers
 

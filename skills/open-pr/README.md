@@ -1,6 +1,6 @@
 # open-pr
 
-Push the current branch and open a new pull request on GitHub using the `gh` CLI.
+Push the current branch and open a new GitHub PR.
 
 ## What This Skill Covers
 
