@@ -20,9 +20,16 @@ to a file only if explicitly asked.
 ## Steps
 
 ### 1. Read the decisions summary
-Find a decisions summary earlier in the conversation. Use it as the sole
-source of truth for what to build and how. Do not re-derive decisions
-from scratch.
+Find a decisions summary earlier in the conversation or in a project
+document. Look for it in:
+- A decisions summary written in chat (e.g., by grill-me or the user)
+- A handoff document (e.g., `/tmp/handoff-*.md`)
+- An existing project file with explicit decisions (e.g., `IMPROVE.md`
+  from the improve skill, a design doc, or a spec)
+- A conversation artifact (e.g., PRD, issue, or user-written notes)
+
+Use the decisions summary as the sole source of truth for what to build
+and how. Do not re-derive decisions from scratch.
 
 ### 2. Present the plan in chat
 Write the plan directly in chat using this structure:
@@ -65,6 +72,7 @@ End with: "Ready to start implementing, or anything to adjust?"
   describe actions at a high level
 - Testing notes must be specific and derived from this plan — never generic
 - Never write PLAN.md without asking first — chat is always the default
-- Never run without a decisions summary present in the conversation.
-  The summary can come from any source — grill-me, a user-written
-  summary, or a handoff document
+- Never run without a decisions summary present in the conversation or
+  a project document. The summary can come from any source — grill-me,
+  a user-written summary, a handoff document (`/tmp/handoff-*.md`), an
+  `IMPROVE.md`, a design doc, a spec, or any other structured artifact

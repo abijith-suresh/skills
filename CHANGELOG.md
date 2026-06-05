@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-06-05
+
+- `skills/handoff/SKILL.md`: new handoff skill — writes a standalone session summary
+  with suggested next skills to the OS temp directory for cross-session continuity
+- `skills/handoff/README.md`: install instructions, trigger phrases, and workflow
+  overview for handoff
+
 ### Changed — 2026-06-05
 
 - `skills/grill-me/SKILL.md`: decoupled from plan — removed all name references to the
@@ -18,10 +25,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   the decisions summary; no longer refuses to run without a grill-me session
 - `skills/plan/README.md`: removed `Requirements` section referencing grill-me;
   updated descriptions to reflect source-agnostic consumption
-- `skills/handoff/SKILL.md`: new handoff skill — writes a standalone session summary
-  with suggested next skills to the OS temp directory for cross-session continuity
-- `skills/handoff/README.md`: install instructions, trigger phrases, and workflow
-  overview for handoff
 - `README.md`: updated `plan` and `grill-me` catalog descriptions; added `handoff`
   to catalog and bumped badge count to 14
 
