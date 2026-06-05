@@ -1,27 +1,35 @@
 ---
 name: plan
 description: >-
-  Present a concrete implementation plan in chat based on the grill-me
-  decisions summary. Use when the user invokes the plan skill after a
-  grill-me session, says "present the plan", "use the plan skill", or
-  "now make the plan". Always runs after grill-me. Does not explore the
-  codebase or ask clarifying questions — grill-me already handled both.
+  Present a concrete implementation plan in chat based on a decisions
+  summary. Use when the user has a clear set of decisions and needs an
+  implementable plan, says "present the plan", "use the plan skill",
+  or "now make the plan". Does not explore the codebase or ask
+  clarifying questions — assumes decisions are already made.
 ---
 
 # Plan
 
 ## What this skill does
-Reads the grill-me decisions summary from the conversation and produces a
-concrete, human-readable implementation plan in chat. Does not re-explore
-the codebase. Does not ask clarifying questions. Writes to a file only if
-explicitly asked.
+Reads a decisions summary from the conversation and produces a concrete,
+human-readable implementation plan in chat. Does not re-explore the
+codebase — the decisions summary is the sole source of truth. Does not
+ask clarifying questions — assumes decisions are already made. Writes
+to a file only if explicitly asked.
 
 ## Steps
 
 ### 1. Read the decisions summary
-Find the decisions summary written by grill-me earlier in the conversation.
-Use it as the sole source of truth for what to build and how. Do not
-re-derive decisions from scratch.
+Find a decisions summary earlier in the conversation or in a project
+document. Look for it in:
+- A decisions summary written in chat (e.g., by grill-me or the user)
+- A handoff document (e.g., `/tmp/handoff-*.md`)
+- An existing project file with explicit decisions (e.g., `IMPROVE.md`
+  from the improve skill, a design doc, or a spec)
+- A conversation artifact (e.g., PRD, issue, or user-written notes)
+
+Use the decisions summary as the sole source of truth for what to build
+and how. Do not re-derive decisions from scratch.
 
 ### 2. Present the plan in chat
 Write the plan directly in chat using this structure:
@@ -56,10 +64,15 @@ If the user says no, or does not answer, do not write it.
 End with: "Ready to start implementing, or anything to adjust?"
 
 ## Rules
-- No codebase exploration — grill-me already did it
-- No clarifying questions — grill-me already resolved them
+- No codebase exploration — the decisions summary is the sole source of truth
+- No clarifying questions — the decisions summary is assumed to be complete.
+  If any decision is ambiguous, flag it in the plan and ask the user to
+  resolve it
 - Steps must name the files and components to be touched, not just
   describe actions at a high level
 - Testing notes must be specific and derived from this plan — never generic
 - Never write PLAN.md without asking first — chat is always the default
-- Never run without a grill-me decisions summary present in the conversation
+- Never run without a decisions summary present in the conversation or
+  a project document. The summary can come from any source — grill-me,
+  a user-written summary, a handoff document (`/tmp/handoff-*.md`), an
+  `IMPROVE.md`, a design doc, a spec, or any other structured artifact

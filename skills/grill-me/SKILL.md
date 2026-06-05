@@ -12,8 +12,8 @@ description: >-
 
 ## What this skill does
 Explores the codebase silently, then interviews you one question at a time
-until shared understanding is reached. Always pairs with the plan skill —
-grill-me runs first, plan runs after.
+until shared understanding is reached. Produces a decisions summary that can
+feed into planning, implementation, or a handoff to another session.
 
 ## Steps
 
@@ -52,11 +52,15 @@ directly in chat:
 ...
 ---
 
-This summary is the handoff document for the plan skill.
+This summary captures every decision made. Use it as the source of truth for
+the next step — whether that's planning, implementation, or a handoff to
+another session.
 
-### 5. Prompt the user to invoke plan
+### 5. Wrap up
 End with:
-> Shared understanding reached. Invoke the plan skill when you are ready.
+> Shared understanding reached. Ready for the next step? You can ask me to
+> plan the implementation, start building, or use the handoff skill to
+> persist this for another session.
 
 ## Rules
 - Silent codebase exploration — no narration, go straight to the first question
@@ -64,4 +68,4 @@ End with:
 - Always include a recommended answer for every question
 - Freeform — no prescribed topic checklist, work from what the user describes
 - Never write to any file
-- Never present an implementation plan — that is the plan skill's job
+- Never present an implementation plan — this skill only interviews and produces a decisions summary
