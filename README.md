@@ -1,7 +1,7 @@
 # Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 12](https://img.shields.io/badge/Skills-12-green.svg)](#skill-catalog)
+[![Skills: 14](https://img.shields.io/badge/Skills-14-green.svg)](#skill-catalog)
 
 Practical AI agent skills for planning, investigation, research, review,
 codebase improvement, clean commits, PRs, and TDD.
@@ -90,8 +90,9 @@ src/
 
 | Skill | Source | Description |
 | --- | --- | --- |
-| `plan` | [README](skills/plan/README.md) | Present a concrete implementation plan in chat based on the grill-me decisions summary. |
+| `plan` | [README](skills/plan/README.md) | Present a concrete implementation plan in chat based on a decisions summary. |
 | `grill-me` | [README](skills/grill-me/README.md) | Interview the user relentlessly about a plan or design until shared understanding is reached. |
+| `handoff` | [README](skills/handoff/README.md) | Compact the current conversation into a handoff document for another agent or session to pick up. |
 | `commit` | [README](skills/commit/README.md) | Inspect the diff, split changes by intent, and create clean conventional commits. |
 | `open-pr` | [README](skills/open-pr/README.md) | Push the current branch and open a new pull request on GitHub using the `gh` CLI. Detects if a PR already exists and directs the user to use `update-pr` instead. |
 | `update-pr` | [README](skills/update-pr/README.md) | Regenerate and update an existing pull request's title and body on GitHub using the `gh` CLI. |
