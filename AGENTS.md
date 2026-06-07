@@ -1,37 +1,61 @@
 # AGENTS.md
 
-## What this repo is
+## Document Ownership
 
-This is a personal collection of AI agent skills. Each skill is a
-`SKILL.md` file that instructs an AI coding agent how to perform a
-specific workflow — planning, committing, reviewing, testing, researching,
-and so on.
+This file is the source of truth for how AI agents should work within
+this repository. It defines the expected behavior of all agents, the
+standards for skill authoring, and the rules for maintaining project
+truth documents.
 
-Skills follow the Agent Skills specification:
-https://agentskills.io/specification
+When an agent works in this repository, it must follow this file. When
+the project evolves, this file must be updated before any other file.
 
----
+## Agent Behavior
 
-## Understanding how agent skills work
+### Core expectations
 
-Before writing or significantly updating a skill, use the `research` skill
-to clone a reference collection and read how mature skills are structured.
-Good starting points:
+1. **Respect the skill catalog as code.** Skills in `skills/` are the
+   product. Changes to SKILL.md or README.md files must follow the
+   conventions below. Treat them like source files, not loose markdown.
 
-- `anthropics/skills` — canonical templates and specification-aligned examples
-- `mattpocock/skills` — strong workflow and architecture language patterns
-- `addyosmani/agent-skills` — broad engineering workflow collection
-- `muratcankoylan/Agent-Skills-for-Context-Engineering` — context-engineering patterns
-- `vercel-labs/agent-skills` — product and engineering skill examples
+2. **Use the `commit` skill for all commits.** All commits follow
+   conventional commit format. Commits are split by intent — each commit
+   represents exactly one reason to change. Never push to `main`
+   directly. Open a PR from a feature branch.
 
-Clone whichever is most relevant to the task, read the skill files, then
-apply those patterns here.
+3. **Read `docs/CONTEXT.md` before making scope decisions.** When deciding
+   whether something belongs in this project, `CONTEXT.md` is authoritative.
 
----
+4. **Read `docs/ARCHITECTURE.md` before making structural changes.** When
+   adding components, changing the build system, or modifying the docs site,
+   `ARCHITECTURE.md` describes how things fit together.
 
-## Skill structure
+5. **No skill invokes another skill by name.** Skills are atomic and
+   self-contained. An agent may compose multiple skills in a session, but
+   no SKILL.md text should say "use the plan skill" or "run the commit
+   skill."
 
-Each skill lives in its own directory under `skills/` at the repo root:
+### When to use skills
+
+Skills are invoked automatically when conversation triggers match. An
+agent should load a skill when the user says something matching the
+skill's `description` field. Do not load skills speculatively — wait
+for a clear trigger.
+
+### When to create a skill
+
+A workflow qualifies as a skill when:
+- It is done repeatedly (daily or near-daily).
+- Different agents produce inconsistent results for the same task.
+- The workflow has clear steps, rules, and failure conditions.
+
+A workflow does not qualify when:
+- It is rarely used or highly context-specific — use a prompt instead.
+- The behavior varies so much by project that a single set of rules
+  cannot cover it.
+- It is a one-line instruction that doesn't benefit from structure.
+
+## Skill Structure
 
 ```
 skills/
@@ -43,15 +67,10 @@ skills/
     assets/       ← optional templates/resources
 ```
 
-Prefer `references/` over loose top-level `.md` files when a skill needs
-supporting documentation.
-
 Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
 `review`, `tdd`, `research`. No namespacing.
 
----
-
-## SKILL.md format
+## SKILL.md Format
 
 ```markdown
 ---
@@ -68,22 +87,15 @@ description: >-
 [Content: intent, workflow, rules]
 ```
 
-Frontmatter: `name` and `description` only. No `metadata` block. The
-description is the most important field — it must be specific enough that
-an agent can decide at a glance whether this skill applies.
+Frontmatter: `name` and `description` only. No `metadata` block.
 
 ### Description pattern
 
-The `description` field follows a consistent trigger-first format.
-See any SKILL.md under `skills/` for real examples: first sentence
-says what the skill does (active voice, no branding), then "Use when"
-clauses enumerate trigger phrases the agent matches on. A "Do NOT
-trigger" clause is added only when a common phrasing could cause
-a false positive.
+First sentence says what the skill does (active voice). Then "Use when"
+clauses enumerate trigger phrases. A "Do NOT trigger" clause is added
+only when a common phrasing could cause a false positive.
 
----
-
-## README.md format
+## README.md Format
 
 ```markdown
 # <skill-name>
@@ -91,84 +103,83 @@ a false positive.
 [One sentence description]
 
 ## What This Skill Covers
-
 - **Capability 1** — brief explanation
 - **Capability 2** — brief explanation
 
 ## Install
-
-\```bash
 npx skills add abijith-suresh/skills --skill <skill-name>
-\```
 
 ## Use
-
 - "[trigger phrase]"
 - "[trigger phrase]"
 
 ## Requirements (optional)
-
-- [External tool or precondition, with link if applicable]
+- [External tool or precondition]
 
 ## How it works
-
 1. **Step name** — description.
 2. **Step name** — description.
 
 ## Resources (optional)
-
 - [External doc link]
 - [Related file in this skill]
 ```
 
-Sections **must** appear in this order. `## What This Skill Covers`, `## Install`, `## Use`, and `## How it works` are mandatory. `## Requirements` and `## Resources` are optional — include them only when relevant.
+Sections must appear in this order. `What This Skill Covers`, `Install`,
+`Use`, and `How it works` are mandatory. `Requirements` and `Resources`
+are optional.
 
----
+## Truth Maintenance Rules
 
-## Design principles
+When the project evolves, update truth documents in this order:
 
-- **Atomic**: each skill does one thing. No skill orchestrates another
-  by name.
-- **Self-contained**: a skill should make sense and be useful without
-  any other skill in this collection.
-- **Platform-agnostic**: skills detect context (GitHub vs GitLab,
-  language, framework) at runtime rather than being pre-configured.
-- **Intent over implementation**: skills describe what to do and why,
-  not how to do it in a specific language or framework.
+1. **`docs/CONTEXT.md`** — if scope, goals, non-goals, or constraints change.
+2. **`docs/ARCHITECTURE.md`** — if the structure, data flow, components,
+   or technical decisions change.
+3. **`docs/CONTRIBUTING.md`** — if the development workflow, conventions,
+   or prerequisites change.
+4. **This file** — if agent behavior expectations or skill authoring
+   conventions change.
+5. **`README.md`** — if the catalog, badge count, or install instructions change.
+6. **`CHANGELOG.md`** — always add an entry under `[Unreleased]` for every
+   change. Merge into an existing date section if one already exists. Create
+   a new `### Added/Changed/Removed — YYYY-MM-DD` section only if none exists
+   for today.
 
----
+## Creating a New Skill
 
-## Creating a new skill
+1. Research reference implementations if the workflow is non-trivial.
+   Clone one of these reference repos and read their skill structure:
+   - `anthropics/skills`
+   - `mattpocock/skills`
+   - `addyosmani/agent-skills`
+   - `muratcankoylan/Agent-Skills-for-Context-Engineering`
+   - `vercel-labs/agent-skills`
+2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter.
+3. Create `skills/<skill-name>/README.md` following the format above.
+4. Update the catalog table and badge count in `README.md`.
+5. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
+6. Install the skill locally by replacing the directory at
+   `~/.agents/skills/<skill-name>/`.
 
-1. Use the `research` skill to read reference implementations if the
-   workflow is non-trivial
-2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter
-3. Create `skills/<skill-name>/README.md` with install instructions and trigger
-   phrases
-4. Update the catalog table in the root `README.md`
-5. Update the badge count in the root `README.md`
-6. Add an entry to `CHANGELOG.md` under `[Unreleased]`. If a `### Changed — YYYY-MM-DD`
-   section with today's date already exists, add the entry there instead of
-   creating a duplicate section. If it doesn't exist, create a new section
-   with `### Changed — YYYY-MM-DD`.
-7. Install the skill locally by replacing the whole directory at
-   `~/.agents/skills/<skill-name>/`
+## Updating an Existing Skill
 
-## Updating an existing skill
-
-1. Edit `skills/<skill-name>/SKILL.md` (and any supporting files)
-2. If the description or trigger phrases changed, update `skills/<skill-name>/README.md`
-3. Add an entry to `CHANGELOG.md` under `[Unreleased]`. If a
-   `### Changed — YYYY-MM-DD` section with today's date already exists,
-   add the entry there instead of creating a duplicate section.
+1. Edit `skills/<skill-name>/SKILL.md` (and any supporting files).
+2. If the description or trigger phrases changed, update
+   `skills/<skill-name>/README.md`.
+3. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
 4. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
-   so stale files are removed
+   so stale files are removed.
 
----
+## Docs Site
 
-## Committing and pushing
+The Astro site at `src/` renders skill content from `skills/`. It uses
+Tailwind v4, Astro content collections, and the Swiss Style design system.
+Design tokens are in `src/styles/global.css`. Components are in
+`src/components/`. See `docs/ARCHITECTURE.md` for the full technical design.
 
-Use the `commit` skill to create clean conventional commits. Push to a
-feature branch and open a PR — never push directly to `main`. Branch
-protection is enabled on `main`: linear history required, force pushes
-blocked, PRs required, PR title must follow conventional commit format.
+## Committing and Pushing
+
+Use conventional commits. Push to a feature branch and open a PR.
+Never push directly to `main`. Branch protection requires linear history,
+PRs, and conventional commit titles.
