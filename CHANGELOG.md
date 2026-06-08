@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-06-07
+
+- `skills/trace-feature/SKILL.md`: new trace-feature skill — traces how a
+  specific feature or code path works in the current repo from entry to
+  side effects; read-only by default with cited symbols and a surfaced
+  test surface
+- `skills/trace-feature/README.md`: install instructions, trigger phrases,
+  and workflow overview for trace-feature
+- `skills/diagnose/SKILL.md`: new diagnose skill — disciplined debugging
+  loop for hard bugs and performance regressions; feedback-loop first,
+  phased reproduce → minimise → hypothesise → instrument, regression
+  test required
+- `skills/diagnose/README.md`: install instructions, trigger phrases,
+  and workflow overview for diagnose
+
+### Removed — 2026-06-07
+
+- `skills/investigate/SKILL.md` and `skills/investigate/README.md`:
+  removed the catch-all investigate skill — its description triggered on
+  generic verbs ("analyze", "investigate", "deep dive") and fired for
+  unrelated requests; replaced by `trace-feature` (working code paths)
+  and `diagnose` (broken behavior), each with narrower, non-overlapping
+  trigger phrases
+
+### Changed — 2026-06-07
+
+- `README.md`: replaced `investigate` with `trace-feature` and `diagnose`
+  in the catalog; bumped badge count to 15
+
 ### Added — 2026-06-05
 
 - `skills/handoff/SKILL.md`: new handoff skill — writes a standalone session summary
