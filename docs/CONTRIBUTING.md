@@ -57,23 +57,18 @@ bun run preview   # Preview the built site (http://localhost:4321/skills/)
    See AGENTS.md for recommended reference repos.
 2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter
    (`name` and `description` only).
-3. Create `skills/<skill-name>/README.md` with the standardized sections:
-   What This Skill Covers, Install, Use, How it works. Optionally:
-   Requirements, Resources.
-4. Update the skill catalog table in `README.md`.
-5. Update the badge count in `README.md`.
-6. Add an entry to `CHANGELOG.md` under `[Unreleased]`. Merge into an
+3. Update the skill catalog table in `README.md`.
+4. Update the badge count in `README.md`.
+5. Add an entry to `CHANGELOG.md` under `[Unreleased]`. Merge into an
    existing date section if one exists for today.
-7. Install locally: replace `~/.agents/skills/<skill-name>/` with the
+6. Install locally: replace `~/.agents/skills/<skill-name>/` with the
    new skill directory.
 
 ## Updating an Existing Skill
 
 1. Edit `skills/<skill-name>/SKILL.md` (and any supporting files).
-2. If the description or trigger phrases changed, update
-   `skills/<skill-name>/README.md` to match.
-3. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
-4. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`.
+2. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
+3. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`.
 
 ## Design Principles
 
@@ -93,8 +88,7 @@ When modifying the Astro site:
 - Design tokens are in `src/styles/global.css` under `@theme inline`.
 - Components live in `src/components/`.
 - Content collection config is in `src/content.config.ts`.
-- Business logic (catalog building, path building, README parsing) lives
-  in `src/lib/`.
+- Business logic (catalog building, path building) lives in `src/lib/`.
 
 Maintain the Swiss Style design language: dark-only, high contrast,
 typography-driven, minimal decoration.

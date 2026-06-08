@@ -15,8 +15,8 @@ the project evolves, this file must be updated before any other file.
 ### Core expectations
 
 1. **Respect the skill catalog as code.** Skills in `skills/` are the
-   product. Changes to SKILL.md or README.md files must follow the
-   conventions below. Treat them like source files, not loose markdown.
+   product. Changes to SKILL.md files must follow the conventions below.
+   Treat them like source files, not loose markdown.
 
 2. **Use the `commit` skill for all commits.** All commits follow
    conventional commit format. Commits are split by intent — each commit
@@ -61,7 +61,6 @@ A workflow does not qualify when:
 skills/
   <skill-name>/
     SKILL.md      ← the skill definition (required)
-    README.md     ← install instructions and example prompts (required)
     references/   ← optional supporting docs
     scripts/      ← optional deterministic helper scripts
     assets/       ← optional templates/resources
@@ -95,40 +94,6 @@ First sentence says what the skill does (active voice). Then "Use when"
 clauses enumerate trigger phrases. A "Do NOT trigger" clause is added
 only when a common phrasing could cause a false positive.
 
-## README.md Format
-
-```markdown
-# <skill-name>
-
-[One sentence description]
-
-## What This Skill Covers
-- **Capability 1** — brief explanation
-- **Capability 2** — brief explanation
-
-## Install
-npx skills add abijith-suresh/skills --skill <skill-name>
-
-## Use
-- "[trigger phrase]"
-- "[trigger phrase]"
-
-## Requirements (optional)
-- [External tool or precondition]
-
-## How it works
-1. **Step name** — description.
-2. **Step name** — description.
-
-## Resources (optional)
-- [External doc link]
-- [Related file in this skill]
-```
-
-Sections must appear in this order. `What This Skill Covers`, `Install`,
-`Use`, and `How it works` are mandatory. `Requirements` and `Resources`
-are optional.
-
 ## Truth Maintenance Rules
 
 When the project evolves, update truth documents in this order:
@@ -156,19 +121,16 @@ When the project evolves, update truth documents in this order:
    - `muratcankoylan/Agent-Skills-for-Context-Engineering`
    - `vercel-labs/agent-skills`
 2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter.
-3. Create `skills/<skill-name>/README.md` following the format above.
-4. Update the catalog table and badge count in `README.md`.
-5. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
-6. Install the skill locally by replacing the directory at
+3. Update the catalog table and badge count in `README.md`.
+4. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
+5. Install the skill locally by replacing the directory at
    `~/.agents/skills/<skill-name>/`.
 
 ## Updating an Existing Skill
 
 1. Edit `skills/<skill-name>/SKILL.md` (and any supporting files).
-2. If the description or trigger phrases changed, update
-   `skills/<skill-name>/README.md`.
-3. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
-4. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
+2. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
+3. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
    so stale files are removed.
 
 ## Docs Site

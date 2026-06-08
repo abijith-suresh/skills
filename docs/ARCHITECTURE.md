@@ -9,7 +9,6 @@ structure, component responsibilities, data flow, and design decisions.
 skills/                    ← canonical skill collection (source of truth)
   <skill-name>/
     SKILL.md               ← skill definition (required)
-    README.md              ← install instructions and example triggers (required)
     references/            ← optional supporting docs
     scripts/               ← optional deterministic helper scripts
     assets/                ← optional templates/resources
@@ -42,21 +41,16 @@ The body contains the skill's workflow: goals, steps, rules, failure
 conditions. No `metadata` block. Only `name` and `description` are allowed
 in frontmatter.
 
-Each skill directory also contains a `README.md` with standardized sections:
-What This Skill Covers, Install, Use, How it works, and optional Requirements
-and Resources.
-
 ## Data Flow
 
 ### Build time (Astro)
 
 ```
 skills/<name>/SKILL.md  ──→  content.config.ts (glob loader)  ──→  Astro collections
-skills/<name>/README.md ──→  content.config.ts (glob loader)  ──→  Astro collections
                                                                     │
                                               ┌─────────────────────┘
                                               ▼
-                              skill-catalog.ts (buildSkillSummaries, parseReadmeBody)
+                                    skill-catalog.ts (buildSkillSummaries)
                                               │
                                     ┌─────────┴─────────┐
                                     ▼                     ▼
@@ -66,23 +60,10 @@ skills/<name>/README.md ──→  content.config.ts (glob loader)  ──→  A
 
 ### Content types
 
-Two Astro content collections:
+One Astro content collection:
 
-1. **skillDefinitions** — globs `skills/*/SKILL.md`. Schema validates `name`
-   and `description` from frontmatter. ID is the directory slug.
-2. **skillReadmes** — globs `skills/*/README.md`. No schema — body is
-   parsed at page render time.
-
-Both collections use the same ID scheme (skill directory slug), so entries
-are joinable by ID.
-
-### README parser (`parseReadmeBody`)
-
-Parses README body into structured sections by matching `##` headings:
-What This Skill Covers, Install, Use, How it works, Requirements, Resources.
-The parser extracts the name from `# heading` and description from the first
-paragraph after it. This is intentionally simple — READMEs follow the
-standardized format defined in AGENTS.md.
+**skillDefinitions** — globs `skills/*/SKILL.md`. Schema validates `name`
+and `description` from frontmatter. ID is the directory slug.
 
 ### Site routing
 
@@ -105,8 +86,7 @@ SiteLayout (shell: head, nav, footer, scripts)
 └── pages/[skill].astro
     ├── SkillPageNav (back link)
     ├── skill hero (name, description, install command)
-    ├── SkillSection × N (parsed README sections)
-    └── SkillSection (SKILL.md rendered content)
+    └── prose container (full SKILL.md rendered content)
 ```
 
 ### Key components
@@ -154,7 +134,7 @@ Builds on push to `main`. Route base is `/skills/`.
 
 No tests are configured. `vitest` is in devDependencies but unused.
 The `test` script is a no-op. Candidate areas for test coverage:
-- `skill-catalog.ts` (buildSkillSummaries, parseReadmeBody)
+- `skill-catalog.ts` (buildSkillSummaries)
 - `site-paths.ts` (buildCatalogPath, buildSkillPath)
 - Content collection schema validation
 
@@ -164,10 +144,10 @@ The `test` script is a no-op. Candidate areas for test coverage:
   location. Moving them inside `src/` would couple the collection to the
   site build system. The site reads from `skills/` via Astro content
   collections.
-- **Custom README parser over a markdown library**: The parser extracts
-  structured data (sections, name, description) from markdown. Using a
-  full AST parser added complexity without benefit since all READMEs
-  follow the same template.
+- **SKILL.md as single source of truth**: Each skill contains only a
+  `SKILL.md` file. The site renders the full SKILL.md body directly via
+  Astro's content collections, eliminating the need for a separate
+  README parser or per-skill README files.
 - **Astro over a static generator**: Astro's content collections provide
   type-safe, validated markdown loading with frontmatter schemas. The
   site ships zero JavaScript to the client (except the copy button script
