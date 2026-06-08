@@ -8,8 +8,7 @@ import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from '../
 import { buildSkillPath } from '../lib/site-paths';
 
 const definitions = await getCollection('skillDefinitions');
-const readmes = await getCollection('skillReadmes');
-const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY, readmes);
+const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY);
 const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 ---
 

@@ -1,12 +1,10 @@
 ---
-import { marked } from 'marked';
 import { getCollection, getEntry, render } from 'astro:content';
 
 import InstallCommandBlock from '../components/InstallCommandBlock.astro';
 import SkillPageNav from '../components/SkillPageNav.astro';
-import SkillSection from '../components/SkillSection.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
-import { buildInstallCommand, buildSkillSummaries, parseReadmeBody, SKILLS_REPOSITORY } from '../lib/skill-catalog';
+import { buildInstallCommand, SKILLS_REPOSITORY } from '../lib/skill-catalog';
 import { buildCatalogPath } from '../lib/site-paths';
 
 export async function getStaticPaths() {
@@ -26,31 +24,12 @@ if (!definition) {
   throw new Error(`Missing skill definition for ${slug}.`);
 }
 
-const readmeEntry = await getEntry('skillReadmes', slug);
-const [summary] = buildSkillSummaries([definition]);
-
-const readmeBody = readmeEntry?.body ?? '';
-const parsed = readmeBody
-  ? parseReadmeBody(readmeBody)
-  : { name: summary.name, description: summary.description, sections: [] };
-
-const { Content: DefinitionContent } = await render(definition);
+const { Content } = await render(definition);
 const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
-
-const installSection = parsed.sections.find((s) => s.heading === 'Install');
-const useSection = parsed.sections.find((s) => s.heading === 'Use');
-const whatItCoversSection = parsed.sections.find((s) => s.heading === 'What This Skill Covers');
-const howItWorksSection = parsed.sections.find((s) => s.heading === 'How it works');
-const requirementsSection = parsed.sections.find((s) => s.heading === 'Requirements');
-const resourcesSection = parsed.sections.find((s) => s.heading === 'Resources');
-
-function renderMarkdown(content: string): string {
-  return marked.parse(content, { async: false }) as string;
-}
 ---
 
-<SiteLayout title={`${parsed.name} | Skills`} description={parsed.description}>
+<SiteLayout title={`${definition.data.name} | Skills`} description={definition.data.description}>
   <SkillPageNav catalogPath={catalogPath} />
 
   <!-- Hero: skill name, description, install block -->
@@ -58,10 +37,10 @@ function renderMarkdown(content: string): string {
     <h1
       class="font-mono text-page-title font-bold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)]"
     >
-      {parsed.name}
+      {definition.data.name}
     </h1>
     <p class="text-muted-foreground mt-4 max-w-[var(--measure-narrow)] leading-[var(--leading-loose)]">
-      {parsed.description}
+      {definition.data.description}
     </p>
 
     <div class="mt-8">
@@ -69,35 +48,10 @@ function renderMarkdown(content: string): string {
     </div>
   </section>
 
-  {
-    whatItCoversSection && (
-      <SkillSection heading="What This Skill Covers" content={renderMarkdown(whatItCoversSection.content)} />
-    )
-  }
-  {
-    useSection && (
-      <SkillSection heading="Use" content={renderMarkdown(useSection.content)} />
-    )
-  }
-  {
-    howItWorksSection && (
-      <SkillSection heading="How It Works" content={renderMarkdown(howItWorksSection.content)} />
-    )
-  }
-  {
-    requirementsSection && (
-      <SkillSection heading="Requirements" content={renderMarkdown(requirementsSection.content)} />
-    )
-  }
-  {
-    resourcesSection && (
-      <SkillSection heading="Resources" content={renderMarkdown(resourcesSection.content)} />
-    )
-  }
-
-  <SkillSection heading="Agent Reference" subtitle="SKILL.md" variant="tinted">
-    <DefinitionContent />
-  </SkillSection>
+  <!-- Full SKILL.md rendered content -->
+  <section class="container-site pb-24">
+    <div class="prose prose-custom max-w-[var(--measure-wide)]">
+      <Content />
+    </div>
+  </section>
 </SiteLayout>
-
-
