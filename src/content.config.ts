@@ -16,15 +16,6 @@ const skillDefinitions = defineCollection({
   }),
 });
 
-const skillReadmes = defineCollection({
-  loader: glob({
-    base: './skills',
-    pattern: '*/README.md',
-    generateId: ({ entry }) => directorySlugFromEntry(entry),
-  }),
-});
-
 export const collections = {
   skillDefinitions,
-  skillReadmes,
 };
