@@ -74,6 +74,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `src/layouts/SiteLayout.astro`: moved `@font-face` declarations to inline
   `<style>` block to suppress Vite build-time resolution warnings for
   public-directory font files
+- **Install UX**: replaced "Copy" text button with clipboard/checkmark SVG
+  icon pair; co-located copy-to-clipboard event handler in
+  `InstallCommandBlock.astro` instead of the layout's inline script
+- **404 page**: added `src/pages/404.astro` with consistent site design and a
+  "Back to skills" link for unknown routes
+- **Dependency cleanup**: removed unused `@types/node` dev dependency
+- **Code cleanup**: removed `prose-custom` no-op class from `[skill].astro`;
+  removed `buildCatalogPath` indirection from `site-paths.ts`; removed
+  `findSkillSummary()` dead export from `skill-catalog.ts`; removed
+  `Grid System` CSS block (`.grid-site`/`.col-full`) from `global.css`;
+  inlined breadcrumb URL with `import.meta.env.BASE_URL`
+- **Copy updates**: changed hero title from "Personal AI agent skills." to
+  "Skills"; updated subtitle to "AI agent workflows I reach for every day.";
+  renamed "Installation" section to "Install" and "Summary" to "Description"
+  on skill detail pages
+- **Font path source of truth**: derived font `url()` paths from
+  `import.meta.env.BASE_URL` so they adapt if the deployment base changes
 
 ### Removed — 2026-06-08
 
