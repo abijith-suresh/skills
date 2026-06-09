@@ -18,10 +18,10 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 >
   <PageHero
     eyebrow="abijith-suresh/skills"
-    title="Personal AI agent skills."
-    description="A lightweight catalog of AI agent skills I reuse across projects. Browse, inspect, and install on any machine."
+    title="Skills"
+    description="AI agent workflows I reach for every day."
     sectionClass="pt-20 pb-10"
-    titleClass="[max-width:20ch]"
+    titleClass="max-w-[20ch]"
   >
     <div slot="actions">
       <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />
@@ -31,16 +31,18 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
   <section class="container-site pb-24">
     <SectionHeader eyebrow="Skills" as="h2" />
 
-    <div>
-      {skills.map((skill) => (
-        <a
-          href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)}
-          class="group block px-3 py-5 -mx-3 border-b border-border no-underline text-inherit transition-[padding-left,background-color,color] duration-[var(--duration-fast)] last:border-b-0 hover:bg-accent hover:pl-6"
-        >
-          <div class={`font-mono text-body-lg font-semibold leading-[var(--leading-compact)] text-text group-hover:text-[var(--color-card-hover-text)]`}>{skill.name}</div>
-          <p class={`text-body-sm text-muted-foreground mt-1 group-hover:text-[var(--color-card-hover-text)]`}>{skill.description}</p>
-        </a>
-      ))}
-    </div>
+    <ul class="list-none p-0 m-0">
+        {skills.map((skill) => (
+          <li>
+            <a
+              href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)}
+              class="group block px-3 py-5 -mx-3 border-b border-border no-underline text-inherit transition-colors duration-150 last:border-b-0 hover:bg-accent"
+            >
+              <div class="text-lg font-semibold leading-snug text-text group-hover:text-[var(--color-card-hover-text)]" translate="no">{skill.name}</div>
+              <p class="text-sm text-muted-foreground mt-1 group-hover:text-[var(--color-card-hover-text)]">{skill.description}</p>
+            </a>
+          </li>
+        ))}
+    </ul>
   </section>
 </SiteLayout>

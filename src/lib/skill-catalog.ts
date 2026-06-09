@@ -14,10 +14,10 @@ export function directorySlugFromEntry(entry: string): string {
 
 export function buildInstallCommand(repository: string, skillSlug?: string): string {
   if (!skillSlug) {
-    return `npx skills add ${repository}`;
+    return `npx skills@latest add ${repository}`;
   }
 
-  return `npx skills add ${repository} --skill ${skillSlug}`;
+  return `npx skills@latest add ${repository} --skill ${skillSlug}`;
 }
 
 export function buildSkillSummaries(
@@ -35,9 +35,4 @@ export function buildSkillSummaries(
     .sort((left, right) => left.name.localeCompare(right.name));
 }
 
-export function findSkillSummary(
-  summaries: SkillSummary[],
-  slug: string,
-): SkillSummary | undefined {
-  return summaries.find((summary) => summary.slug === slug);
-}
+

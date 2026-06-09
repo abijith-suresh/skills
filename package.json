@@ -16,18 +16,14 @@
     "test": "echo 'No tests configured'"
   },
   "dependencies": {
-    "@lucide/astro": "^1.16.0",
     "@tailwindcss/typography": "^0.5.19",
     "astro": "^6.3.3",
     "astro-expressive-code": "^0.42.0",
-    "marked": "^18.0.4",
     "tailwindcss": "4.2.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@tailwindcss/vite": "4.2.1",
-    "@types/node": "^25.8.0",
-    "typescript": "^6.0.3",
-    "vitest": "^4.1.6"
+    "typescript": "^6.0.3"
   }
 }
