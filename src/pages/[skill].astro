@@ -2,10 +2,9 @@
 import { getCollection, getEntry, render } from 'astro:content';
 
 import InstallCommandBlock from '../components/InstallCommandBlock.astro';
-import SkillPageNav from '../components/SkillPageNav.astro';
+import SectionHeader from '../components/SectionHeader.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import { buildInstallCommand, SKILLS_REPOSITORY } from '../lib/skill-catalog';
-import { buildCatalogPath } from '../lib/site-paths';
 
 export async function getStaticPaths() {
   const definitions = await getCollection('skillDefinitions');
@@ -14,44 +13,45 @@ export async function getStaticPaths() {
   }));
 }
 
-const slug = Astro.params.skill;
-if (!slug) {
-  throw new Error('Expected a skill slug.');
-}
+const slug = Astro.params.skill!;
 
 const definition = await getEntry('skillDefinitions', slug);
-if (!definition) {
-  throw new Error(`Missing skill definition for ${slug}.`);
-}
-
 const { Content } = await render(definition);
 const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
-const catalogPath = buildCatalogPath(import.meta.env.BASE_URL);
 ---
 
 <SiteLayout title={`${definition.data.name} | Skills`} description={definition.data.description}>
-  <SkillPageNav catalogPath={catalogPath} />
+  <article class="container-site pt-10 pb-24">
+    <nav class="mb-10" aria-label="Breadcrumb">
+      <a
+        href={import.meta.env.BASE_URL}
+        class="text-xs font-medium text-muted no-underline uppercase tracking-wider transition-colors duration-150 hover:text-text focus-visible:text-text py-2.5 inline-flex items-center"
+      >
+        Skills
+      </a>
+      <span class="text-xs text-muted mx-2" aria-hidden="true">/</span>
+      <span class="text-xs font-medium text-text uppercase tracking-wider" translate="no">
+        {definition.data.name}
+      </span>
+    </nav>
 
-  <!-- Hero: skill name, description, install block -->
-  <section class="container-site pt-10 pb-12">
-    <h1
-      class="font-mono text-page-title font-bold leading-[var(--leading-tight)] tracking-[var(--tracking-tight)]"
-    >
-      {definition.data.name}
-    </h1>
-    <p class="text-muted-foreground mt-4 max-w-[var(--measure-narrow)] leading-[var(--leading-loose)]">
-      {definition.data.description}
-    </p>
+    <h1 class="text-page-title font-bold leading-snug tracking-tight text-balance" translate="no">{definition.data.name}</h1>
 
-    <div class="mt-8">
+    <section>
+      <SectionHeader eyebrow="Install" />
       <InstallCommandBlock command={installCommand} />
-    </div>
-  </section>
+    </section>
 
-  <!-- Full SKILL.md rendered content -->
-  <section class="container-site pb-24">
-    <div class="prose prose-custom max-w-[var(--measure-wide)]">
-      <Content />
-    </div>
-  </section>
+    <section class="mt-16">
+      <SectionHeader eyebrow="Description" />
+      <p class="text-muted-foreground leading-relaxed">{definition.data.description}</p>
+    </section>
+
+    <section class="mt-16">
+      <SectionHeader eyebrow="SKILL.md" />
+      <div class="prose max-w-[var(--measure-wide)]">
+        <Content />
+      </div>
+    </section>
+  </article>
 </SiteLayout>

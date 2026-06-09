@@ -23,9 +23,9 @@ export default defineConfig({
         borderRadius: '0',
         borderColor: COLORS.border,
         codeFontFamily:
-          '"JetBrains Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace',
+          '"Geist Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace',
         codeFontSize: '0.875rem',
-        codeLineHeight: '1.6',
+        codeLineHeight: '1.625',
         codeBackground: COLORS.base,
         codeForeground: COLORS.text,
         frames: {

@@ -6,6 +6,89 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-06-09
+
+- **Design system overhaul**: replaced Manrope + JetBrains Mono with Geist
+  (Sans + Mono) throughout the site; removed decorative noise texture;
+  introduced an implied 12-column asymmetric grid system; removed monospace
+  headings from skill names and detail pages
+- **Skill detail page layout**: restructured `[skill].astro` to match
+  skills.sh format — skill name (H1) → install command → description →
+  full SKILL.md body; removed asymmetric RHS whitespace; replaced
+  "Back to Skills" nav with a minimal breadcrumb
+- **Typography audit**: aligned all line-height, letter-spacing, and
+  spacing tokens with Tailwind v4 canonical scale; removed arbitrary
+  Tailwind values in favor of native utilities (`tracking-tight`,
+  `leading-snug`, `duration-150`, `translate-x-0.5`, etc.)
+- **Accessibility audit**: added `text-balance` to all H1s; added
+  `translate="no"` to identifiers and code; fixed tap targets to
+  minimum 44px; added `aria-live="polite"` to copy button feedback;
+  added `tabindex="0"` to scrollable code blocks; fixed semantic HTML
+  (`<ul>`/`<li>` for skill list); added `touch-action: manipulation`
+  and `-webkit-tap-highlight-color: transparent`
+- **Performance**: added `rel="preload"` for both Geist font files;
+  removed dead `ClientRouter` import and unused view-transition CSS;
+  removed dead `astro:page-load` event listeners from ScrollReveal
+- `src/styles/global.css`: added `@font-face` declarations for Geist Variable
+  and Geist Mono Variable; added `.grid-site`, `.col-main`, `.col-full` grid
+  utilities; removed `body::before` fractal noise overlay; renamed custom
+  tokens to avoid shadowing Tailwind utilities (`--leading-tight` →
+  `--leading-snug`); fixed spacing values off the 4px grid
+- `src/layouts/SiteLayout.astro`: removed Google Fonts preconnect and
+  Manrope/JetBrains Mono stylesheet links; added `theme-color` meta tag
+  and font preload hints
+- `src/pages/index.astro`: skill list uses semantic `<ul>`/`<li>`;
+  removed layout-triggering `hover:pl-6` transition; added
+  `translate="no"` to skill identifiers
+- `src/components/InstallCommandBlock.astro`: added `tabindex="0"` and
+  `aria-label` to scrollable `<code>`; added `aria-live` region for
+  copy feedback; increased copy button tap target to 44px minimum
+- `src/components/Footer.astro`: increased GitHub link tap target to
+  44px minimum; replaced arbitrary `[2px]` translate with
+  `translate-x-0.5`; improved link label to "Source on GitHub"
+- `astro.config.mjs`: updated `codeFontFamily` to Geist Mono; aligned
+  `codeLineHeight` to `1.625` (Tailwind `leading-relaxed`)
+- `src/pages/[skill].astro`: restructured detail page with explicit
+  "Installation", "Summary", and "SKILL.md" sections using `<SectionHeader>`
+  (consistent with the landing page); kept skill name as H1; removed
+  `bg-card` wrapper and `hr` separators in favor of the shared
+  `SectionHeader` component
+- `src/components/InstallCommandBlock.astro`: reverted `showLabel` prop
+- `src/styles/global.css`: removed dead `body::before { display: none; }`
+  from print styles (the noise texture itself was already removed)
+- `src/components/Footer.astro`: reverted link label back to "GitHub"
+- `src/styles/global.css`: fixed font `url()` paths to use `/skills/fonts/...`
+  (matching the site's base URL); removed all dead scroll-reveal CSS
+  (`[data-scroll-reveal]`, `.scroll-revealed`, `.scroll-stagger-*`)
+  and the `--scroll-reveal-distance` / `--stagger-step` custom properties
+- `src/components/ScrollReveal.astro`: removed — no elements used
+  `data-scroll-reveal`, so the entire component and its IntersectionObserver
+  logic was dead code
+- `package.json`: removed unused dependencies `@lucide/astro`, `geist`,
+  `marked`, and `vitest`; removed dead `test` script
+- `src/lib/skill-catalog.ts`: removed unused `findSkillSummary()` export
+- `src/styles/global.css`: removed dead `.col-main` CSS class; removed
+  unused custom properties (`--color-card`, `--text-section-title`,
+  `--leading-snug`, `--duration-normal`, `--duration-slow`, `--z-skip-link`,
+  `--measure-narrow`)
+- `src/layouts/SiteLayout.astro`: moved `@font-face` declarations to inline
+  `<style>` block to suppress Vite build-time resolution warnings for
+  public-directory font files
+
+### Removed — 2026-06-08
+
+- All 15 per-skill `README.md` files (`skills/*/README.md`): removed in favor
+  of rendering `SKILL.md` directly, matching the canonical Agent Skills
+  ecosystem pattern (skills.sh, anthropics, vercel-labs, mattpocock)
+- `src/content.config.ts`: removed `skillReadmes` content collection
+- `src/lib/skill-catalog.ts`: removed `parseReadmeBody`, `ReadmeSection`,
+  `ParsedReadme`, `ReadmeLike`, and README-dependent `buildSkillSummaries`
+  logic
+- `AGENTS.md`: removed README.md authoring requirements and format section
+- `docs/ARCHITECTURE.md`: updated data flow diagram, component tree, and
+  design decisions to reflect single-collection architecture
+- `docs/CONTRIBUTING.md`: removed README creation and update steps
+
 ### Added — 2026-06-07
 
 - `skills/trace-feature/SKILL.md`: new trace-feature skill — traces how a

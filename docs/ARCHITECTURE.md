@@ -104,15 +104,15 @@ SiteLayout (shell: head, nav, footer, scripts)
 
 ## Design System
 
-Swiss Style (International Typographic Style) — dark-only, high contrast,
-typography-driven. Tokens are defined as CSS custom properties via
-`@theme inline` in `global.css`.
+Swiss-inspired developer tooling aesthetic — dark-only, high contrast,
+typography-driven with an implied 12-column asymmetric grid. Tokens are
+defined as CSS custom properties via `@theme inline` in `global.css`.
 
 Key tokens: `--color-base` (#111111), `--color-text` (#F4F4F4),
 `--color-accent` (#F5A623), `--color-border` (#2A2A2A).
 
-Fonts: Manrope (sans), JetBrains Mono (mono). Served via Google Fonts with
-preconnect hints.
+Fonts: Geist Sans (body, headings), Geist Mono (code). Self-hosted variable
+font files (woff2) with `font-display: swap`.
 
 Accessibility: focus-visible styles with accent outline, skip-to-content
 link, `prefers-reduced-motion` support, forced-colors media query, print
