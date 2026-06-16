@@ -1,55 +1,62 @@
 ---
-import { getCollection, getEntry, render } from 'astro:content';
+import { getCollection, getEntry, render } from "astro:content";
 
-import InstallCommandBlock from '../components/InstallCommandBlock.astro';
-import SectionHeader from '../components/SectionHeader.astro';
-import SiteLayout from '../layouts/SiteLayout.astro';
-import { buildInstallCommand, SKILLS_REPOSITORY } from '../lib/skill-catalog';
+import InstallCommandBlock from "../components/InstallCommandBlock.astro";
+import SiteLayout from "../layouts/SiteLayout.astro";
+import { buildInstallCommand, SKILLS_REPOSITORY } from "../lib/skill-catalog";
 
 export async function getStaticPaths() {
-  const definitions = await getCollection('skillDefinitions');
+  const definitions = await getCollection("skillDefinitions");
   return definitions.map((definition) => ({
     params: { skill: definition.id },
   }));
 }
 
-const slug = Astro.params.skill!;
+const slug = Astro.params.skill;
+if (!slug) {
+  throw new Error("Skill route parameter is required");
+}
 
-const definition = await getEntry('skillDefinitions', slug);
+const definition = await getEntry("skillDefinitions", slug);
+if (!definition) {
+  throw new Error(`Skill definition not found: ${slug}`);
+}
+
 const { Content } = await render(definition);
 const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 ---
 
 <SiteLayout title={`${definition.data.name} | Skills`} description={definition.data.description}>
-  <article class="container-site pt-10 pb-24">
-    <nav class="mb-10" aria-label="Breadcrumb">
-      <a
-        href={import.meta.env.BASE_URL}
-        class="text-xs font-medium text-muted no-underline uppercase tracking-wider transition-colors duration-150 hover:text-text focus-visible:text-text py-2.5 inline-flex items-center"
-      >
-        Skills
-      </a>
-      <span class="text-xs text-muted mx-2" aria-hidden="true">/</span>
-      <span class="text-xs font-medium text-text uppercase tracking-wider" translate="no">
+  <article class="page-shell">
+    <nav class="breadcrumb eyebrow" aria-label="Breadcrumb">
+      <a href={import.meta.env.BASE_URL}>Skills</a>
+      <span aria-hidden="true">/</span>
+      <span translate="no">
         {definition.data.name}
       </span>
     </nav>
 
-    <h1 class="text-page-title font-bold leading-snug tracking-tight text-balance" translate="no">{definition.data.name}</h1>
+    <h1 translate="no">{definition.data.name}</h1>
 
-    <section>
-      <SectionHeader eyebrow="Install" />
+    <section class="detail-section">
+      <div class="section-header">
+        <h2 class="eyebrow">Install</h2>
+      </div>
       <InstallCommandBlock command={installCommand} />
     </section>
 
-    <section class="mt-16">
-      <SectionHeader eyebrow="Description" />
-      <p class="text-muted-foreground leading-relaxed">{definition.data.description}</p>
+    <section class="detail-section">
+      <div class="section-header">
+        <h2 class="eyebrow">Description</h2>
+      </div>
+      <p class="page-description">{definition.data.description}</p>
     </section>
 
-    <section class="mt-16">
-      <SectionHeader eyebrow="SKILL.md" />
-      <div class="prose max-w-[var(--measure-wide)]">
+    <section class="detail-section">
+      <div class="section-header">
+        <h2 class="eyebrow">SKILL.md</h2>
+      </div>
+      <div class="prose">
         <Content />
       </div>
     </section>

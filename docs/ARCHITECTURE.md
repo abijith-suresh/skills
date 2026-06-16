@@ -82,10 +82,11 @@ the site at build time.
 SiteLayout (shell: head, nav, footer, scripts)
 ├── pages/index.astro
 │   ├── PageHero (title, description, install-everything)
-│   └── SectionHeader + skill list (catalog)
+│   └── section header + skill list (catalog)
 └── pages/[skill].astro
-    ├── SkillPageNav (back link)
-    ├── skill hero (name, description, install command)
+    ├── breadcrumb
+    ├── install command
+    ├── description
     └── prose container (full SKILL.md rendered content)
 ```
 
@@ -93,30 +94,33 @@ SiteLayout (shell: head, nav, footer, scripts)
 
 | Component | Responsibility |
 |---|---|
-| `SiteLayout` | HTML shell, meta tags, fonts, view transitions, copy-to-clipboard script |
+| `SiteLayout` | HTML shell, meta tags, font preloads, skip link, footer |
 | `PageHero` | Landing page hero with eyebrow, title, description, action slot |
-| `SectionHeader` | Thin border-top divider with eyebrow text |
-| `SkillSection` | Content section with heading and body; `tinted` variant for the SKILL.md block |
-| `SkillPageNav` | Back link to catalog with arrow icon |
 | `InstallCommandBlock` | Code block with copy button for install commands |
-| `ScrollReveal` | IntersectionObserver-based stagger animation (respects reduced-motion) |
 | `Footer` | GitHub link and copyright |
 
 ## Design System
 
 Swiss-inspired developer tooling aesthetic — dark-only, high contrast,
-typography-driven with an implied 12-column asymmetric grid. Tokens are
-defined as CSS custom properties via `@theme inline` in `global.css`.
+typography-driven, and minimally decorated. Tokens are defined as CSS custom
+properties in `global.css`.
 
-Key tokens: `--color-base` (#111111), `--color-text` (#F4F4F4),
-`--color-accent` (#F5A623), `--color-border` (#2A2A2A).
+Key tokens: `--color-bg`, `--color-text`, `--color-muted`,
+`--color-border`, and neutral surface tints.
 
-Fonts: Geist Sans (body, headings), Geist Mono (code). Self-hosted variable
-font files (woff2) with `font-display: swap`.
+Fonts: IBM Plex Sans (body, headings) and IBM Plex Mono (code). Self-hosted
+woff2 font files with `font-display: swap`.
 
-Accessibility: focus-visible styles with accent outline, skip-to-content
-link, `prefers-reduced-motion` support, forced-colors media query, print
+Accessibility: focus-visible styles, skip-to-content link,
+`prefers-reduced-motion` support, forced-colors media query, and print
 stylesheet.
+
+## Markdown Rendering
+
+Skill Markdown is rendered through `@astrojs/markdown-satteri` with
+`satteri-expressive-code` for code blocks. This matches the reference site
+stack and keeps code block styling in Astro's Markdown pipeline instead of a
+separate integration.
 
 ## Deployment
 
@@ -125,6 +129,8 @@ Builds on push to `main`. Route base is `/skills/`.
 
 ## CI
 
+- **CI workflow**: `.github/workflows/ci.yml` — installs dependencies and runs
+  `bun run verify` on pull requests.
 - **Deploy workflow**: `.github/workflows/deploy.yml` — builds and deploys
   on push to main.
 - **PR title check**: `.github/workflows/pr-title.yml` — enforces
@@ -132,11 +138,9 @@ Builds on push to `main`. Route base is `/skills/`.
 
 ## Testing
 
-No tests are configured. `vitest` is in devDependencies but unused.
-The `test` script is a no-op. Candidate areas for test coverage:
-- `skill-catalog.ts` (buildSkillSummaries)
-- `site-paths.ts` (buildCatalogPath, buildSkillPath)
-- Content collection schema validation
+Vitest covers catalog metadata and route generation helpers. The `verify`
+script runs type checking, Biome linting, format checks, tests, and a
+production build.
 
 ## Design Decisions
 

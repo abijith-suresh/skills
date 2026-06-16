@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-06-16
+
+- Aligned the docs site with the reference Astro projects: Satteri Markdown,
+  IBM Plex typography, neutral CSS design tokens, Biome, Vitest, and PR CI.
+- Updated docs-site architecture and contribution docs to reflect the current
+  component tree, verification gate, and Markdown rendering stack.
+
 ### Changed — 2026-06-09
 
 - **Design system overhaul**: replaced Manrope + JetBrains Mono with Geist

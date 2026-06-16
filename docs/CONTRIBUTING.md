@@ -5,6 +5,7 @@ Development workflow for the Agent Skills collection.
 ## Prerequisites
 
 - [mise](https://mise.jdx.dev/) — tool version manager
+- Node `24.14.1` — pinned in `.node-version`
 - Bun `1.3.14` — pinned in `mise.toml`
 
 ```bash
@@ -26,9 +27,12 @@ hot-reload automatically.
 ## Verification
 
 ```bash
-bun run check     # TypeScript type checking
-bun run build     # Production build
-bun run preview   # Preview the built site (http://localhost:4321/skills/)
+bun run type-check     # Astro and TypeScript type checking
+bun run lint           # Biome linting
+bun run format:check   # Biome formatting check
+bun run test           # Vitest tests
+bun run build          # Production build
+bun run verify         # Full local quality gate
 ```
 
 ## Project Conventions
@@ -85,13 +89,13 @@ Skills in this collection follow these rules:
 
 When modifying the Astro site:
 
-- Design tokens are in `src/styles/global.css` under `@theme inline`.
+- Design tokens are plain CSS custom properties in `src/styles/global.css`.
 - Components live in `src/components/`.
 - Content collection config is in `src/content.config.ts`.
 - Business logic (catalog building, path building) lives in `src/lib/`.
 
 Maintain the Swiss Style design language: dark-only, high contrast,
-typography-driven, minimal decoration.
+typography-driven, neutral palette, minimal decoration.
 
 ## Questions
 
