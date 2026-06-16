@@ -136,9 +136,10 @@ When the project evolves, update truth documents in this order:
 ## Docs Site
 
 The Astro site at `src/` renders skill content from `skills/`. It uses
-Tailwind v4, Astro content collections, and the Swiss Style design system.
-Design tokens are in `src/styles/global.css`. Components are in
-`src/components/`. See `docs/ARCHITECTURE.md` for the full technical design.
+Astro content collections, Satteri Markdown rendering, and the Swiss Style
+design system. Design tokens are plain CSS custom properties in
+`src/styles/global.css`. Components are in `src/components/`. See
+`docs/ARCHITECTURE.md` for the full technical design.
 
 ## Committing and Pushing
 

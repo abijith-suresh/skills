@@ -1,0 +1,53 @@
+import { describe, expect, it } from "vitest";
+import { buildInstallCommand, buildSkillSummaries, directorySlugFromEntry } from "./skill-catalog";
+
+describe("directorySlugFromEntry", () => {
+  it("uses the first path segment as the skill slug", () => {
+    expect(directorySlugFromEntry("commit/SKILL.md")).toBe("commit");
+  });
+
+  it("falls back to the entry when no path separator is present", () => {
+    expect(directorySlugFromEntry("SKILL.md")).toBe("SKILL.md");
+  });
+});
+
+describe("buildInstallCommand", () => {
+  it("builds a collection install command", () => {
+    expect(buildInstallCommand("owner/repo")).toBe("npx skills@latest add owner/repo");
+  });
+
+  it("builds a single-skill install command", () => {
+    expect(buildInstallCommand("owner/repo", "commit")).toBe(
+      "npx skills@latest add owner/repo --skill commit"
+    );
+  });
+});
+
+describe("buildSkillSummaries", () => {
+  it("sorts skills by display name and builds install/source metadata", () => {
+    const summaries = buildSkillSummaries(
+      [
+        { id: "review", data: { name: "Review", description: "Review changes." } },
+        { id: "commit", data: { name: "Commit", description: "Commit changes." } },
+      ],
+      "owner/repo"
+    );
+
+    expect(summaries).toEqual([
+      {
+        slug: "commit",
+        name: "Commit",
+        description: "Commit changes.",
+        installCommand: "npx skills@latest add owner/repo --skill commit",
+        sourceUrl: "https://github.com/owner/repo/tree/main/skills/commit",
+      },
+      {
+        slug: "review",
+        name: "Review",
+        description: "Review changes.",
+        installCommand: "npx skills@latest add owner/repo --skill review",
+        sourceUrl: "https://github.com/owner/repo/tree/main/skills/review",
+      },
+    ]);
+  });
+});

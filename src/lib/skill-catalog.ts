@@ -1,4 +1,4 @@
-export const SKILLS_REPOSITORY = 'abijith-suresh/skills';
+export const SKILLS_REPOSITORY = "abijith-suresh/skills";
 
 export interface SkillSummary {
   slug: string;
@@ -9,7 +9,7 @@ export interface SkillSummary {
 }
 
 export function directorySlugFromEntry(entry: string): string {
-  return entry.split('/')[0] ?? entry;
+  return entry.split("/")[0] ?? entry;
 }
 
 export function buildInstallCommand(repository: string, skillSlug?: string): string {
@@ -22,7 +22,7 @@ export function buildInstallCommand(repository: string, skillSlug?: string): str
 
 export function buildSkillSummaries(
   definitions: { id: string; data: { name: string; description: string } }[],
-  repository = SKILLS_REPOSITORY,
+  repository = SKILLS_REPOSITORY
 ): SkillSummary[] {
   return definitions
     .map((definition) => ({
@@ -34,5 +34,3 @@ export function buildSkillSummaries(
     }))
     .sort((left, right) => left.name.localeCompare(right.name));
 }
-
-
