@@ -1,11 +1,10 @@
 ---
 name: handoff
 description: >-
-  Compact the current conversation into a handoff document for another
-  agent or session to pick up. Use when you want to continue work later,
-  hand off to a different agent, or persist decisions and next steps
-  across sessions. Do NOT trigger for simple file saves, git commits,
-  or opening PRs.
+  Compacts the current conversation into a handoff document for another
+  agent or session to pick up. Use only when the user explicitly invokes
+  the handoff skill. Do not trigger from ordinary requests to save files,
+  commit changes, or open pull requests.
 ---
 
 # Handoff

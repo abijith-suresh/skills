@@ -1,9 +1,9 @@
 ---
 name: improve
 description: >-
-  Audit the codebase for technical debt and fix issues incrementally. Use
-  when asked to "improve the codebase", "health check", "address technical
-  debt", or "audit the codebase".
+  Audits the codebase for technical debt and fixes issues incrementally.
+  Use only when the user explicitly invokes the improve skill. Do not
+  trigger from ordinary requests to modify or review code.
 ---
 
 # Improve

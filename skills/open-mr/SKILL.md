@@ -1,9 +1,9 @@
 ---
 name: open-mr
 description: >-
-  Push the current branch and open a new GitLab MR via glab CLI. Use when
-  asked to "open an MR" or "create an MR". Requires a ticket number.
-  Detects existing MRs and redirects to update-mr.
+  Pushes the current branch and opens a new GitLab MR via glab CLI. Use only
+  when the user explicitly invokes the open-mr skill. Requires a ticket
+  number. Do not trigger from ordinary requests that mention merge requests.
 ---
 
 # Open MR (GitLab)

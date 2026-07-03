@@ -1,9 +1,9 @@
 ---
 name: commit
 description: >-
-  Create clean conventional commits from the current diff. Use when asked
-  to "commit these changes", "make a commit", "commit this", or "create
-  commits".
+  Creates clean conventional commits from the current diff. Use only when
+  the user explicitly invokes the commit skill. Do not trigger from ordinary
+  requests that happen to involve code changes.
 ---
 
 # Commit
