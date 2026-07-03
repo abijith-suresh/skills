@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-07-03
+
+- Reworked `diagnose` around resumable, evidence-driven production and QA
+  investigations spanning code, data, service contracts, configuration, and
+  infrastructure. Replaced mandatory local reproduction with calibrated
+  hypotheses, targeted evidence probes, and persistent incident ledgers under
+  `~/.agents/investigations/<task-key>.md`.
+- Renamed `trace-feature` to `explain-flow` and made explicit invocation
+  produce or refresh a verified flow document under
+  `~/.agents/knowledge/flows/<topic>.md`.
+- Changed the catalog policy from automatic model invocation to explicit,
+  user-controlled invocation and documented the portable description
+  convention and external runtime-state layout.
+
 ### Changed — 2026-06-16
 
 - Aligned the docs site with the reference Astro projects: Satteri Markdown,

@@ -34,8 +34,8 @@ any machine with a single copy-paste command.
    development workflows.
 2. **Frictionless installation** — browse the site, copy the command,
    install on any system.
-3. **Platform detection at runtime** — skills detect GitHub vs GitLab and
-   adapt automatically rather than hard-coding platform assumptions.
+3. **Explicit invocation** — the user decides when a skill governs the
+   session; ordinary requests do not activate skills implicitly.
 4. **Self-contained skills** — each skill is usable on its own without
    depending on other skills in the collection.
 5. **Portfolio-quality showcase** — the docs site should look professional
@@ -48,7 +48,7 @@ any machine with a single copy-paste command.
   (shared editing, team workspaces) are out of scope.
 - **Skill orchestration** — skills do not invoke each other by name. A
   workflow that spans skills (grill-me → plan → to-issues) is assembled
-  by the user or agent at runtime, not hard-coded into any skill.
+  by the user at runtime, not hard-coded into any skill.
 - **Success metrics** — this is not measured by adoption numbers or
   engagement. Personal utility and portfolio value are sufficient.
 - **One-off prompts** — prompts that are rarely used or context-specific
@@ -60,6 +60,10 @@ any machine with a single copy-paste command.
   format: YAML frontmatter with `name` and `description`, markdown body.
 - **Platform-agnostic** — skills must not assume a specific AI agent platform.
   GitHub vs GitLab detection is done at runtime from the remote URL.
+- **User-controlled activation** — descriptions identify explicit invocation
+  phrases and reject implicit activation from ordinary task requests.
+- **External working state** — durable investigation and knowledge artifacts
+  live under `~/.agents/`, outside project repositories and version control.
 - **No external build step for skills** — skills are standalone SKILL.md
   files. The Astro site reads them at build time but does not transform them.
 - **Linear git history on main** — branch protection enforces linear
@@ -79,6 +83,11 @@ any machine with a single copy-paste command.
   become skills. Rarely used or context-specific instructions are prompts.
 - **Atomic over orchestrated**: Skills are decoupled. No skill depends on or
   invokes another by name. The user composes them as needed.
+- **Explicit over automatic**: The user invokes skills by name. Agents may
+  suggest a relevant skill but must wait for the user to invoke it.
+- **Durable state over automatic memory**: Long-running investigations and
+  reusable system knowledge use explicit, auditable Markdown under
+  `~/.agents/`; skills do not depend on automatic semantic memory.
 - **Docs site in the same repo**: The Astro site lives alongside the skills
   because the site's sole purpose is rendering skill content. Separate repos
   would create a sync problem.

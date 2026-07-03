@@ -1,9 +1,9 @@
 ---
 name: tdd
 description: >-
-  Build features test-first using red-green-refactor. Use when asked to
-  "do TDD", "write tests first", "red-green-refactor", "build this
-  test-first", or "TDD this".
+  Builds features test-first using red-green-refactor. Use only when the
+  user explicitly invokes the tdd skill. Do not trigger from ordinary
+  requests to add tests or implement a feature.
 ---
 
 # TDD

@@ -1,11 +1,10 @@
 ---
 name: plan
 description: >-
-  Present a concrete implementation plan in chat based on a decisions
-  summary. Use when the user has a clear set of decisions and needs an
-  implementable plan, says "present the plan", "use the plan skill",
-  or "now make the plan". Does not explore the codebase or ask
-  clarifying questions — assumes decisions are already made.
+  Presents a concrete implementation plan in chat based on a decisions
+  summary. Use only when the user explicitly invokes the plan skill. Does
+  not explore the codebase or ask clarifying questions. Do not trigger from
+  ordinary planning requests.
 ---
 
 # Plan

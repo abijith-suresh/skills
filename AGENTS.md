@@ -37,10 +37,10 @@ the project evolves, this file must be updated before any other file.
 
 ### When to use skills
 
-Skills are invoked automatically when conversation triggers match. An
-agent should load a skill when the user says something matching the
-skill's `description` field. Do not load skills speculatively — wait
-for a clear trigger.
+Skills are invoked only when the user names the skill explicitly. Ordinary
+task requests do not activate skills automatically, even when they resemble
+the workflow. An agent may suggest a relevant skill but must wait for the
+user to invoke it.
 
 ### When to create a skill
 
@@ -75,10 +75,9 @@ Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
 ---
 name: <skill-name>
 description: >-
-  [One-line what the skill does]
-  Use when [trigger scenario A].
-  Use when [trigger scenario B].
-  [Do NOT trigger when [anti-trigger].]
+  [One-line what the skill does.]
+  Use only when the user explicitly invokes the <skill-name> skill.
+  Do not trigger from ordinary task requests.
 ---
 
 # Title
@@ -90,9 +89,10 @@ Frontmatter: `name` and `description` only. No `metadata` block.
 
 ### Description pattern
 
-First sentence says what the skill does (active voice). Then "Use when"
-clauses enumerate trigger phrases. A "Do NOT trigger" clause is added
-only when a common phrasing could cause a false positive.
+First sentence says what the skill does in active voice. The remaining
+sentences require explicit invocation by skill name and reject implicit
+activation from ordinary requests. This description-level convention is
+the portable invocation control across supported agents.
 
 ## Truth Maintenance Rules
 

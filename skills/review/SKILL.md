@@ -1,9 +1,9 @@
 ---
 name: review
 description: >-
-  Review the current diff and produce a structured REVIEW.md. Use when
-  asked to "review my changes", "do a code review", "review this branch",
-  or "review against the [story]".
+  Reviews the current diff and produces a structured REVIEW.md. Use only
+  when the user explicitly invokes the review skill. Do not trigger from
+  ordinary requests to inspect or discuss code.
 ---
 
 # Review

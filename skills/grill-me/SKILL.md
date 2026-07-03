@@ -3,9 +3,8 @@ name: grill-me
 description: >-
   Interview the user relentlessly about a plan or design until shared
   understanding is reached, resolving each branch of the decision tree
-  one question at a time. Use when the user explicitly invokes grill-me,
-  says "use the grill me skill", "grill me on this", or asks to be
-  interviewed about a plan before building.
+  one question at a time. Use only when the user explicitly invokes the
+  grill-me skill. Do not trigger from ordinary planning or design requests.
 ---
 
 # Grill Me
