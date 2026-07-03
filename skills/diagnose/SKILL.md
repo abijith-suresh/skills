@@ -29,11 +29,13 @@ solution without changing source code.
 Create or resume:
 
 ```text
-~/.agents/investigations/<system>/<incident>.md
+~/.agents/investigations/<task-key>.md
 ```
 
-Use a stable system name. Prefer an existing incident or ticket identifier;
-otherwise use a short dated slug such as `2026-07-03-missing-invoices`.
+Use an existing incident or ticket identifier in the task key when one is
+available, such as `PROJ-142-payment-timeout`. Otherwise use a short dated
+slug such as `2026-07-03-missing-invoices`. Reuse the same task key for
+related task artifacts.
 
 Start the file with:
 
@@ -106,9 +108,11 @@ Trace only the execution path relevant to the reported symptom:
    retries, idempotency behavior, feature flags, and failure handling.
 5. Inspect relevant tests and configuration.
 
-Check `~/.agents/knowledge/<system>/flows/` for a relevant prior explanation.
-Treat it as a lead, not authority: verify its recorded revisions against the
-current or deployed source before relying on it.
+List likely topic filenames under `~/.agents/knowledge/flows/` when prior
+knowledge may help. Load only files relevant to the current task; never scan
+the entire knowledge directory into context. Treat saved knowledge as a lead,
+not authority: verify its recorded revisions against the current or deployed
+source before relying on it.
 
 Keep the flow bounded. Do not explain the entire feature or every service when
 only one path can affect the symptom.

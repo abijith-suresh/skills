@@ -27,11 +27,13 @@ outside project repositories.
 Create or refresh:
 
 ```text
-~/.agents/knowledge/<system>/flows/<topic>.md
+~/.agents/knowledge/flows/<topic>.md
 ```
 
-Use a stable system name and topic slug so later sessions find the same file.
-Refresh the document in place; do not create dated journal entries.
+Use a stable, sufficiently specific topic slug so later sessions find the
+same file. Include a project or domain qualifier in the slug only when needed
+to avoid ambiguity. Refresh the document in place; do not create dated journal
+entries.
 
 Use this structure:
 
@@ -79,7 +81,8 @@ question. Do not map the entire feature by default.
 
 ### 2. Check existing knowledge
 
-Look for the stable topic file. If it exists:
+List likely filenames under `~/.agents/knowledge/flows/` and select by topic.
+Do not load every saved document. If the stable topic file exists:
 
 1. Read its source revisions and unresolved unknowns.
 2. Compare the recorded revisions with the current repositories.

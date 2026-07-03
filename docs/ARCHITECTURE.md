@@ -56,14 +56,15 @@ supported agent.
 Most skills are stateless. Skills that must survive compaction or a new
 session may maintain explicit Markdown artifacts under `~/.agents/`:
 
-- `~/.agents/investigations/<system>/<incident>.md` stores the current state
-  of a production or QA investigation.
-- `~/.agents/knowledge/<system>/flows/<topic>.md` stores a reusable,
-  source-backed explanation of a system flow.
+- `~/.agents/investigations/<task-key>.md` stores the current state of a
+  production or QA investigation. Related task artifacts reuse the same key.
+- `~/.agents/knowledge/flows/<topic>.md` stores a reusable, source-backed
+  explanation of a sufficiently specific application or business flow.
 
 These files are outside project repositories so operational evidence and
-machine-local knowledge are not committed accidentally. Skills load only the
-artifact relevant to the current task; there is no automatic memory-bank scan.
+machine-local knowledge are not committed accidentally. Skills select
+artifacts by task key, ticket, topic, or repository metadata and load only
+what is relevant; there is no automatic memory-bank scan.
 
 ## Data Flow
 
