@@ -14,7 +14,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "prepare": "husky",
-    "type-check": "astro check && tsc --noEmit",
+    "type-check": "astro sync && tsc --noEmit",
     "lint": "biome lint .",
     "lint:fix": "biome lint --write --unsafe .",
     "format": "biome format --write .",
