@@ -1,11 +1,12 @@
 ---
-name: commit
+name: commit-work
 description: >-
-  Creates clean conventional commits from the current diff. Invoke when
-  committing changes. The user may also name this skill explicitly.
+  Creates clean conventional commits from the current diff with a ticket
+  number in every commit scope. Invoke when committing changes. The user
+  may also name this skill explicitly.
 ---
 
-# Commit
+# Commit Work
 
 Split by intent. One commit per reason to change.
 
@@ -16,6 +17,7 @@ Split by intent. One commit per reason to change.
 - Honest splits — never bundle unrelated changes behind a broad message
 - Branch safety — never commit directly on `main`, `master`, `develop`, or
   the remote default branch
+- Ticket number in every commit scope
 
 ## Workflow
 
@@ -34,7 +36,15 @@ Warn the user and ask whether to create or switch to a feature branch
 before committing. Do not commit on those branches unless the user
 explicitly overrides the guardrail.
 
-### 2. Inspect the diff
+### 2. Resolve the ticket number
+
+A ticket number is required in every commit scope:
+`type(TICKET-123): summary`
+
+If the ticket number is not already known from the branch, MR, or
+conversation, ask for it before continuing.
+
+### 3. Inspect the diff
 
 Run `git status` and `git diff HEAD`. Read every changed file.
 
@@ -46,7 +56,7 @@ explicitly asks:
 - `REVIEW.md`
 - `INVESTIGATION.md`
 
-### 3. Plan the split
+### 4. Plan the split
 
 Group changes by intent. A good split separates things like:
 
@@ -61,7 +71,7 @@ safer to revert.
 Plan the split, then proceed directly to committing. Do not ask for
 permission — make a good judgement call and execute.
 
-### 4. Stage and commit each group
+### 5. Stage and commit each group
 
 For each group in order:
 
@@ -71,12 +81,12 @@ For each group in order:
 
 **Format**
 
-`type(scope?): imperative summary`
+`type(TICKET-123): imperative summary`
 
 Examples:
 
-- `feat: add investigation workflow`
-- `fix(open-pr): correct target branch detection`
+- `feat(PROJ-214): add investigation workflow`
+- `fix(PROJ-214): correct GitLab target option`
 
 Common types:
 
@@ -99,11 +109,11 @@ Message rules:
 
 - Imperative mood: `add X`, not `added X` or `adding X`
 - Lowercase summary, no period at the end
-- Scope is optional; use it only when it sharpens meaning
+- Ticket number is required in the scope position
 - Use a body only when the why is not obvious from the summary alone
 - If the message needs `and` to connect unrelated ideas, split the commit
 
-### 5. Report
+### 6. Report
 
 After all commits, show the list of commits made and confirm whether any
 staged or unstaged changes remain.
