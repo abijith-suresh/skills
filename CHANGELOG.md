@@ -14,6 +14,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   the removed investigation, flow-knowledge, plan, review, improve, and TDD
   workflows.
 
+### Changed — 2026-08-15
+
+- Bumped all direct Bun dependencies to their latest releases, aligned the
+  Biome schema with CLI 2.5.8, and refreshed the pinned Node version to
+  24.19.0 across engines, `.node-version`, deploy workflow, and contributing
+  docs.
+
 ### Changed — 2026-07-03
 
 - Reworked `diagnose` around resumable, evidence-driven production and QA
