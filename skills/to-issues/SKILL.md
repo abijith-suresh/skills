@@ -46,8 +46,8 @@ Every issue uses this structure:
 
 ### 1. Find the plan
 Look for the plan in the current conversation first. If the conversation
-contains a plan from the plan skill, use it. If invoked in a fresh session
-with no plan in context, read `PLAN.md` from the project root.
+already contains a plan, use it. If invoked in a fresh session with no plan
+in context, read `PLAN.md` from the project root.
 
 ### 2. Explore the codebase
 If you have not already explored the codebase in this session, do so now.

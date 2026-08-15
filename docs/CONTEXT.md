@@ -47,8 +47,8 @@ any machine with a single copy-paste command.
   first. It is public and usable by anyone, but collaboration features
   (shared editing, team workspaces) are out of scope.
 - **Skill orchestration** — skills do not invoke each other by name. A
-  workflow that spans skills (grill-me → plan → to-issues) is assembled
-  by the user at runtime, not hard-coded into any skill.
+  workflow that spans skills (grill-me → to-issues) is assembled by the
+  user at runtime, not hard-coded into any skill.
 - **Success metrics** — this is not measured by adoption numbers or
   engagement. Personal utility and portfolio value are sufficient.
 - **One-off prompts** — prompts that are rarely used or context-specific
@@ -62,8 +62,9 @@ any machine with a single copy-paste command.
   GitHub vs GitLab detection is done at runtime from the remote URL.
 - **User-controlled activation** — descriptions identify explicit invocation
   phrases and reject implicit activation from ordinary task requests.
-- **External working state** — durable investigation and knowledge artifacts
-  live under `~/.agents/`, outside project repositories and version control.
+- **External working state** — local skill installs and any durable agent
+  artifacts live under `~/.agents/`, outside project repositories and
+  version control.
 - **No external build step for skills** — skills are standalone SKILL.md
   files. The Astro site reads them at build time but does not transform them.
 - **Linear git history on main** — branch protection enforces linear
@@ -85,9 +86,9 @@ any machine with a single copy-paste command.
   invokes another by name. The user composes them as needed.
 - **Explicit over automatic**: The user invokes skills by name. Agents may
   suggest a relevant skill but must wait for the user to invoke it.
-- **Durable state over automatic memory**: Long-running investigations and
-  reusable system knowledge use explicit, auditable Markdown under
-  `~/.agents/`; skills do not depend on automatic semantic memory.
+- **Local installs over repo copies**: Installed skills and any durable
+  agent artifacts live under `~/.agents/`; skills do not depend on
+  automatic semantic memory.
 - **Docs site in the same repo**: The Astro site lives alongside the skills
   because the site's sole purpose is rendering skill content. Separate repos
   would create a sync problem.
