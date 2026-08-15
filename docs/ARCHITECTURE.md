@@ -36,8 +36,8 @@ Every skill is a `SKILL.md` file with YAML frontmatter:
 name: <skill-name>
 description: >-
   [What the skill does.]
-  Use only when the user explicitly invokes the <skill-name> skill.
-  Do not trigger from ordinary task requests.
+  Invoke when the workflow applies. The user may also name this skill
+  explicitly.
 ---
 ```
 
@@ -45,9 +45,8 @@ The body contains the skill's workflow: goals, steps, rules, failure
 conditions. No `metadata` block. Only `name` and `description` are allowed
 in frontmatter.
 
-Descriptions use explicit invocation phrases because Agent Skills has no
-portable frontmatter field that disables model invocation across every
-supported agent.
+Descriptions state when agents should invoke the skill and note that users
+may also invoke it by name.
 
 ## Runtime State
 

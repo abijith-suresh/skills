@@ -2,8 +2,8 @@
 name: to-issues
 description: >-
   Converts a plan into flat, vertical-slice GitHub issues using the gh CLI.
-  Use only when the user explicitly invokes the to-issues skill. Do not
-  trigger from ordinary requests to discuss or decompose work.
+  Invoke when turning a plan into GitHub issues. The user may also name this
+  skill explicitly.
 ---
 
 # To Issues

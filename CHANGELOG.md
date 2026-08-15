@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-08-15
+
+- Shifted skill invocation policy from user-only to agent-selectable: agents
+  may invoke skills when a task matches the workflow, and users may still
+  invoke skills by name. Updated AGENTS.md, product docs, architecture docs,
+  contributing guidance, README, and all skill descriptions.
+
 ### Removed — 2026-08-15
 
 - Removed `diagnose`, `explain-flow`, `improve`, `plan`, `review`, and `tdd`

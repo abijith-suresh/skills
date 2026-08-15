@@ -2,9 +2,8 @@
 name: research
 description: >-
   Clones canonical source and reads the actual API before implementation
-  against a framework or library. Use only when the user explicitly invokes
-  the research skill. Do not trigger from ordinary implementation or
-  information requests.
+  against a framework or library. Invoke when implementing against unfamiliar
+  APIs or libraries. The user may also name this skill explicitly.
 ---
 
 # Research

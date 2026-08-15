@@ -1,9 +1,9 @@
 ---
 name: update-mr
 description: >-
-  Updates an existing GitLab MR's title and body via glab CLI. Use only when
-  the user explicitly invokes the update-mr skill. Do not trigger from
-  ordinary requests that mention merge requests.
+  Updates an existing GitLab MR's title and body via glab CLI. Invoke when
+  updating an existing GitLab merge request. The user may also name this
+  skill explicitly.
 ---
 
 # Update MR (GitLab)

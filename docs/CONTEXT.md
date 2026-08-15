@@ -34,8 +34,8 @@ any machine with a single copy-paste command.
    development workflows.
 2. **Frictionless installation** — browse the site, copy the command,
    install on any system.
-3. **Explicit invocation** — the user decides when a skill governs the
-   session; ordinary requests do not activate skills implicitly.
+3. **Agent-selectable invocation** — agents choose the right skill when a
+   task matches its workflow; users may also invoke skills by name.
 4. **Self-contained skills** — each skill is usable on its own without
    depending on other skills in the collection.
 5. **Portfolio-quality showcase** — the docs site should look professional
@@ -60,8 +60,8 @@ any machine with a single copy-paste command.
   format: YAML frontmatter with `name` and `description`, markdown body.
 - **Platform-agnostic** — skills must not assume a specific AI agent platform.
   GitHub vs GitLab detection is done at runtime from the remote URL.
-- **User-controlled activation** — descriptions identify explicit invocation
-  phrases and reject implicit activation from ordinary task requests.
+- **Agent-selectable activation** — descriptions tell agents when to invoke
+  the skill; users may also invoke skills by name.
 - **External working state** — local skill installs and any durable agent
   artifacts live under `~/.agents/`, outside project repositories and
   version control.
@@ -84,8 +84,9 @@ any machine with a single copy-paste command.
   become skills. Rarely used or context-specific instructions are prompts.
 - **Atomic over orchestrated**: Skills are decoupled. No skill depends on or
   invokes another by name. The user composes them as needed.
-- **Explicit over automatic**: The user invokes skills by name. Agents may
-  suggest a relevant skill but must wait for the user to invoke it.
+- **Agent-selectable over rigid**: Agents invoke skills when the workflow
+  applies. Users may also invoke skills by name when they want that workflow
+  explicitly.
 - **Local installs over repo copies**: Installed skills and any durable
   agent artifacts live under `~/.agents/`; skills do not depend on
   automatic semantic memory.
