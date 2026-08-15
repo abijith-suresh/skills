@@ -5,7 +5,7 @@ Development workflow for the Agent Skills collection.
 ## Prerequisites
 
 - [mise](https://mise.jdx.dev/) — tool version manager
-- Node `24.14.1` — pinned in `.node-version`
+- Node `24.19.0` — pinned in `.node-version`
 - Bun `1.3.14` — pinned in `mise.toml`
 
 ```bash
