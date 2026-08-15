@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Removed — 2026-08-15
+
+- Removed `diagnose`, `explain-flow`, `improve`, `plan`, `review`, and `tdd`
+  from the skill catalog and docs site.
+- Updated catalog badge count to 9 and trimmed product docs that described
+  the removed investigation, flow-knowledge, plan, review, improve, and TDD
+  workflows.
+
 ### Changed — 2026-07-03
 
 - Reworked `diagnose` around resumable, evidence-driven production and QA

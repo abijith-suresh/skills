@@ -24,9 +24,7 @@ docs/                      ← project documentation
   CONTRIBUTING.md          ← development workflow
 AGENTS.md                  ← agent behavior and skill authoring rules
 
-~/.agents/                ← runtime state outside repositories
-  investigations/         ← resumable incident investigations
-  knowledge/              ← reusable, verified system knowledge
+~/.agents/skills/          ← local skill installs (outside repositories)
 ```
 
 ## Skill Format
@@ -53,18 +51,9 @@ supported agent.
 
 ## Runtime State
 
-Most skills are stateless. Skills that must survive compaction or a new
-session may maintain explicit Markdown artifacts under `~/.agents/`:
-
-- `~/.agents/investigations/<task-key>.md` stores the current state of a
-  production or QA investigation. Related task artifacts reuse the same key.
-- `~/.agents/knowledge/flows/<topic>.md` stores a reusable, source-backed
-  explanation of a sufficiently specific application or business flow.
-
-These files are outside project repositories so operational evidence and
-machine-local knowledge are not committed accidentally. Skills select
-artifacts by task key, ticket, topic, or repository metadata and load only
-what is relevant; there is no automatic memory-bank scan.
+Most skills are stateless. Local installs live under `~/.agents/skills/`
+so agent-facing copies stay outside project repositories and version
+control.
 
 ## Data Flow
 
@@ -177,10 +166,9 @@ production build.
   `SKILL.md` file. The site renders the full SKILL.md body directly via
   Astro's content collections, eliminating the need for a separate
   README parser or per-skill README files.
-- **Explicit file-backed state**: Long-running investigations and reusable
-  flow explanations use narrow Markdown artifacts under `~/.agents/`.
-  Automatic capture, semantic retrieval, and loading every saved file are
-  intentionally out of scope.
+- **Local installs outside repos**: Installed skill copies live under
+  `~/.agents/skills/` so agent tooling does not depend on committing
+  machine-local state into project repositories.
 - **Astro over a static generator**: Astro's content collections provide
   type-safe, validated markdown loading with frontmatter schemas. The
   site ships zero JavaScript to the client (except the copy button script

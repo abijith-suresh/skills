@@ -32,7 +32,7 @@ the project evolves, this file must be updated before any other file.
 
 5. **No skill invokes another skill by name.** Skills are atomic and
    self-contained. An agent may compose multiple skills in a session, but
-   no SKILL.md text should say "use the plan skill" or "run the commit
+   no SKILL.md text should say "use the research skill" or "run the commit
    skill."
 
 ### When to use skills
@@ -66,8 +66,8 @@ skills/
     assets/       ← optional templates/resources
 ```
 
-Skill names are short verbs or nouns in kebab-case: `plan`, `commit`,
-`review`, `tdd`, `research`. No namespacing.
+Skill names are short verbs or nouns in kebab-case: `commit`, `research`,
+`handoff`, `open-pr`. No namespacing.
 
 ## SKILL.md Format
 

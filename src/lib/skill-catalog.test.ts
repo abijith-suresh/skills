@@ -27,7 +27,7 @@ describe("buildSkillSummaries", () => {
   it("sorts skills by display name and builds install/source metadata", () => {
     const summaries = buildSkillSummaries(
       [
-        { id: "review", data: { name: "Review", description: "Review changes." } },
+        { id: "handoff", data: { name: "Handoff", description: "Handoff context." } },
         { id: "commit", data: { name: "Commit", description: "Commit changes." } },
       ],
       "owner/repo"
@@ -42,11 +42,11 @@ describe("buildSkillSummaries", () => {
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/commit",
       },
       {
-        slug: "review",
-        name: "Review",
-        description: "Review changes.",
-        installCommand: "npx skills@latest add owner/repo --skill review",
-        sourceUrl: "https://github.com/owner/repo/tree/main/skills/review",
+        slug: "handoff",
+        name: "Handoff",
+        description: "Handoff context.",
+        installCommand: "npx skills@latest add owner/repo --skill handoff",
+        sourceUrl: "https://github.com/owner/repo/tree/main/skills/handoff",
       },
     ]);
   });
