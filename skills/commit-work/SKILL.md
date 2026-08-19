@@ -1,9 +1,8 @@
 ---
 name: commit-work
 description: >-
-  Creates clean conventional commits from the current diff with a ticket
-  number in every commit scope. Invoke when committing changes. The user
-  may also name this skill explicitly.
+  Creates clean conventional commits from the current diff. Invoke when
+  committing changes. The user may also name this skill explicitly.
 ---
 
 # Commit Work

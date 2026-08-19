@@ -34,7 +34,7 @@ npx skills add abijith-suresh/skills --skill <skill-name>
 | Skill | Description |
 | --- | --- |
 | `commit` | Create clean conventional commits from the current diff. |
-| `commit-work` | Create clean conventional commits with a ticket number in every scope. |
+| `commit-work` | Create clean conventional commits from the current diff. |
 | `grill-me` | Interview the user relentlessly about a plan or design until shared understanding is reached. |
 | `handoff` | Compact the current conversation into a handoff document for another agent or session to pick up. |
 | `open-mr` | Push the current branch and open a new GitLab MR. |
