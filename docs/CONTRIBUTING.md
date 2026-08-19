@@ -47,7 +47,7 @@ bun run verify         # Full local quality gate
 
 - Use conventional commit format: `type(scope?): summary`
 - Common types: `feat`, `fix`, `docs`, `refactor`, `chore`
-- Use the `commit` skill to automate clean splitting.
+- Use the `commit` or `commit-work` skill to automate clean splitting.
 
 ### PRs
 

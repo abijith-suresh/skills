@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-08-15
 
+- Split the `commit` skill into `commit` and `commit-work` (ticket-scoped
+  commits). Updated AGENTS.md, README catalog, and contributing guidance.
+
+### Changed — 2026-08-15
+
 - Shifted skill invocation policy from user-only to agent-selectable: agents
   may invoke skills when a task matches the workflow, and users may still
   invoke skills by name. Updated AGENTS.md, product docs, architecture docs,

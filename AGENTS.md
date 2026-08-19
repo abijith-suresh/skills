@@ -18,10 +18,11 @@ the project evolves, this file must be updated before any other file.
    product. Changes to SKILL.md files must follow the conventions below.
    Treat them like source files, not loose markdown.
 
-2. **Use the `commit` skill for all commits.** All commits follow
-   conventional commit format. Commits are split by intent — each commit
-   represents exactly one reason to change. Never push to `main`
-   directly. Open a PR from a feature branch.
+2. **Use the `commit` or `commit-work` skill when committing changes.**
+   Use `commit-work` when every commit scope must include a ticket number.
+   All commits follow conventional commit format. Commits are split by intent
+   — each commit represents exactly one reason to change. Never push to
+   `main` directly. Open a PR from a feature branch.
 
 3. **Read `docs/CONTEXT.md` before making scope decisions.** When deciding
    whether something belongs in this project, `CONTEXT.md` is authoritative.
@@ -65,8 +66,8 @@ skills/
     assets/       ← optional templates/resources
 ```
 
-Skill names are short verbs or nouns in kebab-case: `commit`, `research`,
-`handoff`, `open-pr`. No namespacing.
+Skill names are short verbs or nouns in kebab-case: `commit`, `commit-work`,
+`research`, `handoff`, `open-pr`. No namespacing.
 
 ## SKILL.md Format
 
