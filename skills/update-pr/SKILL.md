@@ -1,9 +1,8 @@
 ---
 name: update-pr
 description: >-
-  Updates an existing GitHub PR's title and body. Use only when the user
-  explicitly invokes the update-pr skill. Do not trigger from ordinary
-  requests that mention pull requests.
+  Updates an existing GitHub PR's title and body. Invoke when updating an
+  existing GitHub pull request. The user may also name this skill explicitly.
 ---
 
 # Update PR

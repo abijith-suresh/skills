@@ -1,9 +1,8 @@
 ---
 name: open-pr
 description: >-
-  Pushes the current branch and opens a new GitHub PR. Use only when the user
-  explicitly invokes the open-pr skill. Do not trigger from ordinary
-  requests that mention pull requests.
+  Pushes the current branch and opens a new GitHub PR. Invoke when opening
+  a pull request on GitHub. The user may also name this skill explicitly.
 ---
 
 # Open PR

@@ -9,8 +9,8 @@ updating PRs/MRs, researching, and other daily development workflows.
 Each skill tells an AI coding agent how to perform a specific task
 correctly — the way you want it done, every time.
 
-Skills are user-invoked: name the skill explicitly when you want its workflow
-to govern the session.
+Agents invoke skills when a task matches their workflow. You can also name a
+skill explicitly when you want that workflow to govern the session.
 
 ## Browse
 

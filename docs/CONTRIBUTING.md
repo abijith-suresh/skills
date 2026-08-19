@@ -60,8 +60,8 @@ bun run verify         # Full local quality gate
 1. Research reference implementations if the workflow is non-trivial.
    See AGENTS.md for recommended reference repos.
 2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter
-   (`name` and `description` only). The description must require explicit
-   invocation by skill name and reject activation from ordinary requests.
+   (`name` and `description` only). The description must state when agents
+   should invoke the skill and note that users may also invoke it by name.
 3. Update the skill catalog table in `README.md`.
 4. Update the badge count in `README.md`.
 5. Add an entry to `CHANGELOG.md` under `[Unreleased]`. Merge into an
@@ -81,8 +81,8 @@ Skills in this collection follow these rules:
 
 - **Atomic**: each skill does one thing. No skill invokes another by name.
 - **Self-contained**: a skill should work without any other skill installed.
-- **Explicitly invoked**: the user activates a skill by name. Agents may
-  suggest skills but do not activate them from an ordinary task request.
+- **Agent-selectable**: agents invoke skills when the workflow applies.
+  Users may also invoke skills by name.
 - **Platform-agnostic**: skills detect context (GitHub vs GitLab, language,
   framework) at runtime rather than being pre-configured.
 - **Intent over implementation**: skills describe what to do and why, not

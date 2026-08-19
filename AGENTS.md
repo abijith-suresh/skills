@@ -37,10 +37,9 @@ the project evolves, this file must be updated before any other file.
 
 ### When to use skills
 
-Skills are invoked only when the user names the skill explicitly. Ordinary
-task requests do not activate skills automatically, even when they resemble
-the workflow. An agent may suggest a relevant skill but must wait for the
-user to invoke it.
+Agents may invoke skills when a task matches the skill's workflow. The user
+may also invoke a skill by name. When several skills could apply, choose the
+most specific fit. Do not force a skill into a task that does not need it.
 
 ### When to create a skill
 
@@ -76,8 +75,8 @@ Skill names are short verbs or nouns in kebab-case: `commit`, `research`,
 name: <skill-name>
 description: >-
   [One-line what the skill does.]
-  Use only when the user explicitly invokes the <skill-name> skill.
-  Do not trigger from ordinary task requests.
+  Invoke when the workflow applies. The user may also name this skill
+  explicitly.
 ---
 
 # Title
@@ -90,9 +89,8 @@ Frontmatter: `name` and `description` only. No `metadata` block.
 ### Description pattern
 
 First sentence says what the skill does in active voice. The remaining
-sentences require explicit invocation by skill name and reject implicit
-activation from ordinary requests. This description-level convention is
-the portable invocation control across supported agents.
+sentences state when the agent should invoke the skill and that the user
+may also invoke it by name.
 
 ## Truth Maintenance Rules
 

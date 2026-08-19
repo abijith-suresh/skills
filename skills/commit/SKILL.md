@@ -1,9 +1,8 @@
 ---
 name: commit
 description: >-
-  Creates clean conventional commits from the current diff. Use only when
-  the user explicitly invokes the commit skill. Do not trigger from ordinary
-  requests that happen to involve code changes.
+  Creates clean conventional commits from the current diff. Invoke when
+  committing changes. The user may also name this skill explicitly.
 ---
 
 # Commit
