@@ -1,7 +1,7 @@
 # Agent Skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
+[![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
 
 A personal collection of AI agent skills for committing, opening and
 updating PRs/MRs, researching, and other daily development workflows.
@@ -41,6 +41,7 @@ npx skills add abijith-suresh/skills --skill <skill-name>
 | `open-pr` | Push the current branch and open a new GitHub PR. |
 | `research` | Clone the canonical source and read the actual API before implementing against a framework or library. |
 | `to-issues` | Convert a plan into flat, vertical-slice GitHub issues. |
+| `unslop` | Cut AI tells from any writing and add human voice. |
 | `update-mr` | Update an existing GitLab MR's title and body. |
 | `update-pr` | Update an existing GitHub PR's title and body. |
 

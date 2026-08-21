@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-08-21
+
+- Added `unslop` skill for cutting AI tells from writing and adding human
+  voice. Sourced from [cursor/plugins](https://github.com/cursor/plugins).
+
 ### Changed — 2026-08-15
 
 - Split the `commit` skill into `commit` and `commit-work` (ticket-scoped
