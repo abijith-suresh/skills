@@ -1,9 +1,6 @@
 ---
 name: unslop
-description: >-
-  Cuts AI tells from any writing and adds human voice. Invoke when editing
-  or producing text that should read naturally. The user may also name this
-  skill explicitly.
+description: Cut AI tells from any writing. Must always apply.
 ---
 
 # Unslop
