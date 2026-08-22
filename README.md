@@ -1,52 +1,55 @@
-# Agent Skills
+# Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
 
-A personal collection of AI agent skills for committing, opening and
-updating PRs/MRs, researching, and other daily development workflows.
-
-Each skill tells an AI coding agent how to perform a specific task
-correctly — the way you want it done, every time.
-
-Agents invoke skills when a task matches their workflow. You can also name a
-skill explicitly when you want that workflow to govern the session.
+A personal collection of standalone skills for the workflows I use every day:
+commits, pull and merge requests, research, issue creation, handoffs, and
+writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
+and work with compatible coding agents.
 
 ## Browse
 
-The docs site lets you browse skills, read their docs, and copy
-install commands: **[abijith-suresh.github.io/skills](https://abijith-suresh.github.io/skills/)**
+Browse the skills and copy install commands on the [skills site](https://abijith-suresh.github.io/skills/).
 
-## Install Everything
+## Scope
+
+The `skills/` directory is the canonical collection. The Astro site reads
+those files at build time and provides a browsable catalog with install
+commands.
+
+Each skill is standalone and platform-agnostic. Skills do not depend on or
+automatically invoke one another. One-off or highly context-specific prompts
+belong in a separate collection.
+
+## Install all skills
 
 ```bash
-npx skills add abijith-suresh/skills
+npx skills@latest add abijith-suresh/skills
 ```
 
-## Install One Skill
+## Install one skill
 
 ```bash
-npx skills add abijith-suresh/skills --skill <skill-name>
+npx skills@latest add abijith-suresh/skills --skill <skill-name>
 ```
 
-## Skill Catalog
+## Skill catalog
 
 | Skill | Description |
 | --- | --- |
-| `commit` | Create clean conventional commits from the current diff. |
-| `commit-work` | Create clean conventional commits from the current diff. |
-| `grill-me` | Interview the user relentlessly about a plan or design until shared understanding is reached. |
-| `handoff` | Compact the current conversation into a handoff document for another agent or session to pick up. |
-| `open-mr` | Push the current branch and open a new GitLab MR. |
-| `open-pr` | Push the current branch and open a new GitHub PR. |
-| `research` | Clone the canonical source and read the actual API before implementing against a framework or library. |
-| `to-issues` | Convert a plan into flat, vertical-slice GitHub issues. |
-| `unslop` | Cut AI tells from any writing and add human voice. |
-| `update-mr` | Update an existing GitLab MR's title and body. |
-| `update-pr` | Update an existing GitHub PR's title and body. |
+| `commit` | Create conventional commits from the current diff. |
+| `commit-work` | Create conventional commits with a ticket number in every scope. |
+| `grill-me` | Ask one question at a time to settle a plan or design. |
+| `handoff` | Write a compact handoff document for another agent or session. |
+| `open-mr` | Open a new GitLab merge request from the current branch. |
+| `open-pr` | Run tests and open a new GitHub pull request. |
+| `research` | Read a library's canonical source before implementing against its API. |
+| `to-issues` | Turn a plan into previewable, vertical-slice GitHub issues. |
+| `unslop` | Remove AI writing patterns and make prose sound human. |
+| `update-mr` | Update an existing GitLab merge request. |
+| `update-pr` | Update an existing GitHub pull request. |
 
 ## Contributing
 
-See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for the development workflow.
-The [CONTEXT.md](docs/CONTEXT.md) and [ARCHITECTURE.md](docs/ARCHITECTURE.md)
-documents describe the product vision and technical design.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local development and contribution rules.

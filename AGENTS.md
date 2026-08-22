@@ -1,147 +1,53 @@
-# AGENTS.md
+# Agent instructions
 
-## Document Ownership
+Read this file before editing the repository. Keep these rules aligned with
+what the repository actually does.
 
-This file is the source of truth for how AI agents should work within
-this repository. It defines the expected behavior of all agents, the
-standards for skill authoring, and the rules for maintaining project
-truth documents.
+## Where to look
 
-When an agent works in this repository, it must follow this file. When
-the project evolves, this file must be updated before any other file.
+- `README.md` explains the collection, its scope, and installation.
+- `CONTRIBUTING.md` explains local development and contribution workflow.
+- `skills/` contains the installable skills. Each skill's `SKILL.md` is its
+  canonical content.
+- `CHANGELOG.md` records user-visible repository changes.
 
-## Agent Behavior
+There is no separate architecture document. Before changing the Astro site,
+inspect the relevant files under `src/`, `astro.config.ts`, and the package
+scripts.
 
-### Core expectations
+## Repository rules
 
-1. **Respect the skill catalog as code.** Skills in `skills/` are the
-   product. Changes to SKILL.md files must follow the conventions below.
-   Treat them like source files, not loose markdown.
+- Keep the `skills/` directory as the only source for skill content. Do not
+  create per-skill README files.
+- Follow the [Agent Skills specification](https://agentskills.io/specification).
+  Skill directories and their frontmatter `name` fields use lowercase
+  kebab-case and must match.
+- A skill must define one repeatable workflow. It must work without another
+  skill being installed or run.
+- Skills must not automatically invoke or require other skills. A skill may
+  point users to a separate workflow when that helps them continue.
+- Keep repository prose direct. Use sentence-case headings, concrete claims,
+  and plain punctuation.
 
-2. **Use the `commit` or `commit-work` skill when committing changes.**
-   Use `commit-work` when every commit scope must include a ticket number.
-   All commits follow conventional commit format. Commits are split by intent
-   — each commit represents exactly one reason to change. Never push to
-   `main` directly. Open a PR from a feature branch.
+## Adding or updating a skill
 
-3. **Read `docs/CONTEXT.md` before making scope decisions.** When deciding
-   whether something belongs in this project, `CONTEXT.md` is authoritative.
-
-4. **Read `docs/ARCHITECTURE.md` before making structural changes.** When
-   adding components, changing the build system, or modifying the docs site,
-   `ARCHITECTURE.md` describes how things fit together.
-
-5. **No skill invokes another skill by name.** Skills are atomic and
-   self-contained. An agent may compose multiple skills in a session, but
-   no SKILL.md text should say "use the research skill" or "run the commit
-   skill."
-
-### When to use skills
-
-Agents may invoke skills when a task matches the skill's workflow. The user
-may also invoke a skill by name. When several skills could apply, choose the
-most specific fit. Do not force a skill into a task that does not need it.
-
-### When to create a skill
-
-A workflow qualifies as a skill when:
-- It is done repeatedly (daily or near-daily).
-- Different agents produce inconsistent results for the same task.
-- The workflow has clear steps, rules, and failure conditions.
-
-A workflow does not qualify when:
-- It is rarely used or highly context-specific — use a prompt instead.
-- The behavior varies so much by project that a single set of rules
-  cannot cover it.
-- It is a one-line instruction that doesn't benefit from structure.
-
-## Skill Structure
-
-```
-skills/
-  <skill-name>/
-    SKILL.md      ← the skill definition (required)
-    references/   ← optional supporting docs
-    scripts/      ← optional deterministic helper scripts
-    assets/       ← optional templates/resources
-```
-
-Skill names are short verbs or nouns in kebab-case: `commit`, `commit-work`,
-`research`, `handoff`, `open-pr`. No namespacing.
-
-## SKILL.md Format
-
-```markdown
----
-name: <skill-name>
-description: >-
-  [One-line what the skill does.]
-  Invoke when the workflow applies. The user may also name this skill
+- Add a skill only when the workflow is repeated and has clear inputs,
+  outputs, and failure conditions.
+- Keep frontmatter to `name` and `description`. The description must say what
+  the skill does, when agents should use it, and that users may name it
   explicitly.
----
+- When adding, removing, or renaming a skill, update the catalog and count in
+  `README.md`.
+- Add a dated entry under `[Unreleased]` in `CHANGELOG.md` for every change.
+  Add to today's section when one already exists.
+- Local installation is optional. Do not commit anything from `~/.agents/`.
 
-# Title
+## Git and verification
 
-[Content: intent, workflow, rules]
-```
-
-Frontmatter: `name` and `description` only. No `metadata` block.
-
-### Description pattern
-
-First sentence says what the skill does in active voice. The remaining
-sentences state when the agent should invoke the skill and that the user
-may also invoke it by name.
-
-## Truth Maintenance Rules
-
-When the project evolves, update truth documents in this order:
-
-1. **`docs/CONTEXT.md`** — if scope, goals, non-goals, or constraints change.
-2. **`docs/ARCHITECTURE.md`** — if the structure, data flow, components,
-   or technical decisions change.
-3. **`docs/CONTRIBUTING.md`** — if the development workflow, conventions,
-   or prerequisites change.
-4. **This file** — if agent behavior expectations or skill authoring
-   conventions change.
-5. **`README.md`** — if the catalog, badge count, or install instructions change.
-6. **`CHANGELOG.md`** — always add an entry under `[Unreleased]` for every
-   change. Merge into an existing date section if one already exists. Create
-   a new `### Added/Changed/Removed — YYYY-MM-DD` section only if none exists
-   for today.
-
-## Creating a New Skill
-
-1. Research reference implementations if the workflow is non-trivial.
-   Clone one of these reference repos and read their skill structure:
-   - `anthropics/skills`
-   - `mattpocock/skills`
-   - `addyosmani/agent-skills`
-   - `muratcankoylan/Agent-Skills-for-Context-Engineering`
-   - `vercel-labs/agent-skills`
-2. Create `skills/<skill-name>/SKILL.md` with the correct frontmatter.
-3. Update the catalog table and badge count in `README.md`.
-4. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
-5. Install the skill locally by replacing the directory at
-   `~/.agents/skills/<skill-name>/`.
-
-## Updating an Existing Skill
-
-1. Edit `skills/<skill-name>/SKILL.md` (and any supporting files).
-2. Add an entry to `CHANGELOG.md` under `[Unreleased]`.
-3. Replace the locally installed copy at `~/.agents/skills/<skill-name>/`
-   so stale files are removed.
-
-## Docs Site
-
-The Astro site at `src/` renders skill content from `skills/`. It uses
-Astro content collections, Satteri Markdown rendering, and the Swiss Style
-design system. Design tokens are plain CSS custom properties in
-`src/styles/global.css`. Components are in `src/components/`. See
-`docs/ARCHITECTURE.md` for the full technical design.
-
-## Committing and Pushing
-
-Use conventional commits. Push to a feature branch and open a PR.
-Never push directly to `main`. Branch protection requires linear history,
-PRs, and conventional commit titles.
+- Work on a feature branch. Never commit or push directly to `main`.
+- Use the `commit` skill for ordinary commits. Use `commit-work` when every
+  commit scope must include a ticket number.
+- Use conventional commit messages and keep each commit focused on one reason
+  to change.
+- Open a pull request for review.
+- Run `bun run verify` before opening the pull request.
