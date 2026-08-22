@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-08-22
+
+- Reworked repository guidance with direct, task-focused language.
+- Moved contributor instructions to the repository root and removed the
+  standalone context and architecture documents.
+- Updated installation commands and the skill catalog in `README.md`.
+
 ### Added — 2026-08-21
 
 - Added `unslop` skill for cutting AI tells from writing and adding human
