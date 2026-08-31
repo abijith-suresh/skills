@@ -11,6 +11,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Prepared the catalog for root-hosted Vercel static output with canonical and
   social metadata, static skill OG images, generated icons, a sitemap, and
   robots.txt.
+- Limited heading removal to a document's first node and added baseline Vercel
+  security headers with conservative caching for unversioned static assets.
 - Aligned Bun, Node, TypeScript, Astro, Satori, Resvg, and shared CI versions
   with the repository baseline.
 - Removed the GitHub Pages deployment workflow and fixed root-hosted asset paths.

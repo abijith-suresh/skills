@@ -2,7 +2,8 @@ import type { Root } from "mdast";
 import { defineMdastPlugin } from "satteri";
 
 export function findLeadingSkillHeading(tree: Root) {
-  return tree.children.find((node) => node.type === "heading" && node.depth === 1);
+  const firstNode = tree.children[0];
+  return firstNode?.type === "heading" && firstNode.depth === 1 ? firstNode : undefined;
 }
 
 export default defineMdastPlugin({

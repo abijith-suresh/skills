@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { findLeadingSkillHeading } from "./remove-leading-skill-heading";
 
 describe("findLeadingSkillHeading", () => {
-  it("finds the first level-one heading in skill content", () => {
+  it("finds a level-one heading only when it leads the document", () => {
     const tree: Root = {
       type: "root",
       children: [
@@ -15,10 +15,13 @@ describe("findLeadingSkillHeading", () => {
     expect(findLeadingSkillHeading(tree)).toMatchObject({ type: "heading", depth: 1 });
   });
 
-  it("returns no heading when content starts without a level-one heading", () => {
+  it("returns no heading when a later level-one heading follows another block", () => {
     const tree: Root = {
       type: "root",
-      children: [{ type: "paragraph", children: [{ type: "text", value: "Content" }] }],
+      children: [
+        { type: "paragraph", children: [{ type: "text", value: "Intro" }] },
+        { type: "heading", depth: 1, children: [{ type: "text", value: "Details" }] },
+      ],
     };
 
     expect(findLeadingSkillHeading(tree)).toBeUndefined();
