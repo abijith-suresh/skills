@@ -10,7 +10,7 @@ and work with compatible coding agents.
 
 ## Browse
 
-Browse the skills and copy install commands on the [skills site](https://abijith-suresh.github.io/skills/).
+Browse the skills and copy install commands on the [skills site](https://skills-lovat-psi.vercel.app/).
 
 ## Scope
 

@@ -6,6 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-08-31
+
+- Prepared the catalog for root-hosted Vercel static output with canonical and
+  social metadata, static skill OG images, generated icons, a sitemap, and
+  robots.txt.
+- Aligned Bun, Node, TypeScript, Astro, Satori, Resvg, and shared CI versions
+  with the repository baseline.
+- Removed the GitHub Pages deployment workflow and fixed root-hosted asset paths.
+
 ### Changed — 2026-08-22
 
 - Reworked repository guidance with direct, task-focused language.
@@ -117,7 +126,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `src/styles/global.css`: removed dead `body::before { display: none; }`
   from print styles (the noise texture itself was already removed)
 - `src/components/Footer.astro`: reverted link label back to "GitHub"
-- `src/styles/global.css`: fixed font `url()` paths to use `/skills/fonts/...`
+- `src/styles/global.css`: fixed font `url()` paths to use root-hosted `/fonts/...`
   (matching the site's base URL); removed all dead scroll-reveal CSS
   (`[data-scroll-reveal]`, `.scroll-revealed`, `.scroll-stagger-*`)
   and the `--scroll-reveal-distance` / `--stagger-step` custom properties
@@ -275,7 +284,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — 2026-05-17
 
-- Astro-powered docs site with a GitHub Pages-friendly `/skills/` base route, a catalog landing page, per-skill detail pages, and copy-ready skills install commands sourced directly from the repository
+- Astro-powered docs site with a root-hosted base route, a catalog landing page, per-skill detail pages, and copy-ready skills install commands sourced directly from the repository
 - Bun-based frontend tooling (`bun.lock`, `mise.toml`, Astro/Tailwind/TypeScript setup) plus targeted tests for catalog metadata and route generation
 - GitHub Pages deployment workflow using the official Astro action
 
@@ -283,7 +292,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - skill source files now live under `skills/<skill-name>/` so the repository cleanly separates installable skills from the Astro site implementation
 - install instructions now use the current `npx skills add <repo> --skill <name>` syntax throughout the repository
-- `README.md` and `AGENTS.md` now document the new project layout, local Bun-based development flow, and the `/skills/` routing model used for GitHub Pages
+- `README.md` and `AGENTS.md` now document the new project layout, local Bun-based development flow, and the root-hosted routing model
 
 ### Changed — 2026-05-16
 

@@ -4,7 +4,7 @@
 
 - [mise](https://mise.jdx.dev/) for managing tool versions
 - Node `24.19.0`, pinned in `.node-version`
-- Bun `1.3.14`, pinned in `mise.toml`
+- Bun `1.3.14`, pinned in `.bun-version` and `mise.toml`
 
 ```bash
 mise install
@@ -17,8 +17,8 @@ bun install
 bun run dev
 ```
 
-Open `http://localhost:4321/skills/` in a browser. Changes under `skills/`
-reload through Astro's development server.
+Open `http://localhost:4321/` in a browser. Changes under `skills/` reload
+through Astro's development server.
 
 ## Verify changes
 
