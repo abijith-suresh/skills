@@ -1,12 +1,30 @@
 import { describe, expect, it } from "vitest";
-import { buildSkillPath } from "./site-paths";
+import { buildAssetPath, buildCanonicalUrl, buildSkillPath } from "./site-paths";
 
-describe("buildSkillPath", () => {
-  it("builds a trailing-slash route from a base URL and slug", () => {
-    expect(buildSkillPath("/skills/", "commit")).toBe("/skills/commit/");
+describe("buildAssetPath", () => {
+  it("keeps root-hosted assets at the root", () => {
+    expect(buildAssetPath("/", "fonts/IBMPlexSansVar-Roman.woff2")).toBe(
+      "/fonts/IBMPlexSansVar-Roman.woff2"
+    );
   });
 
-  it("normalizes a base URL without a trailing slash", () => {
-    expect(buildSkillPath("/skills", "commit")).toBe("/skills/commit/");
+  it("normalizes a base path before appending an asset", () => {
+    expect(buildAssetPath("/docs", "/fonts/site.woff2")).toBe("/docs/fonts/site.woff2");
+  });
+});
+
+describe("buildSkillPath", () => {
+  it("builds a root-hosted trailing-slash route", () => {
+    expect(buildSkillPath("/", "commit")).toBe("/commit/");
+  });
+});
+
+describe("buildCanonicalUrl", () => {
+  it("normalizes the route and preserves the trailing slash", () => {
+    expect(buildCanonicalUrl("/commit", "https://example.com")).toBe("https://example.com/commit/");
+  });
+
+  it("returns the site root for an empty path", () => {
+    expect(buildCanonicalUrl("", "https://example.com")).toBe("https://example.com/");
   });
 });

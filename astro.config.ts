@@ -1,14 +1,21 @@
 import { satteri } from "@astrojs/markdown-satteri";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import expressiveCode from "satteri-expressive-code";
+import generatedAssets from "./src/integrations/generated-assets";
+import removeLeadingSkillHeading from "./src/lib/remove-leading-skill-heading";
+import { SITE } from "./src/lib/site-metadata";
 
 export default defineConfig({
-  site: "https://abijith-suresh.github.io",
-  base: "/skills",
+  site: SITE.url,
+  base: "/",
+  output: "static",
   trailingSlash: "always",
+  integrations: [generatedAssets(), sitemap()],
   markdown: {
     syntaxHighlight: false,
     processor: satteri({
+      mdastPlugins: [removeLeadingSkillHeading],
       hastPlugins: [
         expressiveCode({
           themes: ["github-dark"],

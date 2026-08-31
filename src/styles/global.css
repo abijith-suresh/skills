@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "IBM Plex Sans";
-  src: url("/skills/fonts/IBMPlexSansVar-Roman.woff2") format("woff2");
+  src: url("/fonts/IBMPlexSansVar-Roman.woff2") format("woff2");
   font-weight: 100 700;
   font-style: normal;
   font-display: swap;
@@ -12,7 +12,7 @@
 
 @font-face {
   font-family: "IBM Plex Sans";
-  src: url("/skills/fonts/IBMPlexSansVar-Italic.woff2") format("woff2");
+  src: url("/fonts/IBMPlexSansVar-Italic.woff2") format("woff2");
   font-weight: 100 700;
   font-style: italic;
   font-display: swap;
@@ -20,7 +20,7 @@
 
 @font-face {
   font-family: "IBM Plex Mono";
-  src: url("/skills/fonts/IBMPlexMono-Regular.woff2") format("woff2");
+  src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -280,6 +280,19 @@ h1 {
 
 .copy-button:hover {
   color: var(--color-text);
+}
+
+.copy-label {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--letter-spacing-uppercase);
+  text-transform: uppercase;
+}
+
+.copy-status {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  white-space: nowrap;
 }
 
 .hidden {

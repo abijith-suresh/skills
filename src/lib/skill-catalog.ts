@@ -20,6 +20,14 @@ export function buildInstallCommand(repository: string, skillSlug?: string): str
   return `npx skills@latest add ${repository} --skill ${skillSlug}`;
 }
 
+export function buildRepositoryUrl(repository = SKILLS_REPOSITORY) {
+  return `https://github.com/${repository}`;
+}
+
+export function buildSkillSourceUrl(repository: string, slug: string) {
+  return `${buildRepositoryUrl(repository)}/tree/main/skills/${slug}`;
+}
+
 export function buildSkillSummaries(
   definitions: { id: string; data: { name: string; description: string } }[],
   repository = SKILLS_REPOSITORY
@@ -30,7 +38,7 @@ export function buildSkillSummaries(
       name: definition.data.name,
       description: definition.data.description,
       installCommand: buildInstallCommand(repository, definition.id),
-      sourceUrl: `https://github.com/${repository}/tree/main/skills/${definition.id}`,
+      sourceUrl: buildSkillSourceUrl(repository, definition.id),
     }))
     .sort((left, right) => left.name.localeCompare(right.name));
 }
