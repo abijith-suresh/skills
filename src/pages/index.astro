@@ -5,6 +5,7 @@ import PageHero from "../components/PageHero.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from "../lib/skill-catalog";
 import { buildSkillPath } from "../lib/site-paths";
+import { SITE } from "../lib/site-metadata";
 
 const definitions = await getCollection("skillDefinitions");
 const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY);
@@ -12,14 +13,14 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 ---
 
 <SiteLayout
-  title="Skills"
-  description="Browse personal AI agent skills, copy install commands, and inspect each skill's docs before installing it on another machine."
+  title={SITE.title}
+  description={SITE.description}
 >
   <section class="page-shell" aria-labelledby="page-title">
     <PageHero
-      eyebrow="abijith-suresh/skills"
+      eyebrow="skills catalog"
       title="Skills"
-      description="AI agent workflows I reach for every day."
+      description={SITE.description}
     >
       <div slot="actions">
         <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />

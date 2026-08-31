@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { buildInstallCommand, buildSkillSummaries, directorySlugFromEntry } from "./skill-catalog";
+import {
+  buildInstallCommand,
+  buildRepositoryUrl,
+  buildSkillSourceUrl,
+  buildSkillSummaries,
+  directorySlugFromEntry,
+} from "./skill-catalog";
 
 describe("directorySlugFromEntry", () => {
   it("uses the first path segment as the skill slug", () => {
@@ -8,6 +14,20 @@ describe("directorySlugFromEntry", () => {
 
   it("falls back to the entry when no path separator is present", () => {
     expect(directorySlugFromEntry("SKILL.md")).toBe("SKILL.md");
+  });
+});
+
+describe("buildRepositoryUrl", () => {
+  it("builds the repository source URL", () => {
+    expect(buildRepositoryUrl("owner/repo")).toBe("https://github.com/owner/repo");
+  });
+});
+
+describe("buildSkillSourceUrl", () => {
+  it("builds a skill source URL from the repository and slug", () => {
+    expect(buildSkillSourceUrl("owner/repo", "commit")).toBe(
+      "https://github.com/owner/repo/tree/main/skills/commit"
+    );
   });
 });
 
