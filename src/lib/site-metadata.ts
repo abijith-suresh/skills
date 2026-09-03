@@ -1,5 +1,5 @@
 export const SITE = {
   title: "Skills",
   description: "Standalone workflows for AI coding agents.",
-  url: "https://skills-lovat-psi.vercel.app",
+  url: "https://skills.abijith.sh",
 } as const;

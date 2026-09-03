@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://skills-lovat-psi.vercel.app/sitemap-index.xml
+Sitemap: https://skills.abijith.sh/sitemap-index.xml
