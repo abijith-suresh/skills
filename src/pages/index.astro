@@ -4,36 +4,33 @@ import InstallCommandBlock from "../components/InstallCommandBlock.astro";
 import PageHero from "../components/PageHero.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from "../lib/skill-catalog";
-import { buildSkillPath } from "../lib/site-paths";
+import { buildAllPath, buildSkillPath } from "../lib/site-paths";
 import { SITE } from "../lib/site-metadata";
 
 const definitions = await getCollection("skillDefinitions");
 const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY);
+const featuredSkills = skills.filter((skill) => skill.featured);
 const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 ---
 
-<SiteLayout
-  title={SITE.title}
-  description={SITE.description}
->
+<SiteLayout title={SITE.title} description={SITE.description}>
   <section class="page-shell" aria-labelledby="page-title">
-    <PageHero
-      eyebrow="skills catalog"
-      title="skills"
-      period
-      description={SITE.description}
-    >
+    <PageHero title="skills" period description={SITE.description}>
       <div slot="actions" class="rise" style="--d: 160ms">
         <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />
       </div>
     </PageHero>
 
     <div class="section-header rise" style="--d: 240ms">
-      <h2 class="eyebrow">Skills</h2>
+      <h2 class="section-title">favourite skills</h2>
+      <a href={buildAllPath(import.meta.env.BASE_URL)} class="section-link">
+        all skills
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
     </div>
 
     <ul class="content-list">
-      {skills.map((skill, index) => (
+      {featuredSkills.map((skill, index) => (
         <li class="rise" style={`--d: ${320 + index * 80}ms`}>
           <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="skill-card">
             <span class="skill-card-title" translate="no">{skill.name}</span>

@@ -4,6 +4,8 @@ description: >-
   Clones canonical source and reads the actual API before implementation
   against a framework or library. Invoke when implementing against unfamiliar
   APIs or libraries. The user may also name this skill explicitly.
+metadata:
+  featured: true
 ---
 
 # Research

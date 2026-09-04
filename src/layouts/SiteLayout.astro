@@ -2,7 +2,6 @@
 import "@fontsource-variable/bricolage-grotesque";
 import "@fontsource-variable/geist";
 import Footer from "../components/Footer.astro";
-import { buildRepositoryUrl } from "../lib/skill-catalog";
 import { buildAssetPath, buildCanonicalUrl } from "../lib/site-paths";
 import { getOgImagePath } from "../lib/route-metadata";
 import { SITE } from "../lib/site-metadata";
@@ -60,10 +59,12 @@ const fontMonoUrl = buildAssetPath(import.meta.env.BASE_URL, "fonts/IBMPlexMono-
     <a href={buildAssetPath(import.meta.env.BASE_URL, "#main-content")} class="skip-link">Skip to content</a>
     <header class="site-topbar rise">
       <div class="topbar-inner">
-        <a class="brand" href={import.meta.env.BASE_URL}>skills.abijith.sh</a>
+        <a class="brand" href={import.meta.env.BASE_URL}>skills<span class="brand-period" aria-hidden="true">.</span></a>
         <nav class="topnav" aria-label="Primary">
-          <a href={buildRepositoryUrl()} target="_blank" rel="noopener noreferrer">github</a>
-          <a href="https://abijith.sh" target="_blank" rel="noopener noreferrer">abijith.sh</a>
+          <a href={buildAssetPath(import.meta.env.BASE_URL, "all/")}>all</a>
+          <a href="https://abijith.sh" target="_blank" rel="noopener noreferrer">
+            abijith.sh <span class="ext-arrow" aria-hidden="true">&nearr;</span>
+          </a>
         </nav>
       </div>
     </header>

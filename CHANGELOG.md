@@ -12,6 +12,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   with a breathing aurora glow, Bricolage Grotesque display and Geist body
   type, a topbar and restyled footer, card-based skill entries with a "read →"
   foot, and staggered load reveals that respect reduced-motion preferences.
+- Widened the site to the main site's measure: a 64rem content container with
+  clamp(1.25rem, 5vw, 2.5rem) gutters, while detail-page prose keeps a ~70ch
+  measure.
+- Restructured the catalog around favourites: the homepage dropped its eyebrow
+  and now lists only skills flagged `featured: true` inside the spec's
+  `metadata` frontmatter map (commit, grill-me, research) under a "favourite
+  skills" section head with an "all skills →" link, and a new /all/ page lists
+  the full collection with its own SEO metadata and OG image.
+- Shortened the topbar brand to "skills." and its links to "all" and
+  "abijith.sh ↗"; the GitHub link now lives in the footer alongside
+  "part of abijith.sh ↗".
+- Streamlined skill detail pages: removed the breadcrumb eyebrow, placed the
+  install command as the primary action under the title and lede, and rendered
+  SKILL.md directly as the page body.
 - Tightened the Dusk Aurora translation on the site: card titles and detail
   page titles use the display face with a glowing pink period on detail pages,
   eyebrow labels render as lowercase violet mono, prose horizontal rules are

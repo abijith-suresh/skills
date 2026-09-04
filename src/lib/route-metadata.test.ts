@@ -13,10 +13,14 @@ describe("getOgImagePath", () => {
   it("uses the catalog image for the noindex 404 page", () => {
     expect(getOgImagePath("/404/")).toBe("/og/index.png");
   });
+
+  it("maps the all-skills route to its own image", () => {
+    expect(getOgImagePath("/all/")).toBe("/og/all.png");
+  });
 });
 
 describe("buildOgRoutes", () => {
-  it("creates one catalog route and one route per skill", () => {
+  it("creates catalog, all-skills, and per-skill routes", () => {
     expect(
       buildOgRoutes([{ id: "commit", data: { name: "Commit", description: "Create commits." } }])
     ).toEqual([
@@ -24,6 +28,12 @@ describe("buildOgRoutes", () => {
         slug: "index",
         title: "Skills",
         description: "Standalone workflows for AI coding agents.",
+        label: "catalog",
+      },
+      {
+        slug: "all",
+        title: "All skills",
+        description: "Every skill in the collection.",
         label: "catalog",
       },
       {

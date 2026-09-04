@@ -1,24 +1,25 @@
 ---
 interface Props {
-  eyebrow?: string;
   title: string;
   description: string;
   period?: boolean;
 }
 
-const { eyebrow, title, description, period = false } = Astro.props;
+const { title, description, period = false } = Astro.props;
+const hasActions = Astro.slots.has("actions");
 ---
 
 <header class="page-header rise" style="--d: 80ms">
-  {eyebrow && <p class="eyebrow" translate="no">{eyebrow}</p>}
   <h1 id="page-title">
     {title}{period && <span class="hero-period" aria-hidden="true">.</span>}
   </h1>
   <p class="page-description">{description}</p>
 
-  <div style="margin-top:var(--space-m)">
-    <slot name="actions" />
-  </div>
+  {hasActions && (
+    <div style="margin-top:var(--space-m)">
+      <slot name="actions" />
+    </div>
+  )}
 </header>
 
 <style>

@@ -15,6 +15,10 @@ export function buildSkillPath(baseUrl: string, slug: string) {
   return buildAssetPath(baseUrl, `${slug.replace(/^\/+|\/+$/g, "")}/`);
 }
 
+export function buildAllPath(baseUrl: string) {
+  return buildAssetPath(baseUrl, "all/");
+}
+
 export function normalizePagePath(pathname: string) {
   if (!pathname || pathname === "/") return "/";
   const [pathOnly] = pathname.split(/[?#]/);

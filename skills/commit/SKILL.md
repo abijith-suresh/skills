@@ -3,6 +3,8 @@ name: commit
 description: >-
   Creates clean conventional commits from the current diff. Invoke when
   committing changes. The user may also name this skill explicitly.
+metadata:
+  featured: true
 ---
 
 # Commit

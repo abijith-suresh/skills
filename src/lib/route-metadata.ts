@@ -32,6 +32,12 @@ export function buildOgRoutes(definitions: SkillDefinition[]): OgRoute[] {
       description: SITE.description,
       label: "catalog",
     },
+    {
+      slug: "all",
+      title: "All skills",
+      description: "Every skill in the collection.",
+      label: "catalog",
+    },
     ...definitions.map((definition) => ({
       slug: definition.id,
       title: definition.data.name,

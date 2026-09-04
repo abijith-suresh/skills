@@ -48,10 +48,10 @@
   --space-xl: clamp(3rem, 2.8613rem + 0.6764vw, 3.375rem);
   --space-2xl: clamp(4rem, 3.8151rem + 0.9019vw, 4.5rem);
 
-  --page-inline: var(--space-m);
+  --page-inline: clamp(1.25rem, 5vw, 2.5rem);
   --page-top: clamp(2.5rem, 2.1rem + 1.8vw, 3.5rem);
   --page-bottom: var(--space-2xl);
-  --container: 44rem;
+  --container: 64rem;
   --transition: 150ms ease;
   --transition-lift: 200ms ease;
 
@@ -231,8 +231,21 @@ a {
   transition: color var(--transition);
 }
 
+.brand-period {
+  color: var(--color-pink);
+}
+
 .brand:hover {
   color: var(--color-primary);
+}
+
+.ext-arrow {
+  display: inline-block;
+  transition: transform var(--transition-lift) ease;
+}
+
+a:hover .ext-arrow {
+  transform: translate(2px, -2px);
 }
 
 .topnav {
@@ -293,10 +306,43 @@ h1 {
   max-width: 34rem;
 }
 
+.arrow {
+  display: inline-block;
+  transition: transform var(--transition-lift) ease;
+}
+
 .section-header {
+  align-items: baseline;
   border-top: 1px solid var(--color-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-s);
+  justify-content: space-between;
   padding-top: var(--space-s);
   margin-bottom: var(--space-xs);
+}
+
+.section-title {
+  font-size: clamp(1.25rem, 1.19rem + 0.3vw, 1.45rem);
+  font-weight: 650;
+}
+
+.section-link {
+  align-items: center;
+  color: var(--color-muted);
+  display: inline-flex;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  gap: 0.35rem;
+  transition: color var(--transition);
+}
+
+.section-link:hover {
+  color: var(--color-primary);
+}
+
+.section-link:hover .arrow {
+  transform: translateX(3px);
 }
 
 /* --- skill cards --- */
@@ -352,37 +398,11 @@ h1 {
   font-weight: 500;
 }
 
-.arrow {
-  display: inline-block;
-  transition: transform var(--transition-lift) ease;
-}
-
 .skill-card:hover .arrow {
   transform: translateX(3px);
 }
 
 /* --- detail page --- */
-
-.breadcrumb {
-  align-items: center;
-  color: var(--color-muted);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2xs);
-  margin-bottom: var(--space-l);
-}
-
-.breadcrumb a {
-  transition: color var(--transition);
-}
-
-.breadcrumb a:hover {
-  color: var(--color-primary);
-}
-
-.detail-section {
-  margin-top: var(--space-xl);
-}
 
 .code-block-shell {
   align-items: center;
@@ -464,6 +484,17 @@ h1 {
 }
 
 .site-footer-inner p {
+  margin: 0;
+}
+
+.footer-links {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.footer-links p {
   margin: 0;
 }
 
