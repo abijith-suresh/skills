@@ -7,16 +7,14 @@ const currentYear = new Date().getFullYear();
 <footer class="site-footer">
   <div class="site-footer-inner">
     <p>&copy; {currentYear} abijith s</p>
-    <div class="footer-links">
+    <p class="footer-links">
       <a href={buildRepositoryUrl()} class="footer-link" target="_blank" rel="noopener noreferrer">
-        github
+        github <span class="ext-arrow" aria-hidden="true">&nearr;</span>
       </a>
-      <p>
-        part of
-        <a href="https://abijith.sh" class="footer-link" target="_blank" rel="noopener noreferrer">
-          abijith.sh <span class="ext-arrow" aria-hidden="true">&nearr;</span>
-        </a>
-      </p>
-    </div>
+      <span aria-hidden="true">&middot;</span>
+      <a href="https://abijith.sh" class="footer-link" target="_blank" rel="noopener noreferrer">
+        abijith.sh <span class="ext-arrow" aria-hidden="true">&nearr;</span>
+      </a>
+    </p>
   </div>
 </footer>

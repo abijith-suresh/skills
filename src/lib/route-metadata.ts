@@ -34,7 +34,7 @@ export function buildOgRoutes(definitions: SkillDefinition[]): OgRoute[] {
     },
     {
       slug: "all",
-      title: "All skills",
+      title: "all skills",
       description: "Every skill in the collection.",
       label: "catalog",
     },

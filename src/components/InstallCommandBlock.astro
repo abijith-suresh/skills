@@ -24,7 +24,7 @@ const { command, label } = Astro.props;
       <svg class="hidden" data-check-icon width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="20 6 9 17 4 12"/>
       </svg>
-      <span class="copy-label" data-copy-label>Copy</span>
+      <span class="copy-label" data-copy-label>copy</span>
     </button>
     <span class="copy-status" data-copy-status role="status" aria-live="polite" aria-atomic="true"></span>
   </div>
@@ -50,8 +50,8 @@ const { command, label } = Astro.props;
       await navigator.clipboard.writeText(command);
     } catch {
       window.prompt("Copy this command:", command);
-      if (copyLabel) copyLabel.textContent = "Try again";
-      if (copyStatus) copyStatus.textContent = "Use the copy dialog to copy the command.";
+      if (copyLabel) copyLabel.textContent = "try again";
+      if (copyStatus) copyStatus.textContent = "use the copy dialog to copy the command";
       return;
     }
 
@@ -59,8 +59,8 @@ const { command, label } = Astro.props;
       copyIcon.classList.add("hidden");
       checkIcon.classList.remove("hidden");
     }
-    if (copyLabel) copyLabel.textContent = "Copied";
-    if (copyStatus) copyStatus.textContent = "Install command copied.";
+    if (copyLabel) copyLabel.textContent = "copied";
+    if (copyStatus) copyStatus.textContent = "install command copied";
     target.setAttribute("aria-label", "Install command copied");
 
     const timeout = window.setTimeout(() => {
@@ -68,7 +68,7 @@ const { command, label } = Astro.props;
         copyIcon.classList.remove("hidden");
         checkIcon.classList.add("hidden");
       }
-      if (copyLabel) copyLabel.textContent = "Copy";
+      if (copyLabel) copyLabel.textContent = "copy";
       if (copyStatus) copyStatus.textContent = "";
       target.setAttribute("aria-label", "Copy install command");
     }, 1600);

@@ -26,10 +26,10 @@ const { Content } = await render(definition);
 const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 ---
 
-<SiteLayout title={`${definition.data.name} | Skills`} description={definition.data.description}>
+<SiteLayout title={`${definition.data.name} | skills`} description={definition.data.description}>
   <article class="page-shell">
     <h1 class="detail-title rise" style="--d: 80ms" translate="no">
-      {definition.data.name}<span class="detail-period" aria-hidden="true">.</span>
+      {definition.data.name}<span class="period" aria-hidden="true">.</span>
     </h1>
 
     <p class="page-description lede rise" style="--d: 120ms">{definition.data.description}</p>
@@ -45,10 +45,8 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 </SiteLayout>
 
 <style>
-  /* the Dusk Aurora signature: a Bricolage title ending in a glowing
-     pink period. The glow lives on a layered copy of the period so its
-     intensity can breathe by animating opacity instead of repainting
-     text-shadow. */
+  /* the Dusk Aurora signature — the glowing pink period — lives in
+     global.css as .period */
   .detail-title {
     letter-spacing: -0.015em;
   }
@@ -63,38 +61,5 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 
   .detail-doc {
     margin-top: var(--space-xl);
-  }
-
-  .detail-period {
-    position: relative;
-    display: inline-block;
-    color: var(--color-pink);
-  }
-
-  .detail-period::after {
-    content: ".";
-    position: absolute;
-    inset: 0;
-    color: var(--color-pink);
-    text-shadow:
-      0 0 18px oklch(70.6% 0.078 302 / 0.6),
-      0 0 36px oklch(83.9% 0.069 3 / 0.4);
-    pointer-events: none;
-    animation: detail-glow-breathe 22s ease-in-out infinite alternate;
-  }
-
-  @keyframes detail-glow-breathe {
-    from {
-      opacity: 0.75;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .detail-period::after {
-      animation: none;
-    }
   }
 </style>

@@ -11,6 +11,14 @@ const PUBLIC_DIR = path.join(process.cwd(), "public");
 const ASSET_FONT_DIR = path.join(process.cwd(), "src/assets/fonts");
 const OG_WIDTH = 1200;
 const OG_HEIGHT = 630;
+
+// Satori needs sRGB hex, so the Dusk Aurora CSS tokens are mirrored here:
+// --color-bg, --color-border, --color-text, and --color-pink
+// (oklch(83.9% 0.069 3)).
+const TILE_BG = "#2b2535";
+const TILE_BORDER = "#403b49";
+const TILE_TEXT = "#ece7f1";
+const TILE_PINK = "#f2b8c6";
 const SITE_DOMAIN = new URL(SITE.url).hostname;
 let fontCache: SatoriFonts | undefined;
 
@@ -179,6 +187,11 @@ async function renderOgSvg(route: OgRoute) {
   );
 }
 
+// The "as." monogram brands the site as part of the abijith.sh family:
+// lowercase letterforms with the signature pink period on the violet
+// rounded tile. Plex Sans Medium is the heaviest cut satori can embed
+// (woff2 variable fonts are unsupported), so a generous size carries
+// legibility at 16px.
 async function renderIconSvg(size: number) {
   const fonts = await loadFonts();
 
@@ -192,11 +205,9 @@ async function renderIconSvg(size: number) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#2b2535",
-          color: "#ece7f1",
+          backgroundColor: TILE_BG,
+          color: TILE_TEXT,
           fontFamily: "IBM Plex Sans",
-          fontSize: size * 0.32,
-          fontWeight: 500,
         },
         children: {
           type: "div",
@@ -207,9 +218,45 @@ async function renderIconSvg(size: number) {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              border: `${size * 0.012}px solid #403b49`,
+              border: `${size * 0.012}px solid ${TILE_BORDER}`,
+              borderRadius: size * 0.16,
             },
-            children: "SK",
+            children: {
+              type: "div",
+              props: {
+                style: {
+                  display: "flex",
+                  alignItems: "baseline",
+                  // optical centering: x-height glyphs ride low in the
+                  // centered line box
+                  transform: "translateY(-8%)",
+                },
+                children: [
+                  {
+                    type: "span",
+                    props: {
+                      style: {
+                        fontSize: size * 0.34,
+                        fontWeight: 500,
+                        letterSpacing: -size * 0.008,
+                      },
+                      children: "as",
+                    },
+                  },
+                  {
+                    type: "span",
+                    props: {
+                      style: {
+                        fontSize: size * 0.34,
+                        fontWeight: 500,
+                        color: TILE_PINK,
+                      },
+                      children: ".",
+                    },
+                  },
+                ],
+              },
+            },
           },
         },
       },

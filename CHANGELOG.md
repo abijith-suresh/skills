@@ -32,6 +32,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   quiet 1px hairlines, links and the copy affordance hover violet, the install
   command block matches the prompts site's copy block, and OG images and site
   icons use the violet palette.
+- Reworked the site icon into an "as." monogram — lowercase letterforms with
+  the signature pink period on the violet rounded tile, sized to stay legible
+  at 16px — branding the site as part of the abijith.sh family.
+- Simplified the footer links to "github ↗ · abijith.sh ↗" and removed the
+  hairline divider between the homepage hero and the favourite skills section.
+- Lowercased browser and OG image titles ("skills", "all skills | skills",
+  "commit | skills", "404 | skills") and the visible copy and 404 link labels
+  to match the lowercase voice used across the sibling sites.
+- Tokenized the stylesheet: added radius and z-index tokens, mapped one-off
+  rem gaps, sizes, and paddings to the fluid scale tokens, and centralized
+  the glowing pink period in global.css instead of duplicating it per page.
+- Fixed card and arrow hover transitions that browsers silently dropped
+  because their shorthand repeated the easing function after a duration token
+  that already contained one.
 
 ### Changed — 2026-08-31
 

@@ -54,6 +54,12 @@
   --container: 64rem;
   --transition: 150ms ease;
   --transition-lift: 200ms ease;
+  --radius-s: 0.625rem;
+  --radius-m: 1rem;
+
+  --z-below: 0;
+  --z-content: 1;
+  --z-overlay: 10;
 
   color-scheme: dark;
 }
@@ -100,7 +106,7 @@ body {
 
 main {
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
   flex: 1;
 }
 
@@ -141,7 +147,7 @@ a {
   position: fixed;
   top: var(--space-s);
   left: var(--space-s);
-  z-index: 10;
+  z-index: var(--z-overlay);
   width: auto;
   height: auto;
   padding: var(--space-xs) var(--space-s);
@@ -159,7 +165,7 @@ a {
 .aurora-glow {
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: var(--z-below);
   pointer-events: none;
   background: radial-gradient(
     ellipse 62% 46% at 50% 22%,
@@ -218,15 +224,15 @@ a {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.75rem 1.75rem;
-  padding: 1.5rem var(--page-inline) 0.25rem;
+  gap: var(--space-xs) var(--space-m);
+  padding: var(--space-m) var(--page-inline) var(--space-3xs);
 }
 
 .brand {
   color: var(--color-text);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 1.05rem;
+  font-size: var(--text-base);
   letter-spacing: -0.01em;
   transition: color var(--transition);
 }
@@ -241,7 +247,7 @@ a {
 
 .ext-arrow {
   display: inline-block;
-  transition: transform var(--transition-lift) ease;
+  transition: transform var(--transition-lift);
 }
 
 a:hover .ext-arrow {
@@ -251,12 +257,12 @@ a:hover .ext-arrow {
 .topnav {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem 1.4rem;
+  gap: var(--space-2xs) var(--space-m);
 }
 
 .topnav a {
   color: var(--color-muted);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   transition: color var(--transition);
 }
 
@@ -306,19 +312,47 @@ h1 {
   max-width: 34rem;
 }
 
+/* The Dusk Aurora signature: a glowing pink period. The glow lives on a
+   layered copy of the period so its intensity can breathe by animating
+   opacity instead of repainting text-shadow. */
+.period {
+  position: relative;
+  display: inline-block;
+  color: var(--color-pink);
+}
+
+.period::after {
+  content: ".";
+  position: absolute;
+  inset: 0;
+  color: var(--color-pink);
+  text-shadow:
+    0 0 18px oklch(70.6% 0.078 302 / 0.6),
+    0 0 36px oklch(83.9% 0.069 3 / 0.4);
+  pointer-events: none;
+  animation: glow-breathe 22s ease-in-out infinite alternate;
+}
+
+@keyframes glow-breathe {
+  from {
+    opacity: 0.75;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .arrow {
   display: inline-block;
-  transition: transform var(--transition-lift) ease;
+  transition: transform var(--transition-lift);
 }
 
 .section-header {
   align-items: baseline;
-  border-top: 1px solid var(--color-border);
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-2xs) var(--space-s);
   justify-content: space-between;
-  padding-top: var(--space-s);
   margin-bottom: var(--space-xs);
 }
 
@@ -333,7 +367,7 @@ h1 {
   display: inline-flex;
   font-size: var(--text-sm);
   font-weight: 500;
-  gap: 0.35rem;
+  gap: var(--space-3xs);
   transition: color var(--transition);
 }
 
@@ -352,20 +386,20 @@ h1 {
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 1rem;
+  gap: var(--space-s);
 }
 
 .skill-card {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--space-2xs);
   background: var(--color-card);
   border: 1px solid var(--ring);
-  border-radius: 1rem;
+  border-radius: var(--radius-m);
   padding: clamp(1.1rem, 2.5vw, 1.5rem);
   transition:
-    transform var(--transition-lift) ease,
-    border-color var(--transition-lift) ease;
+    transform var(--transition-lift),
+    border-color var(--transition-lift);
 }
 
 .skill-card:hover {
@@ -377,24 +411,24 @@ h1 {
   color: var(--color-text);
   font-family: var(--font-display);
   font-weight: 650;
-  font-size: 1.15rem;
+  font-size: var(--text-base);
   letter-spacing: -0.01em;
   line-height: calc(0.45rem + 1em);
 }
 
 .skill-card-description {
   color: var(--color-muted);
-  font-size: 0.925rem;
+  font-size: var(--text-sm);
   line-height: 1.6;
 }
 
 .skill-card-foot {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-top: 0.4rem;
+  gap: var(--space-3xs);
+  margin-top: var(--space-3xs);
   color: var(--color-primary);
-  font-size: 0.9rem;
+  font-size: var(--text-sm);
   font-weight: 500;
 }
 
@@ -408,7 +442,7 @@ h1 {
   align-items: center;
   background: var(--color-surface);
   border: 1px solid var(--ring);
-  border-radius: 1rem;
+  border-radius: var(--radius-m);
   display: flex;
   gap: var(--space-2xs);
   padding: var(--space-xs) var(--space-s);
@@ -427,7 +461,7 @@ h1 {
   align-items: center;
   background: transparent;
   border: 0;
-  border-radius: 0.625rem;
+  border-radius: var(--radius-s);
   color: var(--color-muted);
   cursor: pointer;
   display: inline-flex;
@@ -467,20 +501,20 @@ h1 {
   border-top: 1px solid var(--color-border);
   margin-top: auto;
   position: relative;
-  z-index: 1;
+  z-index: var(--z-content);
 }
 
 .site-footer-inner {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
+  gap: var(--space-2xs) var(--space-m);
   justify-content: space-between;
   width: min(100%, var(--container));
   margin-inline: auto;
-  padding: 1.75rem var(--page-inline) 4rem;
+  padding: var(--space-m) var(--page-inline) var(--space-2xl);
   color: var(--color-muted);
-  font-size: 0.85rem;
+  font-size: var(--text-xs);
 }
 
 .site-footer-inner p {
@@ -491,11 +525,7 @@ h1 {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem 1.5rem;
-}
-
-.footer-links p {
-  margin: 0;
+  gap: var(--space-2xs) var(--space-m);
 }
 
 .footer-link,

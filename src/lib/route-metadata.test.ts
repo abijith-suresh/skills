@@ -26,13 +26,13 @@ describe("buildOgRoutes", () => {
     ).toEqual([
       {
         slug: "index",
-        title: "Skills",
+        title: "skills",
         description: "Standalone workflows for AI coding agents.",
         label: "catalog",
       },
       {
         slug: "all",
-        title: "All skills",
+        title: "all skills",
         description: "Every skill in the collection.",
         label: "catalog",
       },
