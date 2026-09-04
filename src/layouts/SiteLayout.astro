@@ -1,5 +1,8 @@
 ---
+import "@fontsource-variable/bricolage-grotesque";
+import "@fontsource-variable/geist";
 import Footer from "../components/Footer.astro";
+import { buildRepositoryUrl } from "../lib/skill-catalog";
 import { buildAssetPath, buildCanonicalUrl } from "../lib/site-paths";
 import { getOgImagePath } from "../lib/route-metadata";
 import { SITE } from "../lib/site-metadata";
@@ -14,7 +17,6 @@ interface Props {
 const { title, description, noindex = false } = Astro.props;
 const canonicalUrl = buildCanonicalUrl(Astro.url.pathname);
 const ogImageUrl = new URL(getOgImagePath(Astro.url.pathname), `${SITE.url}/`).href;
-const fontSansUrl = buildAssetPath(import.meta.env.BASE_URL, "fonts/IBMPlexSansVar-Roman.woff2");
 const fontMonoUrl = buildAssetPath(import.meta.env.BASE_URL, "fonts/IBMPlexMono-Regular.woff2");
 ---
 
@@ -25,7 +27,7 @@ const fontMonoUrl = buildAssetPath(import.meta.env.BASE_URL, "fonts/IBMPlexMono-
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#111111" />
+    <meta name="theme-color" content="#2b2535" />
     <meta name="title" content={title} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
@@ -33,7 +35,6 @@ const fontMonoUrl = buildAssetPath(import.meta.env.BASE_URL, "fonts/IBMPlexMono-
     <link rel="icon" type="image/svg+xml" href={buildAssetPath(import.meta.env.BASE_URL, "favicon.svg")} />
     <link rel="icon" type="image/x-icon" href={buildAssetPath(import.meta.env.BASE_URL, "favicon.ico")} sizes="32x32" />
     <link rel="apple-touch-icon" href={buildAssetPath(import.meta.env.BASE_URL, "apple-touch-icon.png")} />
-    <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={fontSansUrl} />
     <link rel="preload" as="font" type="font/woff2" crossorigin="anonymous" href={fontMonoUrl} />
 
     <meta property="og:type" content="website" />
@@ -55,7 +56,17 @@ const fontMonoUrl = buildAssetPath(import.meta.env.BASE_URL, "fonts/IBMPlexMono-
     <title>{title}</title>
   </head>
   <body>
+    <div class="aurora-glow" aria-hidden="true"></div>
     <a href={buildAssetPath(import.meta.env.BASE_URL, "#main-content")} class="skip-link">Skip to content</a>
+    <header class="site-topbar rise">
+      <div class="topbar-inner">
+        <a class="brand" href={import.meta.env.BASE_URL}>skills.abijith.sh</a>
+        <nav class="topnav" aria-label="Primary">
+          <a href={buildRepositoryUrl()} target="_blank" rel="noopener noreferrer">github</a>
+          <a href="https://abijith.sh" target="_blank" rel="noopener noreferrer">abijith.sh</a>
+        </nav>
+      </div>
+    </header>
     <main id="main-content">
       <slot />
     </main>

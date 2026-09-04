@@ -3,22 +3,6 @@
 }
 
 @font-face {
-  font-family: "IBM Plex Sans";
-  src: url("/fonts/IBMPlexSansVar-Roman.woff2") format("woff2");
-  font-weight: 100 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "IBM Plex Sans";
-  src: url("/fonts/IBMPlexSansVar-Italic.woff2") format("woff2");
-  font-weight: 100 700;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "IBM Plex Mono";
   src: url("/fonts/IBMPlexMono-Regular.woff2") format("woff2");
   font-weight: 400;
@@ -27,23 +11,33 @@
 }
 
 :root {
-  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  /* Dusk Aurora — dark violet, rounded, one glowing accent.
+     Lift + ring on hover, never shadows. */
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     "IBM Plex Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
     "DejaVu Sans Mono", monospace;
 
-  --color-bg: oklch(14.5% 0 0);
-  --color-text: oklch(98.5% 0 0);
-  --color-border: oklch(25% 0 0);
-  --color-muted: color-mix(in oklch, var(--color-text) 60%, transparent);
-  --color-muted-foreground: color-mix(in oklch, var(--color-text) 68%, transparent);
-  --color-surface: color-mix(in oklch, var(--color-text) 6%, transparent);
-  --color-surface-strong: color-mix(in oklch, var(--color-text) 8%, transparent);
+  --color-bg: oklch(21.7% 0.0215 293);
+  --color-card: oklch(25.4% 0.03 293);
+  --color-text: oklch(90.5% 0.0245 294);
+  --color-ink: oklch(23% 0.035 296);
+  --color-primary: oklch(70.6% 0.078 302);
+  --color-pink: oklch(83.9% 0.069 3);
+  --color-border: oklch(100% 0 0 / 0.1);
+  --color-muted: oklch(69.7% 0.028 300);
+  --color-muted-foreground: oklch(69.7% 0.028 300);
+  --color-surface: oklch(100% 0 0 / 0.06);
+  --color-surface-strong: oklch(100% 0 0 / 0.08);
+
+  --ring: oklch(100% 0 0 / 0.08);
+  --ring-hover: oklch(100% 0 0 / 0.15);
 
   --text-xs: clamp(0.8125rem, 0.7894rem + 0.1127vw, 0.875rem);
   --text-sm: clamp(0.875rem, 0.8519rem + 0.1127vw, 0.9375rem);
   --text-base: clamp(1rem, 0.9538rem + 0.2255vw, 1.125rem);
-  --text-title: clamp(1.75rem, 1.2877rem + 2.255vw, 3rem);
+  --text-title: clamp(2.25rem, 1.5rem + 3vw, 3.25rem);
 
   --space-3xs: clamp(0.25rem, 0.2269rem + 0.1127vw, 0.3125rem);
   --space-2xs: clamp(0.5rem, 0.4769rem + 0.1127vw, 0.5625rem);
@@ -55,10 +49,11 @@
   --space-2xl: clamp(4rem, 3.8151rem + 0.9019vw, 4.5rem);
 
   --page-inline: var(--space-m);
-  --page-top: clamp(4rem, 3.5377rem + 2.255vw, 5.25rem);
+  --page-top: clamp(2.5rem, 2.1rem + 1.8vw, 3.5rem);
   --page-bottom: var(--space-2xl);
   --container: 44rem;
   --transition: 150ms ease;
+  --transition-lift: 200ms ease;
   --letter-spacing-uppercase: 0.04em;
 
   color-scheme: dark;
@@ -94,12 +89,20 @@ dd {
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--text-base);
   line-height: calc(0.65rem + 1em);
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  flex: 1;
 }
 
 a {
@@ -112,9 +115,14 @@ a {
   touch-action: manipulation;
 }
 
+::selection {
+  background: oklch(70.6% 0.078 302 / 0.92);
+  color: var(--color-ink);
+}
+
 :focus-visible {
-  outline: 2px solid var(--color-text);
-  outline-offset: 3px;
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .sr-only,
@@ -142,9 +150,53 @@ a {
   overflow: visible;
   clip: auto;
   white-space: normal;
-  background: var(--color-text);
-  color: var(--color-bg);
+  background: var(--color-primary);
+  color: var(--color-ink);
   font-weight: 500;
+}
+
+/* --- the breathing aurora --- */
+
+.aurora-glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 62% 46% at 50% 22%,
+    oklch(70.6% 0.078 302 / 0.07),
+    transparent 70%
+  );
+  animation: aurora-breathe 22s ease-in-out infinite alternate;
+}
+
+@keyframes aurora-breathe {
+  from {
+    opacity: 0.8;
+    filter: hue-rotate(-6deg);
+  }
+  to {
+    opacity: 1;
+    filter: hue-rotate(6deg);
+  }
+}
+
+/* --- orchestrated load reveal --- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rise {
+  animation: rise 560ms cubic-bezier(0.22, 0.61, 0.36, 1) backwards;
+  animation-delay: var(--d, 0ms);
 }
 
 .page-shell {
@@ -152,6 +204,55 @@ a {
   margin-inline: auto;
   padding: var(--page-top) var(--page-inline) var(--page-bottom);
 }
+
+/* --- topbar --- */
+
+.site-topbar {
+  position: relative;
+  z-index: 1;
+}
+
+.topbar-inner {
+  width: min(100%, var(--container));
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.75rem;
+  padding: 1.5rem var(--page-inline) 0.25rem;
+}
+
+.brand {
+  color: var(--color-text);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  transition: color var(--transition);
+}
+
+.brand:hover {
+  color: var(--color-primary);
+}
+
+.topnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+}
+
+.topnav a {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  transition: color var(--transition);
+}
+
+.topnav a:hover {
+  color: var(--color-text);
+}
+
+/* --- page header --- */
 
 .page-header {
   display: grid;
@@ -175,14 +276,17 @@ h3,
 h4,
 h5,
 h6 {
-  font-weight: 500;
-  letter-spacing: 0;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: calc(0.35rem + 1em);
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--text-title);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 .page-description {
@@ -196,38 +300,69 @@ h1 {
   margin-bottom: var(--space-xs);
 }
 
+/* --- skill cards --- */
+
 .content-list {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  gap: 1rem;
 }
 
-.ledger-row {
-  display: block;
-  padding-block: var(--space-xs);
-  border-bottom: 1px solid var(--color-border);
-  margin-inline: calc(-1 * var(--page-inline));
-  padding-inline: var(--page-inline);
-  transition: background-color var(--transition);
+.skill-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--color-card);
+  border: 1px solid var(--ring);
+  border-radius: 1rem;
+  padding: clamp(1.1rem, 2.5vw, 1.5rem);
+  transition:
+    transform var(--transition-lift) ease,
+    border-color var(--transition-lift) ease;
 }
 
-.ledger-row:hover {
-  background: var(--color-surface-strong);
+.skill-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ring-hover);
 }
 
-.ledger-row-title {
-  display: block;
+.skill-card-title {
   color: var(--color-text);
-  font-size: var(--text-base);
-  font-weight: 500;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  letter-spacing: -0.005em;
   line-height: calc(0.45rem + 1em);
 }
 
-.ledger-row-description {
+.skill-card-description {
   color: var(--color-muted);
-  font-size: var(--text-sm);
-  margin-top: var(--space-3xs);
+  font-size: 0.925rem;
+  line-height: 1.6;
 }
+
+.skill-card-foot {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.4rem;
+  color: var(--color-primary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.arrow {
+  display: inline-block;
+  transition: transform var(--transition-lift) ease;
+}
+
+.skill-card:hover .arrow {
+  transform: translateX(3px);
+}
+
+/* --- detail page --- */
 
 .breadcrumb {
   align-items: center;
@@ -239,7 +374,11 @@ h1 {
 }
 
 .breadcrumb a {
-  border-bottom: 1px solid var(--color-border);
+  transition: color var(--transition);
+}
+
+.breadcrumb a:hover {
+  color: var(--color-primary);
 }
 
 .detail-section {
@@ -249,6 +388,8 @@ h1 {
 .code-block-shell {
   align-items: center;
   background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
   display: flex;
   gap: var(--space-2xs);
   padding: var(--space-xs) var(--space-s);
@@ -299,34 +440,52 @@ h1 {
   display: none;
 }
 
+/* --- footer --- */
+
 .site-footer {
   border-top: 1px solid var(--color-border);
   margin-top: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .site-footer-inner {
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-s);
+  gap: 0.5rem 1.5rem;
   justify-content: space-between;
+  width: min(100%, var(--container));
   margin-inline: auto;
-  max-width: var(--container);
-  padding: var(--space-m) var(--page-inline);
+  padding: 1.75rem var(--page-inline) 4rem;
+  color: var(--color-muted);
+  font-size: 0.85rem;
+}
+
+.site-footer-inner p {
+  margin: 0;
 }
 
 .footer-link,
 .text-link {
-  border-bottom: 1px solid var(--color-muted);
   font-weight: 500;
-  padding-bottom: 0.125rem;
-  transition: border-color var(--transition);
+  transition: color var(--transition);
+}
+
+.footer-link {
+  color: var(--color-muted);
 }
 
 .footer-link:hover,
 .text-link:hover {
-  border-color: var(--color-text);
+  color: var(--color-primary);
 }
+
+.text-link {
+  color: var(--color-text);
+}
+
+/* --- prose --- */
 
 .prose {
   color: var(--color-text);
@@ -349,8 +508,13 @@ h1 {
 }
 
 .prose :where(a):not(:where(.not-prose, .not-prose *)) {
-  border-bottom: 1px solid var(--color-muted);
   color: var(--color-text);
+  font-weight: 500;
+  transition: color var(--transition);
+}
+
+.prose :where(a:hover):not(:where(.not-prose, .not-prose *)) {
+  color: var(--color-primary);
 }
 
 .prose :where(code):not(:where(.not-prose, .not-prose *)) {
@@ -383,7 +547,8 @@ h1 {
   }
 
   .code-block-shell,
-  .prose pre {
+  .prose pre,
+  .skill-card {
     border: 1px solid ButtonBorder;
   }
 }
@@ -396,6 +561,10 @@ h1 {
   body {
     background: #fff;
     color: #000;
+  }
+
+  .aurora-glow {
+    display: none;
   }
 
   .site-footer,
@@ -412,5 +581,13 @@ h1 {
     animation-duration: 0.01ms;
     animation-iteration-count: 1;
     transition-duration: 0.01ms;
+  }
+
+  .aurora-glow {
+    animation: none;
+  }
+
+  .rise {
+    animation: none;
   }
 }

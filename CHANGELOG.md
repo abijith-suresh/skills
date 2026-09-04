@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-09-04
+
+- Adopted the Dusk Aurora design system across the site: a violet OKLCH palette
+  with a breathing aurora glow, Bricolage Grotesque display and Geist body
+  type, a topbar and restyled footer, card-based skill entries with a "read →"
+  foot, and staggered load reveals that respect reduced-motion preferences.
+
 ### Changed — 2026-08-31
 
 - Prepared the catalog for root-hosted Vercel static output with canonical and

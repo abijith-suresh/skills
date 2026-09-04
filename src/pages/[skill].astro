@@ -28,7 +28,7 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 
 <SiteLayout title={`${definition.data.name} | Skills`} description={definition.data.description}>
   <article class="page-shell">
-    <nav class="breadcrumb eyebrow" aria-label="Breadcrumb">
+    <nav class="breadcrumb eyebrow rise" style="--d: 80ms" aria-label="Breadcrumb">
       <a href={import.meta.env.BASE_URL}>Skills</a>
       <span aria-hidden="true">/</span>
       <span translate="no">
@@ -36,7 +36,7 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
       </span>
     </nav>
 
-    <h1 translate="no">{definition.data.name}</h1>
+    <h1 class="rise" style="--d: 160ms" translate="no">{definition.data.name}</h1>
 
     <section class="detail-section">
       <div class="section-header">

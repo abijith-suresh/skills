@@ -3,17 +3,51 @@ interface Props {
   eyebrow?: string;
   title: string;
   description: string;
+  period?: boolean;
 }
 
-const { eyebrow, title, description } = Astro.props;
+const { eyebrow, title, description, period = false } = Astro.props;
 ---
 
-<header class="page-header">
+<header class="page-header rise" style="--d: 80ms">
   {eyebrow && <p class="eyebrow" translate="no">{eyebrow}</p>}
-  <h1 id="page-title">{title}</h1>
+  <h1 id="page-title">
+    {title}{period && <span class="hero-period" aria-hidden="true">.</span>}
+  </h1>
   <p class="page-description">{description}</p>
 
   <div style="margin-top:var(--space-m)">
     <slot name="actions" />
   </div>
 </header>
+
+<style>
+  .hero-period {
+    position: relative;
+    display: inline-block;
+    color: var(--color-pink);
+  }
+
+  /* the glow lives on a layered copy of the period so its intensity
+     can breathe by animating opacity instead of repainting text-shadow */
+  .hero-period::after {
+    content: ".";
+    position: absolute;
+    inset: 0;
+    color: var(--color-pink);
+    text-shadow:
+      0 0 18px oklch(70.6% 0.078 302 / 0.6),
+      0 0 36px oklch(83.9% 0.069 3 / 0.4);
+    pointer-events: none;
+    animation: glow-breathe 22s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow-breathe {
+    from {
+      opacity: 0.75;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+</style>

@@ -1,23 +1,15 @@
 ---
-import { buildRepositoryUrl } from "../lib/skill-catalog";
-import { SITE } from "../lib/site-metadata";
-
 const currentYear = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="site-footer-inner">
-    <a
-      href={buildRepositoryUrl()}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="footer-link"
-    >
-      GitHub
-    </a>
-
-    <p class="eyebrow">
-      &copy; {currentYear} {SITE.title}
+    <p>&copy; {currentYear} abijith s</p>
+    <p>
+      part of
+      <a href="https://abijith.sh" class="footer-link" target="_blank" rel="noopener noreferrer">
+        abijith.sh
+      </a>
     </p>
   </div>
 </footer>
