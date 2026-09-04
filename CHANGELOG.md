@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   with a breathing aurora glow, Bricolage Grotesque display and Geist body
   type, a topbar and restyled footer, card-based skill entries with a "read →"
   foot, and staggered load reveals that respect reduced-motion preferences.
+- Tightened the Dusk Aurora translation on the site: card titles and detail
+  page titles use the display face with a glowing pink period on detail pages,
+  eyebrow labels render as lowercase violet mono, prose horizontal rules are
+  quiet 1px hairlines, links and the copy affordance hover violet, the install
+  command block matches the prompts site's copy block, and OG images and site
+  icons use the violet palette.
 
 ### Changed — 2026-08-31
 

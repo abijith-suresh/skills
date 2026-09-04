@@ -36,7 +36,9 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
       </span>
     </nav>
 
-    <h1 class="rise" style="--d: 160ms" translate="no">{definition.data.name}</h1>
+    <h1 class="detail-title rise" style="--d: 160ms" translate="no">
+      {definition.data.name}<span class="detail-period" aria-hidden="true">.</span>
+    </h1>
 
     <section class="detail-section">
       <div class="section-header">
@@ -62,3 +64,46 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
     </section>
   </article>
 </SiteLayout>
+
+<style>
+  /* the Dusk Aurora signature: a Bricolage title ending in a glowing
+     pink period. The glow lives on a layered copy of the period so its
+     intensity can breathe by animating opacity instead of repainting
+     text-shadow. */
+  .detail-title {
+    letter-spacing: -0.015em;
+  }
+
+  .detail-period {
+    position: relative;
+    display: inline-block;
+    color: var(--color-pink);
+  }
+
+  .detail-period::after {
+    content: ".";
+    position: absolute;
+    inset: 0;
+    color: var(--color-pink);
+    text-shadow:
+      0 0 18px oklch(70.6% 0.078 302 / 0.6),
+      0 0 36px oklch(83.9% 0.069 3 / 0.4);
+    pointer-events: none;
+    animation: detail-glow-breathe 22s ease-in-out infinite alternate;
+  }
+
+  @keyframes detail-glow-breathe {
+    from {
+      opacity: 0.75;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .detail-period::after {
+      animation: none;
+    }
+  }
+</style>
