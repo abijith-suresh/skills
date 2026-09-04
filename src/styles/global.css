@@ -37,7 +37,9 @@
   --text-xs: clamp(0.8125rem, 0.7894rem + 0.1127vw, 0.875rem);
   --text-sm: clamp(0.875rem, 0.8519rem + 0.1127vw, 0.9375rem);
   --text-base: clamp(1rem, 0.9538rem + 0.2255vw, 1.125rem);
-  --text-title: clamp(2.25rem, 1.5rem + 3vw, 3.25rem);
+  --text-lg: clamp(1.125rem, 1.0418rem + 0.4059vw, 1.35rem);
+  --text-page: clamp(1.75rem, 1.2877rem + 2.255vw, 3rem);
+  --text-hero: clamp(2.25rem, 1.5rem + 3vw, 3.25rem);
 
   --space-3xs: clamp(0.25rem, 0.2269rem + 0.1127vw, 0.3125rem);
   --space-2xs: clamp(0.5rem, 0.4769rem + 0.1127vw, 0.5625rem);
@@ -302,9 +304,14 @@ h6 {
 }
 
 h1 {
-  font-size: var(--text-title);
+  font-size: var(--text-page);
   font-weight: 700;
   letter-spacing: -0.02em;
+}
+
+/* landing heroes and the 404 title step up from the inner-page default */
+.hero-title {
+  font-size: var(--text-hero);
 }
 
 .page-description {
@@ -411,7 +418,7 @@ h1 {
   color: var(--color-text);
   font-family: var(--font-display);
   font-weight: 650;
-  font-size: var(--text-base);
+  font-size: 1.2rem;
   letter-spacing: -0.01em;
   line-height: calc(0.45rem + 1em);
 }
@@ -531,7 +538,9 @@ h1 {
 .footer-link,
 .text-link {
   font-weight: 500;
-  transition: color var(--transition);
+  transition:
+    color var(--transition),
+    text-decoration-color var(--transition);
 }
 
 .footer-link {
@@ -543,8 +552,35 @@ h1 {
   color: var(--color-primary);
 }
 
+/* inline prose links stay identifiable without hover: a persistent,
+   quiet underline that warms to the primary color on hover */
 .text-link {
   color: var(--color-text);
+  text-decoration-line: underline;
+  text-decoration-color: oklch(69.7% 0.028 300 / 0.5);
+  text-underline-offset: 3px;
+}
+
+.text-link:hover {
+  text-decoration-color: var(--color-primary);
+}
+
+/* the 404 escape hatch: chrome-style link, no underline */
+.back-link {
+  align-items: center;
+  color: var(--color-muted);
+  display: inline-flex;
+  font-weight: 500;
+  gap: var(--space-3xs);
+  transition: color var(--transition);
+}
+
+.back-link:hover {
+  color: var(--color-text);
+}
+
+.back-link:hover .arrow {
+  transform: translateX(-3px);
 }
 
 /* --- prose --- */
@@ -572,11 +608,17 @@ h1 {
 .prose :where(a):not(:where(.not-prose, .not-prose *)) {
   color: var(--color-text);
   font-weight: 500;
-  transition: color var(--transition);
+  text-decoration-line: underline;
+  text-decoration-color: oklch(69.7% 0.028 300 / 0.5);
+  text-underline-offset: 3px;
+  transition:
+    color var(--transition),
+    text-decoration-color var(--transition);
 }
 
 .prose :where(a:hover):not(:where(.not-prose, .not-prose *)) {
   color: var(--color-primary);
+  text-decoration-color: var(--color-primary);
 }
 
 .prose :where(hr):not(:where(.not-prose, .not-prose *)) {

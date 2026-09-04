@@ -12,13 +12,15 @@ const ASSET_FONT_DIR = path.join(process.cwd(), "src/assets/fonts");
 const OG_WIDTH = 1200;
 const OG_HEIGHT = 630;
 
-// Satori needs sRGB hex, so the Dusk Aurora CSS tokens are mirrored here:
-// --color-bg, --color-border, --color-text, and --color-pink
-// (oklch(83.9% 0.069 3)).
-const TILE_BG = "#2b2535";
-const TILE_BORDER = "#403b49";
-const TILE_TEXT = "#ece7f1";
-const TILE_PINK = "#f2b8c6";
+// Satori needs sRGB hex, so the Dusk Aurora CSS tokens are mirrored here.
+// These are the canonical conversions from the Dusk Aurora House Standard:
+// --color-bg, --color-text, --color-muted, the composited hairline, and
+// --color-pink (oklch(83.9% 0.069 3)).
+const OG_BG = "#1a1823";
+const OG_TEXT = "#e0ddef";
+const OG_MUTED = "#a09aad";
+const OG_HAIRLINE = "#312f39";
+const OG_PINK = "#f2b8c6";
 const SITE_DOMAIN = new URL(SITE.url).hostname;
 let fontCache: SatoriFonts | undefined;
 
@@ -52,8 +54,8 @@ async function renderOgSvg(route: OgRoute) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#2b2535",
-          color: "#ece7f1",
+          backgroundColor: OG_BG,
+          color: OG_TEXT,
           padding: 72,
           fontFamily: "IBM Plex Sans",
         },
@@ -73,7 +75,7 @@ async function renderOgSvg(route: OgRoute) {
                     style: {
                       width: "100%",
                       height: 1,
-                      backgroundColor: "#403b49",
+                      backgroundColor: OG_HAIRLINE,
                     },
                   },
                 },
@@ -90,7 +92,7 @@ async function renderOgSvg(route: OgRoute) {
                         type: "div",
                         props: {
                           style: {
-                            color: "#a9a2b4",
+                            color: OG_MUTED,
                             fontFamily: "IBM Plex Mono",
                             fontSize: 24,
                             fontWeight: 500,
@@ -128,7 +130,7 @@ async function renderOgSvg(route: OgRoute) {
                             display: "flex",
                             flexDirection: "column",
                             gap: 8,
-                            color: "#a9a2b4",
+                            color: OG_MUTED,
                             fontSize: 32,
                             lineHeight: 1.25,
                           },
@@ -169,7 +171,7 @@ async function renderOgSvg(route: OgRoute) {
                     style: {
                       width: "100%",
                       height: 1,
-                      backgroundColor: "#403b49",
+                      backgroundColor: OG_HAIRLINE,
                     },
                   },
                 },
@@ -205,58 +207,45 @@ async function renderIconSvg(size: number) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: TILE_BG,
-          color: TILE_TEXT,
+          backgroundColor: OG_BG,
+          color: OG_TEXT,
+          borderRadius: size * 0.16,
           fontFamily: "IBM Plex Sans",
         },
         children: {
           type: "div",
           props: {
             style: {
-              width: size * 0.68,
-              height: size * 0.68,
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: `${size * 0.012}px solid ${TILE_BORDER}`,
-              borderRadius: size * 0.16,
+              alignItems: "baseline",
+              // optical centering: x-height glyphs ride low in the
+              // centered line box
+              transform: "translateY(-6%)",
             },
-            children: {
-              type: "div",
-              props: {
-                style: {
-                  display: "flex",
-                  alignItems: "baseline",
-                  // optical centering: x-height glyphs ride low in the
-                  // centered line box
-                  transform: "translateY(-8%)",
+            children: [
+              {
+                type: "span",
+                props: {
+                  style: {
+                    fontSize: size * 0.52,
+                    fontWeight: 500,
+                    letterSpacing: "-0.02em",
+                  },
+                  children: "as",
                 },
-                children: [
-                  {
-                    type: "span",
-                    props: {
-                      style: {
-                        fontSize: size * 0.34,
-                        fontWeight: 500,
-                        letterSpacing: -size * 0.008,
-                      },
-                      children: "as",
-                    },
-                  },
-                  {
-                    type: "span",
-                    props: {
-                      style: {
-                        fontSize: size * 0.34,
-                        fontWeight: 500,
-                        color: TILE_PINK,
-                      },
-                      children: ".",
-                    },
-                  },
-                ],
               },
-            },
+              {
+                type: "span",
+                props: {
+                  style: {
+                    fontSize: size * 0.52,
+                    fontWeight: 500,
+                    color: OG_PINK,
+                  },
+                  children: ".",
+                },
+              },
+            ],
           },
         },
       },

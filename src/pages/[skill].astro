@@ -4,6 +4,7 @@ import { getCollection, getEntry, render } from "astro:content";
 import InstallCommandBlock from "../components/InstallCommandBlock.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { buildInstallCommand, SKILLS_REPOSITORY } from "../lib/skill-catalog";
+import { buildPageTitle } from "../lib/route-metadata";
 
 export async function getStaticPaths() {
   const definitions = await getCollection("skillDefinitions");
@@ -26,19 +27,19 @@ const { Content } = await render(definition);
 const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 ---
 
-<SiteLayout title={`${definition.data.name} | skills`} description={definition.data.description}>
+<SiteLayout title={buildPageTitle(definition.data.name)} description={definition.data.description}>
   <article class="page-shell">
-    <h1 class="detail-title rise" style="--d: 80ms" translate="no">
+    <h1 class="detail-title rise" style="--d: 0ms" translate="no">
       {definition.data.name}<span class="period" aria-hidden="true">.</span>
     </h1>
 
-    <p class="page-description lede rise" style="--d: 120ms">{definition.data.description}</p>
+    <p class="page-description lede rise" style="--d: 80ms">{definition.data.description}</p>
 
-    <div class="detail-install rise" style="--d: 160ms">
+    <div class="detail-install rise" style="--d: 80ms">
       <InstallCommandBlock command={installCommand} />
     </div>
 
-    <div class="prose detail-doc rise" style="--d: 240ms">
+    <div class="prose detail-doc rise" style="--d: 80ms">
       <Content />
     </div>
   </article>

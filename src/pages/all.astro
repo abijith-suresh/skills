@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import PageHero from "../components/PageHero.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { buildSkillSummaries, SKILLS_REPOSITORY } from "../lib/skill-catalog";
+import { buildPageTitle } from "../lib/route-metadata";
 import { buildSkillPath } from "../lib/site-paths";
 
 const ALL_PAGE_DESCRIPTION = "Every skill in the collection.";
@@ -11,13 +12,13 @@ const definitions = await getCollection("skillDefinitions");
 const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY);
 ---
 
-<SiteLayout title="all skills | skills" description={ALL_PAGE_DESCRIPTION}>
+<SiteLayout title={buildPageTitle("all skills")} description={ALL_PAGE_DESCRIPTION}>
   <section class="page-shell" aria-labelledby="page-title">
     <PageHero title="all skills" period description={ALL_PAGE_DESCRIPTION} />
 
     <ul class="content-list">
       {skills.map((skill, index) => (
-        <li class="rise" style={`--d: ${160 + index * 80}ms`}>
+        <li class="rise" style={`--d: ${160 + Math.min(index, 7) * 70}ms`}>
           <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="skill-card">
             <span class="skill-card-title" translate="no">{skill.name}</span>
             <span class="skill-card-description">{skill.description}</span>

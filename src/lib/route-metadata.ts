@@ -16,6 +16,12 @@ type SkillDefinition = {
   };
 };
 
+const SITE_DOMAIN = new URL(SITE.url).hostname;
+
+export function buildPageTitle(name?: string): string {
+  return name ? `${name} · ${SITE_DOMAIN}` : SITE_DOMAIN;
+}
+
 export function getOgImagePath(pathname: string): string {
   const normalizedPath = normalizePagePath(pathname);
   if (normalizedPath === "/" || normalizedPath === "/404/") return "/og/index.png";

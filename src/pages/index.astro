@@ -4,6 +4,7 @@ import InstallCommandBlock from "../components/InstallCommandBlock.astro";
 import PageHero from "../components/PageHero.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from "../lib/skill-catalog";
+import { buildPageTitle } from "../lib/route-metadata";
 import { buildAllPath, buildSkillPath } from "../lib/site-paths";
 import { SITE } from "../lib/site-metadata";
 
@@ -13,15 +14,15 @@ const featuredSkills = skills.filter((skill) => skill.featured);
 const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 ---
 
-<SiteLayout title={SITE.title} description={SITE.description}>
+<SiteLayout title={buildPageTitle()} description={SITE.description}>
   <section class="page-shell" aria-labelledby="page-title">
-    <PageHero title="skills" period description={SITE.description}>
-      <div slot="actions" class="rise" style="--d: 160ms">
+    <PageHero title="skills" period hero description={SITE.description}>
+      <div slot="actions" class="rise" style="--d: 80ms">
         <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />
       </div>
     </PageHero>
 
-    <div class="section-header rise" style="--d: 240ms">
+    <div class="section-header rise" style="--d: 80ms">
       <h2 class="section-title">favourite skills</h2>
       <a href={buildAllPath(import.meta.env.BASE_URL)} class="section-link">
         all skills
@@ -31,7 +32,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 
     <ul class="content-list">
       {featuredSkills.map((skill, index) => (
-        <li class="rise" style={`--d: ${320 + index * 80}ms`}>
+        <li class="rise" style={`--d: ${160 + Math.min(index, 7) * 70}ms`}>
           <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="skill-card">
             <span class="skill-card-title" translate="no">{skill.name}</span>
             <span class="skill-card-description">{skill.description}</span>

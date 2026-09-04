@@ -8,6 +8,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-09-04
 
+- Applied the Dusk Aurora House Standard v1 across the site: OG images and site
+  icons now use the canonical sRGB palette (#1a1823 background, #e0ddef text,
+  #a09aad muted, #312f39 hairlines), the theme-color meta matches the new
+  background, and the "as." monogram follows the shared icon geometry — a
+  full-bleed 16%-radius tile with no frame and a larger 0.52-size "as" glyph.
+- Switched browser titles to the shared middle-dot vocabulary: the home page
+  titles as the bare domain ("skills.abijith.sh"), and section, detail, and 404
+  pages as "<page> · skills.abijith.sh" through a new buildPageTitle() helper;
+  og:site_name stays "skills".
+- Rebuilt the 404 page on the canonical template: a "page not found." hero with
+  the glowing pink period, one muted explanation line, and a "← back to skills"
+  link, left-aligned with 0/60/120ms reveals and no eyebrow or numeral.
+- Gave inline prose links a persistent quiet underline (3px offset, muted at
+  half alpha) that warms to violet on hover; chrome links keep their
+  underline-free style. Card titles stepped up to 1.2rem, and the type scale
+  gained the shared --text-hero/--text-page/--text-lg token names.
+- Enabled Astro's ClientRouter for client-side navigation: the aurora glow
+  persists across navigations so its 22s breathe doesn't restart, and the
+  install-command copy script re-binds on astro:page-load with an idempotent
+  guard so copy keeps working after soft navigations.
+- Retimed the rise choreography to the shared table: header at 0ms, content at
+  80ms, and list items at 160ms plus 70ms per card, capped after eight items.
 - Adopted the Dusk Aurora design system across the site: a violet OKLCH palette
   with a breathing aurora glow, Bricolage Grotesque display and Geist body
   type, a topbar and restyled footer, card-based skill entries with a "read →"
