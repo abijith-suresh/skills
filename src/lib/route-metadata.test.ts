@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildOgRoutes, buildPageTitle, getOgImagePath } from "./route-metadata";
+import { buildOgRoutes, buildPageTitle, getOgImagePath } from "@/lib/route-metadata";
 
 describe("buildPageTitle", () => {
   it("uses the bare domain for the home page", () => {

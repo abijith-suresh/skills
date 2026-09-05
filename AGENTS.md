@@ -9,6 +9,9 @@ what the repository actually does.
 - `CONTRIBUTING.md` explains local development and contribution workflow.
 - `skills/` contains the installable skills. Each skill's `SKILL.md` is its
   canonical content.
+- `src/consts.ts` holds site-wide config (URLs, titles, descriptions).
+- `src/styles/` holds the design tokens, base styles, and component styles.
+- `src/components/seo/` holds the SEO meta and structured data components.
 - `CHANGELOG.md` records user-visible repository changes.
 
 There is no separate architecture document. Before changing the Astro site,
@@ -17,6 +20,7 @@ scripts.
 
 ## Repository rules
 
+- Use `@/` path alias for all imports from `src/`.
 - Keep the `skills/` directory as the only source for skill content. Do not
   create per-skill README files.
 - Follow the [Agent Skills specification](https://agentskills.io/specification).

@@ -2,9 +2,9 @@ import { satteri } from "@astrojs/markdown-satteri";
 import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import expressiveCode from "satteri-expressive-code";
+import { SITE } from "./src/consts";
 import generatedAssets from "./src/integrations/generated-assets";
 import removeLeadingSkillHeading from "./src/lib/remove-leading-skill-heading";
-import { SITE } from "./src/lib/site-metadata";
 
 export default defineConfig({
   site: SITE.url,
@@ -28,7 +28,7 @@ export default defineConfig({
             borderRadius: "0",
             codeBackground: "color-mix(in oklch, var(--color-text) 6%, transparent)",
             frames: {
-              editorActiveTabForeground: "var(--color-muted)",
+              editorActiveTabForeground: "var(--color-muted-foreground)",
               editorActiveTabBackground: "color-mix(in oklch, var(--color-text) 6%, transparent)",
               editorActiveTabIndicatorBottomColor: "transparent",
               editorActiveTabIndicatorTopColor: "transparent",
@@ -39,7 +39,7 @@ export default defineConfig({
               terminalBackground: "color-mix(in oklch, var(--color-text) 6%, transparent)",
               terminalTitlebarBackground: "transparent",
               terminalTitlebarBorderBottomColor: "transparent",
-              terminalTitlebarForeground: "var(--color-muted)",
+              terminalTitlebarForeground: "var(--color-muted-foreground)",
             },
           },
         }),

@@ -1,10 +1,12 @@
 ---
 import { getCollection, getEntry, render } from "astro:content";
 
-import InstallCommandBlock from "../components/InstallCommandBlock.astro";
-import SiteLayout from "../layouts/SiteLayout.astro";
-import { buildInstallCommand, SKILLS_REPOSITORY } from "../lib/skill-catalog";
-import { buildPageTitle } from "../lib/route-metadata";
+import InstallCommandBlock from "@/components/InstallCommandBlock.astro";
+import PageHeader from "@/components/ui/PageHeader.astro";
+import PageShell from "@/components/ui/PageShell.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { buildInstallCommand, SKILLS_REPOSITORY } from "@/lib/skill-catalog";
+import { buildPageTitle } from "@/lib/route-metadata";
 
 export async function getStaticPaths() {
   const definitions = await getCollection("skillDefinitions");
@@ -28,39 +30,23 @@ const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
 ---
 
 <SiteLayout title={buildPageTitle(definition.data.name)} description={definition.data.description}>
-  <article class="page-shell">
-    <h1 class="detail-title rise" style="--d: 0ms" translate="no">
-      {definition.data.name}<span class="period" aria-hidden="true">.</span>
-    </h1>
-
-    <p class="page-description lede rise" style="--d: 80ms">{definition.data.description}</p>
-
-    <div class="detail-install rise" style="--d: 80ms">
-      <InstallCommandBlock command={installCommand} />
-    </div>
-
-    <div class="prose detail-doc rise" style="--d: 80ms">
-      <Content />
-    </div>
+  <article>
+    <PageShell>
+      <Fragment slot="header">
+        <PageHeader title={definition.data.name} subtitle={definition.data.description} />
+        <div class="detail-install rise" style="--d: 80ms">
+          <InstallCommandBlock command={installCommand} />
+        </div>
+      </Fragment>
+      <div class="prose rise" style="--d: 80ms">
+        <Content />
+      </div>
+    </PageShell>
   </article>
 </SiteLayout>
 
 <style>
-  /* the Dusk Aurora signature — the glowing pink period — lives in
-     global.css as .period */
-  .detail-title {
-    letter-spacing: -0.015em;
-  }
-
-  .lede {
-    margin-top: var(--space-2xs);
-  }
-
   .detail-install {
     margin-top: var(--space-s);
-  }
-
-  .detail-doc {
-    margin-top: var(--space-xl);
   }
 </style>

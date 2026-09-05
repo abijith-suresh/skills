@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildAllPath, buildAssetPath, buildCanonicalUrl, buildSkillPath } from "./site-paths";
+import { buildAllPath, buildAssetPath, buildCanonicalUrl, buildSkillPath } from "@/lib/site-paths";
 
 describe("buildAssetPath", () => {
   it("keeps root-hosted assets at the root", () => {

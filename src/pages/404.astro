@@ -1,22 +1,22 @@
 ---
-import SiteLayout from "../layouts/SiteLayout.astro";
-import { buildPageTitle } from "../lib/route-metadata";
+import Container from "@/components/ui/Container.astro";
+import SiteLayout from "@/layouts/SiteLayout.astro";
+import { buildPageTitle } from "@/lib/route-metadata";
 ---
 
 <SiteLayout title={buildPageTitle("page not found")} description="Page not found" noindex>
   <div class="page-404">
-    <section class="page-shell page-404-inner">
+    <Container class="page-404-inner">
       <h1 class="hero-title rise" style="--d: 0ms">
         page not found<span class="period" aria-hidden="true">.</span>
       </h1>
-      <p class="page-description page-404-note rise" style="--d: 60ms">
+      <p class="page-404-note rise" style="--d: 60ms">
         the page you're looking for doesn't exist or has been moved.
       </p>
-      <a href={import.meta.env.BASE_URL} class="back-link rise" style="--d: 120ms">
-        <span class="arrow" aria-hidden="true">&larr;</span>
-        back to skills
+      <a class="back-link rise" style="--d: 120ms" href={import.meta.env.BASE_URL}>
+        <span class="arrow" aria-hidden="true">&larr;</span> back to skills
       </a>
-    </section>
+    </Container>
   </div>
 </SiteLayout>
 
@@ -31,9 +31,9 @@ import { buildPageTitle } from "../lib/route-metadata";
   }
 
   .page-404-inner {
-    align-items: flex-start;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     row-gap: var(--space-2xs);
     /* symmetric so the centered stack doesn't lean; doubles as breathing
        room on viewports too small to center into */
@@ -46,8 +46,9 @@ import { buildPageTitle } from "../lib/route-metadata";
   }
 
   .page-404-note {
-    margin-top: var(--space-2xs);
     max-width: 32rem;
+    margin-top: var(--space-2xs);
+    color: var(--color-muted-foreground);
   }
 
   .back-link {
