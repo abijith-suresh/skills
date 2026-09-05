@@ -1,4 +1,4 @@
-import { SITE } from "./site-metadata";
+import { SITE } from "@/consts";
 
 export function normalizeBaseUrl(baseUrl: string) {
   if (!baseUrl || baseUrl === "/") return "/";

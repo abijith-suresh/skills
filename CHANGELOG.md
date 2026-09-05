@@ -8,6 +8,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-09-05
 
+- Restructured the site to mirror the main site's architecture: the stylesheet
+  split into fonts.css, tokens.css (the canonical design tokens, shared by the
+  critical inline CSS), base.css (element resets), and global.css (component
+  and prose styles), with tokens and base inlined into the document head so
+  the first paint carries the real background and type and no longer shifts.
+- Extracted the SEO meta tags into a `components/seo/SEO.astro` component and
+  added `JsonLd.astro`, which renders WebSite structured data.
+- Added the main site's ui primitives — `Container`, `PageShell`, and
+  `PageHeader` — and rewired the homepage, all-skills, skill detail, and 404
+  pages onto them, retiring the bespoke `PageHero` component. The shell owns
+  the shared page rhythm (block-start air, tight header-to-content gap,
+  block-end padding) and inner-page titles now render at 650 weight with
+  heading tracking.
+- Adopted the main site's inner-page rhythm: pages start at the shared
+  --page-block-start air (4–6.25rem) instead of the tighter local top padding.
+- Adopted the `@/` path alias for all imports from `src/` and renamed
+  `src/lib/site-metadata.ts` to `src/consts.ts`, matching the main site's
+  layout; AGENTS.md documents both.
+- Fixed expressive-code tab colors referencing the removed --color-muted
+  token (they now use --color-muted-foreground).
+
 - Migrated the site to the monochrome chrome standard the main site adopted:
   neutral hueless surfaces (oklch(20.8% 0 0) background ≈ #141414) with no UI
   accent — hovers, links, eyebrows, selection, and focus rings are white or

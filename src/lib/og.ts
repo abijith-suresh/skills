@@ -2,8 +2,8 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 import satori from "satori";
-import type { OgRoute } from "./route-metadata";
-import { SITE } from "./site-metadata";
+import { SITE } from "@/consts";
+import type { OgRoute } from "@/lib/route-metadata";
 
 type SatoriFonts = Awaited<ReturnType<typeof loadFontsInternal>>;
 

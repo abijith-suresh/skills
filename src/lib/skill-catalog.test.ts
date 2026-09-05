@@ -5,7 +5,7 @@ import {
   buildSkillSourceUrl,
   buildSkillSummaries,
   directorySlugFromEntry,
-} from "./skill-catalog";
+} from "@/lib/skill-catalog";
 
 describe("directorySlugFromEntry", () => {
   it("uses the first path segment as the skill slug", () => {
