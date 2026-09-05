@@ -1,7 +1,7 @@
 import { getCollection } from "astro:content";
 import type { APIRoute, GetStaticPaths } from "astro";
-import { renderOgPng } from "../../lib/og";
-import { buildOgRoutes, type OgRoute } from "../../lib/route-metadata";
+import { renderOgPng } from "@/lib/og";
+import { buildOgRoutes, type OgRoute } from "@/lib/route-metadata";
 
 export const prerender = true;
 

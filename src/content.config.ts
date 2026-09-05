@@ -2,7 +2,7 @@ import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 
-import { directorySlugFromEntry } from "./lib/skill-catalog";
+import { directorySlugFromEntry } from "@/lib/skill-catalog";
 
 const skillDefinitions = defineCollection({
   loader: glob({

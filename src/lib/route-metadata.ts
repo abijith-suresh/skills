@@ -1,5 +1,5 @@
-import { SITE } from "./site-metadata";
-import { normalizePagePath } from "./site-paths";
+import { SITE } from "@/consts";
+import { normalizePagePath } from "@/lib/site-paths";
 
 export interface OgRoute {
   slug: string;

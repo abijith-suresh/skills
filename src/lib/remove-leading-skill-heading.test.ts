@@ -1,6 +1,6 @@
 import type { Root } from "mdast";
 import { describe, expect, it } from "vitest";
-import { findLeadingSkillHeading } from "./remove-leading-skill-heading";
+import { findLeadingSkillHeading } from "@/lib/remove-leading-skill-heading";
 
 describe("findLeadingSkillHeading", () => {
   it("finds a level-one heading only when it leads the document", () => {
