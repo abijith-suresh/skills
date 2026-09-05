@@ -11,35 +11,48 @@
 }
 
 :root {
-  /* Dusk Aurora — dark violet, rounded, one glowing accent.
-     Lift + ring on hover, never shadows. */
+  /* Dusk Aurora — flat, monochrome chrome.
+     Neutral hueless surfaces, no UI accent: hovers, links, eyebrows, and
+     selection are white/neutral. Pink survives only as the signature —
+     the glowing period and the "as." favicon mark. */
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono:
     "IBM Plex Mono", ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas,
     "DejaVu Sans Mono", monospace;
 
-  --color-bg: oklch(21.7% 0.0215 293);
-  --color-card: oklch(25.4% 0.03 293);
-  --color-text: oklch(90.5% 0.0245 294);
-  --color-ink: oklch(23% 0.035 296);
-  --color-primary: oklch(70.6% 0.078 302);
+  --color-bg: oklch(20.8% 0 0);
+  --color-card: oklch(24.5% 0 0);
+  --color-text: oklch(92% 0 0);
+  --color-ink: oklch(26% 0 0);
   --color-pink: oklch(83.9% 0.069 3);
+  --color-muted-foreground: oklch(66% 0 0);
   --color-border: oklch(100% 0 0 / 0.1);
-  --color-muted: oklch(69.7% 0.028 300);
-  --color-muted-foreground: oklch(69.7% 0.028 300);
   --color-surface: oklch(100% 0 0 / 0.06);
   --color-surface-strong: oklch(100% 0 0 / 0.08);
+
+  --glow-primary: oklch(from var(--color-pink) l c h / 0.6);
+  --glow-pink: oklch(from var(--color-pink) l c h / 0.4);
 
   --ring: oklch(100% 0 0 / 0.08);
   --ring-hover: oklch(100% 0 0 / 0.15);
 
+  --step-1: clamp(1.125rem, 1.0418rem + 0.4059vw, 1.35rem);
+  --step-2: clamp(1.2656rem, 1.1346rem + 0.6392vw, 1.62rem);
+  --step-3: clamp(1.4238rem, 1.2309rem + 0.941vw, 1.944rem);
+
   --text-xs: clamp(0.8125rem, 0.7894rem + 0.1127vw, 0.875rem);
   --text-sm: clamp(0.875rem, 0.8519rem + 0.1127vw, 0.9375rem);
   --text-base: clamp(1rem, 0.9538rem + 0.2255vw, 1.125rem);
-  --text-lg: clamp(1.125rem, 1.0418rem + 0.4059vw, 1.35rem);
+  --text-lg: var(--step-1);
+  --text-xl: var(--step-2);
+  --text-2xl: var(--step-3);
   --text-page: clamp(1.75rem, 1.2877rem + 2.255vw, 3rem);
-  --text-hero: clamp(2.25rem, 1.5rem + 3vw, 3.25rem);
+  --text-hero: clamp(2.5rem, 2.5rem + 2vw, 3.75rem);
+
+  --leading-text: calc(0.65rem + 1em);
+  --leading-heading: calc(0.35rem + 1em);
+  --leading-none: 1;
 
   --space-3xs: clamp(0.25rem, 0.2269rem + 0.1127vw, 0.3125rem);
   --space-2xs: clamp(0.5rem, 0.4769rem + 0.1127vw, 0.5625rem);
@@ -54,12 +67,19 @@
   --page-top: clamp(2.5rem, 2.1rem + 1.8vw, 3.5rem);
   --page-bottom: var(--space-2xl);
   --container: 64rem;
+
   --transition: 150ms ease;
   --transition-lift: 200ms ease;
-  --radius-s: 0.625rem;
-  --radius-m: 1rem;
+  --duration-breathe: 22s;
+  --radius-card: 1rem;
+  --radius-pill: 999px;
 
-  --z-below: 0;
+  --letter-spacing-tight: -0.01em;
+  --letter-spacing-heading: -0.015em;
+  --letter-spacing-display: -0.02em;
+
+  --gap-icon: 0.4rem;
+
   --z-content: 1;
   --z-overlay: 10;
 
@@ -70,7 +90,7 @@ html {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  scrollbar-color: var(--color-muted) var(--color-bg);
+  scrollbar-color: var(--color-muted-foreground) var(--color-bg);
   text-rendering: optimizeLegibility;
 }
 
@@ -103,7 +123,21 @@ body {
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: var(--text-base);
-  line-height: calc(0.65rem + 1em);
+  line-height: var(--leading-text);
+}
+
+p {
+  text-wrap: pretty;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
 }
 
 main {
@@ -123,12 +157,12 @@ a {
 }
 
 ::selection {
-  background: oklch(70.6% 0.078 302 / 0.92);
-  color: var(--color-ink);
+  background: oklch(100% 0 0 / 0.22);
+  color: inherit;
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid oklch(100% 0 0 / 0.6);
   outline-offset: 2px;
 }
 
@@ -157,35 +191,9 @@ a {
   overflow: visible;
   clip: auto;
   white-space: normal;
-  background: var(--color-primary);
+  background: oklch(100% 0 0);
   color: var(--color-ink);
   font-weight: 500;
-}
-
-/* --- the breathing aurora --- */
-
-.aurora-glow {
-  position: fixed;
-  inset: 0;
-  z-index: var(--z-below);
-  pointer-events: none;
-  background: radial-gradient(
-    ellipse 62% 46% at 50% 22%,
-    oklch(70.6% 0.078 302 / 0.07),
-    transparent 70%
-  );
-  animation: aurora-breathe 22s ease-in-out infinite alternate;
-}
-
-@keyframes aurora-breathe {
-  from {
-    opacity: 0.8;
-    filter: hue-rotate(-6deg);
-  }
-  to {
-    opacity: 1;
-    filter: hue-rotate(6deg);
-  }
 }
 
 /* --- orchestrated load reveal --- */
@@ -231,20 +239,16 @@ a {
 }
 
 .brand {
-  color: var(--color-text);
+  color: var(--color-muted-foreground);
   font-family: var(--font-display);
   font-weight: 700;
   font-size: var(--text-base);
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-tight);
   transition: color var(--transition);
 }
 
-.brand-period {
-  color: var(--color-pink);
-}
-
 .brand:hover {
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 .ext-arrow {
@@ -263,7 +267,7 @@ a:hover .ext-arrow {
 }
 
 .topnav a {
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
   font-size: var(--text-sm);
   transition: color var(--transition);
 }
@@ -280,14 +284,14 @@ a:hover .ext-arrow {
   margin-bottom: var(--space-xl);
 }
 
-/* lowercase mono labels; the violet tint is a quiet brand accent */
+/* lowercase mono labels */
 .eyebrow {
-  color: var(--color-primary);
+  color: var(--color-muted-foreground);
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 500;
   letter-spacing: 0.08em;
-  line-height: 1;
+  line-height: var(--leading-none);
 }
 
 h1,
@@ -298,15 +302,15 @@ h5,
 h6 {
   font-family: var(--font-display);
   font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: calc(0.35rem + 1em);
+  letter-spacing: var(--letter-spacing-tight);
+  line-height: var(--leading-heading);
   text-wrap: balance;
 }
 
 h1 {
   font-size: var(--text-page);
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--letter-spacing-display);
 }
 
 /* landing heroes and the 404 title step up from the inner-page default */
@@ -315,7 +319,7 @@ h1 {
 }
 
 .page-description {
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
   max-width: 34rem;
 }
 
@@ -334,10 +338,10 @@ h1 {
   inset: 0;
   color: var(--color-pink);
   text-shadow:
-    0 0 18px oklch(70.6% 0.078 302 / 0.6),
-    0 0 36px oklch(83.9% 0.069 3 / 0.4);
+    0 0 18px var(--glow-primary),
+    0 0 36px var(--glow-pink);
   pointer-events: none;
-  animation: glow-breathe 22s ease-in-out infinite alternate;
+  animation: glow-breathe var(--duration-breathe) ease-in-out infinite alternate;
 }
 
 @keyframes glow-breathe {
@@ -354,6 +358,8 @@ h1 {
   transition: transform var(--transition-lift);
 }
 
+/* --- section head — title left, "all … →" top right --- */
+
 .section-header {
   align-items: baseline;
   display: flex;
@@ -364,22 +370,23 @@ h1 {
 }
 
 .section-title {
-  font-size: clamp(1.25rem, 1.19rem + 0.3vw, 1.45rem);
-  font-weight: 650;
+  font-size: clamp(1.4rem, 3vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: var(--letter-spacing-tight);
 }
 
 .section-link {
   align-items: center;
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
   display: inline-flex;
   font-size: var(--text-sm);
   font-weight: 500;
-  gap: var(--space-3xs);
+  gap: var(--gap-icon);
   transition: color var(--transition);
 }
 
 .section-link:hover {
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 .section-link:hover .arrow {
@@ -402,16 +409,24 @@ h1 {
   gap: var(--space-2xs);
   background: var(--color-card);
   border: 1px solid var(--ring);
-  border-radius: var(--radius-m);
+  border-radius: var(--radius-card);
   padding: clamp(1.1rem, 2.5vw, 1.5rem);
   transition:
     transform var(--transition-lift),
     border-color var(--transition-lift);
 }
 
-.skill-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--ring-hover);
+/* hover effects are desktop-only: gate them behind hover-capable pointers so
+   touch devices don't get sticky hover lifts mid-scroll */
+@media (hover: hover) and (pointer: fine) {
+  .skill-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--ring-hover);
+  }
+
+  .skill-card:hover .arrow {
+    transform: translateX(3px);
+  }
 }
 
 .skill-card-title {
@@ -419,12 +434,12 @@ h1 {
   font-family: var(--font-display);
   font-weight: 650;
   font-size: 1.2rem;
-  letter-spacing: -0.01em;
+  letter-spacing: var(--letter-spacing-tight);
   line-height: calc(0.45rem + 1em);
 }
 
 .skill-card-description {
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
   font-size: var(--text-sm);
   line-height: 1.6;
 }
@@ -432,15 +447,11 @@ h1 {
 .skill-card-foot {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-3xs);
+  gap: var(--gap-icon);
   margin-top: var(--space-3xs);
-  color: var(--color-primary);
+  color: var(--color-muted-foreground);
   font-size: var(--text-sm);
   font-weight: 500;
-}
-
-.skill-card:hover .arrow {
-  transform: translateX(3px);
 }
 
 /* --- detail page --- */
@@ -449,7 +460,7 @@ h1 {
   align-items: center;
   background: var(--color-surface);
   border: 1px solid var(--ring);
-  border-radius: var(--radius-m);
+  border-radius: var(--radius-card);
   display: flex;
   gap: var(--space-2xs);
   padding: var(--space-xs) var(--space-s);
@@ -468,12 +479,12 @@ h1 {
   align-items: center;
   background: transparent;
   border: 0;
-  border-radius: var(--radius-s);
-  color: var(--color-muted);
+  border-radius: 0.5rem;
+  color: var(--color-muted-foreground);
   cursor: pointer;
   display: inline-flex;
   flex-shrink: 0;
-  gap: var(--space-3xs);
+  gap: var(--gap-icon);
   justify-content: center;
   min-height: 2.75rem;
   min-width: 2.75rem;
@@ -482,7 +493,7 @@ h1 {
 }
 
 .copy-button:hover {
-  color: var(--color-primary);
+  color: var(--color-text);
 }
 
 .copy-label {
@@ -493,7 +504,7 @@ h1 {
 }
 
 .copy-status {
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
   font-size: var(--text-xs);
   white-space: nowrap;
 }
@@ -519,9 +530,9 @@ h1 {
   justify-content: space-between;
   width: min(100%, var(--container));
   margin-inline: auto;
-  padding: var(--space-m) var(--page-inline) var(--space-2xl);
-  color: var(--color-muted);
-  font-size: var(--text-xs);
+  padding: 1.5rem var(--page-inline) 3rem;
+  color: var(--color-muted-foreground);
+  font-size: var(--text-sm);
 }
 
 .site-footer-inner p {
@@ -535,43 +546,39 @@ h1 {
   gap: var(--space-2xs) var(--space-m);
 }
 
-.footer-link,
-.text-link {
-  font-weight: 500;
-  transition:
-    color var(--transition),
-    text-decoration-color var(--transition);
-}
-
 .footer-link {
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
+  font-weight: 500;
+  transition: color var(--transition);
 }
 
-.footer-link:hover,
-.text-link:hover {
-  color: var(--color-primary);
+.footer-link:hover {
+  color: var(--color-text);
 }
 
 /* inline prose links stay identifiable without hover: a persistent,
-   quiet underline that warms to the primary color on hover */
+   quiet underline that brightens on hover */
 .text-link {
+  font-weight: 500;
   color: var(--color-text);
   text-decoration-line: underline;
-  text-decoration-color: oklch(69.7% 0.028 300 / 0.5);
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
+  text-decoration-color: oklch(100% 0 0 / 0.35);
+  transition: text-decoration-color var(--transition);
 }
 
 .text-link:hover {
-  text-decoration-color: var(--color-primary);
+  text-decoration-color: oklch(100% 0 0 / 0.9);
 }
 
 /* the 404 escape hatch: chrome-style link, no underline */
 .back-link {
   align-items: center;
-  color: var(--color-muted);
+  color: var(--color-muted-foreground);
   display: inline-flex;
   font-weight: 500;
-  gap: var(--space-3xs);
+  gap: var(--gap-icon);
   transition: color var(--transition);
 }
 
@@ -588,7 +595,7 @@ h1 {
 .prose {
   color: var(--color-text);
   font-size: var(--text-base);
-  line-height: calc(0.65rem + 1em);
+  line-height: var(--leading-text);
   max-width: 70ch;
 }
 
@@ -599,6 +606,28 @@ h1 {
 .prose :where(h1, h2, h3, h4, h5, h6):not(:where(.not-prose, .not-prose *)) {
   margin-top: var(--space-xl);
   margin-bottom: var(--space-s);
+  font-weight: 500;
+}
+
+.prose :where(h2):not(:where(.not-prose, .not-prose *)) {
+  font-size: var(--text-2xl);
+}
+
+.prose :where(h3):not(:where(.not-prose, .not-prose *)) {
+  margin-top: var(--space-l);
+  font-size: var(--text-xl);
+}
+
+.prose :where(h4):not(:where(.not-prose, .not-prose *)) {
+  margin-top: var(--space-l);
+  margin-bottom: var(--space-2xs);
+  font-size: var(--text-lg);
+}
+
+.prose :where(h5, h6):not(:where(.not-prose, .not-prose *)) {
+  margin-top: var(--space-m);
+  margin-bottom: var(--space-2xs);
+  font-weight: 500;
 }
 
 .prose :where(p, li):not(:where(.not-prose, .not-prose *)) {
@@ -606,19 +635,53 @@ h1 {
 }
 
 .prose :where(a):not(:where(.not-prose, .not-prose *)) {
-  color: var(--color-text);
   font-weight: 500;
+  color: var(--color-text);
   text-decoration-line: underline;
-  text-decoration-color: oklch(69.7% 0.028 300 / 0.5);
+  text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  transition:
-    color var(--transition),
-    text-decoration-color var(--transition);
+  text-decoration-color: oklch(100% 0 0 / 0.35);
+  transition: text-decoration-color var(--transition);
+  overflow-wrap: break-word;
 }
 
 .prose :where(a:hover):not(:where(.not-prose, .not-prose *)) {
-  color: var(--color-primary);
-  text-decoration-color: var(--color-primary);
+  text-decoration-color: oklch(100% 0 0 / 0.9);
+}
+
+.prose :where(strong):not(:where(.not-prose, .not-prose *)) {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.prose :where(ul):not(:where(.not-prose, .not-prose *)) {
+  margin-left: var(--space-s);
+  list-style-type: disc;
+}
+
+.prose :where(ol):not(:where(.not-prose, .not-prose *)) {
+  margin-left: var(--space-s);
+  list-style-type: decimal;
+}
+
+.prose :where(ul > li, ol > li):not(:where(.not-prose, .not-prose *)) {
+  margin-top: var(--space-2xs);
+  padding-left: var(--space-2xs);
+}
+
+.prose :where(ul ul, ol ol, ul ol, ol ul):not(:where(.not-prose, .not-prose *)) {
+  margin-top: var(--space-2xs);
+  margin-bottom: var(--space-2xs);
+}
+
+.prose :where(blockquote):not(:where(.not-prose, .not-prose *)) {
+  padding-left: var(--space-s);
+  border-left: 3px solid var(--color-border);
+  font-style: normal;
+}
+
+.prose :where(blockquote > *):not(:where(.not-prose, .not-prose *)) {
+  color: inherit;
 }
 
 .prose :where(hr):not(:where(.not-prose, .not-prose *)) {
@@ -632,18 +695,57 @@ h1 {
   color: var(--color-text);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  padding: 0.125rem 0.375rem;
+  font-weight: 500;
+  padding: 0.15em 0.35em;
+  overflow-wrap: break-word;
 }
 
 .prose :where(pre):not(:where(.not-prose, .not-prose *)) {
   background: var(--color-surface);
+  max-height: min(68vh, 1000px);
   overflow-x: auto;
+  overflow-y: auto;
   padding: var(--space-s);
 }
 
 .prose :where(pre code):not(:where(.not-prose, .not-prose *)) {
   background: transparent;
   padding: 0;
+}
+
+.prose :where(table):not(:where(.not-prose, .not-prose *)) {
+  margin: var(--space-s) auto;
+  display: block;
+  max-width: fit-content;
+  overflow-x: auto;
+  font-size: var(--text-sm);
+}
+
+.prose :where(thead):not(:where(.not-prose, .not-prose *)) {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.prose :where(th):not(:where(.not-prose, .not-prose *)) {
+  padding: var(--space-2xs) var(--space-s);
+  font-weight: 500;
+  text-align: left;
+  color: var(--color-text);
+}
+
+.prose :where(tr):not(:where(.not-prose, .not-prose *)) {
+  border-top: 1px solid var(--color-border);
+}
+
+.prose :where(tr:first-child):not(:where(.not-prose, .not-prose *)) {
+  border-top: none;
+}
+
+.prose :where(td):not(:where(.not-prose, .not-prose *)) {
+  padding: var(--space-2xs) var(--space-s);
+  text-align: left;
+  vertical-align: top;
+  color: var(--color-muted-foreground);
+  overflow-wrap: break-word;
 }
 
 .prose :where(:first-child):not(:where(.not-prose, .not-prose *)) {
@@ -673,10 +775,6 @@ h1 {
     color: #000;
   }
 
-  .aurora-glow {
-    display: none;
-  }
-
   .site-footer,
   .code-block-shell,
   .prose pre {
@@ -693,11 +791,11 @@ h1 {
     transition-duration: 0.01ms;
   }
 
-  .aurora-glow {
+  .rise {
     animation: none;
   }
 
-  .rise {
+  .period::after {
     animation: none;
   }
 }

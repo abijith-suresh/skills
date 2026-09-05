@@ -13,13 +13,13 @@ const OG_WIDTH = 1200;
 const OG_HEIGHT = 630;
 
 // Satori needs sRGB hex, so the Dusk Aurora CSS tokens are mirrored here.
-// These are the canonical conversions from the Dusk Aurora House Standard:
-// --color-bg, --color-text, --color-muted, the composited hairline, and
-// --color-pink (oklch(83.9% 0.069 3)).
-const OG_BG = "#1a1823";
-const OG_TEXT = "#e0ddef";
-const OG_MUTED = "#a09aad";
-const OG_HAIRLINE = "#312f39";
+// These are the canonical conversions from the monochrome chrome standard:
+// --color-bg, --color-text, --color-muted-foreground, the composited
+// hairline, and --color-pink (oklch(83.9% 0.069 3)).
+const OG_BG = "#141414";
+const OG_TEXT = "#e8e8e8";
+const OG_MUTED = "#a3a3a3";
+const OG_HAIRLINE = "#2c2c2c";
 const OG_PINK = "#f2b8c6";
 const SITE_DOMAIN = new URL(SITE.url).hostname;
 let fontCache: SatoriFonts | undefined;
@@ -190,7 +190,7 @@ async function renderOgSvg(route: OgRoute) {
 }
 
 // The "as." monogram brands the site as part of the abijith.sh family:
-// lowercase letterforms with the signature pink period on the violet
+// lowercase letterforms with the signature pink period on the neutral
 // rounded tile. Plex Sans Medium is the heaviest cut satori can embed
 // (woff2 variable fonts are unsupported), so a generous size carries
 // legibility at 16px.
