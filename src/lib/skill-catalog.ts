@@ -6,6 +6,7 @@ export interface SkillSummary {
   description: string;
   installCommand: string;
   sourceUrl: string;
+  featured: boolean;
 }
 
 export function directorySlugFromEntry(entry: string): string {
@@ -29,9 +30,12 @@ export function buildSkillSourceUrl(repository: string, slug: string) {
 }
 
 export function buildSkillSummaries(
-  definitions: { id: string; data: { name: string; description: string } }[],
+  definitions: {
+    id: string;
+    data: { name: string; description: string; metadata?: { featured?: boolean } };
+  }[],
   repository = SKILLS_REPOSITORY
-): SkillSummary[] {
+) {
   return definitions
     .map((definition) => ({
       slug: definition.id,
@@ -39,6 +43,7 @@ export function buildSkillSummaries(
       description: definition.data.description,
       installCommand: buildInstallCommand(repository, definition.id),
       sourceUrl: buildSkillSourceUrl(repository, definition.id),
+      featured: definition.data.metadata?.featured === true,
     }))
     .sort((left, right) => left.name.localeCompare(right.name));
 }

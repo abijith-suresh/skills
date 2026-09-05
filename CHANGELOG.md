@@ -6,6 +6,69 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-09-04
+
+- Applied the Dusk Aurora House Standard v1 across the site: OG images and site
+  icons now use the canonical sRGB palette (#1a1823 background, #e0ddef text,
+  #a09aad muted, #312f39 hairlines), the theme-color meta matches the new
+  background, and the "as." monogram follows the shared icon geometry — a
+  full-bleed 16%-radius tile with no frame and a larger 0.52-size "as" glyph.
+- Switched browser titles to the shared middle-dot vocabulary: the home page
+  titles as the bare domain ("skills.abijith.sh"), and section, detail, and 404
+  pages as "<page> · skills.abijith.sh" through a new buildPageTitle() helper;
+  og:site_name stays "skills".
+- Rebuilt the 404 page on the canonical template: a "page not found." hero with
+  the glowing pink period, one muted explanation line, and a "← back to skills"
+  link, left-aligned with 0/60/120ms reveals and no eyebrow or numeral.
+- Gave inline prose links a persistent quiet underline (3px offset, muted at
+  half alpha) that warms to violet on hover; chrome links keep their
+  underline-free style. Card titles stepped up to 1.2rem, and the type scale
+  gained the shared --text-hero/--text-page/--text-lg token names.
+- Enabled Astro's ClientRouter for client-side navigation: the aurora glow
+  persists across navigations so its 22s breathe doesn't restart, and the
+  install-command copy script re-binds on astro:page-load with an idempotent
+  guard so copy keeps working after soft navigations.
+- Retimed the rise choreography to the shared table: header at 0ms, content at
+  80ms, and list items at 160ms plus 70ms per card, capped after eight items.
+- Adopted the Dusk Aurora design system across the site: a violet OKLCH palette
+  with a breathing aurora glow, Bricolage Grotesque display and Geist body
+  type, a topbar and restyled footer, card-based skill entries with a "read →"
+  foot, and staggered load reveals that respect reduced-motion preferences.
+- Widened the site to the main site's measure: a 64rem content container with
+  clamp(1.25rem, 5vw, 2.5rem) gutters, while detail-page prose keeps a ~70ch
+  measure.
+- Restructured the catalog around favourites: the homepage dropped its eyebrow
+  and now lists only skills flagged `featured: true` inside the spec's
+  `metadata` frontmatter map (commit, grill-me, research) under a "favourite
+  skills" section head with an "all skills →" link, and a new /all/ page lists
+  the full collection with its own SEO metadata and OG image.
+- Shortened the topbar brand to "skills." and its links to "all" and
+  "abijith.sh ↗"; the GitHub link now lives in the footer alongside
+  "part of abijith.sh ↗".
+- Streamlined skill detail pages: removed the breadcrumb eyebrow, placed the
+  install command as the primary action under the title and lede, and rendered
+  SKILL.md directly as the page body.
+- Tightened the Dusk Aurora translation on the site: card titles and detail
+  page titles use the display face with a glowing pink period on detail pages,
+  eyebrow labels render as lowercase violet mono, prose horizontal rules are
+  quiet 1px hairlines, links and the copy affordance hover violet, the install
+  command block matches the prompts site's copy block, and OG images and site
+  icons use the violet palette.
+- Reworked the site icon into an "as." monogram — lowercase letterforms with
+  the signature pink period on the violet rounded tile, sized to stay legible
+  at 16px — branding the site as part of the abijith.sh family.
+- Simplified the footer links to "github ↗ · abijith.sh ↗" and removed the
+  hairline divider between the homepage hero and the favourite skills section.
+- Lowercased browser and OG image titles ("skills", "all skills | skills",
+  "commit | skills", "404 | skills") and the visible copy and 404 link labels
+  to match the lowercase voice used across the sibling sites.
+- Tokenized the stylesheet: added radius and z-index tokens, mapped one-off
+  rem gaps, sizes, and paddings to the fluid scale tokens, and centralized
+  the glowing pink period in global.css instead of duplicating it per page.
+- Fixed card and arrow hover transitions that browsers silently dropped
+  because their shorthand repeated the easing function after a duration token
+  that already contained one.
+
 ### Changed — 2026-08-31
 
 - Prepared the catalog for root-hosted Vercel static output with canonical and

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { buildAssetPath, buildCanonicalUrl, buildSkillPath } from "./site-paths";
+import { buildAllPath, buildAssetPath, buildCanonicalUrl, buildSkillPath } from "./site-paths";
 
 describe("buildAssetPath", () => {
   it("keeps root-hosted assets at the root", () => {
@@ -16,6 +16,12 @@ describe("buildAssetPath", () => {
 describe("buildSkillPath", () => {
   it("builds a root-hosted trailing-slash route", () => {
     expect(buildSkillPath("/", "commit")).toBe("/commit/");
+  });
+});
+
+describe("buildAllPath", () => {
+  it("builds a root-hosted all-skills route", () => {
+    expect(buildAllPath("/")).toBe("/all/");
   });
 });
 

@@ -4,39 +4,42 @@ import InstallCommandBlock from "../components/InstallCommandBlock.astro";
 import PageHero from "../components/PageHero.astro";
 import SiteLayout from "../layouts/SiteLayout.astro";
 import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from "../lib/skill-catalog";
-import { buildSkillPath } from "../lib/site-paths";
+import { buildPageTitle } from "../lib/route-metadata";
+import { buildAllPath, buildSkillPath } from "../lib/site-paths";
 import { SITE } from "../lib/site-metadata";
 
 const definitions = await getCollection("skillDefinitions");
 const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY);
+const featuredSkills = skills.filter((skill) => skill.featured);
 const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 ---
 
-<SiteLayout
-  title={SITE.title}
-  description={SITE.description}
->
+<SiteLayout title={buildPageTitle()} description={SITE.description}>
   <section class="page-shell" aria-labelledby="page-title">
-    <PageHero
-      eyebrow="skills catalog"
-      title="Skills"
-      description={SITE.description}
-    >
-      <div slot="actions">
+    <PageHero title="skills" period hero description={SITE.description}>
+      <div slot="actions" class="rise" style="--d: 80ms">
         <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />
       </div>
     </PageHero>
 
-    <div class="section-header">
-      <h2 class="eyebrow">Skills</h2>
+    <div class="section-header rise" style="--d: 80ms">
+      <h2 class="section-title">favourite skills</h2>
+      <a href={buildAllPath(import.meta.env.BASE_URL)} class="section-link">
+        all skills
+        <span class="arrow" aria-hidden="true">&rarr;</span>
+      </a>
     </div>
 
     <ul class="content-list">
-      {skills.map((skill) => (
-        <li>
-          <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="ledger-row">
-            <span class="ledger-row-title" translate="no">{skill.name}</span>
-            <span class="ledger-row-description">{skill.description}</span>
+      {featuredSkills.map((skill, index) => (
+        <li class="rise" style={`--d: ${160 + Math.min(index, 7) * 70}ms`}>
+          <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="skill-card">
+            <span class="skill-card-title" translate="no">{skill.name}</span>
+            <span class="skill-card-description">{skill.description}</span>
+            <span class="skill-card-foot">
+              read
+              <span class="arrow" aria-hidden="true">&rarr;</span>
+            </span>
           </a>
         </li>
       ))}

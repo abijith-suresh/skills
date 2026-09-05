@@ -24,54 +24,68 @@ const { command, label } = Astro.props;
       <svg class="hidden" data-check-icon width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <polyline points="20 6 9 17 4 12"/>
       </svg>
-      <span class="copy-label" data-copy-label>Copy</span>
+      <span class="copy-label" data-copy-label>copy</span>
     </button>
     <span class="copy-status" data-copy-status role="status" aria-live="polite" aria-atomic="true"></span>
   </div>
 </div>
 
 <script>
-  document.addEventListener("click", async (event) => {
-    const target =
-      event.target instanceof Element ? event.target.closest("[data-copy-command]") : null;
-    if (!target) return;
+  // The copy handler binds per button. ClientRouter swaps the DOM on soft
+  // navigation without re-running module scripts, so init re-runs on
+  // astro:page-load to bind freshly rendered buttons; the dataset guard
+  // keeps already-bound buttons from getting a second listener.
+  function bindCopyButton(button: HTMLButtonElement) {
+    if (button.dataset.copyBound === "true") return;
+    button.dataset.copyBound = "true";
 
-    const command = target.getAttribute("data-copy-command");
-    if (!command) return;
+    button.addEventListener("click", async () => {
+      const command = button.getAttribute("data-copy-command");
+      if (!command) return;
 
-    const copyIcon = target.querySelector("[data-copy-icon]");
-    const checkIcon = target.querySelector("[data-check-icon]");
-    const copyLabel = target.querySelector("[data-copy-label]");
-    const copyStatus = target.parentElement?.querySelector("[data-copy-status]");
-    const timeoutId = Number(target.getAttribute("data-copy-timeout") || "0");
-    window.clearTimeout(timeoutId);
+      const copyIcon = button.querySelector("[data-copy-icon]");
+      const checkIcon = button.querySelector("[data-check-icon]");
+      const copyLabel = button.querySelector("[data-copy-label]");
+      const copyStatus = button.parentElement?.querySelector("[data-copy-status]");
+      const timeoutId = Number(button.getAttribute("data-copy-timeout") || "0");
+      window.clearTimeout(timeoutId);
 
-    try {
-      await navigator.clipboard.writeText(command);
-    } catch {
-      window.prompt("Copy this command:", command);
-      if (copyLabel) copyLabel.textContent = "Try again";
-      if (copyStatus) copyStatus.textContent = "Use the copy dialog to copy the command.";
-      return;
-    }
-
-    if (copyIcon && checkIcon) {
-      copyIcon.classList.add("hidden");
-      checkIcon.classList.remove("hidden");
-    }
-    if (copyLabel) copyLabel.textContent = "Copied";
-    if (copyStatus) copyStatus.textContent = "Install command copied.";
-    target.setAttribute("aria-label", "Install command copied");
-
-    const timeout = window.setTimeout(() => {
-      if (copyIcon && checkIcon) {
-        copyIcon.classList.remove("hidden");
-        checkIcon.classList.add("hidden");
+      try {
+        await navigator.clipboard.writeText(command);
+      } catch {
+        window.prompt("Copy this command:", command);
+        if (copyLabel) copyLabel.textContent = "try again";
+        if (copyStatus) copyStatus.textContent = "use the copy dialog to copy the command";
+        return;
       }
-      if (copyLabel) copyLabel.textContent = "Copy";
-      if (copyStatus) copyStatus.textContent = "";
-      target.setAttribute("aria-label", "Copy install command");
-    }, 1600);
-    target.setAttribute("data-copy-timeout", String(timeout));
-  });
+
+      if (copyIcon && checkIcon) {
+        copyIcon.classList.add("hidden");
+        checkIcon.classList.remove("hidden");
+      }
+      if (copyLabel) copyLabel.textContent = "copied";
+      if (copyStatus) copyStatus.textContent = "install command copied";
+      button.setAttribute("aria-label", "Install command copied");
+
+      const timeout = window.setTimeout(() => {
+        if (copyIcon && checkIcon) {
+          copyIcon.classList.remove("hidden");
+          checkIcon.classList.add("hidden");
+        }
+        if (copyLabel) copyLabel.textContent = "copy";
+        if (copyStatus) copyStatus.textContent = "";
+        button.setAttribute("aria-label", "Copy install command");
+      }, 1600);
+      button.setAttribute("data-copy-timeout", String(timeout));
+    });
+  }
+
+  function initCopyButtons() {
+    for (const button of document.querySelectorAll<HTMLButtonElement>("[data-copy-command]")) {
+      bindCopyButton(button);
+    }
+  }
+
+  initCopyButtons();
+  document.addEventListener("astro:page-load", initCopyButtons);
 </script>

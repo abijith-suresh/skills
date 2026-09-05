@@ -16,6 +16,12 @@ type SkillDefinition = {
   };
 };
 
+const SITE_DOMAIN = new URL(SITE.url).hostname;
+
+export function buildPageTitle(name?: string): string {
+  return name ? `${name} · ${SITE_DOMAIN}` : SITE_DOMAIN;
+}
+
 export function getOgImagePath(pathname: string): string {
   const normalizedPath = normalizePagePath(pathname);
   if (normalizedPath === "/" || normalizedPath === "/404/") return "/og/index.png";
@@ -30,6 +36,12 @@ export function buildOgRoutes(definitions: SkillDefinition[]): OgRoute[] {
       slug: "index",
       title: SITE.title,
       description: SITE.description,
+      label: "catalog",
+    },
+    {
+      slug: "all",
+      title: "all skills",
+      description: "Every skill in the collection.",
       label: "catalog",
     },
     ...definitions.map((definition) => ({

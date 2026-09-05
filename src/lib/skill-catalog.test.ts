@@ -60,6 +60,7 @@ describe("buildSkillSummaries", () => {
         description: "Commit changes.",
         installCommand: "npx skills@latest add owner/repo --skill commit",
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/commit",
+        featured: false,
       },
       {
         slug: "handoff",
@@ -67,7 +68,34 @@ describe("buildSkillSummaries", () => {
         description: "Handoff context.",
         installCommand: "npx skills@latest add owner/repo --skill handoff",
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/handoff",
+        featured: false,
       },
+    ]);
+  });
+
+  it("reads the featured flag from the spec metadata map", () => {
+    const summaries = buildSkillSummaries([
+      {
+        id: "commit",
+        data: {
+          name: "Commit",
+          description: "Commit changes.",
+          metadata: { featured: true },
+        },
+      },
+      {
+        id: "handoff",
+        data: {
+          name: "Handoff",
+          description: "Handoff context.",
+          metadata: { featured: false },
+        },
+      },
+    ]);
+
+    expect(summaries.map((summary) => [summary.slug, summary.featured])).toEqual([
+      ["commit", true],
+      ["handoff", false],
     ]);
   });
 });

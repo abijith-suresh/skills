@@ -5,6 +5,8 @@ description: >-
   understanding is reached, resolving each branch of the decision tree
   one question at a time. Invoke when a plan or design needs rigorous
   clarification. The user may also name this skill explicitly.
+metadata:
+  featured: true
 ---
 
 # Grill Me
