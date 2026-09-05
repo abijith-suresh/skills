@@ -6,7 +6,41 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Changed — 2026-09-04
+### Changed — 2026-09-05
+
+- Migrated the site to the monochrome chrome standard the main site adopted:
+  neutral hueless surfaces (oklch(20.8% 0 0) background ≈ #141414) with no UI
+  accent — hovers, links, eyebrows, selection, and focus rings are white or
+  neutral — and the pink palette color survives only as the signature: the
+  glowing period and the "as." favicon period. The site-wide breathing aurora
+  glow is removed; the design is flat, and only the period's glow-breathe
+  remains.
+- Moved OG images and site icons to the canonical sRGB set (#141414
+  background, #e8e8e8 text, #a3a3a3 muted, #2c2c2c hairlines) with the
+  theme-color meta updated to match; the "as." monogram keeps the shared
+  geometry on the neutral tile.
+- Adopted the main site's link language: inline prose and text links carry a
+  persistent quiet underline (1px, white at 35% alpha) that brightens to 90%
+  on hover, instead of violet color-only links.
+- Aligned chrome with the main site: the topbar brand is plain "skills" (the
+  pink period lives only in the favicon and page headers), eyebrows render as
+  lowercase neutral mono, the skip link and focus ring are white-on-neutral,
+  section links and the card "read →" foot hover to full text color, the
+  copy affordance hovers neutral, and inline text links lost the violet hover.
+- Updated the shared type tokens: --text-hero now renders 48px on small
+  phones and 60px on desktop (previously 36–52px), hero titles use the
+  display tracking, section heads match the main site's clamp, prose gained
+  the main site's heading scale (h2/h3/h4 sizes with shared margins), and
+  tokens were renamed to the shared names (--radius-card, --leading-*, glow
+  color/duration tokens, letter-spacing tokens).
+- Reworked the footer into the main site's single row: "© 2026 abijith
+  suresh" on the left, "github ↗ · abijith.sh ↗" on the right, with
+  symmetric 1.5rem/3rem padding.
+- Centered the 404 page vertically like the main site's template: the
+  "page not found." stack sits in the viewport's middle with a symmetric
+  safety padding.
+- Gated card hover effects (lift and ring brighten) behind hover-capable
+  pointers so touch devices no longer trigger the animation mid-scroll.
 
 - Applied the Dusk Aurora House Standard v1 across the site: OG images and site
   icons now use the canonical sRGB palette (#1a1823 background, #e0ddef text,
