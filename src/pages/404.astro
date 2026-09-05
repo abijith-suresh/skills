@@ -4,26 +4,54 @@ import { buildPageTitle } from "../lib/route-metadata";
 ---
 
 <SiteLayout title={buildPageTitle("page not found")} description="Page not found" noindex>
-  <section class="page-shell">
-    <h1 class="hero-title rise" style="--d: 0ms">
-      page not found<span class="period" aria-hidden="true">.</span>
-    </h1>
-    <p class="page-description rise" style="--d: 60ms">
-      the page you're looking for doesn't exist or has been moved.
-    </p>
-    <a href={import.meta.env.BASE_URL} class="back-link rise" style="--d: 120ms">
-      <span class="arrow" aria-hidden="true">&larr;</span>
-      back to skills
-    </a>
-  </section>
+  <div class="page-404">
+    <section class="page-shell page-404-inner">
+      <h1 class="hero-title rise" style="--d: 0ms">
+        page not found<span class="period" aria-hidden="true">.</span>
+      </h1>
+      <p class="page-description page-404-note rise" style="--d: 60ms">
+        the page you're looking for doesn't exist or has been moved.
+      </p>
+      <a href={import.meta.env.BASE_URL} class="back-link rise" style="--d: 120ms">
+        <span class="arrow" aria-hidden="true">&larr;</span>
+        back to skills
+      </a>
+    </section>
+  </div>
 </SiteLayout>
 
 <style>
-  .page-description {
+  .page-404 {
+    width: 100%;
+    margin-inline: auto;
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .page-404-inner {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-2xs);
+    /* symmetric so the centered stack doesn't lean; doubles as breathing
+       room on viewports too small to center into */
+    padding-block: var(--space-2xl);
+  }
+
+  .page-404 h1 {
+    font-weight: 650;
+    letter-spacing: var(--letter-spacing-heading);
+  }
+
+  .page-404-note {
     margin-top: var(--space-2xs);
+    max-width: 32rem;
   }
 
   .back-link {
-    margin-top: var(--space-l);
+    margin-top: var(--space-s);
+    font-size: var(--text-sm);
   }
 </style>
