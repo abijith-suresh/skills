@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-09-05
 
+- Aligned the tooling baseline with the main site: mise.toml is the single
+  source for tool versions (bun 1.4.1, node 24.20.0), the .bun-version and
+  .node-version dotfiles are removed, engines.bun is pinned to the exact
+  1.4.1 version, and the CI bun-quality and dependency-review workflows are
+  re-pinned to the v0.4.0 release that reads Bun from mise.toml.
 - Restructured the site to mirror the main site's architecture: the stylesheet
   split into fonts.css, tokens.css (the canonical design tokens, shared by the
   critical inline CSS), base.css (element resets), and global.css (component
