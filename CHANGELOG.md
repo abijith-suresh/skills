@@ -8,8 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — 2026-09-06
 
-- `create-issue` skill: file one GitHub or GitLab issue to park a follow-up
-  thought from the current work. Detects the forge from the origin remote.
+- `create-issue` skill: file one GitHub issue to park a follow-up thought
+  from the current work. GitHub-only. Stops on a GitLab remote.
 
 ### Changed — 2026-09-06
 
