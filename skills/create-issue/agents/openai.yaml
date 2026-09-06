@@ -1,0 +1,5 @@
+interface:
+  display_name: "Create issue"
+  short_description: "Park one follow-up on the current tracker"
+policy:
+  allow_implicit_invocation: false
