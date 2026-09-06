@@ -13,9 +13,11 @@ const skillDefinitions = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    // The Agent Skills spec reserves `metadata` for string-to-string pairs.
-    // Site curation flags such as `featured` live here, never as new
-    // top-level frontmatter keys that could break skill install tooling.
+    // Harness extension, not part of the Agent Skills spec. Cursor, Claude
+    // Code, and Pi honor it; Codex uses agents/openai.yaml instead.
+    "disable-model-invocation": z.boolean().optional(),
+    // The spec reserves `metadata` for string-to-string pairs. Site flags
+    // (`featured`) and OpenCode invocation (`opencode/autoinvoke`) live here.
     metadata: z.record(z.string(), z.string()).optional(),
   }),
 });

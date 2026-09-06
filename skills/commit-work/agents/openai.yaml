@@ -1,0 +1,5 @@
+interface:
+  display_name: "Commit work"
+  short_description: "Conventional commits with a ticket in every scope"
+policy:
+  allow_implicit_invocation: false

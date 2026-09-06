@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 - Site catalog treats `metadata.featured` as the string `"true"`, matching the
   Agent Skills spec's string-to-string metadata map.
+- User-invoked skills now ship harness invocation locks: `disable-model-invocation`
+  in `SKILL.md`, `agents/openai.yaml` with `allow_implicit_invocation: false`,
+  and `metadata.opencode/autoinvoke: "false"`. Model-invoked skills (`research`,
+  `unslop`) ship `agents/openai.yaml` display metadata only.
+- User-invoked skill descriptions are short human summaries. Discovery is the
+  invocation flag, not trigger-phrase padding.
 
 ### Changed — 2026-09-05
 

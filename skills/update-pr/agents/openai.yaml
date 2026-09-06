@@ -1,0 +1,5 @@
+interface:
+  display_name: "Update PR"
+  short_description: "Refresh the open GitHub pull request"
+policy:
+  allow_implicit_invocation: false

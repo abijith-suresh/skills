@@ -1,8 +1,10 @@
 ---
 name: update-pr
 description: >-
-  Updates an existing GitHub PR's title and body. Invoke when updating an
-  existing GitHub pull request. The user may also name this skill explicitly.
+  Runs tests and updates the title and body of the open GitHub pull request.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Update PR

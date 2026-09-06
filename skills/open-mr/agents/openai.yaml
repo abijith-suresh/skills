@@ -1,0 +1,5 @@
+interface:
+  display_name: "Open MR"
+  short_description: "Push the branch and open a GitLab merge request"
+policy:
+  allow_implicit_invocation: false

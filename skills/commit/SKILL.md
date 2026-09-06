@@ -1,10 +1,11 @@
 ---
 name: commit
 description: >-
-  Creates clean conventional commits from the current diff. Invoke when
-  committing changes. The user may also name this skill explicitly.
+  Creates conventional commits from the current diff, one intent per commit.
+disable-model-invocation: true
 metadata:
   featured: "true"
+  opencode/autoinvoke: "false"
 ---
 
 # Commit

@@ -1,9 +1,11 @@
 ---
 name: open-mr
 description: >-
-  Pushes the current branch and opens a new GitLab MR via glab CLI. Invoke
-  when opening a merge request on GitLab. Requires a ticket number. The
-  user may also name this skill explicitly.
+  Pushes the current branch and opens a GitLab merge request. Requires a
+  ticket number.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Open MR (GitLab)

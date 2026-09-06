@@ -1,8 +1,11 @@
 ---
 name: commit-work
 description: >-
-  Creates clean conventional commits from the current diff. Invoke when
-  committing changes. The user may also name this skill explicitly.
+  Creates conventional commits from the current diff with a ticket number in
+  every scope.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Commit Work
