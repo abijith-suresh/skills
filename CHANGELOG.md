@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-09-06
+
+- `create-issue` skill: file one GitHub issue to park a follow-up thought
+  from the current work. GitHub-only. Stops on a GitLab remote.
+
 ### Changed — 2026-09-06
 
 - Site catalog treats `metadata.featured` as the string `"true"`, matching the
@@ -16,6 +21,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `unslop`) ship `agents/openai.yaml` display metadata only.
 - User-invoked skill descriptions are short human summaries. Discovery is the
   invocation flag, not trigger-phrase padding.
+
+### Removed — 2026-09-06
+
+- `to-issues` skill: the plan-to-tickets breakdown was unused. Capture a single
+  later thought with `create-issue` instead.
 
 ### Changed — 2026-09-05
 
