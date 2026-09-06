@@ -13,10 +13,10 @@ const skillDefinitions = defineCollection({
   schema: z.object({
     name: z.string(),
     description: z.string(),
-    // The Agent Skills spec reserves `metadata` for arbitrary client-defined
-    // key-value pairs; site curation flags live here, never as new top-level
-    // frontmatter keys that could break skill install tooling.
-    metadata: z.looseObject({ featured: z.boolean().optional() }).optional(),
+    // The Agent Skills spec reserves `metadata` for string-to-string pairs.
+    // Site curation flags such as `featured` live here, never as new
+    // top-level frontmatter keys that could break skill install tooling.
+    metadata: z.record(z.string(), z.string()).optional(),
   }),
 });
 

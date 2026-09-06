@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-09-06
+
+- Site catalog treats `metadata.featured` as the string `"true"`, matching the
+  Agent Skills spec's string-to-string metadata map.
+
 ### Changed — 2026-09-05
 
 - Aligned the tooling baseline with the main site: mise.toml is the single

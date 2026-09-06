@@ -46,7 +46,8 @@ bun run verify
 
 1. Create `skills/<skill-name>/SKILL.md`.
 2. Follow the [Agent Skills specification](https://agentskills.io/specification).
-   Use YAML frontmatter with only `name` and `description`.
+   Use YAML frontmatter with `name`, `description`, and optional `metadata`.
+   `metadata` values are strings (`featured: "true"`).
 3. Make the directory name and frontmatter `name` match in lowercase
    kebab-case.
 4. Write a description that says what the skill does, when agents should use
