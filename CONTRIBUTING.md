@@ -47,14 +47,17 @@ bun run verify
 1. Create `skills/<skill-name>/SKILL.md`.
 2. Follow the [Agent Skills specification](https://agentskills.io/specification).
    Use YAML frontmatter with `name`, `description`, and optional `metadata`.
-   `metadata` values are strings (`featured: "true"`).
+   Add `disable-model-invocation: true` when the skill should only run when
+   named. Put site flags and OpenCode invocation in `metadata` as strings.
 3. Make the directory name and frontmatter `name` match in lowercase
    kebab-case.
-4. Write a description that says what the skill does, when agents should use
-   it, and that users may name it explicitly.
-5. Keep the workflow standalone. It must not require another skill.
-6. Add the skill to the catalog and update the count in `README.md`.
-7. Add a dated entry under `[Unreleased]` in `CHANGELOG.md`.
+4. Write a short description. For model-invoked skills include when to use
+   it. For user-invoked skills, keep it a human summary.
+5. Keep the workflow standalone. It must not require or run another skill.
+6. Add `agents/openai.yaml` with display metadata. User-invoked skills also
+   set `policy.allow_implicit_invocation: false`.
+7. Add the skill to the catalog and update the count in `README.md`.
+8. Add a dated entry under `[Unreleased]` in `CHANGELOG.md`.
 
 Supporting `references/`, `scripts/`, or `assets/` directories are allowed
 when a skill needs them. Do not add a per-skill README.

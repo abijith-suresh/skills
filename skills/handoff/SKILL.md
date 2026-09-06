@@ -1,9 +1,11 @@
 ---
 name: handoff
 description: >-
-  Compacts the current conversation into a handoff document for another
-  agent or session to pick up. Invoke when handing off work to another
-  agent or session. The user may also name this skill explicitly.
+  Compacts the current conversation into a handoff document for another agent
+  or session.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Handoff

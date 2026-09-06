@@ -1,8 +1,10 @@
 ---
 name: open-pr
 description: >-
-  Pushes the current branch and opens a new GitHub PR. Invoke when opening
-  a pull request on GitHub. The user may also name this skill explicitly.
+  Pushes the current branch, runs tests, and opens a GitHub pull request.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Open PR

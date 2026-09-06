@@ -1,9 +1,10 @@
 ---
 name: update-mr
 description: >-
-  Updates an existing GitLab MR's title and body via glab CLI. Invoke when
-  updating an existing GitLab merge request. The user may also name this
-  skill explicitly.
+  Regenerates the title and body of the open GitLab merge request.
+disable-model-invocation: true
+metadata:
+  opencode/autoinvoke: "false"
 ---
 
 # Update MR (GitLab)

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Open PR"
+  short_description: "Push the branch and open a GitHub pull request"
+policy:
+  allow_implicit_invocation: false

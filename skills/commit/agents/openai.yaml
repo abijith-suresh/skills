@@ -1,0 +1,5 @@
+interface:
+  display_name: "Commit"
+  short_description: "Conventional commits from the current diff"
+policy:
+  allow_implicit_invocation: false
