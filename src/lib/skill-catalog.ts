@@ -29,10 +29,14 @@ export function buildSkillSourceUrl(repository: string, slug: string) {
   return `${buildRepositoryUrl(repository)}/tree/main/skills/${slug}`;
 }
 
+export function isFeaturedMetadata(featured: string | undefined): boolean {
+  return featured === "true";
+}
+
 export function buildSkillSummaries(
   definitions: {
     id: string;
-    data: { name: string; description: string; metadata?: { featured?: boolean } };
+    data: { name: string; description: string; metadata?: Record<string, string> };
   }[],
   repository = SKILLS_REPOSITORY
 ) {
@@ -43,7 +47,7 @@ export function buildSkillSummaries(
       description: definition.data.description,
       installCommand: buildInstallCommand(repository, definition.id),
       sourceUrl: buildSkillSourceUrl(repository, definition.id),
-      featured: definition.data.metadata?.featured === true,
+      featured: isFeaturedMetadata(definition.data.metadata?.featured),
     }))
     .sort((left, right) => left.name.localeCompare(right.name));
 }

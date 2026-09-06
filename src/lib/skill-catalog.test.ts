@@ -5,6 +5,7 @@ import {
   buildSkillSourceUrl,
   buildSkillSummaries,
   directorySlugFromEntry,
+  isFeaturedMetadata,
 } from "@/lib/skill-catalog";
 
 describe("directorySlugFromEntry", () => {
@@ -80,7 +81,7 @@ describe("buildSkillSummaries", () => {
         data: {
           name: "Commit",
           description: "Commit changes.",
-          metadata: { featured: true },
+          metadata: { featured: "true" },
         },
       },
       {
@@ -88,7 +89,7 @@ describe("buildSkillSummaries", () => {
         data: {
           name: "Handoff",
           description: "Handoff context.",
-          metadata: { featured: false },
+          metadata: { featured: "false" },
         },
       },
     ]);
@@ -97,5 +98,13 @@ describe("buildSkillSummaries", () => {
       ["commit", true],
       ["handoff", false],
     ]);
+  });
+});
+
+describe("isFeaturedMetadata", () => {
+  it("treats only the string true as featured", () => {
+    expect(isFeaturedMetadata("true")).toBe(true);
+    expect(isFeaturedMetadata("false")).toBe(false);
+    expect(isFeaturedMetadata(undefined)).toBe(false);
   });
 });

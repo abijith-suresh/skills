@@ -38,8 +38,8 @@ scripts.
 - Add a skill only when the workflow is repeated and has clear inputs,
   outputs, and failure conditions.
 - Keep frontmatter to `name`, `description`, and the optional spec `metadata`
-  map (site curation flags such as `featured` live there). Never add new
-  top-level frontmatter keys. The description must say what
+  map. `metadata` values are strings. Site curation uses `featured: "true"`.
+  Never add new top-level frontmatter keys. The description must say what
   the skill does, when agents should use it, and that users may name it
   explicitly.
 - When adding, removing, or renaming a skill, update the catalog and count in
