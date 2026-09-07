@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-09-07
 
+- `unslop` keeps the rewrite process in `SKILL.md` and moves the 31
+  patterns into `references/patterns.md` so the always-on skill stays
+  short. Still model-invoked.
+
 - `open-pr` now creates or updates the GitHub pull request for the current
   branch. Title is a conventional commit from the net diff. Body is Why,
   optional How, and optional Out of scope. Local test runs no longer gate
