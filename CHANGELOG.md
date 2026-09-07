@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-09-07
 
+- `grill-me` asks a frontier of independent questions per round instead of
+  serializing them. Facts stay with the agent. Decisions stay with the user.
+  Recommended answers and the chat-only summary are unchanged.
+
 - `open-pr` now creates or updates the GitHub pull request for the current
   branch. Title is a conventional commit from the net diff. Body is Why,
   optional How, and optional Out of scope. Local test runs no longer gate
