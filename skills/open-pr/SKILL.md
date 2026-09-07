@@ -1,7 +1,8 @@
 ---
 name: open-pr
 description: >-
-  Pushes the current branch, runs tests, and opens a GitHub pull request.
+  Pushes the current branch and creates or updates the GitHub pull request
+  for it.
 disable-model-invocation: true
 metadata:
   opencode/autoinvoke: "false"
@@ -9,13 +10,69 @@ metadata:
 
 # Open PR
 
-Push the current branch, run tests, and create a new pull request on GitHub.
+Push the current branch. Create a GitHub pull request if this branch has
+none. Update title and body if it already has one. Personal GitHub. Squash
+merge: the title is the commit that will land on the default branch.
+
+This skill does not commit. If the work is uncommitted, stop and tell the
+user to use `commit` first.
 
 ## Prerequisites
 
 - `git` must be available
-- `gh` CLI must be installed and authenticated — verify with `gh auth status`
+- `gh` CLI must be installed and authenticated. Verify with `gh auth status`.
 - If `gh` is missing: "gh CLI is required. Install it from https://cli.github.com/."
+
+## Title
+
+Conventional commit from the **net diff**, not from the first commit on the
+branch:
+
+```
+type(scope?): summary
+```
+
+- Imperative, lowercase, no period
+- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`,
+  `ci`, `chore`
+- Scope only when it sharpens meaning
+- Under 72 characters
+- If the title needs `and` to join unrelated ideas, stop and say the branch
+  should be split
+
+## Body
+
+```markdown
+## Why
+[The problem or the outcome. One short paragraph. Do not restate the title.]
+
+## How
+[Only if the approach is not obvious from the diff.]
+
+## Out of scope
+[Only if a reviewer would reasonably ask why something was left out.]
+
+Closes #123
+```
+
+**Omit a heading when it has nothing to say.** `Closes` only when an issue
+number is in the conversation or a linked GitHub issue is already known. Do
+not invent `Closes`. Do not add a Testing section. CI is the automated
+record. One extra line under Why is allowed only when a human must check
+something CI cannot.
+
+Forbidden in the body:
+
+- Restating the title
+- File-list bullets (`Updated Foo.ts`, `Added tests`)
+- Fake checklists
+- Local disk paths
+- A Notes dump because the template used to have Notes
+
+Ignore `.github/pull_request_template.md`. This skill is the convention.
+
+Write the body to a temp file and pass `--body-file`. Do not interpolate
+markdown through a quoted `--body`.
 
 ## Steps
 
@@ -27,107 +84,66 @@ git remote show origin | grep "HEAD branch"
 git status --porcelain
 ```
 
-- If current branch is `main`, `master`, or the remote default branch — stop: "Cannot open a PR from the default branch. Switch to a feature branch first."
-- If `git status --porcelain` returns any output — stop: "Uncommitted changes detected. Commit or stash them before opening a PR."
+- Default branch (`main`, `master`, or the remote HEAD): stop. "Cannot open
+  a PR from the default branch. Switch to a feature branch first."
+- `git status --porcelain` has output: stop. "Uncommitted changes detected.
+  Commit or stash them before opening a PR."
 
-### 2. Check for existing PR
-
-```bash
-gh pr list --head <branch-name> --state open --json number,url --jq '.[0] // empty'
-```
-
-- If a PR is found — stop: "A PR already exists for this branch: <url>. Use update-pr to modify it."
-
-### 3. Push the branch
+### 2. Push
 
 ```bash
 git push -u origin <branch-name>
 ```
 
-- If push fails — stop and show the exact error.
+If push fails, stop and show the exact error.
 
-### 4. Run tests
+### 3. Find an existing PR
 
-Detect the test setup from project files:
+```bash
+gh pr view --json number,url --jq '{number,url}'
+```
 
-- `package.json` with a `test` script → identify the test command and run it
-- `pytest.ini`, `pyproject.toml`, or `setup.py` → `pytest`
-- `Makefile` with a `test` target → `make test`
-- If none found → skip tests entirely; omit the Automated sub-section from the PR body
+If this errors because there is no PR, treat that as missing. Do not create
+a second PR when one exists.
 
-Run the detected command and capture the result (pass/fail, test count).
-
-- If tests fail — stop: "Tests failed. Fix the failures before opening a PR." Show the output.
-
-### 5. Derive title and body
-
-Run the following to gather branch data:
+### 4. Derive title and body
 
 ```bash
 git log origin/<default-branch>..HEAD --oneline
-git log origin/<default-branch>..HEAD --format="%s %b"
+git diff origin/<default-branch>..HEAD
 git diff origin/<default-branch>..HEAD --stat
 ```
 
-**Title** — use conventional commits format:
+Read the **full diff**. Infer the title from that intent. Regenerate the
+body from scratch every time, including updates. Do not preserve an old
+body to "tweak" it.
 
-```
-type(scope?): summary
-```
+### 5. Create or update
 
-Infer `type` from commit messages. Common types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`. Infer `scope` from the files changed if it adds clarity. Keep the summary under 72 characters.
-
-**Body** — follow the Output Format section below. Derive every field from the git data. Leave no unfilled placeholders.
-
-### 6. Create the PR
+**No PR:**
 
 ```bash
 gh pr create \
   --title "<title>" \
-  --body "<body>" \
+  --body-file <temp-body> \
   --assignee @me
 ```
 
-Only add `--reviewer <username>` if the user explicitly names a reviewer.
+Only add `--reviewer` when the user names a reviewer. Open ready, not draft.
 
-### 7. Report
+**PR exists:**
 
-Print the PR URL returned by `gh pr create`. Note any follow-up the user still needs to do manually.
-
----
-
-## Output Format
-
-```markdown
-## Summary
-[What changed and why — 2–3 sentences derived from commit messages and diff.]
-
-## Changes
-- [Specific action taken, not just a filename]
-- [Specific action taken]
-
-## Testing
-**Automated**
-- [x] [test command] passed ([N] tests)
-
-**Manual**
-- [ ] [UI or user-facing change to verify]
-
-## Notes
-[Risks, follow-ups, rollout notes, or reviewer context.]
-
-Closes #[issue-number]
+```bash
+gh pr edit <number> \
+  --title "<title>" \
+  --body-file <temp-body>
 ```
 
-**Rules:**
-- `## Notes` — omit entirely if there is nothing useful to say
-- `Closes #[issue-number]` — include only if an issue number appears in the conversation. Omit otherwise; do not leave a placeholder
-- `**Automated**` sub-section — omit if no test suite was detected or run
-- `**Manual**` sub-section — omit if the diff contains no UI or user-facing changes
-- `## Testing` — omit entirely if both sub-sections would be empty
-- Never leave any placeholder text unfilled in the final output
+Do not change draft vs ready on an existing PR.
 
----
+### 6. Report
+
+Print the URL. Say whether this created a PR or updated one.
 
 ## Failure Conditions
 
@@ -137,6 +153,5 @@ Closes #[issue-number]
 | Not authenticated | "gh CLI is not authenticated. Run gh auth login first." |
 | On default branch | "Cannot open a PR from the default branch. Switch to a feature branch first." |
 | Uncommitted changes | "Uncommitted changes detected. Commit or stash them before opening a PR." |
-| PR already exists | "A PR already exists for this branch: <url>. Use update-pr to modify it." |
 | Push failed | Show the exact git error and stop. |
-| Tests failed | "Tests failed. Fix the failures before opening a PR." Show test output. |
+| Title is not one intent | Stop and say the branch should be split before opening. |
