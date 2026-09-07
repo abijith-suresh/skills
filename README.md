@@ -40,7 +40,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `commit` | Create conventional commits from the current diff. |
 | `commit-work` | Create conventional commits with a ticket number in every scope. |
 | `create-issue` | File one GitHub issue to park a later thought. |
-| `grill-me` | Ask one question at a time to settle a plan or design. |
+| `grill-me` | Settle a plan or design by asking independent questions in one round. |
 | `handoff` | Write a compact handoff document for another agent or session. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
