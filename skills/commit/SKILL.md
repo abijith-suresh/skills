@@ -16,8 +16,8 @@ Split by intent. One commit per reason to change.
 
 - One intent per commit
 - Conventional commit messages, imperative mood
-- Honest splits — never bundle unrelated changes behind a broad message
-- Branch safety — never commit directly on `main`, `master`, `develop`, or
+- Honest splits. Never bundle unrelated changes behind a broad message
+- Branch safety. Never commit directly on `main`, `master`, `develop`, or
   the remote default branch
 
 ## Workflow
@@ -41,14 +41,6 @@ explicitly overrides the guardrail.
 
 Run `git status` and `git diff HEAD`. Read every changed file.
 
-Never include these agent-generated working files unless the user
-explicitly asks:
-
-- `PLAN.md`
-- `IMPROVE.md`
-- `REVIEW.md`
-- `INVESTIGATION.md`
-
 ### 3. Plan the split
 
 Group changes by intent. A good split separates things like:
@@ -62,7 +54,7 @@ When in doubt, split. A slightly smaller commit is easier to review and
 safer to revert.
 
 Plan the split, then proceed directly to committing. Do not ask for
-permission — make a good judgement call and execute.
+permission. Make a good judgement call and execute.
 
 ### 4. Stage and commit each group
 
@@ -72,13 +64,15 @@ For each group in order:
 2. Write the commit message
 3. Commit: `git commit -m "message"` (or add a body when the why is not obvious)
 
+Never `git add .` or `git add -A`. Stage by path so unrelated files stay out.
+
 **Format**
 
 `type(scope?): imperative summary`
 
 Examples:
 
-- `feat: add investigation workflow`
+- `feat(open-pr): upsert existing pull requests`
 - `fix(open-pr): correct target branch detection`
 
 Common types:
@@ -114,8 +108,8 @@ staged or unstaged changes remain.
 ## Rules
 
 - Never commit unrelated changes together
-- Never push — that is a separate step
-- Never include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md`
-  unless the user explicitly asks
-- Do not ask for permission to commit — plan the split, make a judgement call, and execute
+- Never push. That is a separate step
+- Never `git add .` or `git add -A`
+- Do not ask for permission to commit. Plan the split, make a judgement
+  call, and execute
 - Call out risky git operations before taking them

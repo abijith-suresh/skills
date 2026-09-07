@@ -8,7 +8,7 @@ metadata:
   opencode/autoinvoke: "false"
 ---
 
-# Commit Work
+# Commit work
 
 Split by intent. One commit per reason to change.
 
@@ -16,8 +16,8 @@ Split by intent. One commit per reason to change.
 
 - One intent per commit
 - Conventional commit messages, imperative mood
-- Honest splits — never bundle unrelated changes behind a broad message
-- Branch safety — never commit directly on `main`, `master`, `develop`, or
+- Honest splits. Never bundle unrelated changes behind a broad message
+- Branch safety. Never commit directly on `main`, `master`, `develop`, or
   the remote default branch
 - Ticket number in every commit scope
 
@@ -43,20 +43,17 @@ explicitly overrides the guardrail.
 A ticket number is required in every commit scope:
 `type(TICKET-123): summary`
 
-If the ticket number is not already known from the branch, MR, or
-conversation, ask for it before continuing.
+Read `git branch --show-current`. Extract a Jira-style key (`ABC-123`,
+`PROJ-214`). If the conversation already named a ticket, use that.
+
+Ask only when neither the branch nor the conversation has a key.
+
+Work commits stay `type(TICKET-123): …`. GitLab MR titles stay
+`TICKET-123: …` without a conventional type. That split is intentional.
 
 ### 3. Inspect the diff
 
 Run `git status` and `git diff HEAD`. Read every changed file.
-
-Never include these agent-generated working files unless the user
-explicitly asks:
-
-- `PLAN.md`
-- `IMPROVE.md`
-- `REVIEW.md`
-- `INVESTIGATION.md`
 
 ### 4. Plan the split
 
@@ -71,7 +68,7 @@ When in doubt, split. A slightly smaller commit is easier to review and
 safer to revert.
 
 Plan the split, then proceed directly to committing. Do not ask for
-permission — make a good judgement call and execute.
+permission. Make a good judgement call and execute.
 
 ### 5. Stage and commit each group
 
@@ -81,13 +78,15 @@ For each group in order:
 2. Write the commit message
 3. Commit: `git commit -m "message"` (or add a body when the why is not obvious)
 
+Never `git add .` or `git add -A`. Stage by path so unrelated files stay out.
+
 **Format**
 
 `type(TICKET-123): imperative summary`
 
 Examples:
 
-- `feat(PROJ-214): add investigation workflow`
+- `feat(PROJ-214): retry payment webhooks`
 - `fix(PROJ-214): correct GitLab target option`
 
 Common types:
@@ -123,8 +122,8 @@ staged or unstaged changes remain.
 ## Rules
 
 - Never commit unrelated changes together
-- Never push — that is a separate step
-- Never include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md`
-  unless the user explicitly asks
-- Do not ask for permission to commit — plan the split, make a judgement call, and execute
+- Never push. That is a separate step
+- Never `git add .` or `git add -A`
+- Do not ask for permission to commit. Plan the split, make a judgement
+  call, and execute
 - Call out risky git operations before taking them
