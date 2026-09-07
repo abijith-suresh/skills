@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-09-07
 
+- `commit` and `commit-work` drop the ban on removed agent files
+  (`PLAN.md`, `IMPROVE.md`, `REVIEW.md`, `INVESTIGATION.md`). Stage by
+  path only. Never `git add .` or `git add -A`. `commit-work` reads the
+  ticket from the branch before asking.
+
 - `open-pr` now creates or updates the GitHub pull request for the current
   branch. Title is a conventional commit from the net diff. Body is Why,
   optional How, and optional Out of scope. Local test runs no longer gate
