@@ -17,10 +17,9 @@ on GitLab.
 ## Prerequisites
 
 - `git` must be available
-- `gh` CLI must be installed and authenticated — verify with `gh auth status`
-- If `gh` is missing: "gh CLI is required. Install it from https://cli.github.com/."
-- Origin must be GitHub. Run `git remote get-url origin`. If the URL contains
-  `gitlab`, stop: "create-issue is GitHub-only. This remote is GitLab."
+- `gh` CLI must be installed and authenticated. Verify with `gh auth status`.
+- Origin must be GitHub. Run `git remote get-url origin`. If the URL
+  contains `gitlab`, stop.
 
 ## Steps
 
@@ -32,27 +31,33 @@ worth parking, say so and stop.
 
 ### 2. Draft
 
-**Title** — imperative, under 72 characters.
+Title: imperative, under 72 characters.
 
-**Body:**
+Body:
 
 ```markdown
 ## What
-[The follow-up, one or two sentences.]
+[The follow-up, one or two sentences. Include the file, symbol, or
+constraint to remember.]
 
 ## Why later
 [Why it is not part of the current change.]
-
-## Notes
-[File, symbol, or constraint to remember. Omit this section if empty.]
 ```
 
-Show the draft in chat and wait for approval. Do not create anything yet.
+No Notes section. If a heading would be empty, omit it.
+
+Write the body to a temp file. Pass `--body-file`. Do not interpolate
+markdown through a quoted `--body`.
 
 ### 3. Create
 
+If the user named the thought, create it. Do not wait for a second
+approval.
+
+If you inferred a leftover they did not name, show the draft and wait.
+
 ```bash
-gh issue create --title "<title>" --body "<body>" --assignee @me
+gh issue create --title "<title>" --body-file <temp-body> --assignee @me
 ```
 
 Add labels only when the user names them. Do not invent a label vocabulary.
@@ -65,7 +70,16 @@ implementing the parked item.
 ## Rules
 
 - One issue per invocation
-- Never create issues before the user approves the draft
+- Create immediately when the thought was named. Preview only when inferred
 - Never turn a plan into a set of tickets
 - Never switch the current branch or commit
 - Never create GitLab issues
+
+## Failure conditions
+
+| Condition | Message |
+|---|---|
+| `gh` CLI not installed | "gh CLI is required. Install it from https://cli.github.com/." |
+| Not authenticated | "gh CLI is not authenticated. Run gh auth login first." |
+| Origin is GitLab | "create-issue is GitHub-only. This remote is GitLab." |
+| Nothing worth parking | Say so and stop. |
