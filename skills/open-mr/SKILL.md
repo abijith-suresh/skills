@@ -1,8 +1,8 @@
 ---
 name: open-mr
 description: >-
-  Pushes the current branch and opens a GitLab merge request. Requires a
-  ticket number.
+  Pushes the current branch and creates or updates the GitLab merge request
+  for it. Requires a ticket number.
 disable-model-invocation: true
 metadata:
   opencode/autoinvoke: "false"
@@ -10,13 +10,61 @@ metadata:
 
 # Open MR (GitLab)
 
-Push the current branch and create a new merge request on GitLab.
+Push the current branch. Create a GitLab merge request if this branch has
+none. Update title and body if it already has one. Work GitLab. The ticket
+lives in Jira. The title must carry that key.
+
+This skill does not commit. If the work is uncommitted, stop and tell the
+user to use `commit-work` first.
 
 ## Prerequisites
 
-- `glab` CLI must be installed and authenticated — verify with `glab auth status`.
+- `glab` CLI must be installed and authenticated. Verify with `glab auth status`.
 - If `glab` is missing: "glab CLI is required. Install it from https://gitlab.com/gitlab-org/cli#installation."
-- Ticket number required in the branch name or conversation.
+- Ticket number from the branch name or the conversation. If neither has
+  one, stop and ask.
+
+## Title
+
+```
+TICKET-123: Short description
+```
+
+Examples:
+
+- `PROJ-214: Retry payment webhooks`
+- `PROJ-214: Fix target branch detection`
+
+Do not use conventional-commit types in the title. The Jira key is the
+prefix. Derive the description from the **net diff**, not from the first
+commit on the branch.
+
+## Body
+
+```markdown
+## Summary
+[Why this ticket needed code, and what is now true. Two or three sentences.
+Do not write "this MR implements the ticket."]
+
+## What changed
+- [User-visible behaviour, API or data contract, or risk]
+- [Same bar. Not a file name.]
+```
+
+Omit **What changed** when every bullet would only name a file. Then Summary
+is enough.
+
+Forbidden:
+
+- File-list bullets (`Updated Foo.ts`, `Added tests`)
+- A Testing checklist. CI is the automated record. One concrete QA line
+  under Summary is allowed only when you will actually do that step
+  ("Refund a captured payment in staging.")
+- A References or Jira link section. The key is already in the title
+- Local disk paths
+
+Write the body to a temp file. Pass it as the description. Do not interpolate
+markdown through a quoted `--description`.
 
 ## Steps
 
@@ -28,88 +76,68 @@ git remote show origin | grep "HEAD branch"
 git status --porcelain
 ```
 
-- If current branch is `main`, `master`, or the remote default branch — stop: "Cannot open an MR from the default branch. Switch to a feature branch first."
-- If `git status --porcelain` returns any output — stop: "Uncommitted changes detected. Commit or stash them before opening an MR."
+- Default branch: stop. "Cannot open an MR from the default branch. Switch
+  to a feature branch first."
+- `git status --porcelain` has output: stop. "Uncommitted changes detected.
+  Commit or stash them before opening an MR."
 
-### 2. Check for existing MR
-
-```bash
-glab mr list --source-branch <branch-name> -F json
-```
-
-Parse the JSON output. If the array is non-empty — stop: "An MR already exists for this branch. Use update-mr to modify it."
-
-### 3. Push the branch
+### 2. Push
 
 ```bash
 git push -u origin <branch-name>
 ```
 
-- If push fails — stop and show the exact error.
+If push fails, stop and show the exact error. Do not pass `--push` to
+`glab mr create` after this.
+
+### 3. Find an existing MR
+
+```bash
+glab mr list --source-branch <branch-name> -F json
+```
+
+If the array is non-empty, note the `iid` and URL. Do not create a second MR.
 
 ### 4. Derive title and body
 
-Run the following to gather branch data:
-
 ```bash
 git log origin/<default-branch>..HEAD --oneline
-git log origin/<default-branch>..HEAD --format="%s %b"
+git diff origin/<default-branch>..HEAD
 git diff origin/<default-branch>..HEAD --stat
 ```
 
-**Title format:**
+Read the **full diff**. Regenerate title and body from scratch every time,
+including updates.
 
-```
-TICKET-123: Short description
-```
+### 5. Create or update
 
-Examples:
-- `PROJ-214: Add investigation workflow`
-- `PROJ-214: Fix target branch detection`
-
-**MR body template:**
-
-```markdown
-## Summary
-[What changed and why. 2–3 concise sentences.]
-
-## Changes
-- [Specific action taken]
-- [Specific action taken]
-
-## Testing
-- [ ] [Specific verification step]
-- [ ] [Edge case or regression check]
-
-## Notes
-[Risks, follow-ups, rollout notes, or reviewer context. Omit this section if
-there is nothing useful to say.]
-```
-
-**Rules:**
-
-- Derive the Testing checklist from the real changes, not a generic template
-- Each Changes bullet describes an action, not just a file name
-- Omit `Notes` if there is nothing useful to say
-- No References section — the ticket is already in the title
-
-### 5. Create the MR
+**No MR:**
 
 ```bash
 glab mr create \
   --title "<title>" \
-  --description "<body>" \
-  --push \
+  --description-file <temp-body> \
   --yes
 ```
 
-Note: `--push` pushes the branch first, then creates the MR. `--yes` skips the confirmation prompt.
+Open ready, not draft.
+
+**MR exists:**
+
+```bash
+glab mr update <iid> \
+  --title "<title>" \
+  --description-file <temp-body> \
+  --yes
+```
+
+If `glab` rejects `--description-file` on update, pass the file contents
+with `--description`. Do not hand-quote a multiline body on the command
+line.
 
 ### 6. Report
 
-Print the MR URL returned by `glab mr create`. Note any follow-up the user still needs to do manually.
-
----
+Print the URL. Say whether this created an MR or updated one.
 
 ## Failure Conditions
 
@@ -119,5 +147,5 @@ Print the MR URL returned by `glab mr create`. Note any follow-up the user still
 | Not authenticated | "glab CLI is not authenticated. Run glab auth login first." |
 | On default branch | "Cannot open an MR from the default branch. Switch to a feature branch first." |
 | Uncommitted changes | "Uncommitted changes detected. Commit or stash them before opening an MR." |
-| MR already exists | "An MR already exists for this branch. Use update-mr to modify it." |
+| No ticket number | "A ticket number is required in the branch name or conversation." |
 | Push failed | Show the exact git error and stop. |

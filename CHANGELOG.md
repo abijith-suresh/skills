@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-09-07
+
+- `open-pr` now creates or updates the GitHub pull request for the current
+  branch. Title is a conventional commit from the net diff. Body is Why,
+  optional How, and optional Out of scope. Local test runs no longer gate
+  opening.
+- `open-mr` now creates or updates the GitLab merge request for the current
+  branch. Title stays `TICKET-123: …`. Body is Summary plus behaviour
+  bullets, omitted when they would only name files.
+
+### Removed — 2026-09-07
+
+- `update-pr` and `update-mr`. Use `open-pr` or `open-mr`; each upserts.
+
 ### Added — 2026-09-06
 
 - `create-issue` skill: file one GitHub issue to park a follow-up thought
