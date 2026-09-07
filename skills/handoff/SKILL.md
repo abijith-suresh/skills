@@ -1,8 +1,7 @@
 ---
 name: handoff
 description: >-
-  Compacts the current conversation into a handoff document for another agent
-  or session.
+  Write a loadable handoff for the next session.
 disable-model-invocation: true
 metadata:
   opencode/autoinvoke: "false"
@@ -13,6 +12,9 @@ metadata:
 Write a standalone handoff so a fresh agent can continue. Save to the OS
 temp directory, not the current workspace. Print the path. The user pastes
 that path into the next session.
+
+If the user passed arguments, treat them as a description of what the next
+session will focus on and tailor the document accordingly.
 
 ## Steps
 
@@ -62,12 +64,8 @@ review, deployment. One sentence.]
 - [Path or URL]
 ```
 
-Suggested skills are recommendations only. Name skills from this
-collection: `commit`, `commit-work`, `create-issue`, `grill-me`,
-`open-mr`, `open-pr`, `unslop`, and the source-clone implementation skill
-if it is installed. Never suggest skills that are not in this collection.
-Never suggest `plan`, `improve`, `review`, `investigate`, `update-pr`,
-`update-mr`, or `to-issues`.
+Suggested skills are recommendations only. Name skills that exist in this
+collection, never skills from outside it.
 
 ### 3. Save to temp directory
 

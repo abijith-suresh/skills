@@ -9,8 +9,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Changed — 2026-09-07
 
 - `handoff` records branch, PR or MR URL, ticket, last failure, and what
-  not to redo so the next session can load the work. Suggested skills are
-  limited to this collection. Print the temp path for the user to paste.
+  not to redo so the next session can load the work. Arguments to the
+  invocation describe the next session's focus and tailor the document.
+  Suggested skills are limited to this collection. Print the temp path for
+  the user to paste.
 
 - `open-pr` now creates or updates the GitHub pull request for the current
   branch. Title is a conventional commit from the net diff. Body is Why,
