@@ -42,9 +42,9 @@ three harness controls together:
 - `agents/openai.yaml` with `policy.allow_implicit_invocation: false` (Codex)
 - `metadata.opencode/autoinvoke: "false"` (OpenCode)
 
-Model-invoked skills (`research`, `unslop`) omit those locks so the agent can
-reach them from context. They still ship `agents/openai.yaml` with display
-metadata only.
+Model-invoked skills (`implement-from-source`, `unslop`) omit those locks so
+the agent can reach them from context. They still ship `agents/openai.yaml`
+with display metadata only.
 
 The description is the discovery API. For model-invoked skills it must say
 what the skill does and when to use it. For user-invoked skills it is a short

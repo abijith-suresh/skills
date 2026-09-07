@@ -6,6 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-09-07
+
+- `implement-from-source` skill: clone canonical library source, read the
+  types, tests, and exports you will call, then implement against that API.
+  Replaces `research`. Keeps the `~/.research/` clone store. Refreshes with
+  fetch, and only hard-resets when the clone is clean.
+
+### Removed — 2026-09-07
+
+- `research` skill: the name said research and the output was implementation,
+  so agents fired it on lookup questions or skipped it when coding. Use
+  `implement-from-source`.
+
 ### Changed — 2026-09-07
 
 - `open-pr` now creates or updates the GitHub pull request for the current
