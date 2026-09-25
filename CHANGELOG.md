@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-09-25
+
+- `test-audit` skill: clean up existing test suites by checking for independent
+  behavior coverage and removing low-value tests and unused test-only code.
+
 ### Changed — 2026-09-07
 
 - `handoff` records branch, PR or MR URL, ticket, last failure, and what

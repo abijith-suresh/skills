@@ -1,11 +1,11 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 9](https://img.shields.io/badge/Skills-9-green.svg)](#skill-catalog)
+[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
-commits, pull and merge requests, research, issue creation, handoffs, and
-writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
+test cleanup, commits, pull and merge requests, research, issue creation,
+handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
 and work with compatible coding agents.
 
 ## Browse
@@ -45,6 +45,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
 | `research` | Read a library's canonical source before implementing against its API. |
+| `test-audit` | Audit existing tests and remove low-value coverage. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
 
 ## Contributing
