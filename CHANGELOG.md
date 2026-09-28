@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-09-28
+
+- Skip Dependabot builds and remove Vercel preview deployments when pull requests close.
+
 ### Added — 2026-09-25
 
 - `test-audit` skill: clean up existing test suites by checking for independent
