@@ -1,0 +1,5 @@
+interface:
+  display_name: "Inbox Zero"
+  short_description: "Batch-process a Gorgias support inbox with suggested quick actions"
+policy:
+  allow_implicit_invocation: false
