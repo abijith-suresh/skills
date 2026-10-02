@@ -42,7 +42,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `create-issue` | File one GitHub issue to park a later thought. |
 | `grill-me` | Ask one question at a time to settle a plan or design. |
 | `handoff` | Write a compact handoff document for another agent or session. |
-| `inbox-zero` | Batch-process a Gorgias support inbox with suggested quick actions. |
+| `inbox-zero` | Triage a Gmail inbox and cut recurring noise with filters. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
 | `research` | Read a library's canonical source before implementing against its API. |

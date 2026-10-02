@@ -8,8 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — 2026-10-01
 
-- `inbox-zero` skill: scan a Gorgias support inbox, classify open tickets into
-  one primary action, and execute only the actions the user explicitly approves.
+- `inbox-zero` skill: triage a Gmail inbox into archivable, follow-up,
+  waiting, read-through, and filter candidates, then act on it.
 
 ### Added — 2026-09-25
 
