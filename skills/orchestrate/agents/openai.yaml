@@ -1,0 +1,5 @@
+interface:
+  display_name: "Orchestrate"
+  short_description: "Split a task across subagents and verify the result"
+policy:
+  allow_implicit_invocation: false
