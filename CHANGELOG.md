@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-10-02
+
+- `orchestrate` skill: run a task as an orchestrator that splits work across
+  analysis, implementation, and verification subagents, and reports back.
+
 ### Added — 2026-09-25
 
 - `test-audit` skill: clean up existing test suites by checking for independent
