@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-10-01
+
+- `inbox-zero` skill: triage a Gmail inbox into archivable, follow-up,
+  waiting, read-through, and filter candidates, then act on it.
+
 ### Added — 2026-09-25
 
 - `test-audit` skill: clean up existing test suites by checking for independent
