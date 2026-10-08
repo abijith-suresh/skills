@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-10-08
+
+- `clarify` skill: rewrite a rough request into a clear, precise prompt.
+  Ported from the retired `prompts` collection.
+
 ### Added — 2026-09-25
 
 - `test-audit` skill: clean up existing test suites by checking for independent
