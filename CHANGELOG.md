@@ -14,6 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   calls the shared auto-merge workflow.
 - Browser tests: Playwright runs the built site on chromium, firefox, and
   webkit through the `test:e2e` script required by the shared CI.
+- Unit tests fail when no test files match: `test` is `vitest run` without
+  `--passWithNoTests`.
 
 ### Added — 2026-09-25
 
