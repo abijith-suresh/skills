@@ -14,6 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   calls the shared auto-merge workflow.
 - Browser tests: Playwright runs the built site on chromium, firefox, and
   webkit through the `test:e2e` script required by the shared CI.
+- Browser tests reuse the build CI already produces: `test:e2e` runs
+  `playwright test` against the existing `dist/`, so the shared CI's Build
+  step is no longer duplicated. `test:e2e:build` keeps the clean-start local
+  command (`bun run build && bun run test:e2e`).
+- Unit tests fail when no test files match: `test` is `vitest run` without
+  `--passWithNoTests`.
 
 ### Added — 2026-09-25
 
