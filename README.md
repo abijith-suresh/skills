@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
+[![Skills: 12](https://img.shields.io/badge/Skills-12-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
 test cleanup, commits, pull and merge requests, research, issue creation,
@@ -48,6 +48,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `subagents` | Delegate work, choose parallel or sequential execution, and keep the main conversation available. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
+| `writing` | Draft and edit natural, direct prose for the audience while preserving facts and stance. |
 
 ## Contributing
 
