@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added - 2026-10-10
+
+- `java` skill: write, refactor, or review Java code against the project's
+  supported Java version, with guidance on API contracts, nulls and errors,
+  resource ownership, collections, concurrency, and verification. Supporting
+  examples link to official Java and OpenJDK sources.
+
 ### Changed — 2026-10-09
 
 - Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.

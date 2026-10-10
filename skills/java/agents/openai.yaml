@@ -1,0 +1,3 @@
+interface:
+  display_name: "Java"
+  short_description: "Write and review Java against project contracts"
