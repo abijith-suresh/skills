@@ -1,89 +1,59 @@
 ---
 name: explain
 description: >-
-  Explain how existing code or a system works by tracing a concrete execution
-  path, with source locations and clear limits on what the evidence shows.
-  Use when asked to explain how this works, walk through a flow, or understand
-  an unfamiliar function, feature, or subsystem.
+  Explain how existing code or a system works. Use when the user asks how
+  something works or wants a code walkthrough.
 ---
 
 # Explain
 
-Help the user understand the behavior well enough to follow what happens
-and where to look next. Explain the existing system at their level.
-Do not automatically refactor, fix, or change code. Loading this skill
-does not expand authorization.
+Explain the existing system at the user's level. Help them follow what
+happens and know where to look next. Focus on understanding; do not
+automatically refactor, fix, or change code.
 
-## Set the scope
+## Understand the system
 
-Use the question and conversation to identify the behavior, the user's
-reason for asking, and what they already know. State a reasonable scope
-and proceed when the target is clear. Ask a focused question if choosing
-the wrong target would change the answer.
+Use the question and conversation to understand what the user wants to
+learn and what they already know. Start unfamiliar systems with a broad
+look at the relevant responsibilities and connections, then narrow the
+exploration to the gaps that matter. Keep a small question small. Ask the
+user about intent or decisions the code cannot resolve.
 
-For a broad system, give a brief map of its responsibilities, then choose
-a representative path through it. For a small function, stay with that
-function and the callers needed to explain it. Avoid a repository tour.
+Read the implementation and relevant configuration. Use documentation,
+comments, tests, and runtime observations to check your understanding.
+If exploration is delegated, keep partial analysis internal. Reconcile
+the findings and present one coherent explanation once the relevant
+workers have finished.
 
-## Trace a concrete path
+## Follow a concrete path
 
-Read the implementation and relevant configuration. Names, comments,
-documentation, and tests can guide the search, but check their claims
-against the code. For systems without accessible source, use the supplied
-documentation or observations and say what they cannot establish.
+Choose an input or user action that makes the behavior clear. Follow it
+from the entry point to the result. Explain who handles each step, how
+the data changes, and which conditions select the path. Track the state
+that is read or changed, who owns it, and how long it survives.
 
-Pick a concrete input or user action and follow it from its entry point
-to its result. Mark invented example values as illustrative. Trace:
+At module, process, service, or storage boundaries, establish what goes
+in, what comes back, and which ordering or guarantees matter. Follow
+relevant failure paths too. Explain how the caller learns about failure
+and whether earlier state changes remain. Include retries, caching,
+cleanup, or concurrency when they affect the answer.
 
-- What triggers the behavior and which conditions select this path.
-- Which functions or components handle it, what each receives, and how
-  the data changes before the next step.
-- Which state is read or changed, who owns it, and how long it survives.
-- Where execution crosses a module, process, service, or storage boundary,
-  including the inputs, outputs, and ordering that matter to this example.
-- What the user or caller receives and which side effects remain afterward.
+## Explain what the evidence supports
 
-Follow relevant failure branches from the same path. Explain where an
-invalid input, missing value, or failed operation goes, whether earlier
-state changes remain, and how the caller learns about the failure. Include
-retries, cleanup, caching, or concurrency only when they affect the answer.
-Do not invent guarantees at a boundary whose implementation is unavailable.
+Lead with the smallest complete account of what the system does, then
+walk through the example in execution order. Define unfamiliar terms as
+they appear. Use a short snippet or diagram when it helps. Put source
+locations beside the claims they support, rather than returning a file
+inventory or annotating every line. Deepen the explanation where the
+user's question needs it.
 
-Inspect existing tests or runtime evidence when useful to resolve a
-specific uncertainty. Run a demonstration only within the user's existing
-authorization and account for its side effects. An explanation request
-does not itself authorize changes to code or live systems.
+Distinguish inspected code behavior from observed execution and from
+what documentation promises. Attribute documented design reasons to
+their source; label inferred intent and give its basis. Mark illustrative
+example values as examples. If sources disagree or part of the path is
+unavailable, say what is known, what remains uncertain, and what evidence
+would resolve it. Do not fill gaps with a plausible story.
 
-## Keep evidence and intent separate
-
-Attach source locations to the steps and claims they support. Use file
-paths, symbols, and current line numbers where available, or precise
-document sections and observation details otherwise. Cite the implementation
-for behavior, rather than a caller's name or a test's title.
-
-Distinguish what the inspected code does, what an executed check showed,
-and what documentation says should happen. Reading a branch does not prove
-that it ran in production. If sources disagree, describe the disagreement.
-
-Explain design intent only when it helps answer the question. Attribute
-documented reasons to their source. Label your own interpretation as an
-inference and give its basis. Code behavior alone does not establish why
-someone chose it.
-
-When a link in the path cannot be established, name the gap and the
-evidence needed to resolve it. Give the supported portion of the answer
-rather than filling the gap with a plausible story.
-
-## Deliver the explanation
-
-Lead with a short account of what the system does. Define unfamiliar
-terms as they appear, then walk through the chosen example in execution
-order. Connect each component to its role in that example. Match detail
-to the user's question and familiarity, and deepen the explanation when
-they ask.
-
-Use a short snippet or diagram when it clarifies a transformation or
-interaction. Keep source references beside the explanation and avoid
-annotating every line of code. Include the failure paths and evidence
-limits that change the user's understanding. The result is the explanation
-itself, not a refactoring plan or a report of files inspected.
+This skill works on its own. Companion skills are optional and must not
+route back into it. Skill loading and any demonstrations stay within
+the user's existing authorization.

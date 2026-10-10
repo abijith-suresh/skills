@@ -8,9 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — 2026-10-10
 
-- `explain` skill: trace existing code or system behavior at the user's level,
-  with source locations, state changes, boundaries, relevant failure paths,
-  and clear distinctions between observed behavior and inferred intent.
+- `explain` skill: compact guidance for understanding existing code or system
+  behavior at the user's level, with concrete paths, source locations, state
+  changes, boundaries, relevant failures, and evidence limits. Works standalone
+  and distinguishes observed behavior from inferred intent.
 
 ### Changed — 2026-10-09
 
