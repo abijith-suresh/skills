@@ -12,7 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   and catalog guidance, and the contributor workflow. Corrected the site
   URL and tooling guidance, documented separate personal and work
   installations, and replaced invocation-lock and composition restrictions
-  with portable authoring rules and authorization boundaries.
+  with portable authoring rules and authorization boundaries. Authoring
+  guidance favors short discovery descriptions, plain English, behavior
+  across agent platforms, and references needed during skill use.
 
 ### Changed — 2026-10-09
 

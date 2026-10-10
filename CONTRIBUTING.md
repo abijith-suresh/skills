@@ -35,9 +35,15 @@ Chromium, Firefox, and WebKit installations.
 - Follow the [Agent Skills specification](https://agentskills.io/specification).
   Use matching lowercase kebab-case names for the directory and frontmatter
   `name`.
-- Write a `description` in natural language that explains what the skill
-  does and when to invoke it. Keep canonical instructions agnostic to models
-  and agent platforms. State any tools or services the workflow requires.
+- Keep discovery descriptions short and natural. Explain what the skill
+  does and when to invoke it.
+- Write plain English that captures the user's working preferences and
+  reduces repeated prompting. Prescribe only the structure the task needs.
+- Keep canonical instructions agnostic to models and agent platforms.
+  Describe behavior and intent without platform branches, fixed agent tool or
+  model names, or a mandated context mode. State any tools or services the
+  workflow requires, and make assignments clear in the context a worker
+  receives.
 - Use spec frontmatter fields only. `metadata` values are strings; the site
   uses `featured: "true"` to curate skills.
 - Do not add automatic-invocation locks. `agents/openai.yaml` is optional
@@ -45,8 +51,9 @@ Chromium, Firefox, and WebKit installations.
 - Keep each skill usable on its own. Optional companion skills must have a
   standalone fallback and no dependency cycles. Loading any skill never
   expands the user's authorization.
-- Add supporting references, scripts, or assets only when the workflow
-  needs them. Keep skill content in `skills/`, without per-skill READMEs.
+- Adapt research into useful instructions. Ship references only when using
+  the skill needs that material, rather than keeping research provenance by
+  default. Add scripts or assets only when the workflow needs them.
 - Preserve personal and work skills as separate workflows and installations.
 
 ## Submitting changes
