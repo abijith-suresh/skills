@@ -1,5 +1,3 @@
 interface:
   display_name: "Grill me"
-  short_description: "Interview until a plan or design is settled"
-policy:
-  allow_implicit_invocation: false
+  short_description: "Resolve consequential design decisions one at a time"

@@ -23,7 +23,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "test:e2e:build": "bun run build && bun run test:e2e",
-    "verify": "bun run type-check && bun run lint && bun run format:check && bun run test && bun run build"
+    "verify:skills": "bun scripts/verify-skills.mjs",
+    "verify": "bun run verify:skills && bun run type-check && bun run lint && bun run format:check && bun run test && bun run build"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "^0.4.2",

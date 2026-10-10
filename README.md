@@ -1,53 +1,89 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
+[![Skills: 14](https://img.shields.io/badge/Skills-14-green.svg)](#skill-catalog)
 
-A personal collection of standalone skills for the workflows I use every day:
-test cleanup, commits, pull and merge requests, research, issue creation,
-handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
-and work with compatible coding agents.
+A personal collection of composable skills for investigating, explaining,
+building, verifying, and reviewing software. Each workflow follows the
+[Agent Skills specification](https://agentskills.io/specification) and works
+without another skill, a specific model, or a particular agent platform.
 
-## Browse
+Browse the collection on the [skills site](https://skills.abijith.sh/).
+The Astro site reads the canonical content from `skills/` at build time.
 
-Browse the skills and copy install commands on the [skills site](https://skills-lovat-psi.vercel.app/).
+## Use natural language
 
-## Scope
+Describe the work. You do not need a slash command:
 
-The `skills/` directory is the canonical collection. The Astro site reads
-those files at build time and provides a browsable catalog with install
-commands.
+- "Use triage to analyze the issue reported here."
+- "Explain how retries work in this service."
+- "Implement the change and prove it handles a failed request."
+- "Orchestrate this with subagents and verify the combined result."
+- "Commit this with PROJ-214 in every scope, then open a merge request."
+- "Rewrite this explanation so it sounds like me."
 
-Each skill is standalone and platform-agnostic. Skills do not run one
-another. Name the next skill yourself, or let a skill point to it in output.
+Every description says when the skill applies. There are no automatic
+invocation locks. Compatible agents can select `prove-it` during feature
+work, language guidance during code changes, and `writing` during prose
+work. Discovery still depends on the host's skill support; descriptions
+cannot force every platform to load a skill. Naming it in ordinary language
+also makes the intent clear.
 
-## Install all skills
+## Compose within the task
 
-```bash
+Skills may use installed companions when helpful. `commit` can continue
+into `open-pr` when both actions were requested. `triage` can feed evidence
+into a fix and `prove-it` when fixing was requested. Missing companions
+never block a skill's own workflow.
+
+Loading a skill does not authorize additional actions. Analysis does not
+authorize changing code or posting comments. A local commit does not
+authorize a push. Each skill carries its own scope and stopping conditions.
+
+## Install
+
+```sh
 npx skills@latest add abijith-suresh/skills
 ```
 
-## Install one skill
+Install only what you need:
 
-```bash
-npx skills@latest add abijith-suresh/skills --skill <skill-name>
+```sh
+npx skills@latest add abijith-suresh/skills --skill triage
 ```
 
 ## Skill catalog
 
-| Skill | Description |
+| Skill | When it applies |
 | --- | --- |
-| `commit` | Create conventional commits from the current diff. |
-| `commit-work` | Create conventional commits with a ticket number in every scope. |
-| `create-issue` | File one GitHub issue to park a later thought. |
-| `grill-me` | Ask one question at a time to settle a plan or design. |
-| `handoff` | Write a compact handoff document for another agent or session. |
-| `open-mr` | Create or update the GitLab merge request for this branch. |
-| `open-pr` | Create or update the GitHub pull request for this branch. |
-| `research` | Read a library's canonical source before implementing against its API. |
-| `test-audit` | Audit existing tests and remove low-value coverage. |
-| `unslop` | Remove AI writing patterns and make prose sound human. |
+| `commit` | Commit current work, split by intent, or include required ticket scopes. |
+| `create-issue` | File one issue or park a follow-up in the project's tracker. |
+| `explain` | Understand actual runtime behavior or walk through a subsystem. |
+| `grill-me` | Stress-test an idea and settle consequential design decisions. |
+| `handoff` | Preserve verified context for another agent or session. |
+| `java` | Write or review Java code with explicit contracts and resource ownership. |
+| `open-pr` | Create or update a pull or merge request on the repository's forge. |
+| `orchestration` | Delegate work while the main agent coordinates integration and acceptance. |
+| `prove-it` | Check observable behavior before claiming an implementation works. |
+| `research` | Resolve an unfamiliar API or version-sensitive technical question. |
+| `test-audit` | Remove redundant tests while preserving distinct behavioral evidence. |
+| `triage` | Investigate a reported issue and determine the next action. |
+| `typescript` | Write or review TypeScript and TSX with sound types and runtime boundaries. |
+| `writing` | Draft or edit concrete prose that preserves meaning and the author's voice. |
 
-## Contributing
+## Migrate existing installations
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for local development and contribution rules.
+| Previous skill | Replacement |
+| --- | --- |
+| `commit-work` | `commit`, which reads required ticket scope conventions. |
+| `open-mr` | `open-pr`, which detects the forge and honors its review conventions. |
+| `unslop` | `writing`, which covers drafting and editing. |
+
+Install the replacements and remove the old copies from your agent's skill
+directory. Installation may leave renamed skills behind. Check for project
+and global copies so stale invocation locks or duplicate workflows do not
+remain. This repository does not modify local installations automatically.
+
+Read the [design decisions and audit](docs/skill-design.md) and
+[evaluation scenarios](docs/skill-evaluations.md). See
+[CONTRIBUTING.md](CONTRIBUTING.md) for local development.

@@ -1,5 +1,3 @@
 interface:
   display_name: "Handoff"
-  short_description: "Write a loadable handoff for the next session"
-policy:
-  allow_implicit_invocation: false
+  short_description: "Preserve verified context for another agent or session"

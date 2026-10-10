@@ -6,6 +6,35 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-10
+
+- Rebuilt the collection around natural-language discovery, optional skill
+  composition, and model- and platform-independent workflows. Removed all
+  invocation locks while keeping authorization boundaries in each workflow.
+- Consolidated `commit-work` into `commit`, `open-mr` into `open-pr`, and
+  `unslop` into `writing`. Ticket scopes, forge selection, and review title
+  conventions now come from the project and task.
+- Reworked issue capture, interviews, handoffs, and research. Issue capture
+  supports the project's tracker; research targets the installed version
+  and never resets a user-owned reference checkout.
+- Retained the evidence-led test audit with a contextual description and
+  task-based authorization for any follow-on actions.
+- Updated repository guidance, catalog, installation migration notes, and
+  contribution prerequisites to match the new collection and `mise.toml`.
+
+### Added - 2026-10-10
+
+- `orchestration`, `triage`, `explain`, `prove-it`, `java`, `typescript`,
+  and `writing` workflows, with optional display metadata for each.
+- Optional GitHub and GitLab adapters for the unified review workflow.
+- Redirects for retired skill URLs and a package validator included in
+  `bun run verify` to catch malformed metadata and catalog drift.
+- Site routes for canonical Markdown references, plus browser coverage for
+  new workflow discovery, install commands, reference links, and redirects.
+- Collection design decisions, reference-repository audit, and realistic
+  evaluation scenarios for routing, composition, and failure behavior.
+
+
 ### Changed — 2026-10-09
 
 - Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.

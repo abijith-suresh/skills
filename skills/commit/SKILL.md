@@ -1,121 +1,56 @@
 ---
 name: commit
 description: >-
-  Creates conventional commits from the current diff, one intent per commit.
-disable-model-invocation: true
+  Create focused conventional commits from the current changes. Use when the
+  user asks to commit work, split a diff into commits, or commit with a ticket
+  key in every scope.
 metadata:
   featured: "true"
-  opencode/autoinvoke: "false"
 ---
 
 # Commit
 
-Split by intent. One commit per reason to change.
+Turn the authorized changes into reviewable commits, one reason to change
+per commit. This workflow ends at local commits.
 
-## Goals
+## Inspect and choose scope
 
-- One intent per commit
-- Conventional commit messages, imperative mood
-- Honest splits — never bundle unrelated changes behind a broad message
-- Branch safety — never commit directly on `main`, `master`, `develop`, or
-  the remote default branch
+Read repository instructions, commit conventions, branch state, staged and
+unstaged changes, and untracked files. Inspect staged changes separately;
+they may belong to the user. Do not sweep unrelated work into the commit.
 
-## Workflow
+Determine the remote default branch. On that branch or another protected
+branch, create a feature branch when the task authorizes it. Otherwise ask
+for the target branch. Never commit on a protected branch by accident.
 
-### 1. Check branch safety first
+Resolve ticket conventions from repository instructions and the request.
+If every scope requires a ticket, use `type(TICKET-123): summary`. Use a
+key from an unambiguous branch, linked issue, or conversation. Ask if the
+required key is missing or conflicts. Never invent one. Otherwise use
+`type(scope?): summary`.
 
-Run:
+## Group and commit
 
-- `git branch --show-current`
-- `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'`
-- or `git remote show origin` if `origin/HEAD` is unavailable
+Read the full diff and group by intent. Keep a behavior change with its
+tests and necessary documentation. Separate unrelated cleanup. A commit
+should describe a coherent state that can be reviewed or reverted.
 
-If the current branch is `main`, `master`, `develop`, or the remote
-default branch, stop.
+Run required checks if they have not already passed on this state. Stage
+explicit paths or hunks for each group. Inspect the staged diff before
+committing, including deletions and generated files. Exclude secrets and
+temporary investigation artifacts. Do not discard existing staging to
+make the split easier.
 
-Warn the user and ask whether to create or switch to a feature branch
-before committing. Do not commit on those branches unless the user
-explicitly overrides the guardrail.
+Use an imperative, lowercase summary with no final period. Add a body for
+the reason or a non-obvious tradeoff. Follow repository hooks; do not bypass
+them to turn a failure into success. If a hook fails, correct the relevant
+problem and inspect what remains staged before retrying.
 
-### 2. Inspect the diff
+## Return
 
-Run `git status` and `git diff HEAD`. Read every changed file.
+Report each commit hash and purpose, checks run, and remaining changes.
+Do not push or rewrite published history as part of committing.
 
-Never include these agent-generated working files unless the user
-explicitly asks:
-
-- `PLAN.md`
-- `IMPROVE.md`
-- `REVIEW.md`
-- `INVESTIGATION.md`
-
-### 3. Plan the split
-
-Group changes by intent. A good split separates things like:
-
-- a new feature from the refactoring that made room for it
-- a bug fix from unrelated formatting or cleanup changes
-- generated files from hand-written code
-- changes in unrelated modules with different reasons to change
-
-When in doubt, split. A slightly smaller commit is easier to review and
-safer to revert.
-
-Plan the split, then proceed directly to committing. Do not ask for
-permission — make a good judgement call and execute.
-
-### 4. Stage and commit each group
-
-For each group in order:
-
-1. Stage only the relevant files: `git add <files>`
-2. Write the commit message
-3. Commit: `git commit -m "message"` (or add a body when the why is not obvious)
-
-**Format**
-
-`type(scope?): imperative summary`
-
-Examples:
-
-- `feat: add investigation workflow`
-- `fix(open-pr): correct target branch detection`
-
-Common types:
-
-- `feat`
-- `fix`
-- `docs`
-- `style`
-- `refactor`
-- `perf`
-- `test`
-- `build`
-- `ci`
-- `chore`
-
-Conventional Commits gives semantic meaning primarily to `feat`, `fix`,
-and `BREAKING CHANGE`. The rest are common types used by convention, not
-a hard mandatory list from the spec.
-
-Message rules:
-
-- Imperative mood: `add X`, not `added X` or `adding X`
-- Lowercase summary, no period at the end
-- Scope is optional; use it only when it sharpens meaning
-- Use a body only when the why is not obvious from the summary alone
-- If the message needs `and` to connect unrelated ideas, split the commit
-
-### 5. Report
-
-After all commits, show the list of commits made and confirm whether any
-staged or unstaged changes remain.
-
-## Rules
-
-- Never commit unrelated changes together
-- Never push — that is a separate step
-- Never include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md`
-  unless the user explicitly asks
-- Do not ask for permission to commit — plan the split, make a judgement call, and execute
-- Call out risky git operations before taking them
+When the authorized task also includes opening a review, an installed
+`open-pr` can continue from the commits. Otherwise return the commit
+results. Missing companion skills never prevent this workflow.

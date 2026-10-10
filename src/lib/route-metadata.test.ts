@@ -45,7 +45,7 @@ describe("buildOgRoutes", () => {
       {
         slug: "index",
         title: "skills",
-        description: "Standalone workflows for AI coding agents.",
+        description: "Composable workflows for investigating, building, and verifying software.",
         label: "catalog",
       },
       {

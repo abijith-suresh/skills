@@ -11,6 +11,11 @@ export default defineConfig({
   base: "/",
   output: "static",
   trailingSlash: "always",
+  redirects: {
+    "/commit-work/": "/commit/",
+    "/open-mr/": "/open-pr/",
+    "/unslop/": "/writing/",
+  },
   integrations: [generatedAssets(), sitemap()],
   markdown: {
     syntaxHighlight: false,

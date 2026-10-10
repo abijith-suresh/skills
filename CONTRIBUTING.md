@@ -3,8 +3,7 @@
 ## Prerequisites
 
 - [mise](https://mise.jdx.dev/) for managing tool versions
-- Node `24.19.0`, pinned in `.node-version`
-- Bun `1.3.14`, pinned in `.bun-version` and `mise.toml`
+- Node and Bun versions pinned in `mise.toml`
 
 ```bash
 mise install
@@ -31,7 +30,9 @@ bun run build
 bun run verify
 ```
 
-`bun run verify` runs all checks and the production build.
+`bun run verify` validates the skill packages, runs all site checks, and
+builds the production site. Browser checks run with `bun run test:e2e`
+after a build.
 
 ## Branches, commits, and pull requests
 
@@ -47,20 +48,28 @@ bun run verify
 1. Create `skills/<skill-name>/SKILL.md`.
 2. Follow the [Agent Skills specification](https://agentskills.io/specification).
    Use YAML frontmatter with `name`, `description`, and optional `metadata`.
-   Add `disable-model-invocation: true` when the skill should only run when
-   named. Put site flags and OpenCode invocation in `metadata` as strings.
+   Put site flags in `metadata` as strings. Keep platform invocation policy
+   out of the canonical content.
 3. Make the directory name and frontmatter `name` match in lowercase
    kebab-case.
-4. Write a short description. For model-invoked skills include when to use
-   it. For user-invoked skills, keep it a human summary.
-5. Keep the workflow standalone. It must not require or run another skill.
-6. Add `agents/openai.yaml` with display metadata. User-invoked skills also
-   set `policy.allow_implicit_invocation: false`.
+4. Write a description that says what the skill does and when to use it.
+   Try a natural request that should load it and a nearby request that should
+   not. Do not rely on slash commands.
+5. Define the workflow's inputs, output, failure conditions, and scope.
+   Keep it standalone. Optional companions may help within the authorized
+   task, with a usable fallback and no dependency cycles.
+6. Add `agents/openai.yaml` with display metadata and no invocation locks.
 7. Add the skill to the catalog and update the count in `README.md`.
 8. Add a dated entry under `[Unreleased]` in `CHANGELOG.md`.
 
 Supporting `references/`, `scripts/`, or `assets/` directories are allowed
 when a skill needs them. Do not add a per-skill README.
+
+Use available capabilities instead of prescribing a model or agent API.
+Read [docs/skill-design.md](docs/skill-design.md) for the collection's design
+and migration decisions. Check substantial workflow changes against the
+realistic scenarios in [docs/skill-evaluations.md](docs/skill-evaluations.md).
+Metadata validation does not establish correct agent behavior.
 
 ## Update a skill
 

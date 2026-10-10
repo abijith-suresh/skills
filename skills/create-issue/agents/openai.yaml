@@ -1,5 +1,3 @@
 interface:
   display_name: "Create issue"
-  short_description: "Park one follow-up as a GitHub issue"
-policy:
-  allow_implicit_invocation: false
+  short_description: "Capture one actionable issue in the project tracker"

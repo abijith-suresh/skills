@@ -1,0 +1,3 @@
+interface:
+  display_name: "Java"
+  short_description: "Write Java with explicit contracts and resource ownership"

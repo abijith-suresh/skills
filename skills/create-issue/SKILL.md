@@ -1,71 +1,47 @@
 ---
 name: create-issue
 description: >-
-  Files one GitHub issue to capture a later thought from the current work so
-  it is not lost.
-disable-model-invocation: true
-metadata:
-  opencode/autoinvoke: "false"
+  Capture one actionable issue or follow-up in the project's tracker. Use when
+  the user asks to file an issue, report a bug, or park a thought for later
+  rather than implement it now.
 ---
 
 # Create issue
 
-Capture one follow-up as a GitHub issue on the current repo. This is a
-parking lot, not a plan breakdown. Personal GitHub only. Do not use this
-on GitLab.
+Turn one concrete thought into an actionable issue. This workflow captures
+work; it does not implement it or split a whole project into tickets.
 
-## Prerequisites
+## Locate and draft
 
-- `git` must be available
-- `gh` CLI must be installed and authenticated — verify with `gh auth status`
-- If `gh` is missing: "gh CLI is required. Install it from https://cli.github.com/."
-- Origin must be GitHub. Run `git remote get-url origin`. If the URL contains
-  `gitlab`, stop: "create-issue is GitHub-only. This remote is GitLab."
+Identify the project's tracker from repository instructions, links, and
+available integrations. Use the actual tracker, whether GitHub, GitLab,
+another service, or local issue files. Do not infer a tracker from a model
+or platform. If the destination is ambiguous, draft first and ask for it.
 
-## Steps
+Read the user's report and relevant code or prior discussion. Search for
+an existing issue when access permits. If it covers the same work, return
+that link; update it only when authorized.
 
-### 1. Identify the thought
+Write a specific title and a body with the problem, expected outcome,
+known evidence, and acceptance conditions. For a bug, include reproduction
+steps and observed versus expected behavior. Separate hypotheses from
+facts. For a follow-up, explain why it sits outside the current task.
+Omit empty sections. Do not invent reproduction results or priority.
 
-Use what the user just named, or a leftover the conversation turned up that
-is out of scope for the current work. One issue, one thought. If nothing is
-worth parking, say so and stop.
+## Publish or return the draft
 
-### 2. Draft
+An explicit request to file the issue authorizes publication to the known
+destination. If the issue is an agent-discovered follow-up, present the
+draft and obtain authorization before posting. Reuse authorization already
+given in this session. Skill discovery alone does not authorize posting.
 
-**Title** — imperative, under 72 characters.
+Use a structured tool argument or body file. Set labels, priority, or
+assignees only from the request or project conventions. After an uncertain
+write result, check for the issue before retrying to avoid duplicates.
 
-**Body:**
+Return its URL or local path. If publication is blocked, return the usable
+draft and the exact missing capability. Resume the original task without
+starting the parked work.
 
-```markdown
-## What
-[The follow-up, one or two sentences.]
-
-## Why later
-[Why it is not part of the current change.]
-
-## Notes
-[File, symbol, or constraint to remember. Omit this section if empty.]
-```
-
-Show the draft in chat and wait for approval. Do not create anything yet.
-
-### 3. Create
-
-```bash
-gh issue create --title "<title>" --body "<body>" --assignee @me
-```
-
-Add labels only when the user names them. Do not invent a label vocabulary.
-
-### 4. Report
-
-Print the issue URL. Then continue the original work. Do not start
-implementing the parked item.
-
-## Rules
-
-- One issue per invocation
-- Never create issues before the user approves the draft
-- Never turn a plan into a set of tickets
-- Never switch the current branch or commit
-- Never create GitLab issues
+For an unverified bug, an installed `triage` can supply evidence when
+investigation is in scope. Otherwise record that reproduction is unknown.

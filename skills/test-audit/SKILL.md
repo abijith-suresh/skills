@@ -1,14 +1,14 @@
 ---
 name: test-audit
-description: Audit existing tests and remove low-value coverage.
-disable-model-invocation: true
-metadata:
-  opencode/autoinvoke: "false"
+description: >-
+  Audit existing tests and simplify coverage that adds no independent evidence.
+  Use when the user asks to review test quality, remove redundant tests, or
+  clean up test-only code.
 ---
 
 # Test audit
 
-Audit existing tests in the requested scope and make a focused cleanup. The goal is to remove tests that add no independent evidence and simplify production code that exists only to support them.
+Audit existing tests in the requested scope. For a review-only request, keep the workflow read-only and return findings and proposed removals. Make a focused cleanup only when the task authorizes changes. The goal is to remove tests that add no independent evidence and simplify production code that exists only to support them.
 
 ## Workflow
 
@@ -18,7 +18,7 @@ Read root and scoped `AGENTS.md` files, test documentation, and the project's te
 
 Read each candidate test in full. Find the production behavior it claims to protect, its owner and entry point, relevant callers and sibling implementations, overlapping tests, and test selection in CI. Check history when the reason for a test or test-support seam is unclear. Inspect dependency source or types when a test claims dependency-backed behavior.
 
-Keep discovery read-only. Share a short summary of high-confidence candidates and the evidence for them before editing. Continue without waiting for approval unless scope or risk is genuinely unclear.
+Keep discovery read-only. Share a short summary of high-confidence candidates and the evidence for them before editing. For an authorized cleanup, continue without waiting for redundant approval unless scope or risk is genuinely unclear. For a review, stop at findings and recommendations.
 
 ### 2. Establish each candidate's value
 
@@ -47,4 +47,4 @@ Remove test-only exports, globals, wrappers, injection hooks, or dead production
 
 Follow the repository's test and formatting guidance. Run the smallest relevant owner and sibling tests. If removing a source-level check, run the executable test, script, or dry run that owns the real contract. Run focused formatting and diff checks as appropriate. Report exactly what ran and what could not be checked.
 
-Summarize the behavior covered by removed tests, the remaining proof, production or test-support code simplified, candidates retained with reasons, and the validation results. Do not commit, push, or open or merge a pull request unless the user separately asks for those actions.
+Summarize the behavior covered by removed tests, the remaining proof, production or test-support code simplified, candidates retained with reasons, and the validation results. Do not commit, push, or open or merge a pull request unless those actions are already authorized by the task.

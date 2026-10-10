@@ -1,116 +1,48 @@
 ---
 name: research
 description: >-
-  Clones canonical source and reads the actual API before implementing against
-  a framework or library. Use when implementing against unfamiliar APIs or
-  libraries.
-metadata:
-  featured: "true"
+  Resolve technical uncertainty using primary documentation and source. Use
+  when working with unfamiliar APIs, checking version-sensitive behavior, or
+  investigating a technical claim before choosing an implementation.
 ---
 
 # Research
 
-Clone the source shallow. Read the actual docs. Implement from truth.
+Answer a specific technical question with evidence relevant to the project's
+actual versions. Research can inform implementation or end with an answer.
 
-## Store
+## Bound the question
 
-All repos live at `~/.research/<username>/<repo-name>/`.
+State the uncertainty and what decision it affects. Inspect the project's
+manifests, lockfiles, runtime configuration, and existing usage. Determine
+the version or commit that matters. Do not treat the latest default branch
+as evidence for an older installed release.
 
-```
-~/.research/
-  vercel/
-    next.js/
-  tailwindlabs/
-    tailwindcss/
-  facebook/
-    react/
-```
+## Read primary sources
 
-This persists across sessions. Repos are never deleted automatically.
+Start with available local source, types, official versioned documentation,
+examples, and tests. Browse or clone the canonical repository only when
+those do not resolve the question. Inspect the smallest relevant portion.
+Record the release, commit, or retrieval date needed to interpret it.
 
-## Repo Resolution
+If cloning helps, use a temporary directory or the user's existing reference
+store outside the project. For an existing checkout, inspect its remote,
+revision and dirty state before reuse. Never reset or clean a user-owned
+clone. Use a separate checkout for a different revision. A shallow clone is
+usually enough; fetch a specific tag or history only when the question needs
+it.
 
-**If the user provides a URL** — use it directly.
+Use a small experiment when documentation and source disagree or behavior
+depends on configuration. Record exact input, version, command, and observed
+output. Keep unrelated dependencies and project files out of the experiment.
 
-**If no URL is provided** — infer from context:
+## Return usable evidence
 
-- Identify the framework, library, or tool being implemented against
-- Find the canonical repo (official org, actively maintained, default branch)
-- If genuinely ambiguous between multiple repos, ask before cloning
+Give the answer, supporting file or source links, version, and implication
+for the current task. Distinguish documented behavior, observed behavior,
+and inference. State unresolved uncertainty or unavailable access rather
+than filling gaps from memory.
 
-## Core Workflow
-
-### 1. Identify target
-
-Determine what framework, library, or tool the implementation depends on.
-
-- If the user gives a URL, that is the target.
-- Otherwise, inspect project files (`package.json`, imports, config files) to
-  identify dependencies the implementation will interact with.
-- Be explicit about what you are researching before you clone.
-
-### 2. Clone shallow
-
-```bash
-git clone --depth 1 <repo-url> ~/.research/<username>/<repo-name>/
-```
-
-If it already exists, skip to step 3.
-
-Notify the user briefly:
-> Cloning `<username>/<repo-name>` for reference…
-
-### 3. Refresh
-
-On every access, refresh to the latest commit:
-
-```bash
-git -C ~/.research/<username>/<repo-name> fetch --depth 1 origin HEAD
-git -C ~/.research/<username>/<repo-name> reset --hard FETCH_HEAD
-```
-
-This keeps the clone at depth 1 forever — no history bloat.
-
-Notify the user briefly:
-> Refreshing `<username>/<repo-name>`…
-
-If refresh fails, note it briefly and continue with the existing state.
-
-### 4. Orient
-
-Build a mental map of the project:
-
-```bash
-cat ~/.research/<username>/<repo-name>/README.md
-ls -la ~/.research/<username>/<repo-name>/
-find ~/.research/<username>/<repo-name> -name "*.md" | head -20
-```
-
-Focus on:
-
-- What does the project export or expose?
-- Where are the source files (src/, lib/, packages/)?
-- Are there examples or tests that show real usage patterns?
-
-### 5. Read with intent
-
-Read the specific files, modules, types, tests, or examples directly relevant
-to the code you are about to write. Not browsing — targeted reading driven by
-what the implementation needs.
-
-### 6. Implement
-
-Write code that mirrors the patterns found. This is the implicit output of the
-skill — the research exists to ground implementation in source truth.
-
-## Rules
-
-- **Inform, never ask** — say "Cloning…" or "Refreshing…" then act immediately
-- **Shallow clone only** — always `--depth 1`. Full clones waste disk space.
-- **Refresh on every access** — always fetch the latest HEAD before reading.
-  A stale reference is worse than no reference.
-- **Never clone into the project directory** — always use `~/.research/`
-- **Never delete repos** — the store is persistent; cleanup is always a manual
-  user action
-- **Implement from truth** — the output of this skill is working code grounded
-  in the source, not a summary or report
+Continue implementation only when it was part of the original request.
+An installed language skill can guide that work; neither installation nor
+research expands the scope.

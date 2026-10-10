@@ -1,157 +1,82 @@
 ---
 name: open-pr
 description: >-
-  Pushes the current branch and creates or updates the GitHub pull request
-  for it.
-disable-model-invocation: true
-metadata:
-  opencode/autoinvoke: "false"
+  Create or update a pull or merge request for the current branch. Use when
+  the user asks to open a PR or MR, prepare a branch for review, or refresh an
+  existing request's title and description.
 ---
 
 # Open PR
 
-Push the current branch. Create a GitHub pull request if this branch has
-none. Update title and body if it already has one. Personal GitHub. Squash
-merge: the title is the commit that will land on the default branch.
+Prepare a branch for review on the repository's forge. PR and MR describe
+the same workflow here. Follow the project's conventions for each.
 
-This skill does not commit. If the work is uncommitted, stop and tell the
-user to use `commit` first.
+## Establish the review
 
-## Prerequisites
+Read repository instructions and any review template. Identify the remote,
+host, source branch, target branch, and authenticated account using available
+tools. Prefer an existing connector or CLI; do not require a particular
+provider. [Host examples](references/hosts.md) cover GitHub and GitLab.
 
-- `git` must be available
-- `gh` CLI must be installed and authenticated. Verify with `gh auth status`.
-- If `gh` is missing: "gh CLI is required. Install it from https://cli.github.com/."
+Check for an existing open request by source repository, source branch,
+and target branch. An authentication or network error is not evidence that
+none exists. If multiple requests match, resolve the ambiguity before
+updating one. Link the request to the current session if the environment
+provides a registration tool.
 
-## Title
+Distinguish branch publication from a metadata-only request. If the user
+asks only to rewrite an existing title or description, use the published
+request's base/head diff. Do not commit, push, or include unpublished local
+changes. Return an updated title/body from that published state.
 
-Conventional commit from the **net diff**, not from the first commit on the
-branch:
+Do not open from the target or protected branch. If the intended changes
+are uncommitted, commit them only when that action is already authorized.
+An installed `commit` can do this; otherwise follow the repository's
+conventions directly. Leave unrelated changes alone. Do not stash or
+commit them to satisfy a clean-tree preference.
 
-```
-type(scope?): summary
-```
+If intended changes remain uncommitted and committing is not authorized,
+return the prepared review content and explain what must be committed.
+Do not publish a request that silently omits the requested work.
 
-- Imperative, lowercase, no period
-- Types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`,
-  `ci`, `chore`
-- Scope only when it sharpens meaning
-- Under 72 characters
-- If the title needs `and` to join unrelated ideas, stop and say the branch
-  should be split
+## Make the result reviewable
 
-## Body
+For branch publication, fetch the target and read the full change from the
+merge base to the committed source tip. For stacked branches, compare
+against the intended parent. Derive the title and description from this net
+change, including any material risk or compatibility change.
 
-```markdown
-## Why
-[The problem or the outcome. One short paragraph. Do not restate the title.]
+Use repository title rules. Conventional commits suit squash-merged
+projects; ticket-prefixed titles suit projects that require them. Ask for
+a missing required ticket rather than inventing one.
 
-## How
-[Only if the approach is not obvious from the diff.]
+Lead the description with the concrete problem and resulting behavior.
+Add implementation detail only when it explains a tradeoff. Record
+verification actually performed and any unresolved gap. Respect required
+template fields. Preserve meaningful reviewer notes and update checked
+boxes only from evidence. Do not fabricate issue links or test results.
 
-## Out of scope
-[Only if a reviewer would reasonably ask why something was left out.]
+For branch publication, run required repository checks on the intended
+committed state. If checks cannot run, report the blocker; create a draft
+only when allowed by the request and project. Do not label an unverified
+branch ready.
 
-Closes #123
-```
+For metadata-only updates, cite existing verification of the published
+state. Do not imply that checks of a different local state verify it.
 
-**Omit a heading when it has nothing to say.** `Closes` only when an issue
-number is in the conversation or a linked GitHub issue is already known. Do
-not invent `Closes`. Do not add a Testing section. CI is the automated
-record. One extra line under Why is allowed only when a human must check
-something CI cannot.
+## Publish once
 
-Forbidden in the body:
+When publishing code is authorized, push the feature branch without force.
+Skip pushing for metadata-only updates. Stop on a rejected push and inspect
+the cause. Create or update the identified request using a structured body
+argument or a temporary body file. Avoid shell interpolation of prose.
 
-- Restating the title
-- File-list bullets (`Updated Foo.ts`, `Added tests`)
-- Fake checklists
-- Local disk paths
-- A Notes dump because the template used to have Notes
+Keep an existing request's target, reviewers, and draft state unless the
+task requires changing them. Add reviewers, assignees, labels, or automatic
+closing links only when supported by the request or repository convention.
+After an uncertain API result, query for the request before retrying.
 
-Ignore `.github/pull_request_template.md`. This skill is the convention.
-
-Write the body to a temp file and pass `--body-file`. Do not interpolate
-markdown through a quoted `--body`.
-
-## Steps
-
-### 1. Check branch state
-
-```bash
-git branch --show-current
-git remote show origin | grep "HEAD branch"
-git status --porcelain
-```
-
-- Default branch (`main`, `master`, or the remote HEAD): stop. "Cannot open
-  a PR from the default branch. Switch to a feature branch first."
-- `git status --porcelain` has output: stop. "Uncommitted changes detected.
-  Commit or stash them before opening a PR."
-
-### 2. Push
-
-```bash
-git push -u origin <branch-name>
-```
-
-If push fails, stop and show the exact error.
-
-### 3. Find an existing PR
-
-```bash
-gh pr view --json number,url --jq '{number,url}'
-```
-
-If this errors because there is no PR, treat that as missing. Do not create
-a second PR when one exists.
-
-### 4. Derive title and body
-
-```bash
-git log origin/<default-branch>..HEAD --oneline
-git diff origin/<default-branch>..HEAD
-git diff origin/<default-branch>..HEAD --stat
-```
-
-Read the **full diff**. Infer the title from that intent. Regenerate the
-body from scratch every time, including updates. Do not preserve an old
-body to "tweak" it.
-
-### 5. Create or update
-
-**No PR:**
-
-```bash
-gh pr create \
-  --title "<title>" \
-  --body-file <temp-body> \
-  --assignee @me
-```
-
-Only add `--reviewer` when the user names a reviewer. Open ready, not draft.
-
-**PR exists:**
-
-```bash
-gh pr edit <number> \
-  --title "<title>" \
-  --body-file <temp-body>
-```
-
-Do not change draft vs ready on an existing PR.
-
-### 6. Report
-
-Print the URL. Say whether this created a PR or updated one.
-
-## Failure Conditions
-
-| Condition | Message |
-|---|---|
-| `gh` CLI not installed | "gh CLI is required. Install it from https://cli.github.com/." |
-| Not authenticated | "gh CLI is not authenticated. Run gh auth login first." |
-| On default branch | "Cannot open a PR from the default branch. Switch to a feature branch first." |
-| Uncommitted changes | "Uncommitted changes detected. Commit or stash them before opening a PR." |
-| Push failed | Show the exact git error and stop. |
-| Title is not one intent | Stop and say the branch should be split before opening. |
+Return the URL, whether it was created or updated, the target branch, and
+verification gaps. This workflow does not merge, deploy, or monitor the
+request. A missing authenticated forge tool blocks publication; still
+return the prepared title and description.

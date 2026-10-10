@@ -28,41 +28,39 @@ scripts.
   kebab-case and must match.
 - A skill must define one repeatable workflow. It must work without another
   skill being installed or run.
-- Skills must not run other user-invoked skills. A skill may name a follow-on
-  skill in its output so the user can invoke it next.
+- Skills may use installed companions within the authorized task. Keep
+  composition optional, provide a standalone path, and avoid dependency
+  cycles. Loading a skill never expands authorization.
+- Keep skill bodies independent of models and agent platforms. Put optional
+  tool-specific examples in supporting references. Discover capabilities
+  instead of assuming model IDs, tool names, or shared filesystems.
 - Keep repository prose direct. Use sentence-case headings, concrete claims,
   and plain punctuation.
 
 ## Skill invocation
 
-User-invoked skills (git writes, forge writes, interviews, handoffs) use all
-three harness controls together:
+All skills support natural-language discovery. Descriptions say what the
+skill does and when to use it, with boundaries that prevent common routing
+mistakes. Do not add automatic-invocation locks. `agents/openai.yaml` provides
+optional display metadata only; the canonical workflow lives in `SKILL.md`.
 
-- `disable-model-invocation: true` in `SKILL.md` (Cursor, Claude Code, Pi)
-- `agents/openai.yaml` with `policy.allow_implicit_invocation: false` (Codex)
-- `metadata.opencode/autoinvoke: "false"` (OpenCode)
+Discovery is not authorization. Analysis does not authorize a fix or tracker
+updates. Committing does not authorize pushing. Reuse authorization already
+present in the task instead of adding redundant confirmation steps.
 
-Model-invoked skills (`research`, `unslop`) omit those locks so the agent can
-reach them from context. They still ship `agents/openai.yaml` with display
-metadata only.
-
-The description is the discovery API. For model-invoked skills it must say
-what the skill does and when to use it. For user-invoked skills it is a short
-human summary. Do not pad descriptions with "the user may also name this
-skill explicitly."
+`prove-it`, `java`, `typescript`, and `writing` can apply during an existing
+task. `orchestration` applies when delegated work is requested. Hosts decide
+whether to load skills; descriptions cannot guarantee it across platforms.
 
 ## Adding or updating a skill
 
 - Add a skill only when the workflow is repeated and has clear inputs,
   outputs, and failure conditions.
 - Keep frontmatter to spec fields (`name`, `description`, optional
-  `metadata`) plus `disable-model-invocation` when the skill is user-invoked.
-  Never add other top-level frontmatter keys. `metadata` values are strings.
-  Site curation uses `featured: "true"`. OpenCode uses
-  `opencode/autoinvoke: "false"`.
+  `metadata`). `metadata` values are strings. Site curation uses
+  `featured: "true"`. Do not put platform policy in the canonical content.
 - Every skill ships `agents/openai.yaml` with `interface.display_name` and
-  `interface.short_description`. User-invoked skills also set
-  `policy.allow_implicit_invocation: false`.
+  `interface.short_description`. Do not require this file to run a skill.
 - When adding, removing, or renaming a skill, update the catalog and count in
   `README.md`.
 - Add a dated entry under `[Unreleased]` in `CHANGELOG.md` for every change.
@@ -72,8 +70,8 @@ skill explicitly."
 ## Git and verification
 
 - Work on a feature branch. Never commit or push directly to `main`.
-- Use the `commit` skill for ordinary commits. Use `commit-work` when every
-  commit scope must include a ticket number.
+- Use the `commit` skill. Resolve any required ticket scope from the project
+  conventions and task rather than using a separate skill.
 - Use conventional commit messages and keep each commit focused on one reason
   to change.
 - Open a pull request for review.

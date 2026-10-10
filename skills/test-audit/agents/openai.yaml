@@ -1,5 +1,3 @@
 interface:
   display_name: "Test audit"
-  short_description: "Audit existing tests and remove low-value coverage"
-policy:
-  allow_implicit_invocation: false
+  short_description: "Audit test value and preserve meaningful coverage"

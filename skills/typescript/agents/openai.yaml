@@ -1,0 +1,3 @@
+interface:
+  display_name: "TypeScript"
+  short_description: "Write TypeScript with validated boundaries and sound types"
