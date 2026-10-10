@@ -1,121 +1,81 @@
 ---
 name: prove-it
 description: >-
-  Verify implementation claims with observable evidence at the boundary that
-  owns the behavior. Use while implementing features or fixes, before declaring
-  work complete, or when asked to prove it works. Report what ran, what it showed,
-  and what remains unverified.
+  Verify that features and fixes behave as intended. Use during implementation,
+  before declaring work complete, or when asked to prove it works.
 ---
 
 # Prove it
 
-Turn a claim about an implementation into a repeatable check of its observable
-behavior. Start from the requested change, acceptance criteria, or explicit
-claim and the current implementation.
+Support completion claims with evidence that observes the requested behavior.
+Use the project's existing tools and checks, and keep the effort proportionate
+to the change.
 
-The description supports discovery during implementation and explicit "prove it"
-requests. Hosts decide which skills they expose and load. A description cannot
-guarantee automatic loading across hosts. Optional `agents/openai.yaml` is display
-metadata only. This workflow needs no companion skill or particular model,
-platform, or test framework. Loading it grants no additional authorization.
+## Define what must work
 
-## Define the claim
+Read the relevant requirements, code, and project verification guidance. State
+the starting conditions, action or input, and expected observable result. Include
+failure cases when they matter. Take expectations from the user's intent or an
+independent contract. Ask the user about decisions the code cannot resolve.
 
-Read the relevant project instructions, implementation, and existing verification
-commands. State the starting conditions, action or input, and expected observable
-result. Include a failure or edge case when it matters to the change. Derive
-expectations from the user's requirement or an independent contract, rather than
-copying the implementation into the assertion.
+Choose a check at the boundary that owns the claim. A library result belongs at
+its public API; a CLI claim may include output, exit status, and files written;
+a UI claim may span an interaction, a response, and persisted state. Ask what
+plausible defect would make the check fail. If the behavior could be broken while
+it passes, improve the observation or narrow the claim. Avoid expectations copied
+from the implementation and fixtures that perform the behavior under test.
 
-Identify the boundary that owns the claim and what must be real to observe it.
-A library result belongs at its public API. A CLI claim may include exit status,
-output, and files written. A UI claim may span an interaction, server response,
-and persisted state. Match the check to the behavior being claimed.
+## Observe the behavior
 
-Resolve a missing expectation from available requirements. Ask a focused question
-if different interpretations would change what counts as success. Keep that
-claim unresolved while checking independent claims.
+Use the smallest meaningful check and follow required repository checks. Add a
+focused regression check when useful. For a fix, reproduce the failure before
+the fix when practical; say when that was not possible. Verification does not
+require a giant suite or new evaluator infrastructure.
 
-## Choose proportionate evidence
+Keep conclusions within what the evidence observes:
 
-Use existing checks and tools first. Choose the smallest check that exercises
-the owning boundary and can detect the relevant defect. Add a focused regression
-check when it provides lasting value. A simple change may need only one targeted
-execution; a cross-boundary claim may need a short sequence of observations.
-Follow required repository checks, but do not invent a giant suite, coverage
-target, or evaluator infrastructure.
+- Unit checks support the exercised cases. Mocked dependencies leave the real
+  integration unverified.
+- Static checks and builds support their contracts, not unexecuted runtime paths.
+- Screenshots show appearance in the captured state, not interaction or persistence.
+- Worker agreement and completion summaries cannot replace observed evidence.
 
-For each check, ask what plausible defect would make it fail. If the claimed
-behavior could be broken while the check still passes, strengthen the observation
-or narrow the claim. Avoid assertions whose expected result comes from the same
-code under test, and fixtures or mocks that perform the behavior being claimed.
-For a regression, reproduce the failure before the fix when practical. If that
-is unavailable, say so; do not imply a failing run occurred.
+For "saved settings survive reload," change a value through the UI, save through
+the real application path, and reload to read it back. If the claim includes
+server storage, check that boundary too. A success toast or cached value alone
+does not establish persistence.
 
-Keep evidence within what it observes:
+Confirm prerequisites and the version and instance under test. Run the check and
+inspect the actual result. Make sure the intended cases executed and completed;
+skipped tests and stale artifacts leave gaps. Keep enough context and evidence
+to repeat the check, and preserve that evidence during cleanup.
 
-- A unit check can establish a function's result for the exercised cases.
-  A mocked dependency cannot establish that the real integration works.
-- A type check, lint run, or build establishes its static or build contract.
-  It does not establish an unexecuted runtime path.
-- A screenshot can establish appearance in the captured state. It cannot alone
-  establish an interaction, persistence, or an unseen side effect.
-- Worker agreement or a completion summary can suggest checks. It cannot replace
-  observed execution results or inspected artifacts.
+## Decide whether it is green
 
-For example, verify "saved settings survive reload" by changing a value through
-the UI, saving through the real application path, and reloading to read it back.
-Use an authorized test environment and account. A mocked save response or success
-toast alone leaves persistence unverified. If the claim includes server storage,
-observe that boundary too, rather than letting cached UI state stand in for it.
+Call the work green when the agreed behavior has supporting observations,
+required checks pass, and relevant failures are resolved. Limit that conclusion
+to the exercised cases and environment. Stop adding checks once they provide
+proportionate evidence for the requested scope.
 
-## Execute and inspect
+Investigate a mismatch as a possible defect, setup problem, or observation error.
+After a fix, rerun affected checks. Do not weaken expectations or let a passing
+retry hide an unexplained failure. If verification stops making progress, report
+the blocker and what would resolve it.
 
-Confirm prerequisites such as the build under test, runtime, configuration,
-credentials, services, and fixture state. Use isolated local or test resources
-when available. Stay within the user's authorized scope. Verification does not
-authorize deployments, purchases, messages, production writes, or unrelated
-repairs. If a necessary step needs additional authorization, report that exact
-step and continue checks that do not depend on it.
+When credentials, services, tools, safe test data, or authorization are missing,
+name the blocked claim and prerequisite. Continue independent safe checks when
+useful. Label partial evidence and substitutions; failed, blocked, or untested
+paths cannot establish success.
 
-Run the selected command or interaction and inspect its actual output and final
-state. Confirm that the intended checks executed, the expected instance answered,
-and long-running work completed before reporting success. Wait for readiness
-using a concrete signal. An exit code without the relevant assertion, a skipped
-test, or an old artifact does not establish the claim.
+## Hand back the evidence
 
-Record enough to repeat the check: command or interaction steps, environment and
-version or revision, relevant inputs and substitutions, expected and observed
-outcomes, and useful evidence paths. Preserve relevant failure output. Retain
-evidence when cleaning up temporary processes and state created for the run.
+Give a concise account of the expected behavior, what actually ran, and what it
+showed. Include the command or interaction, relevant environment and inputs, and
+evidence pointers where useful. Separate completed executions from proposed
+checks. State failures, blocked paths, remaining gaps, and the next step. Never
+invent a run or a successful result.
 
-## Handle failures and blocked paths
-
-When an observation disagrees with the expectation, report the mismatch. Check
-whether it is a product defect, invalid setup, or an observation error. Do not
-weaken the expectation, remove the check, or retry until a passing run hides an
-unexplained failure. Fix an identified cause within the authorized implementation
-scope and rerun affected checks. Preserve any unresolved intermittent failure.
-
-Missing credentials, unavailable tools or services, unsafe test data, and required
-authorization can block a path. Name the prerequisite and the claim it prevents
-you from checking. A smaller safe check may provide partial evidence; record its
-substitutions and limits. Never present it as equivalent to the blocked path.
-
-Stop expanding verification when the bounded claims have proportionate evidence
-and required checks pass, or when the remaining paths need an unavailable
-prerequisite or action outside scope. Keep failed, blocked, and untested claims
-explicit. Never fabricate executions or turn those states into success.
-
-## Hand off the evidence
-
-Keep the report short enough to review. For each material claim, include:
-
-- Expected behavior and the boundary checked.
-- What actually ran, with the observed result and an evidence pointer when useful.
-- Status: supported for the exercised cases, failed, blocked, or not checked.
-- Remaining gaps, substitutions, and the next check or prerequisite needed.
-
-Separate commands proposed for later from completed executions. Qualify broader
-claims when the evidence covers only part of the behavior. A passing run supports
-the observed cases in the tested environment, not universal correctness.
+This skill works on its own. Companions are optional and must not route back into
+this skill. Skill loading never expands authorization. Hosts decide loading;
+descriptions cannot guarantee automatic use across hosts. Optional
+`agents/openai.yaml` supplies display metadata only.
