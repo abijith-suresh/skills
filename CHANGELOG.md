@@ -8,10 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added - 2026-10-10
 
-- `triage` skill: analyze reported issues through evidence collection,
-  reproduction, competing hypotheses, and an assessment of affected scope and
-  confidence. Return a diagnosis or a concrete next step when blocked. Analysis
-  alone does not authorize fixes or tracker updates.
+- `triage` skill: compact guidance for evidence-backed issue diagnosis,
+  reproduction, competing hypotheses, affected scope, and confidence. Stop with
+  a diagnosis or a concrete blocked next step. Optional `subagents` and
+  `research` companions have standalone fallbacks. Analysis alone does not
+  authorize fixes or tracker updates.
 
 ### Changed — 2026-10-09
 
