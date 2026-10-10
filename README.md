@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
+[![Skills: 12](https://img.shields.io/badge/Skills-12-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
 test cleanup, commits, pull and merge requests, research, issue creation,
@@ -47,6 +47,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `research` | Read a library's canonical source before implementing against its API. |
 | `subagents` | Delegate work, choose parallel or sequential execution, and keep the main conversation available. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
+| `typescript` | Write and review TypeScript within the project's runtime and compiler contracts. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
 
 ## Contributing
