@@ -1,95 +1,89 @@
 ---
 name: typescript
 description: >-
-  Write and review TypeScript with checked runtime boundaries, clear types, and
-  project-compatible modules. Use when implementing, refactoring, or reviewing
-  TypeScript code.
+  Write TypeScript that fits the project. Use when implementing, refactoring, or
+  reviewing TypeScript code.
 ---
 
 # TypeScript
 
-Turn a requested TypeScript change into code whose types describe its behavior
-and whose runtime assumptions are checked where needed.
+Write types that describe the code's behavior and check the assumptions that
+matter at runtime. Work within the requested change or review scope. This skill
+works on its own, and loading it never expands authorization.
 
-## Inputs and scope
+## Use the project's contracts
 
-Use the requested behavior or review scope, affected code, project configuration,
-and runtime as inputs. If a missing contract affects correctness, inspect callers
-and tests first, then ask for the unresolved requirement. Loading this skill grants
-no additional authorization. It works without companion skills or specific tools.
+Read the relevant code, callers, tests, package scripts, installed TypeScript
+version, and compiler settings, including inherited configuration. Understand
+what checks types, what emits or strips them, and what loads the modules. If a
+missing requirement affects correctness, inspect the project first, then ask
+about what remains unclear.
 
-## Workflow
+Follow local conventions and the project's runtime, framework, and dependencies.
+Change compiler settings or add dependencies only when the requested behavior
+needs them, explaining the effect on compatibility and scope.
 
-### 1. Establish the project contract
+## Check data at boundaries
 
-Read local instructions, package scripts, the installed TypeScript version,
-relevant `tsconfig` files including inherited settings, and nearby code. Identify
-who checks types, who emits or strips them, and what loads the resulting modules.
-Check public callers, input sources, and existing error conventions.
+Treat untrusted input as `unknown` until runtime checks establish the contract
+used by the code. JSON parsing, annotations, assertions, and generic arguments
+do not validate data. Use the project's existing parser or explicit checks for
+consumed fields and domain constraints. Validate at the boundary so trusted
+internal code can use the resulting type.
 
-Respect the project's framework, runtime, dependency choices, and compiler
-settings. Propose configuration changes only when the requested behavior requires
-them, explaining compatibility and scope. Do not turn a local edit into a compiler
-migration or add a validation library merely to follow this skill.
+Narrow through checks that prove what the next operation needs. Distinguish
+missing values from valid `0`, `false`, or empty strings, and check uncertain
+indexed reads even if compiler settings do not flag them. Type predicates and
+assertion functions need implementations that prove their claims.
 
-### 2. Write types that carry evidence
+## Keep types clear
 
-- Treat external data as `unknown` until validated. JSON parsing, annotations,
-  assertions, and generic type arguments do not validate a value. Use an existing
-  schema parser or explicit runtime checks for the fields and domain constraints
-  consumed by the code. Establish where validation belongs rather than repeating
-  it throughout trusted internal paths.
-- Let straightforward local values and callbacks infer their types. Add explicit
-  contracts where they clarify public APIs or prevent accidental return changes.
-  Use `satisfies` for compatibility checks on authored values when supported;
-  it provides no runtime validation.
-- Narrow with control flow and checks that prove the needed property. Distinguish
-  missing values from valid falsy values. Check uncertain indexed reads even when
-  compiler settings do not expose them. A type predicate or assertion function is
-  a promise whose implementation needs evidence and tests.
-- Model mutually exclusive states with discriminated unions when this prevents
-  invalid combinations. Use exhaustive handling for closed unions. Choose
-  interfaces, aliases, generics, classes, or enums for the contract and runtime
-  behavior they express, following local conventions. Generics should preserve a
-  real relationship between values.
-- Use assertions, non-null assertions, `any`, or diagnostic suppressions only for
-  a specific gap you can explain. Keep them local and record the supporting
-  invariant or compatibility constraint. Repair missing checks or incorrect types
-  before bypassing diagnostics. `readonly` expresses static access restrictions;
-  it does not freeze runtime objects.
+Let straightforward locals and callbacks infer their types. Add explicit
+contracts where they clarify public APIs or catch accidental return changes.
+Use `satisfies` for authored values when supported by the installed compiler.
 
-Read the relevant examples in [Type and boundary decisions](references/decisions.md#type-and-boundary-decisions)
-when choosing validation, inference, or state representations.
+Use discriminated unions when fields depend on a state, and handle closed unions
+exhaustively. Choose interfaces, aliases, classes, and enums for what they express
+and the runtime behavior they need. Generics should preserve a real relationship
+between values. Follow existing conventions instead of replacing equivalent
+representations throughout the project.
 
-### 3. Preserve runtime behavior
+Before bypassing a diagnostic, check for a missing runtime check or incorrect
+contract. An assertion, non-null assertion, `any`, or suppression can bridge a
+specific gap you can justify. Keep it local and explain the supporting invariant.
+`readonly` and `as const` do not freeze objects at runtime.
 
-Match imports, exports, extensions, and type-only imports to the actual loader
-and emitter. Check module format, resolution, package exports, runtime APIs, and
-syntax support before introducing features. Type declarations and path aliases
-alone do not make an import or API work at runtime.
+Read the relevant [examples](references/decisions.md) when a parser, inferred
+configuration, or state union would help make the contract concrete.
 
-Give each promise an owner that awaits, returns, or deliberately handles it.
-Choose sequencing or concurrency according to dependencies and failure behavior.
-Narrow caught values before accessing them; JavaScript can throw any value.
-Follow the established throw or result convention and preserve useful failure
-context. Avoid converting a failure into an apparent success or adding retries
-without considering duplicate effects.
+## Preserve runtime behavior
 
-Read [Module compatibility](references/decisions.md#module-compatibility) for
-loader or compiler questions, and [Async and errors](references/decisions.md#async-and-errors)
-when changing asynchronous behavior.
+Match module format, resolution, imports, extensions, and package exports to the
+actual loader and emitter. Keep runtime and side-effect imports when marking
+imports as type-only. Check single-file transformation and type-stripping limits
+before introducing syntax that needs runtime code generation. Path mappings do
+not supply runtime resolution, and API declarations do not supply runtime APIs.
 
-### 4. Verify the contract and report
+Give each promise an owner that awaits, returns, or handles it. Sequence dependent
+operations; run independent work concurrently when its failure behavior permits.
+`Promise.all` rejection does not cancel work already started. Inspect every result
+when using `Promise.allSettled`. A detached task needs rejection handling and a
+runtime that lets it finish; `void` alone does not handle rejection.
 
-Run the project's type check with its installed compiler and intended project
-configuration, plus relevant lint, tests, and build checks. A transpile-only test
-runner or successful emit does not prove type correctness. Verify runtime behavior
-where types cannot help, especially malformed input, missing data, failure paths,
-and imports through the real entry point. Add tests for changed contracts and
-observable outcomes rather than duplicating the implementation.
+JavaScript can throw any value. Narrow caught values, preserve useful context,
+and follow the project's throw or result convention. Await inside a local
+`try`/`catch` when it needs to handle rejection. Preserve cleanup and cancellation
+behavior, and consider duplicate effects before adding retries.
 
-Deliver the scoped code change, or actionable findings for a review-only request,
-with checks run, results, and remaining assumptions. If required context or tools
-are missing, report the specific blocker and what remains unverified. If checks
-fail, distinguish introduced failures from existing ones and stop short of
-claiming completion; do not weaken settings or expand scope to conceal them.
+## Verify the change
+
+Use the project's type check with its installed compiler and intended
+configuration, plus relevant lint, tests, and build checks. Transpilation or
+successful emit does not prove type correctness. Exercise behavior that types
+cannot establish, including malformed input, missing data, failure paths, and
+module loading through the real entry point. Test changed contracts and outcomes.
+
+Return the scoped change or actionable review findings, the checks and results,
+and unresolved assumptions. Report missing tools or context and what remains
+unverified. If checks fail, distinguish introduced failures from existing ones;
+do not weaken settings or expand scope to conceal them.
