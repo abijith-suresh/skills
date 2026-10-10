@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-10
+
+- Consolidated repository Markdown into agent instructions, installation
+  and catalog guidance, and the contributor workflow. Corrected the site
+  URL and tooling guidance, documented separate personal and work
+  installations, and replaced invocation-lock and composition restrictions
+  with portable authoring rules and authorization boundaries.
+
 ### Changed — 2026-10-09
 
 - Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.

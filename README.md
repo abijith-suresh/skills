@@ -3,35 +3,38 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
 
-A personal collection of standalone skills for the workflows I use every day:
+A collection of ten skills for the personal and work workflows I use every day:
 test cleanup, commits, pull and merge requests, research, issue creation,
 handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
 and work with compatible coding agents.
 
-## Browse
+Browse the [skills site](https://skills.abijith.sh/) for skill instructions.
+The site reads the canonical `skills/` files at build time.
 
-Browse the skills and copy install commands on the [skills site](https://skills-lovat-psi.vercel.app/).
+## Installation
 
-## Scope
-
-The `skills/` directory is the canonical collection. The Astro site reads
-those files at build time and provides a browsable catalog with install
-commands.
-
-Each skill is standalone and platform-agnostic. Skills do not run one
-another. Name the next skill yourself, or let a skill point to it in output.
-
-## Install all skills
+Personal and work skills are distinct collections installed on separate
+systems. On the personal system, install the GitHub workflows:
 
 ```bash
-npx skills@latest add abijith-suresh/skills
+npx skills@latest add abijith-suresh/skills --skill commit open-pr
 ```
 
-## Install one skill
+On the work system, install the ticket-scoped commit and GitLab workflows:
+
+```bash
+npx skills@latest add abijith-suresh/skills --skill commit-work open-mr
+```
+
+Choose other skills separately for each system:
 
 ```bash
 npx skills@latest add abijith-suresh/skills --skill <skill-name>
 ```
+
+The [installer](https://github.com/vercel-labs/skills) prompts for target
+agents and installs into the current project by default. Add `--global`
+for a user-level installation on that system.
 
 ## Skill catalog
 
