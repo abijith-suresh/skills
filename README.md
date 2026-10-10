@@ -44,8 +44,8 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `handoff` | Write a compact handoff document for another agent or session. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
-| `orchestration` | Coordinate requested delegated work through integration and verification. |
 | `research` | Read a library's canonical source before implementing against its API. |
+| `subagents` | Delegate work, choose parallel or sequential execution, and keep the main conversation available. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
 

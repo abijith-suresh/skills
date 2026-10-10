@@ -8,10 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — 2026-10-10
 
-- `orchestration` skill: delegate requested research, implementation, and
-  verification while the main agent owns scope, worker boundaries, integration,
-  and the final result. Discover available capabilities, bound retries, and
-  report delegation or verification gaps. Companion skills are optional.
+- `subagents` skill: keep substantive work in workers and the main conversation
+  available. Explore broadly before narrowing, choose parallel or sequential
+  work, and cycle through implementation and verification. Companion skills
+  are optional, and delegation never expands authorization.
 
 ### Changed — 2026-10-09
 
