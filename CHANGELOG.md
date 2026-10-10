@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   conversation available. Explore broadly before narrowing, choose parallel
   or sequential work, and verify changes until green or blocked. The guidance
   adapts to the context workers receive and needs no companion skills.
+- `prove-it` skill: verify feature and fix claims at the boundary that owns the
+  behavior, choose proportionate evidence, and report actual executions,
+  failures, blocked paths, and remaining gaps. Its description supports discovery
+  during implementation and explicit requests; hosts control loading.
 
 ### Changed — 2026-10-09
 
