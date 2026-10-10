@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-10-10
+
+- `prove-it` skill: verify feature and fix claims at the boundary that owns the
+  behavior, choose proportionate evidence, and report actual executions,
+  failures, blocked paths, and remaining gaps. Its description supports discovery
+  during implementation and explicit requests; hosts control loading.
+
 ### Changed — 2026-10-09
 
 - Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.
