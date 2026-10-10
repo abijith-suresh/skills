@@ -1,80 +1,36 @@
 # Agent instructions
 
-Read this file before editing the repository. Keep these rules aligned with
-what the repository actually does.
+Read this file before editing the repository. Follow the development and
+authoring workflow in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Where to look
 
-- `README.md` explains the collection, its scope, and installation.
-- `CONTRIBUTING.md` explains local development and contribution workflow.
-- `skills/` contains the installable skills. Each skill's `SKILL.md` is its
-  canonical content.
-- `src/consts.ts` holds site-wide config (URLs, titles, descriptions).
-- `src/styles/` holds the design tokens, base styles, and component styles.
-- `src/components/seo/` holds the SEO meta and structured data components.
-- `CHANGELOG.md` records user-visible repository changes.
+- `README.md` covers installation and the ten-skill catalog.
+- `skills/<skill-name>/SKILL.md` is the canonical content for each skill.
+- `src/content.config.ts` loads the skills; `src/lib/` holds catalog and
+  path logic.
+- `src/consts.ts` holds site-wide URLs, titles, and descriptions.
+- `src/styles/tokens.css` holds design tokens; the other stylesheets hold
+  fonts, base styles, and component styles.
+- `src/components/seo/` holds meta tags and structured data.
+- `CHANGELOG.md` records repository changes.
 
-There is no separate architecture document. Before changing the Astro site,
-inspect the relevant files under `src/`, `astro.config.ts`, and the package
-scripts.
+Before changing the Astro site, inspect the relevant source files,
+`astro.config.ts`, and the scripts in `package.json`.
 
-## Repository rules
+## Working rules
 
-- Use `@/` path alias for all imports from `src/`.
-- Keep the `skills/` directory as the only source for skill content. Do not
-  create per-skill README files.
-- Follow the [Agent Skills specification](https://agentskills.io/specification).
-  Skill directories and their frontmatter `name` fields use lowercase
-  kebab-case and must match.
-- A skill must define one repeatable workflow. It must work without another
-  skill being installed or run.
-- Skills must not run other user-invoked skills. A skill may name a follow-on
-  skill in its output so the user can invoke it next.
-- Keep repository prose direct. Use sentence-case headings, concrete claims,
-  and plain punctuation.
-
-## Skill invocation
-
-User-invoked skills (git writes, forge writes, interviews, handoffs) use all
-three harness controls together:
-
-- `disable-model-invocation: true` in `SKILL.md` (Cursor, Claude Code, Pi)
-- `agents/openai.yaml` with `policy.allow_implicit_invocation: false` (Codex)
-- `metadata.opencode/autoinvoke: "false"` (OpenCode)
-
-Model-invoked skills (`research`, `unslop`) omit those locks so the agent can
-reach them from context. They still ship `agents/openai.yaml` with display
-metadata only.
-
-The description is the discovery API. For model-invoked skills it must say
-what the skill does and when to use it. For user-invoked skills it is a short
-human summary. Do not pad descriptions with "the user may also name this
-skill explicitly."
-
-## Adding or updating a skill
-
-- Add a skill only when the workflow is repeated and has clear inputs,
-  outputs, and failure conditions.
-- Keep frontmatter to spec fields (`name`, `description`, optional
-  `metadata`) plus `disable-model-invocation` when the skill is user-invoked.
-  Never add other top-level frontmatter keys. `metadata` values are strings.
-  Site curation uses `featured: "true"`. OpenCode uses
-  `opencode/autoinvoke: "false"`.
-- Every skill ships `agents/openai.yaml` with `interface.display_name` and
-  `interface.short_description`. User-invoked skills also set
-  `policy.allow_implicit_invocation: false`.
-- When adding, removing, or renaming a skill, update the catalog and count in
+- Use the `@/` alias for imports from `src/`.
+- Preserve the site's dark, high-contrast, typography-led design and
+  accessibility behavior.
+- Keep skill content in `skills/`. Do not create per-skill READMEs or
+  duplicate authoring and architecture manuals.
+- Keep personal and work workflows distinct, including `commit` and
+  `open-pr` versus `commit-work` and `open-mr`. Installation guidance is in
   `README.md`.
-- Add a dated entry under `[Unreleased]` in `CHANGELOG.md` for every change.
-  Add to today's section when one already exists.
-- Local installation is optional. Do not commit anything from `~/.agents/`.
-
-## Git and verification
-
-- Work on a feature branch. Never commit or push directly to `main`.
-- Use the `commit` skill for ordinary commits. Use `commit-work` when every
-  commit scope must include a ticket number.
-- Use conventional commit messages and keep each commit focused on one reason
-  to change.
-- Open a pull request for review.
-- Run `bun run verify` before opening the pull request.
+- Keep prose direct, with sentence-case headings and plain punctuation.
+- Local skill installation is optional. Do not commit local installations.
+- Use `commit` for ordinary commits and `commit-work` for ticket-scoped
+  work commits. Push and open a PR only within the user's authorization.
+- Run `bun run verify` before opening a PR. Use `mise exec -- bun run verify`
+  if the pinned tools are not on `PATH`.
