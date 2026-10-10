@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added — 2026-10-10
+
+- `subagents` skill: delegate substantive work while keeping the main
+  conversation available. Explore broadly before narrowing, choose parallel
+  or sequential work, and verify changes until green or blocked. The guidance
+  adapts to the context workers receive and needs no companion skills.
+
 ### Changed — 2026-10-09
 
 - Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.
