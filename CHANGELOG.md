@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-11
+
+- `java` has a shorter discovery description and direct authoring instructions.
+  Its reference file focuses on version compatibility, value copying,
+  resource lifetime, collection semantics, and concurrency decisions.
+
 ### Added — 2026-10-10
 
 - `subagents` skill: delegate substantive work while keeping the main

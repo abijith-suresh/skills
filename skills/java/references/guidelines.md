@@ -1,10 +1,8 @@
 # Java guidelines
 
-Use the sections relevant to the task. These are engineering recommendations
-based on the linked language and API contracts. They do not mandate a style
-guide, Java upgrade, or framework. The Java SE 21 links below are reference
-anchors, not a minimum version. Consult the edition matching the project
-before relying on an API or runtime behavior.
+Read the section needed for a compatibility or ownership decision. The Java
+SE 21 links explain specific contracts; consult the edition matching the
+project before using an API or relying on runtime behavior.
 
 ## Compatibility
 
@@ -25,7 +23,7 @@ when it is insufficient instead of changing it without authorization.
 [Maven compiler release](https://maven.apache.org/plugins/maven-compiler-plugin/examples/set-compiler-release.html),
 [Gradle toolchains](https://docs.gradle.org/current/userguide/toolchains.html).
 
-Common gates, not an upgrade checklist:
+Common feature gates:
 
 - Records became final in Java 16. Use an ordinary class on older targets.
   [JEP 395](https://openjdk.org/jeps/395).
@@ -42,17 +40,7 @@ Confirm preview status for the exact target. A preview feature in one release
 is not a portable API contract. Follow the project's existing compile, test,
 and runtime preview settings rather than adding flags to make a sample work.
 
-## Types and APIs
-
-Use a domain type when it prevents confusing values such as an account ID
-and an amount. Avoid raw types and unchecked casts unless an external
-boundary requires them. Keep any suppression narrow and explain its safety.
-Use interfaces where callers need a contract, not one interface per class.
-
-Document externally relevant constraints: nulls, ranges, side effects,
-ordering, failures, thread safety, and who owns returned resources.
-Distinguish compatibility obligations from internal implementation choices.
-[Oracle API specification guidance](https://www.oracle.com/java/technologies/javase/api-specifications.html).
+## Value types and copying
 
 Records fit transparent data carriers. Their final component fields do not
 make referenced lists or arrays immutable. Validate invariants in the
@@ -80,33 +68,6 @@ If overriding `equals`, maintain symmetry, transitivity, and consistent
 breaks lookup assumptions.
 [Object](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)),
 [Map](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html).
-
-## Nulls and errors
-
-Define null handling at boundaries and follow the project's existing
-nullability annotations and checking tools. Do not add an annotation library
-just to mark one method. Reject invalid required arguments near their entry
-point; preserve legitimate optional values.
-
-`Optional` fits a return value whose absence is expected. Return an empty
-instance for absence, never a null `Optional`. Do not mechanically wrap every
-field or parameter. Use an empty collection only when it means a valid result
-with zero elements, not a failed operation.
-[Optional](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Optional.html).
-
-Choose checked or unchecked exceptions using the API's recovery contract
-and existing conventions. Catch an exception where recovery or useful
-translation is possible. Preserve its cause when translating it. Do not turn
-failures into success values or routinely catch `Throwable`; fatal errors
-usually cannot be recovered from. Log where the failure is handled rather
-than logging and rethrowing at every layer.
-[JLS exceptions](https://docs.oracle.com/javase/specs/jls/se21/html/jls-11.html).
-
-Propagate `InterruptedException` when the API allows it. When a boundary
-cannot propagate it, restore the interrupt flag and exit or otherwise follow
-the documented cancellation policy. Do not restore the flag and then resume
-the same blocking loop unconditionally.
-[ExecutorService shutdown example](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html).
 
 ## Resources
 
@@ -147,10 +108,9 @@ operations.
 
 ## Collections
 
-Select a list, set, or map from required order, duplicate semantics, lookup,
-and mutation. Do not rely on unspecified `HashMap` or factory-map iteration
-order. Keep map keys stable for equality, hashing, and any ordering comparator.
-Check null and duplicate-key behavior before replacing a collection factory.
+`HashMap` and factory maps do not promise iteration order. Keep keys stable
+for equality, hashing, and any ordering comparator. Check null and
+duplicate-key behavior before replacing a collection factory.
 [Map](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Map.html).
 
 An unmodifiable wrapper is a live view of its backing collection. `List.copyOf`
@@ -187,6 +147,12 @@ executors to their owner. `ExecutorService` supports try-with-resources only
 since Java 19, and closing it waits for termination.
 [ExecutorService](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html).
 
+Propagate `InterruptedException` when the API allows it. When a boundary
+cannot propagate it, restore the interrupt flag and exit or otherwise follow
+the documented cancellation policy. Do not restore the flag and then resume
+the same blocking loop unconditionally.
+[ExecutorService shutdown example](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/ExecutorService.html).
+
 On Java 21 or later, virtual threads can help many blocking tasks scale.
 They do not speed up CPU-bound work and should not be pooled. Limit access
 to scarce downstream resources independently of thread count. On JDK 21
@@ -194,33 +160,3 @@ through 23, blocking while holding a monitor can pin a carrier thread.
 JDK 24's JEP 491 removes monitor-related pinning; some native interactions
 can still pin. Check the actual runtime before recommending a lock rewrite.
 [JEP 444](https://openjdk.org/jeps/444), [JEP 491](https://openjdk.org/jeps/491).
-
-## Verification
-
-Choose checks from the behavior changed, using the existing test framework:
-
-- Exercise a normal result and the relevant invalid, absent, empty, or
-  boundary inputs. Assert the result or failure contract, not private calls.
-- When ownership changes, test mutation isolation and cleanup on failure.
-  When value types change, test equality and hash-based lookup expectations.
-- For concurrency changes, coordinate participants with synchronization and
-  bounded waits. Test cancellation, task failures, and the shared invariant.
-  Sleep-based timing and a passing stress test do not prove thread safety;
-  explain the synchronization argument as well.
-- When a framework boundary changes, use an existing integration test that
-  exercises the real transaction, mapping, or lifecycle behavior. A mocked
-  collaborator cannot verify those framework guarantees.
-
-Compile with the effective target and run required checks using the configured
-toolchain. Where the task changes compatibility, exercise the result on the
-supported runtime too. Review compiler/static-analysis warnings in changed
-code. Do not add global warning policies, a test stack, benchmarks, or build
-infrastructure unless the task requires them.
-
-Use explicit exceptions for production input validation; Java assertions
-can be disabled. Use the test framework's assertions for test expectations.
-[JLS assert statement](https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.10).
-
-Report failed or unavailable checks and distinguish evidence of correctness
-from unverified assumptions. Performance claims need representative
-measurements; shorter syntax and newer APIs do not establish a speedup.
