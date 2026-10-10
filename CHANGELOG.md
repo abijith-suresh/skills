@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added - 2026-10-10
 
-- `triage` skill: compact guidance for evidence-backed issue diagnosis,
+- `triage` skill: compact English guidance for evidence-backed issue diagnosis,
   reproduction, competing hypotheses, affected scope, and confidence. Stop with
   a diagnosis or a concrete blocked next step. Optional `subagents` and
   `research` companions have standalone fallbacks. Analysis alone does not
