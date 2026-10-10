@@ -12,6 +12,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   conversation available. Explore broadly before narrowing, choose parallel
   or sequential work, and verify changes until green or blocked. The guidance
   adapts to the context workers receive and needs no companion skills.
+- `java` skill: write, refactor, or review Java code against the project's
+  supported Java version, with guidance on API contracts, nulls and errors,
+  resource ownership, collections, concurrency, and verification. Supporting
+  examples link to official Java and OpenJDK sources.
 
 ### Changed — 2026-10-09
 
