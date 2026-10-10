@@ -1,70 +1,54 @@
 ---
 name: subagents
-description: >-
-  Delegate substantive work while keeping the main conversation available.
-  Use when coordinating subagents for research, implementation, or verification,
-  especially in large codebases. Choose parallel or sequential work and
-  reconcile worker findings into a complete result.
+description: Use when the user asks for subagents or you think the task needs them.
 ---
 
 # Subagents
 
-Keep the main agent focused on scope, decisions, integration, and the user.
-Delegate substantive work and read only enough to judge the results. Use as
-few workers as the task needs. Small tasks do not need a swarm.
+You are the orchestrator. Do the minimum needed to direct the work. Delegate
+substantive research, implementation, and verification. Keep your attention
+on the user's intent, the decisions, and the combined result. Once you hand
+off a task, do not do the same work yourself.
 
-## Brief workers
+## Delegate with intent
 
-Discover available delegation capabilities and models. Respect the user's
-choices. Do not assume tool names, inherited context, shared files, or access
-to sibling results. If delegation is unavailable, say so; use a direct
-fallback only when the user's instructions permit it.
+Use the delegation capabilities available in your environment and choose
+workers suited to the task. Make each assignment clear in the context the
+worker receives. Give it the goal, relevant facts, boundaries, and what to
+return. Supply missing context without making it rediscover what you already
+know. Ask for conclusions backed by source locations or checks, rather than
+raw exploration and logs. Keep that detail with the worker.
 
-Give each worker a clear question or outcome, relevant context, scope and
-constraints, and the evidence to return. Pass accessible references or needed
-content. Request concise findings, source locations, checks actually run,
-and unresolved questions. Keep bulk files, logs, and analysis in workers.
-
-## Explore broadly, then narrow
-
-For unfamiliar work, start with broad sweeps of the code and possible
-explanations. Use the findings to delegate narrower follow-ups that trace
-behavior, test hypotheses, or resolve disagreements. Each round should answer
-an open question. Stop exploring when you can explain the task and justify
-the next step. Ask the user about requirements the code cannot settle.
-
-Keep partial analysis internal until the relevant workers finish and you
-have reconciled their evidence. Do not invent certainty or repeat sweeps
-without learning. Bound failed retries and report blockers honestly.
-
-## Choose the order
-
-Parallelize independent research, hypotheses, or checks. Sequence dependent
-work and pass each result to the next worker. Give overlapping writes one
-owner at a time and confirm how changes reach the working branch.
-
-For an agreed plan, delegate implementation, then verification of the actual
-changes. Send failures back for fixes and verify again until green, within
-a finite repair budget. Green requires the requested behavior and required
-checks to pass on the integrated result. Keep substantive fixes in workers.
-Push and open a PR or MR when the user has requested that outcome.
+Run independent work in parallel. Run dependent work in sequence,
+passing the earlier findings forward. Give overlapping changes one owner.
+Reuse a worker's knowledge when useful; seek an independent view when you
+need to challenge an assumption or verify a result.
 
 ## Stay available
 
-Use background workers and completion notifications when supported. After
-dispatch, briefly acknowledge and end your turn so the user can keep talking.
-Resume when results arrive. Do not block or keep polling. If the environment
-cannot resume you on completion, disclose that limitation.
+Run workers in the background when supported. Briefly acknowledge what you
+launched, then end your turn. Let completion notifications bring you back.
+Do not block, poll, or fill the conversation with partial worker reports.
+Stay available for the user and carry their steering into the delegated work.
+If the environment cannot support this, say so rather than promise it can.
 
-Retain task handles and enough notes to avoid duplicate work. Acknowledge
-completions without dumping partial findings. Respond to user questions and
-carry steering into affected briefs. Confirm an old writer stopped before
-replacing it. Present the complete result with evidence and remaining limits
-when the relevant workers and checks finish. Missing results are not passes.
-The main agent remains responsible for scope and correctness.
+## Work toward clarity
 
-Other skills may supply task-specific guidance. Composition is optional,
-standalone, and acyclic; this workflow needs no companion. Loading skills or
-delegating work never expands the user's authorization.
+Start unfamiliar work with broad sweeps. Use what comes back to identify
+specific gaps, then send workers deeper. Reconcile conflicting findings.
+Continue until you can explain what is happening and justify what to do next.
+Ask the user about intent or decisions the code cannot answer.
 
-For provenance, see [source patterns](references/source-patterns.md).
+For an agreed implementation plan, delegate implementation, then verification
+of the combined changes. Return failures to an implementer and verify the
+fixes. Continue until the requested behavior and checks pass. Bound retries;
+if attempts stop making progress, change approach or bring back the blocker.
+Push and open a PR or MR when that is part of the user's requested outcome.
+
+Keep partial analysis internal until the relevant workers finish. Return one
+coherent result, with evidence and any unresolved limits. A worker reporting
+success is an input to your judgment. You remain responsible for the outcome.
+
+Task-specific skills can guide workers when useful. This skill works on its
+own; companion skills are optional and must not route back into this skill.
+Delegation and skill loading never expand the user's authorization.

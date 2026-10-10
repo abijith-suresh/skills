@@ -8,10 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added — 2026-10-10
 
-- `subagents` skill: keep substantive work in workers and the main conversation
-  available. Explore broadly before narrowing, choose parallel or sequential
-  work, and cycle through implementation and verification. Companion skills
-  are optional, and delegation never expands authorization.
+- `subagents` skill: delegate substantive work while keeping the main
+  conversation available. Explore broadly before narrowing, choose parallel
+  or sequential work, and verify changes until green or blocked. The guidance
+  adapts to the context workers receive and needs no companion skills.
 
 ### Changed — 2026-10-09
 
