@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added - 2026-10-10
+
+- `triage` skill: analyze reported issues through evidence collection,
+  reproduction, competing hypotheses, and an assessment of affected scope and
+  confidence. Return a diagnosis or a concrete next step when blocked. Analysis
+  alone does not authorize fixes or tracker updates.
+
 ### Changed — 2026-10-09
 
 - Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.
