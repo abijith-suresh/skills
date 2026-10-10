@@ -13,8 +13,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   or sequential work, and verify changes until green or blocked. The guidance
   adapts to the context workers receive and needs no companion skills.
 - `writing` skill: draft and edit prose for its audience and intent, preserve
-  facts and the author's stance, and check wording and flow with before-and-after
-  examples grounded in editorial guidance.
+  facts and the author's stance, and check wording and flow. Includes a short
+  discovery description, plain instructions, and before-and-after examples.
 
 ### Changed — 2026-10-09
 
