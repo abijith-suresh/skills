@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   conversation available. Explore broadly before narrowing, choose parallel
   or sequential work, and verify changes until green or blocked. The guidance
   adapts to the context workers receive and needs no companion skills.
+- `typescript` skill: write and review TypeScript with runtime input validation,
+  inference and narrowing, state modeling, module compatibility, async error
+  handling, and verification suited to the project's existing settings.
 
 ### Changed — 2026-10-09
 
