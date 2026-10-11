@@ -9,7 +9,7 @@ metadata:
   opencode/autoinvoke: "false"
 ---
 
-# Grill Me
+# Grill me
 
 ## What this skill does
 Explores the codebase silently, then interviews you one question at a time
@@ -34,12 +34,11 @@ For every question:
 - Make the question specific to this feature — never generic
 - Skip any question the codebase has already answered
 
-Never batch questions. Never ask more than one at a time.
-
-### 3. Keep going until shared understanding is reached
-Continue until every significant branch of the decision tree is resolved —
-scope, constraints, design choices, edge cases, tradeoffs. You decide when
-that point is reached. Do not stop early.
+### 3. Settle the consequential decisions
+Continue until the choices affecting scope, constraints, design, and edge
+cases have answers. Do not reopen decisions the user has already settled.
+If a branch cannot be resolved without missing evidence or an external
+decision, record it as open and state what would settle it.
 
 ### 4. Write a decisions summary in chat
 Once shared understanding is reached, write a compact decisions summary
@@ -65,7 +64,6 @@ End with:
 
 ## Rules
 - Silent codebase exploration — no narration, go straight to the first question
-- One question at a time, always — never batch
 - Always include a recommended answer for every question
 - Freeform — no prescribed topic checklist, work from what the user describes
 - Never write to any file
