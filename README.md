@@ -1,10 +1,10 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 12](https://img.shields.io/badge/Skills-12-green.svg)](#skill-catalog)
+[![Skills: 17](https://img.shields.io/badge/Skills-17-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
-test cleanup, commits, pull and merge requests, research, issue creation,
+implementation, test cleanup, commits, pull and merge requests, research, issue creation,
 handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
 and work with compatible coding agents.
 
@@ -20,6 +20,8 @@ commands.
 
 Each skill is standalone and platform-agnostic. Skills do not run one
 another. Name the next skill yourself, or let a skill point to it in output.
+Workflows include their own delegation instructions. Substantive work goes
+to workers while the parent owns scope, decisions, and the combined result.
 
 ## Install all skills
 
@@ -40,15 +42,20 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `commit` | Create conventional commits from the current diff. |
 | `commit-work` | Create conventional commits with a ticket number in every scope. |
 | `create-issue` | File one GitHub issue to park a later thought. |
+| `explain` | Explain existing code through concrete execution paths. |
 | `grill-me` | Ask one question at a time to settle a plan or design. |
 | `handoff` | Write a compact handoff document for another agent or session. |
+| `implement` | Implement features and fixes through verified code. |
+| `java` | Write and review Java for the supported runtime. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
-| `research` | Read a library's canonical source before implementing against its API. |
-| `subagents` | Delegate work, choose parallel or sequential execution, and keep the main conversation available. |
+| `prove-it` | Verify completion claims against observed behavior. |
+| `research` | Resolve API and dependency behavior questions from canonical source. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
+| `triage` | Diagnose reported issues from evidence before choosing a fix. |
+| `typescript` | Write and review TypeScript against runtime contracts. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
-| `writing` | Draft and edit natural, direct prose for the audience while preserving facts and stance. |
+| `writing` | Draft and edit prose for its reader and purpose. |
 
 ## Contributing
 
