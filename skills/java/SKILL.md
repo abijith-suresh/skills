@@ -13,29 +13,31 @@ with code locations, concrete effects, and verification gaps.
 
 ## Delegate substantial work
 
-Default substantive research, implementation, and review to a worker. Give it
-the requested outcome, bounded files or questions, supported JDK and API
-targets, relevant contracts, and project guidance. Keep coupled edits with one
-worker; parallelize only independent questions or changes. Have a separate
-verifier inspect the integrated diff and run relevant build and checks on the
-supported runtime. Send failures to the implementer and recheck the
-correction. In review-only work, make no edits. Report compatibility evidence
-and gaps; do not commit or publish unless requested.
+Send substantive investigation, implementation, and review to a worker by
+default. If delegation is unavailable, do the workflow directly and say so.
+Give the worker the requested outcome, bounded files or questions, supported
+JDK and API targets, relevant contracts, and project guidance. Keep coupled
+edits with one worker; parallelize only independent questions or changes.
+Have a separate verifier inspect the integrated diff and run relevant build
+and checks on the supported runtime. Send failures to the implementer and
+recheck the correction. In review-only work, make no edits. Report
+compatibility evidence and gaps; do not commit or publish unless requested.
 
-Keep scope, user decisions, and the combined result with the parent. Prefer a
-less costly capable worker, honoring the user's model preferences. Include
-applicable guidance and authorization limits in each brief, and use context
-pointers only when the worker can access them. Keep coordination with the
-parent and avoid repeating completed discovery. Parallelize independent work
-and sequence dependencies. Trivial lookups or edits can stay direct when
-worker setup and reporting would outweigh the work.
+Keep scope, user decisions, and the combined result with the parent. Choose a
+capable worker that honors the user's model preferences, using a less costly
+option when available. State in each brief what the worker may change and
+what evidence to return. Point to context only when the worker can access it;
+otherwise include the needed material in the brief. Direct trivial lookups or
+edits when dispatch and reporting would outweigh the work.
 
-Run workers in the background when completion notifications are supported.
-When only worker results remain, acknowledge the launch and end the turn; let
-completion bring you back. Carry user steering into active work and keep
-partial worker analysis internal. If notifications are unavailable, use the
-supported completion mechanism and state the limitation. If delegation is
-unavailable, perform the workflow directly and say so.
+Run workers in the background when completion notifications are supported;
+acknowledge the dispatch. With notifications, when only worker results
+remain, end the turn and let completion bring you back. Carry user steering into active work. Without
+notifications, wait for results using an available wait or join operation.
+If no wait or join operation is available, make bounded status checks at
+meaningful work boundaries; do not poll rapidly. If checks do not show
+completion and there is no way to await it, report pending results and what
+follow-up is needed.
 
 ## Understand the project
 
@@ -101,6 +103,5 @@ unresolved limits. If a JDK, service, or test prerequisite is missing, report
 which check is blocked and what remains unverified. Stop dependent work when
 the target or contract needs a user decision.
 
-This workflow works on its own. Skill loading never expands authorization,
-including permission to upgrade Java, add dependencies, commit, publish, or
-deploy.
+Skill loading never expands authorization, including permission to upgrade
+Java, add dependencies, commit, publish, or deploy.
