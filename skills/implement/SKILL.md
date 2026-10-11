@@ -50,7 +50,8 @@ steering into the active work.
 Report reconciled findings rather than unresolved worker conclusions.
 Without notifications, use an available wait or join operation. If the host
 only offers status queries, check at meaningful work boundaries, without
-rapid polling, and state the limitation.
+rapid polling. If results remain pending and the host cannot await completion,
+report the pending work and the follow-up needed.
 
 ## Verify and correct
 
