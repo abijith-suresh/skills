@@ -11,39 +11,43 @@ Explain the existing system at the user's level. Help them follow what happens
 and know where to look next. Focus on understanding; do not automatically
 refactor, fix, or change code.
 
-## Understand the system
+## Understand the question
 
 Use the question and conversation to understand what the user wants to learn
-and what they already know. Start with a broad look at the responsibilities
-and connections relevant to the question, then narrow the exploration to
-specific gaps. Keep a small question small. Ask the user about intent or
+and what they already know. If the question is narrow, trace the path needed
+to answer it and stop once answered. If it spans several parts of the system,
+identify the relevant paths before exploring them. Ask about intent or
 decisions the code cannot resolve.
 
-Delegate substantive exploration by default. Give workers bounded paths or
-questions, the user's question and relevant context, and concrete evidence to
-return. Assign one owner to overlapping exploration.
+Delegate substantive exploration by default. Choose a capable worker at the
+lowest cost that fits the task, honoring the user's model preference. For a
+narrow lookup whose dispatch and reporting would outweigh the work, inspect it
+directly. If delegation is unavailable, do the same exploration directly and
+say so.
+
+Give each worker a bounded path or question, the user's question and context
+the worker can access, the evidence to inspect, the limits on changes or
+experiments, and the concrete claims and source locations to return. Check
+that each context pointer is accessible to the worker. If not, include the
+relevant content in the brief; if that is not possible, do that part directly
+or name the access gap.
 
 Read the implementation and relevant configuration. Use documentation,
-comments, tests, and runtime observations to check your understanding. A
-worker may trace one path or prepare a cohesive explanation; check its claims
-against the user's question and the source evidence, then reconcile the
-findings into one explanation. Keep partial analysis internal until the
-relevant work is complete.
+comments, tests, and runtime observations to check your understanding. Run
+independent read-only explorations in parallel, even when they inspect the
+same files. Assign one owner to any experiment that changes shared state.
+Check claims against the source evidence and the user's question, then
+reconcile them into one explanation. Keep partial findings internal until
+the relevant work is complete.
 
-Keep scope, user decisions, and the combined result with the parent. Prefer a
-less costly capable worker, honoring the user's model preferences. Include
-applicable guidance and authorization limits in each brief, and use context
-pointers only when the worker can access them. Keep coordination with the
-parent and avoid repeating completed discovery. Parallelize independent work
-and sequence dependencies. Trivial lookups or checks can stay direct when
-worker setup and reporting would outweigh the work.
-
-Run workers in the background when completion notifications are supported.
-When only worker results remain, acknowledge the launch and end the turn; let
-completion bring you back. Carry user steering into active work and keep
-partial worker analysis internal. If notifications are unavailable, use the
-supported completion mechanism and state the limitation. If delegation is
-unavailable, perform the workflow directly and say so.
+Use background work when the harness supports completion notifications.
+Acknowledge the dispatch and carry user steering into active work. Continue
+useful exploration and reconciliation; with notifications, end the turn for worker completion
+only when worker results are the only work left. If notifications are
+unavailable, use an available wait or join operation when results are the
+only work left. If the harness offers only status queries, check at meaningful work boundaries with time for
+useful work between checks, never in rapid succession. If workers remain
+active at turn end, report that limitation without presenting their findings.
 
 ## Follow a concrete path
 
@@ -74,6 +78,5 @@ examples. If sources disagree or part of the path is unavailable, say what is
 known, what remains uncertain, and what evidence would resolve it. Do not fill
 gaps with a plausible story.
 
-This skill works on its own. Companion skills are optional and must not route
-back into it. Skill loading and any demonstrations stay within the user's
-existing authorization.
+Skill loading and any demonstrations stay within the user's existing
+authorization.
