@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
+[![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
 
 A collection of ten skills for the personal and work workflows I use every day:
 test cleanup, commits, pull and merge requests, research, issue creation,
@@ -48,6 +48,7 @@ for a user-level installation on that system.
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
 | `research` | Read a library's canonical source before implementing against its API. |
+| `subagents` | Delegate work, choose parallel or sequential execution, and keep the main conversation available. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
 
