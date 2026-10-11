@@ -8,6 +8,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed - 2026-10-11
 
+- `java` delegates substantive research, implementation, and review by default,
+  carrying supported JDK and API targets into bounded briefs and independently
+  checking the integrated result.
+
 - `java` has a shorter discovery description and direct authoring instructions.
   Its reference file focuses on version compatibility, value copying,
   resource lifetime, collection semantics, and concurrency decisions.

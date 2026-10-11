@@ -11,13 +11,39 @@ Work from the requested behavior or diff. Write code that fits the project's
 supported Java version and existing contracts. For a review, return findings
 with code locations, concrete effects, and verification gaps.
 
+## Delegate substantial work
+
+Default substantive research, implementation, and review to a worker. Give it
+the requested outcome, bounded files or questions, supported JDK and API
+targets, relevant contracts, and project guidance. Keep coupled edits with one
+worker; parallelize only independent questions or changes. Have a separate
+verifier inspect the integrated diff and run relevant build and checks on the
+supported runtime. Send failures to the implementer and recheck the
+correction. In review-only work, make no edits. Report compatibility evidence
+and gaps; do not commit or publish unless requested.
+
+Keep scope, user decisions, and the combined result with the parent. Prefer a
+less costly capable worker, honoring the user's model preferences. Include
+applicable guidance and authorization limits in each brief, and use context
+pointers only when the worker can access them. Keep coordination with the
+parent and avoid repeating completed discovery. Parallelize independent work
+and sequence dependencies. Trivial lookups or edits can stay direct when
+worker setup and reporting would outweigh the work.
+
+Run workers in the background when completion notifications are supported.
+When only worker results remain, acknowledge the launch and end the turn; let
+completion bring you back. Carry user steering into active work and keep
+partial worker analysis internal. If notifications are unavailable, use the
+supported completion mechanism and state the limitation. If delegation is
+unavailable, perform the workflow directly and say so.
+
 ## Understand the project
 
 Read repository instructions, affected code, callers, build configuration,
 tests, and CI. Establish the module's compiler JDK, source and API target,
 deployed runtime, and preview policy. The local JDK alone does not establish
-what the project supports. Check official documentation for the target
-release before adopting unfamiliar syntax or APIs.
+what the project supports. Check official documentation for the target release
+before adopting unfamiliar syntax or APIs.
 
 Identify the expected result, important failure cases, and contracts for
 nulls, mutation, ordering, ownership, and thread safety. Preserve public
@@ -53,9 +79,9 @@ availability, equality and copying, resource lifetime, or concurrency
 semantics. Read only the sections relevant to the change.
 
 Apply framework advice only when the project uses that framework and the
-change touches its behavior. Check the installed version's transaction,
-proxy, serialization, persistence, or lifecycle contracts. Follow the existing
-stack rather than introducing Spring, an ORM, or a new architecture.
+change touches its behavior. Check the installed version's transaction, proxy,
+serialization, persistence, or lifecycle contracts. Follow the existing stack
+rather than introducing Spring, an ORM, or a new architecture.
 
 ## Verify the result
 
@@ -66,15 +92,15 @@ cleanup when ownership changes. For concurrency, use coordination and bounded
 waits, and explain why the synchronization protects the invariant. A passing
 stress test alone does not prove thread safety.
 
-Use existing integration tests when correctness depends on framework
-behavior. Run on the supported runtime when compatibility changes. Review
-warnings in changed code; justify performance claims with measurements.
+Use existing integration tests when correctness depends on framework behavior.
+Run on the supported runtime when compatibility changes. Review warnings in
+changed code; justify performance claims with measurements.
 
-Return the change or findings, compatibility evidence, checks and results,
-and unresolved limits. If a JDK, service, or test prerequisite is missing,
-report which check is blocked and what remains unverified. Stop dependent
-work when the target or contract needs a user decision.
+Return the change or findings, compatibility evidence, checks and results, and
+unresolved limits. If a JDK, service, or test prerequisite is missing, report
+which check is blocked and what remains unverified. Stop dependent work when
+the target or contract needs a user decision.
 
 This workflow works on its own. Skill loading never expands authorization,
-including permission to upgrade Java, add dependencies, commit, publish,
-or deploy.
+including permission to upgrade Java, add dependencies, commit, publish, or
+deploy.
