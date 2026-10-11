@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-10-11
+
+- `writing` delegates substantial drafting, editing, and source checks by
+  default, while preserving one voice for coherent pieces and reviewing the
+  whole draft for factual drift and changes in stance.
+
 ### Added — 2026-10-10
 
 - `subagents` skill: delegate substantive work while keeping the main

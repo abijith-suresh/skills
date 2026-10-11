@@ -8,18 +8,46 @@ description: Write and edit natural, direct prose. Use when drafting text or imp
 Write for the intended reader and purpose. Preserve the author's meaning and
 stance, and make the prose clear enough to understand on the first reading.
 
+## Delegate substantial writing work
+
+Default substantial drafting, editing, and source checks to a worker. Give it
+the audience, purpose, format, voice, supplied facts, and bounded deliverable.
+Keep a coherent piece with one writer; parallelize independent source checks
+or genuinely separate sections only when that will preserve a consistent
+voice. Review the complete draft against the supplied context for factual
+drift, missing qualifications, and changes in stance. Resolve message and
+wording decisions yourself, then return the final text with only material
+assumptions or unresolved facts called out. Do not send or publish it unless
+requested.
+
+Keep scope, user decisions, and the combined result with the parent. Prefer a
+less costly capable worker, honoring the user's model preferences. Include
+applicable guidance and authorization limits in each brief, and use context
+pointers only when the worker can access them. Keep coordination with the
+parent and avoid repeating completed discovery. Parallelize independent work
+and sequence dependencies. Trivial lookups or edits can stay direct when
+worker setup and reporting would outweigh the work.
+
+Run workers in the background when completion notifications are supported.
+When only worker results remain, acknowledge the launch and end the turn; let
+completion bring you back. Carry user steering into active work and keep
+partial worker analysis internal. If notifications are unavailable, use the
+supported completion mechanism and state the limitation. If delegation is
+unavailable, perform the workflow directly and say so.
+
 ## Understand the message
 
-Use the request and available context to work out who will read this, what they
-already know, and what they should understand or do next. Match the requested
-format, length, language, and tone. Use the author's own writing as a guide when
-available. Ask only when a missing detail would materially change the message.
+Use the request and available context to work out who will read this, what
+they already know, and what they should understand or do next. Match the
+requested format, length, language, and tone. Use the author's own writing as
+a guide when available. Ask only when a missing detail would materially change
+the message.
 
 Keep facts, judgments, and unknowns distinct. Preserve names, numbers, dates,
 quotations, attribution, conditions, and the strength of claims. An estimate
-must not become a promise, or an opinion a fact. Keep the author's reservations
-and disagreements. Do not invent evidence, feelings, anecdotes, or personal
-experience to make the writing sound human.
+must not become a promise, or an opinion a fact. Keep the author's
+reservations and disagreements. Do not invent evidence, feelings, anecdotes,
+or personal experience to make the writing sound human.
 
 If an essential fact is missing or sources conflict, ask or mark the gap in a
 working draft. Continue with unaffected passages and surface unresolved gaps
@@ -28,10 +56,10 @@ when returning the draft. Do not present an incomplete draft as ready to send.
 ## Draft and edit
 
 Choose an opening and order that serve the purpose. Practical writing usually
-benefits from the answer, request, or result first, followed by needed context.
-A narrative may need a scene before its point. In an edit, fix buried points,
-missing connections, and repetition before polishing sentences. Keep passages
-that work, and respect the requested depth of editing.
+benefits from the answer, request, or result first, followed by needed
+context. A narrative may need a scene before its point. In an edit, fix buried
+points, missing connections, and repetition before polishing sentences. Keep
+passages that work, and respect the requested depth of editing.
 
 Prefer familiar words and precise verbs. Replace abstract praise with a
 supported action, observation, or consequence. Name the actor when known and
@@ -45,18 +73,18 @@ a key term when a synonym would confuse the reader. Let sentence length follow
 the thought. Let each paragraph develop a point and connect to the next.
 
 Match the author's voice to the situation. Warmth can come from attending to
-the reader's needs. It does not require praise, jokes, slang, or invented first
-person. Use headings and lists when they help readers navigate or compare.
-Judge words and punctuation in context rather than applying a blacklist or
-forcing a rhythm. End when the message is complete.
+the reader's needs. It does not require praise, jokes, slang, or invented
+first person. Use headings and lists when they help readers navigate or
+compare. Judge words and punctuation in context rather than applying a
+blacklist or forcing a rhythm. End when the message is complete.
 
 ## Check the prose
 
-Read the whole piece as its intended reader. Is the point clear? Can they follow
-the reasoning without backtracking? Does each paragraph add something needed?
-Compare the draft with the supplied material for changed facts, missing
-qualifications, or a shifted stance. Then proofread names, numbers, links,
-quotations, grammar, and formatting.
+Read the whole piece as its intended reader. Is the point clear? Can they
+follow the reasoning without backtracking? Does each paragraph add something
+needed? Compare the draft with the supplied material for changed facts,
+missing qualifications, or a shifted stance. Then proofread names, numbers,
+links, quotations, grammar, and formatting.
 
 Return the requested prose in its intended format. Add a brief note only for
 material assumptions, unresolved facts, or substantive changes the user needs
@@ -89,8 +117,8 @@ not yet tested it with customers."
 After: "I think this could reduce support requests, but we haven't tested it
 with customers yet."
 
-The opinion and untested claim stay intact. "This will reduce support requests"
-would change the meaning.
+The opinion and untested claim stay intact. "This will reduce support
+requests" would change the meaning.
 
 ### Connect the sentences
 
