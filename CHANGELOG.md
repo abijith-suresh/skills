@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-10-11
+
+- Retired the standalone `subagents` skill and embedded focused delegation
+  guidance in `implement`, `research`, and `test-audit`; added `implement` as a
+  standalone workflow for feature and fix requests through verified code.
+
 ### Added — 2026-10-10
 
 - `subagents` skill: delegate substantive work while keeping the main

@@ -28,7 +28,7 @@ All repos live at `~/.research/<username>/<repo-name>/`.
 
 This persists across sessions. Repos are never deleted automatically.
 
-## Repo Resolution
+## Resolve the repository
 
 **If the user provides a URL** — use it directly.
 
@@ -38,7 +38,7 @@ This persists across sessions. Repos are never deleted automatically.
 - Find the canonical repo (official org, actively maintained, default branch)
 - If genuinely ambiguous between multiple repos, ask before cloning
 
-## Core Workflow
+## Core workflow
 
 ### 1. Identify target
 
@@ -62,7 +62,7 @@ Notify the user briefly:
 
 ### 3. Refresh
 
-On every access, refresh to the latest commit:
+Before each research pass, refresh to the latest commit:
 
 ```bash
 git -C ~/.research/<username>/<repo-name> fetch --depth 1 origin HEAD
@@ -107,10 +107,38 @@ skill — the research exists to ground implementation in source truth.
 
 - **Inform, never ask** — say "Cloning…" or "Refreshing…" then act immediately
 - **Shallow clone only** — always `--depth 1`. Full clones waste disk space.
-- **Refresh on every access** — always fetch the latest HEAD before reading.
+- **Refresh before each research pass** — fetch the latest HEAD before reading.
   A stale reference is worse than no reference.
 - **Never clone into the project directory** — always use `~/.research/`
 - **Never delete repos** — the store is persistent; cleanup is always a manual
   user action
 - **Implement from truth** — the output of this skill is working code grounded
   in the source, not a summary or report
+
+## Delegation
+
+Delegate substantive source investigation with the target, question, relevant
+repository context, bounded scope, and a request for source locations and
+observed evidence. The parent owns target resolution, conclusions, and
+implementation decisions. For broad research, sweep first, then assign focused
+reads for the questions that matter; do not ask workers to repeat discovery.
+
+One owner refreshes a shared clone. Keep its revision stable while workers read
+it. If concurrent refresh or reads could change what they see, use snapshots or
+isolated clones. Do not run duplicate refreshes. Reconcile findings against the
+source before implementing, and report refresh failures or unresolved ambiguity.
+
+Keep scope, user decisions, and the combined result with the parent. Prefer a
+less costly capable worker, honoring the user's model preferences. Include
+applicable guidance and authorization limits in each brief, and use context
+pointers only when the worker can access them. Keep coordination with the
+parent and avoid repeating completed discovery. Parallelize independent work
+and sequence dependencies. Trivial lookups or edits can stay direct when
+worker setup and reporting would outweigh the work.
+
+Run workers in the background when completion notifications are supported.
+When only worker results remain, acknowledge the launch and end the turn;
+let completion bring you back. Carry user steering into active work and keep
+partial worker analysis internal. If notifications are unavailable, use the
+supported completion mechanism and state the limitation. If delegation is
+unavailable, perform the workflow directly and say so.

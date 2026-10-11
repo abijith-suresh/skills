@@ -18,6 +18,31 @@ Read root and scoped `AGENTS.md` files, test documentation, and the project's te
 
 Read each candidate test in full. Find the production behavior it claims to protect, its owner and entry point, relevant callers and sibling implementations, overlapping tests, and test selection in CI. Check history when the reason for a test or test-support seam is unclear. Inspect dependency source or types when a test claims dependency-backed behavior.
 
+For substantive audits, delegate real module or package batches to workers.
+Give each the scope, project guidance and commands, relevant boundaries, and
+the evidence required below. Use independent workers for independent batches;
+the parent owns scope, batch boundaries, cleanup decisions, and integration.
+Assign each file or overlapping cleanup to one owner. Ask workers for exact
+test contracts, retained coverage, candidates, and focused checks. A separate
+verifier checks the combined diff and remaining behavior contracts against the
+original scope. Return failures to the cleanup owner and recheck affected
+coverage before reporting completion.
+
+Keep scope, user decisions, and the combined result with the parent. Prefer a
+less costly capable worker, honoring the user's model preferences. Include
+applicable guidance and authorization limits in each brief, and use context
+pointers only when the worker can access them. Keep coordination with the
+parent and avoid repeating completed discovery. Parallelize independent work
+and sequence dependencies. Trivial lookups or edits can stay direct when
+worker setup and reporting would outweigh the work.
+
+Run workers in the background when completion notifications are supported.
+When only worker results remain, acknowledge the launch and end the turn;
+let completion bring you back. Carry user steering into active work and keep
+partial worker analysis internal. If notifications are unavailable, use the
+supported completion mechanism and state the limitation. If delegation is
+unavailable, perform the workflow directly and say so.
+
 Keep discovery read-only. Share a short summary of high-confidence candidates and the evidence for them before editing. Continue without waiting for approval unless scope or risk is genuinely unclear.
 
 ### 2. Establish each candidate's value
@@ -45,6 +70,6 @@ Remove test-only exports, globals, wrappers, injection hooks, or dead production
 
 ### 4. Validate and report
 
-Follow the repository's test and formatting guidance. Run the smallest relevant owner and sibling tests. If removing a source-level check, run the executable test, script, or dry run that owns the real contract. Run focused formatting and diff checks as appropriate. Report exactly what ran and what could not be checked.
+Have the verifier follow the repository's test and formatting guidance and run the smallest relevant owner and sibling tests against the integrated changes. Reuse valid execution evidence; rerun only when a subsequent change, failure, or gap requires it. If removing a source-level check, run the executable test, script, or dry run that owns the real contract. Run focused formatting and diff checks as appropriate. Report exactly what ran and what could not be checked.
 
 Summarize the behavior covered by removed tests, the remaining proof, production or test-support code simplified, candidates retained with reasons, and the validation results. Do not commit, push, or open or merge a pull request unless the user separately asks for those actions.
