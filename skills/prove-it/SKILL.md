@@ -16,8 +16,7 @@ to the change.
 Read the relevant requirements, code, and project verification guidance. State
 the starting conditions, action or input, and expected observable result.
 Include failure cases when they matter. Take expectations from the user's
-intent or an independent contract. Ask the user about decisions the code
-cannot resolve.
+intent or an independent contract. Ask about decisions the code cannot resolve.
 
 Choose a check at the boundary that owns the claim. A library result belongs
 at its public API; a CLI claim may include output, exit status, and files
@@ -29,10 +28,20 @@ behavior under test.
 
 ## Observe the behavior
 
-Delegate substantive verification by default. Give a verifier the expected
-behavior or independent contract, starting conditions, relevant version and
-instance, bounded checks to execute, and the evidence to return. Give one
-verifier ownership of overlapping execution.
+Delegate substantive verification by default. Choose a capable verifier at the
+lowest cost that fits the task, honoring the user's model preference. For a
+narrow check whose dispatch and reporting would outweigh the work, run it
+directly. If delegation is unavailable, perform the same verification
+yourself and say so.
+
+Give each verifier the expected behavior or independent contract, starting
+conditions, relevant version and instance, bounded checks to execute, the
+evidence to return, and the authorization limits. Check that each context
+pointer is accessible to the verifier. If not, include the relevant content
+in the brief; if that is not possible, do that part directly or name the
+access gap. Give one verifier ownership of executions that change shared
+state. Independent checks that do not share mutable state may run in
+parallel.
 
 The verifier returns commands or actions, inputs and version, observations,
 failures, and gaps. A summary or claim of completion is not proof: inspect the
@@ -42,22 +51,16 @@ regression check when useful. For a fix, reproduce the failure before the fix
 when practical; say when that was not possible. Verification does not require
 a giant suite or new evaluator infrastructure.
 
-Keep scope, user decisions, and the combined result with the parent. Prefer a
-less costly capable worker, honoring the user's model preferences. Include
-applicable guidance and authorization limits in each brief, and use context
-pointers only when the worker can access them. Keep coordination with the
-parent and avoid repeating completed discovery. Parallelize independent work
-and sequence dependencies. Trivial lookups or checks can stay direct when
-worker setup and reporting would outweigh the work.
+Use background work when the harness supports completion notifications.
+Acknowledge the dispatch and carry user steering into active work. Continue
+useful checks and evidence reconciliation; with notifications, end the turn for worker completion
+only when worker results are the only work left. If notifications are
+unavailable, use an available wait or join operation when results are the
+only work left. If the harness offers only status queries, check at meaningful work boundaries with time for
+useful work between checks, never in rapid succession. If workers remain
+active at turn end, report that limitation without presenting their findings.
 
-Run workers in the background when completion notifications are supported.
-When only worker results remain, acknowledge the launch and end the turn; let
-completion bring you back. Carry user steering into active work and keep
-partial worker analysis internal. If notifications are unavailable, use the
-supported completion mechanism and state the limitation. If delegation is
-unavailable, perform the workflow directly and say so.
-
-Keep conclusions within what the evidence observes:
+## Keep conclusions within the evidence
 
 - Unit checks support the exercised cases. Mocked dependencies leave the real
   integration unverified.
@@ -83,25 +86,24 @@ conclusion to the exercised cases and environment. Stop adding checks once
 they provide proportionate evidence for the requested scope.
 
 Investigate a mismatch as a possible defect, setup problem, or observation
-error. After a fix, rerun affected checks. Do not weaken expectations or let a
-passing retry hide an unexplained failure. If verification stops making
-progress, report the blocker and what would resolve it.
+error. After a fix, rerun affected checks. Do not weaken expectations or let
+a passing retry hide an unexplained failure.
 
-When credentials, services, tools, safe test data, or authorization are
-missing, name the blocked claim and prerequisite. Continue independent safe
-checks when useful. Label partial evidence and substitutions; failed, blocked,
-or untested paths cannot establish success.
+When a prerequisite such as credentials, services, tools, safe test data, or
+authorization is missing, name the blocked claim and prerequisite. Continue
+checks that do not depend on the missing prerequisite. Label partial evidence
+and substitutions; failed, blocked, or untested paths cannot establish
+success. If verification stops making progress for another reason, report the
+blocker and what would resolve it.
 
 ## Hand back the evidence
 
 Give a concise account of the expected behavior, what actually ran, and what
 it showed. Include the command or interaction, relevant environment and
-inputs, and evidence pointers where useful. Separate completed executions from
-proposed checks. State failures, blocked paths, remaining gaps, and the next
-step. Never invent a run or a successful result.
+inputs, and evidence pointers where useful. Separate completed executions
+from proposed checks. State failures, blocked paths, remaining gaps, and the
+next step. Never invent a run or a successful result.
 
-This skill works on its own. Delegated verification may identify actionable
-defects, but it does not authorize product changes beyond the original scope.
-Skill loading never expands authorization. Hosts decide loading; descriptions
-cannot guarantee automatic use across hosts. Optional `agents/openai.yaml`
-supplies display metadata only.
+Delegated verification may identify actionable defects, but it does not
+authorize product changes beyond the original scope. Skill loading never
+expands authorization.
