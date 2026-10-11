@@ -31,41 +31,52 @@ Chromium, Firefox, and WebKit installations.
 ## Authoring skills
 
 - Define one repeatable workflow with clear inputs, outputs, and failure
-  conditions in `skills/<skill-name>/SKILL.md`.
+  conditions in `skills/<skill-name>/SKILL.md`. Include the complete method in
+  that skill so it works without another skill being installed or invoked.
+  A skill must not run another skill as part of its method.
+  A completed workflow may recommend a follow-on skill in its output, but the
+  recommendation must be optional and must not be a required next step.
 - Follow the [Agent Skills specification](https://agentskills.io/specification).
   Use matching lowercase kebab-case names for the directory and frontmatter
   `name`.
 - Keep discovery descriptions short and natural. Explain what the skill
   does and when to invoke it.
-- Write plain English that captures the user's working preferences and
-  reduces repeated prompting. Prescribe only the structure the task needs.
+- Write direct English. State each action with its condition and the evidence
+  or observable finish that shows it is complete. Put an instruction beside
+  the decision it governs. Remove slogans and repeated rules within one skill;
+  concise repetition across independently installed skills is acceptable.
+  Preserve domain constraints that change what the workflow does.
 - Put delegation instructions in the workflow that owns the work. Default
-  substantive investigation, implementation, and verification to workers;
-  keep scope, user decisions, and the combined result with the parent. One
-  worker can own a cohesive task. Keep trivial actions direct when dispatch
-  and reporting would outweigh the work.
-- Give workers bounded assignments, accessible context, authorization limits,
-  and concrete evidence to return. Parallelize independent work, sequence
-  dependencies, and give overlapping changes one owner. Use background
-  completion notifications when available so the parent stays available.
-  Each workflow owns its evidence standard and stopping conditions; it must
-  not depend on a separate delegation skill. Repeating concise instructions
-  across independently installed skills is acceptable.
-- Keep canonical instructions agnostic to models and agent platforms.
-  Describe behavior and intent without platform branches, fixed agent tool or
-  model names, or a mandated context mode. State any tools or services the
-  workflow requires, and make assignments clear in the context a worker
-  receives.
-- Use spec frontmatter fields only. `metadata` values are strings; the site
+  substantive investigation, implementation, and verification to workers.
+  Prefer a less costly capable worker, honoring the user's model preferences.
+  Keep the task scope,
+  user decisions, and combined result with the parent. Keep trivial actions
+  direct when dispatch and reporting would outweigh the work.
+- Give each worker a bounded assignment: state the question to answer or edits
+  it owns, provide context it can access, set what it may change, and name the
+  evidence to return. Parallelize independent tasks, sequence dependencies,
+  and give overlapping edits one owner. If delegation is unavailable, perform
+  the workflow directly and say so. When the harness supports completion
+  notifications, acknowledge the dispatch and end the turn when only worker
+  results remain. Without notifications, use an available wait or join
+  operation. If only status queries are available, make bounded checks at
+  meaningful work boundaries without rapid polling. Report pending work
+  when the host cannot await completion.
+- Keep canonical instructions portable across agents. Name a model, platform,
+  API, tool, or service only when the task depends on it; otherwise describe
+  the required capability. Each workflow owns its evidence standard and finish
+  conditions.
+- Use specification frontmatter fields. New skills follow default discovery
+  unless the user asks for explicit-only invocation. Preserve invocation
+  metadata when editing an existing skill, and change it only when invocation
+  policy is in scope. `agents/openai.yaml` is optional display metadata; retain
+  any policy fields already present. `metadata` values are strings; the site
   uses `featured: "true"` to curate skills.
-- Do not add automatic-invocation locks. `agents/openai.yaml` is optional
-  display metadata, not invocation policy.
-- Keep each skill usable on its own. Optional companion skills must have a
-  standalone fallback and no dependency cycles. Loading any skill never
-  expands the user's authorization.
-- Adapt research into useful instructions. Ship references only when using
-  the skill needs that material, rather than keeping research provenance by
-  default. Add scripts or assets only when the workflow needs them.
+- Loading a skill does not authorize edits, external writes, or publishing.
+- Adapt research conclusions into useful instructions. Include a
+  `references/` file only when using the skill requires its material, and name
+  the decision or condition that tells the agent when to consult it. Add
+  scripts or assets only when the workflow needs them.
 - Preserve personal and work skills as separate workflows and installations.
 
 ## Submitting changes

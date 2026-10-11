@@ -6,29 +6,108 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Changed - 2026-10-11
+### Changed — 2026-10-11
 
-- Authoring guidance puts delegation inside each standalone workflow, with
-  substantive work assigned to workers and scope, decisions, and the final
-  result retained by the parent. Removes a stale catalog count from agent
-  instructions and keeps installation guidance aligned with current main.
+- Consolidated authoring guidance around independent workflows, concrete
+  decision language, task-specific delegation, and capability fallbacks.
+  Preserved existing invocation metadata and clarified default discovery for
+  new skills. Updated installation examples and the 17-skill catalog.
+- Clarified `writing` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
 
-### Changed - 2026-10-10
+- `writing` delegates substantial drafting, editing, and source checks by
+  default, while preserving one voice for coherent pieces and reviewing the
+  whole draft for factual drift and changes in stance.
 
-- Consolidated repository Markdown into agent instructions, installation
-  and catalog guidance, and the contributor workflow. Corrected the site
-  URL and tooling guidance, documented separate personal and work
-  installations, and replaced invocation-lock and composition restrictions
-  with portable authoring rules and authorization boundaries. Authoring
-  guidance favors short discovery descriptions, plain English, behavior
-  across agent platforms, and references needed during skill use.
+- Clarified `java` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `java` has a shorter discovery description and direct authoring instructions.
+  Its reference file focuses on version compatibility, value copying,
+  resource lifetime, collection semantics, and concurrency decisions.
+
+- `java` delegates substantive research, implementation, and review by default,
+  carrying supported JDK and API targets into bounded briefs and independently
+  checking the integrated result.
+
+- Clarified `typescript` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `typescript` delegates substantive research, implementation, and review by
+  default, with bounded worker briefs, one owner for coupled edits, and
+  independent verification of integrated changes.
+
+- Clarified `prove-it` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `prove-it` delegates substantive execution by default and requires inspection
+  of returned evidence; verification findings do not authorize product fixes.
+
+- Clarified `explain` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `explain` delegates substantive exploration by default and checks delegated
+  explanations against the source before presenting a coherent account.
+
+- Clarified `triage` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `triage` delegates substantive investigation by default, tests competing
+  explanations, and removes the optional `subagents` companion dependency.
+
+- Clarified workflow wording: research answers source-backed questions at
+  the relevant revision and only implements when requested; delegation
+  briefs and completion handling in `implement` and `test-audit` now name
+  concrete actions. Handoffs use the host's temporary directory, and
+  interview and merge-request instructions remove ambiguous phrasing.
+- Retired the standalone `subagents` skill and embedded focused delegation
+  guidance in `implement`, `research`, and `test-audit`; added `implement` as a
+  standalone workflow for feature and fix requests through verified code.
 
 ### Added — 2026-10-10
+
+- `writing` skill: draft and edit prose for its audience and intent, preserve
+  facts and the author's stance, and check wording and flow. Includes a short
+  discovery description, plain instructions, and before-and-after examples.
+
+- `java` skill: write, refactor, or review Java code against the project's
+  supported Java version, with guidance on API contracts, nulls and errors,
+  resource ownership, collections, concurrency, and verification. Supporting
+  examples link to official Java and OpenJDK sources.
+
+- `typescript` skill: write and review TypeScript with runtime input validation,
+  inference and narrowing, state modeling, module compatibility, async error
+  handling, and verification suited to the project's existing settings. The
+  instructions follow project conventions, with focused examples for use during
+  implementation and review.
+
+- `prove-it` skill: verify feature and fix claims at the boundary that owns the
+  behavior, choose proportionate evidence, define what counts as green, and
+  report actual executions, failures, blocked paths, and remaining gaps. Keep
+  the guidance compact and the description natural; hosts control loading.
+
+- `explain` skill: compact guidance for understanding existing code or system
+  behavior at the user's level, with concrete paths, source locations, state
+  changes, boundaries, relevant failures, and evidence limits. Works standalone
+  and distinguishes observed behavior from inferred intent.
+
+- `triage` skill: compact English guidance for evidence-backed issue diagnosis,
+  reproduction, competing hypotheses, affected scope, and confidence. Stop with
+  a diagnosis or a concrete blocked next step. Optional `subagents` and
+  `research` companions have standalone fallbacks. Analysis alone does not
+  authorize fixes or tracker updates.
 
 - `subagents` skill: delegate substantive work while keeping the main
   conversation available. Explore broadly before narrowing, choose parallel
   or sequential work, and verify changes until green or blocked. The guidance
   adapts to the context workers receive and needs no companion skills.
+
+### Changed — 2026-10-10
+
+- Consolidated repository Markdown into agent instructions, installation
+  and catalog guidance, and the contributor workflow. Corrected the site
+  URL and tooling guidance and documented separate personal and work
+  installations.
 
 ### Changed — 2026-10-09
 

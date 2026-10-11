@@ -1,0 +1,3 @@
+interface:
+  display_name: "Triage"
+  short_description: "Diagnose reported issues from evidence"
