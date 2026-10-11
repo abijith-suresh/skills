@@ -5,7 +5,7 @@ authoring workflow in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Where to look
 
-- `README.md` covers installation and the ten-skill catalog.
+- `README.md` covers installation and the skill catalog.
 - `skills/<skill-name>/SKILL.md` is the canonical content for each skill.
 - `src/content.config.ts` loads the skills; `src/lib/` holds catalog and
   path logic.

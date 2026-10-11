@@ -39,6 +39,18 @@ Chromium, Firefox, and WebKit installations.
   does and when to invoke it.
 - Write plain English that captures the user's working preferences and
   reduces repeated prompting. Prescribe only the structure the task needs.
+- Put delegation instructions in the workflow that owns the work. Default
+  substantive investigation, implementation, and verification to workers;
+  keep scope, user decisions, and the combined result with the parent. One
+  worker can own a cohesive task. Keep trivial actions direct when dispatch
+  and reporting would outweigh the work.
+- Give workers bounded assignments, accessible context, authorization limits,
+  and concrete evidence to return. Parallelize independent work, sequence
+  dependencies, and give overlapping changes one owner. Use background
+  completion notifications when available so the parent stays available.
+  Each workflow owns its evidence standard and stopping conditions; it must
+  not depend on a separate delegation skill. Repeating concise instructions
+  across independently installed skills is acceptable.
 - Keep canonical instructions agnostic to models and agent platforms.
   Describe behavior and intent without platform branches, fixed agent tool or
   model names, or a mandated context mode. State any tools or services the

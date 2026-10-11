@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-11
+
+- Authoring guidance puts delegation inside each standalone workflow, with
+  substantive work assigned to workers and scope, decisions, and the final
+  result retained by the parent. Removes a stale catalog count from agent
+  instructions and keeps installation guidance aligned with current main.
+
 ### Changed - 2026-10-10
 
 - Consolidated repository Markdown into agent instructions, installation
