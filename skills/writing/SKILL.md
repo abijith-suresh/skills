@@ -1,6 +1,6 @@
 ---
 name: writing
-description: Write and edit natural, direct prose. Use when drafting text or improving wording and flow within a writing task.
+description: Draft and edit natural, direct prose. Use when drafting text, or when the user asks for wording, tone, or clarity edits.
 ---
 
 # Writing
@@ -10,30 +10,32 @@ stance, and make the prose clear enough to understand on the first reading.
 
 ## Delegate substantial writing work
 
-Default substantial drafting, editing, and source checks to a worker. Give it
+Default substantial drafting, editing, and source checks to a worker. If
+delegation is unavailable, do the work directly and say so. Give the worker
 the audience, purpose, format, voice, supplied facts, and bounded deliverable.
-Keep a coherent piece with one writer; parallelize independent source checks
-or genuinely separate sections only when that will preserve a consistent
-voice. Review the complete draft against the supplied context for factual
-drift, missing qualifications, and changes in stance. Resolve message and
-wording decisions yourself, then return the final text with only material
+Keep a coherent piece with one writer; parallelize independent
+source checks or genuinely separate sections only when that will preserve a
+consistent voice. Review the complete draft against the supplied context for
+factual drift, missing qualifications, and changes in stance. Resolve message
+and wording decisions yourself, then return the final text with only material
 assumptions or unresolved facts called out. Do not send or publish it unless
 requested.
 
-Keep scope, user decisions, and the combined result with the parent. Prefer a
-less costly capable worker, honoring the user's model preferences. Include
-applicable guidance and authorization limits in each brief, and use context
-pointers only when the worker can access them. Keep coordination with the
-parent and avoid repeating completed discovery. Parallelize independent work
-and sequence dependencies. Trivial lookups or edits can stay direct when
-worker setup and reporting would outweigh the work.
+Keep scope, user decisions, and the combined result with the parent. Choose a
+capable worker that honors the user's model preferences, using a less costly
+option when available. State in each brief what the worker may change and
+what evidence to return. Point to context only when the worker can access it;
+otherwise include the needed material in the brief. Direct trivial lookups or
+edits when dispatch and reporting would outweigh the work.
 
-Run workers in the background when completion notifications are supported.
-When only worker results remain, acknowledge the launch and end the turn; let
-completion bring you back. Carry user steering into active work and keep
-partial worker analysis internal. If notifications are unavailable, use the
-supported completion mechanism and state the limitation. If delegation is
-unavailable, perform the workflow directly and say so.
+Run workers in the background when completion notifications are supported;
+acknowledge the dispatch. With notifications, when only worker results
+remain, end the turn and let completion bring you back. Carry user steering into active work. Without
+notifications, wait for results using an available wait or join operation.
+If no wait or join operation is available, make bounded status checks at
+meaningful work boundaries; do not poll rapidly. If checks do not show
+completion and there is no way to await it, report pending results and what
+follow-up is needed.
 
 ## Understand the message
 
@@ -90,9 +92,8 @@ Return the requested prose in its intended format. Add a brief note only for
 material assumptions, unresolved facts, or substantive changes the user needs
 to assess. Keep the editing process out of the finished text unless requested.
 
-This skill works on its own. Companions are optional and must not create a
-dependency cycle. Skill loading never expands authorization to send, publish,
-or change additional documents.
+Skill loading never expands authorization to send, publish, or change
+additional documents.
 
 ## Before and after
 
