@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed — 2026-10-11
+
+- `typescript` delegates substantive research, implementation, and review by
+  default, with bounded worker briefs, one owner for coupled edits, and
+  independent verification of integrated changes.
+
 ### Added — 2026-10-10
 
 - `subagents` skill: delegate substantive work while keeping the main
