@@ -8,6 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-10-11
 
+- Clarified `triage` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `triage` delegates substantive investigation by default, tests competing
+  explanations, and removes the optional `subagents` companion dependency.
+
 - Clarified workflow wording: research answers source-backed questions at
   the relevant revision and only implements when requested; delegation
   briefs and completion handling in `implement` and `test-audit` now name
@@ -18,6 +24,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   standalone workflow for feature and fix requests through verified code.
 
 ### Added — 2026-10-10
+
+- `triage` skill: compact English guidance for evidence-backed issue diagnosis,
+  reproduction, competing hypotheses, affected scope, and confidence. Stop with
+  a diagnosis or a concrete blocked next step. Optional `subagents` and
+  `research` companions have standalone fallbacks. Analysis alone does not
+  authorize fixes or tracker updates.
 
 - `subagents` skill: delegate substantive work while keeping the main
   conversation available. Explore broadly before narrowing, choose parallel
