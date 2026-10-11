@@ -20,6 +20,8 @@ commands.
 
 Each skill is standalone and platform-agnostic. Skills do not run one
 another. Name the next skill yourself, or let a skill point to it in output.
+Workflows include their own delegation instructions. Substantive work goes
+to workers while the parent owns scope, decisions, and the combined result.
 
 ## Install all skills
 
@@ -42,10 +44,10 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `create-issue` | File one GitHub issue to park a later thought. |
 | `grill-me` | Ask one question at a time to settle a plan or design. |
 | `handoff` | Write a compact handoff document for another agent or session. |
+| `implement` | Implement features and fixes through verified code. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
 | `research` | Read a library's canonical source before implementing against its API. |
-| `subagents` | Delegate work, choose parallel or sequential execution, and keep the main conversation available. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
 
