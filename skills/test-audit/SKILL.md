@@ -16,9 +16,11 @@ Audit existing tests in the requested scope and make a focused cleanup. The goal
 
 Read root and scoped `AGENTS.md` files, test documentation, and the project's test commands. Use the user's scope. If it is broad, group discovery by the repository's real module or package boundaries and choose one coherent batch to edit at a time.
 
-Read each candidate test in full. Find the production behavior it claims to protect, its owner and entry point, relevant callers and sibling implementations, overlapping tests, and test selection in CI. Check history when the reason for a test or test-support seam is unclear. Inspect dependency source or types when a test claims dependency-backed behavior.
+Read each candidate test in full. Find the production behavior it claims to protect, its owner and entry point, relevant callers and sibling implementations, overlapping tests, and test selection in CI. Check history when the reason for a test or test-support seam is unclear. Inspect the pinned dependency's source or types when a test claims dependency-backed behavior.
 
 For substantive audits, delegate real module or package batches to workers.
+If delegation is unavailable, audit and validate directly and state that
+limitation.
 Give each the scope, project guidance and commands, relevant boundaries, and
 the evidence required below. Use independent workers for independent batches;
 the parent owns scope, batch boundaries, cleanup decisions, and integration.
@@ -28,20 +30,24 @@ verifier checks the combined diff and remaining behavior contracts against the
 original scope. Return failures to the cleanup owner and recheck affected
 coverage before reporting completion.
 
-Keep scope, user decisions, and the combined result with the parent. Prefer a
-less costly capable worker, honoring the user's model preferences. Include
-applicable guidance and authorization limits in each brief, and use context
-pointers only when the worker can access them. Keep coordination with the
-parent and avoid repeating completed discovery. Parallelize independent work
-and sequence dependencies. Trivial lookups or edits can stay direct when
-worker setup and reporting would outweigh the work.
+Prefer a less costly capable worker, honoring the user's model preferences.
+State which tests and supporting code each worker may change and which
+behavior must survive. Use context pointers only when the worker can access
+them; otherwise supply the needed material. Pass established coverage
+findings forward rather than sending another worker through the same
+discovery. Trivial lookups or edits can stay direct when worker setup and
+reporting would outweigh the work.
 
 Run workers in the background when completion notifications are supported.
-When only worker results remain, acknowledge the launch and end the turn;
-let completion bring you back. Carry user steering into active work and keep
-partial worker analysis internal. If notifications are unavailable, use the
-supported completion mechanism and state the limitation. If delegation is
-unavailable, perform the workflow directly and say so.
+Continue independent work. With notifications, when only worker results
+remain, tell the user what is running and end the turn so completion brings
+you back. Carry user
+steering into active work and keep
+worker findings tied to the retained behavior contracts. Without
+notifications, use an available wait or join operation. If the host only
+offers status queries, check at meaningful work boundaries, without rapid
+polling. If results remain pending and the host cannot await completion,
+report the pending work and the follow-up needed.
 
 Keep discovery read-only. Share a short summary of high-confidence candidates and the evidence for them before editing. Continue without waiting for approval unless scope or risk is genuinely unclear.
 
@@ -72,4 +78,4 @@ Remove test-only exports, globals, wrappers, injection hooks, or dead production
 
 Have the verifier follow the repository's test and formatting guidance and run the smallest relevant owner and sibling tests against the integrated changes. Reuse valid execution evidence; rerun only when a subsequent change, failure, or gap requires it. If removing a source-level check, run the executable test, script, or dry run that owns the real contract. Run focused formatting and diff checks as appropriate. Report exactly what ran and what could not be checked.
 
-Summarize the behavior covered by removed tests, the remaining proof, production or test-support code simplified, candidates retained with reasons, and the validation results. Do not commit, push, or open or merge a pull request unless the user separately asks for those actions.
+Summarize the behavior covered by removed tests, the remaining proof, production or test-support code simplified, candidates retained with reasons, and the validation results. Do not commit or push, and do not open or merge a pull request, unless the user separately asks for those actions.

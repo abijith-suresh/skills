@@ -4,7 +4,7 @@
 [![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
-test cleanup, commits, pull and merge requests, research, issue creation,
+implementation, test cleanup, commits, pull and merge requests, research, issue creation,
 handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
 and work with compatible coding agents.
 
@@ -47,7 +47,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `implement` | Implement features and fixes through verified code. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
-| `research` | Read a library's canonical source before implementing against its API. |
+| `research` | Resolve API and dependency behavior questions from canonical source. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
 
