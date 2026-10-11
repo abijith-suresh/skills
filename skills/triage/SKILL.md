@@ -21,11 +21,38 @@ product changes; experiments with unapproved external effects must wait.
 Establish expected versus observed behavior, the basis for the expectation,
 and the relevant version, environment, trigger, and frequency. Read existing
 replies and artifacts before asking for information already supplied. Ask the
-user about intended behavior or decisions the code cannot resolve.
+user only about missing or conflicting expectations or decisions the code
+cannot resolve. Carry supplied expectations forward without asking for them
+again.
 
-Follow evidence through the relevant code, logs, tests, and history. Preserve
-source locations and distinguish reporter claims from verified observations.
-Name inaccessible evidence and redact sensitive details from shared output.
+Delegate substantive investigation by default. Give each worker a bounded
+question, the report and relevant context, the evidence to inspect, and a
+concrete finding to return.
+
+Start with broad relevant investigation, then test competing explanations and
+close specific evidence gaps. Workers may inspect different paths or evaluate
+different hypotheses; assign one owner to any overlapping investigation. Keep
+partial analysis internal, compare findings against the same symptom, and
+follow up where evidence conflicts or leaves a gap. A worker's conclusion is a
+lead until its supporting evidence connects the mechanism to the symptom.
+Preserve source locations and distinguish reporter claims from verified
+observations. Name inaccessible evidence and redact sensitive details from
+shared output.
+
+Keep scope, user decisions, and the combined result with the parent. Prefer a
+less costly capable worker, honoring the user's model preferences. Include
+applicable guidance and authorization limits in each brief, and use context
+pointers only when the worker can access them. Keep coordination with the
+parent and avoid repeating completed discovery. Parallelize independent work
+and sequence dependencies. Trivial lookups or checks can stay direct when
+worker setup and reporting would outweigh the work.
+
+Run workers in the background when completion notifications are supported.
+When only worker results remain, acknowledge the launch and end the turn; let
+completion bring you back. Carry user steering into active work and keep
+partial worker analysis internal. If notifications are unavailable, use the
+supported completion mechanism and state the limitation. If delegation is
+unavailable, perform the workflow directly and say so.
 
 Reproduce the reported symptom under matching conditions. Record the steps,
 failure signal, and result. For intermittent or performance issues, preserve
@@ -34,8 +61,8 @@ finding; failure to reproduce does not show that the issue is absent.
 
 Test plausible explanations against observations that distinguish them.
 Include alternatives to the reporter's guess and revise hypotheses when
-evidence contradicts them. A demonstrated cause needs evidence connecting
-its mechanism to the symptom; suspicious code or correlation is a lead.
+evidence contradicts them. A demonstrated cause needs evidence connecting its
+mechanism to the symptom; suspicious code or correlation is a lead.
 
 Assess affected versions, inputs, configurations, and user paths. Separate
 confirmed scope from suspected impact and untested cases.
@@ -47,17 +74,11 @@ access, data, permission, or a user decision. When blocked, preserve findings
 and attempted checks, label unverified hypotheses, and identify the smallest
 question or experiment that would separate the remaining explanations.
 
-Return reconciled findings with expected versus observed behavior, reproduction
-status and evidence, demonstrated causes versus hypotheses, affected scope,
-confidence and its limits, and a concrete next step. Proposing a fix does not
-authorize implementing it or posting the findings to a tracker.
+Return reconciled findings with expected versus observed behavior,
+reproduction status and evidence, demonstrated causes versus hypotheses,
+affected scope, confidence and its limits, and a concrete next step. Proposing
+a fix does not authorize implementing it or posting the findings to a tracker.
 
-## Optional companions
-
-When available and delegation is permitted, `subagents` can guide delegated
-investigation. `research` can help verify dependency behavior against canonical
-source. Triage owns the diagnosis and stopping criteria.
-
-Neither companion is required. Without them, investigate directly when
-permitted and read relevant official documentation or source. Use companions
-only for analysis here; they must not route back into triage.
+`research` may help verify dependency behavior against canonical source when
+useful. It is optional and analysis-only. Triage owns the diagnosis and stop
+criteria; delegated work does not authorize fixes or tracker writes.
