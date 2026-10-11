@@ -1,144 +1,112 @@
 ---
 name: research
 description: >-
-  Clones canonical source and reads the actual API before implementing against
-  a framework or library. Use when implementing against unfamiliar APIs or
-  libraries.
+  Resolve API and dependency behavior questions from canonical source. Use
+  when an answer or implementation depends on how a library, framework, or
+  tool works, including behavior specific to a release.
 metadata:
   featured: "true"
 ---
 
 # Research
 
-Clone the source shallow. Read the actual docs. Implement from truth.
+Answer a concrete dependency question with source evidence. Return the
+relevant behavior, the revision inspected, and the locations that support
+the answer. Change project code only when the request also authorizes
+implementation.
 
-## Store
+## Choose the source and revision
 
-All repos live at `~/.research/<username>/<repo-name>/`.
+Use the supplied repository or source URL. Otherwise identify the dependency
+from the request, imports, manifest, and lockfile, then find its official
+source. Ask only when unresolved source or version ambiguity would change
+the answer.
 
-```
-~/.research/
-  vercel/
-    next.js/
-  tailwindlabs/
-    tailwindcss/
-  facebook/
-    react/
-```
+Match the source to the version involved in the question. Prefer the reported
+or deployed version, then the project's pinned dependency. Use the current
+default branch for questions about current development, and record its
+commit. For a comparison across releases, identify each revision separately.
+Do not substitute latest source for an unavailable affected release.
 
-This persists across sessions. Repos are never deleted automatically.
+## Prepare a stable reference
 
-## Resolve the repository
+Keep reusable shallow clones outside the project. The default store is
+`~/.research/<owner>/<repo>/`; use an equivalent persistent reference
+directory if the host uses different paths. Stored repositories survive
+sessions and are never deleted automatically.
 
-**If the user provides a URL** — use it directly.
-
-**If no URL is provided** — infer from context:
-
-- Identify the framework, library, or tool being implemented against
-- Find the canonical repo (official org, actively maintained, default branch)
-- If genuinely ambiguous between multiple repos, ask before cloning
-
-## Core workflow
-
-### 1. Identify target
-
-Determine what framework, library, or tool the implementation depends on.
-
-- If the user gives a URL, that is the target.
-- Otherwise, inspect project files (`package.json`, imports, config files) to
-  identify dependencies the implementation will interact with.
-- Be explicit about what you are researching before you clone.
-
-### 2. Clone shallow
+For a named tag or branch, clone that revision directly:
 
 ```bash
-git clone --depth 1 <repo-url> ~/.research/<username>/<repo-name>/
+git clone --depth 1 --branch <tag-or-branch> <repo-url> <store-path>
 ```
 
-If it already exists, skip to step 3.
-
-Notify the user briefly:
-> Cloning `<username>/<repo-name>` for reference…
-
-### 3. Refresh
-
-Before each research pass, refresh to the latest commit:
+For an existing clean reference clone, fetch the chosen tag, branch, or
+commit and check out the fetched revision:
 
 ```bash
-git -C ~/.research/<username>/<repo-name> fetch --depth 1 origin HEAD
-git -C ~/.research/<username>/<repo-name> reset --hard FETCH_HEAD
+git -C <store-path> fetch --depth 1 origin <ref>
+git -C <store-path> checkout --detach FETCH_HEAD
+git -C <store-path> rev-parse HEAD
 ```
 
-This keeps the clone at depth 1 forever — no history bloat.
+Resolve release names to actual repository refs. Keep fetches shallow; deepen
+only when the question requires history. Preserve local changes in an
+existing clone by using another reference checkout. One owner prepares each
+shared checkout, then leaves its revision fixed while workers read it. Use
+separate checkouts for concurrent work on different revisions.
 
-Notify the user briefly:
-> Refreshing `<username>/<repo-name>`…
+State the source and revision briefly, then proceed. If cloning or fetching
+is unavailable, inspect versioned canonical source through available source
+browsing or release artifacts. A failed refresh permits reading the existing
+revision only for claims it can answer. Name the unavailable evidence and
+leave claims about another revision unresolved.
 
-If refresh fails, note it briefly and continue with the existing state.
+## Investigate the question
 
-### 4. Orient
+Delegate substantive source investigation by default. If delegation is
+unavailable, follow the same method directly and state that limitation.
+Prefer a less costly capable worker, honoring the user's model preferences.
+Keep source selection, interpretation, and the final answer with the parent.
 
-Build a mental map of the project:
+Give each worker the question, chosen revision, relevant project context,
+and a read-only assignment. Require file and symbol locations, the behavior
+observed, and any limits on the conclusion. Point to material only when the
+worker can access it; otherwise include the needed excerpts.
 
-```bash
-cat ~/.research/<username>/<repo-name>/README.md
-ls -la ~/.research/<username>/<repo-name>/
-find ~/.research/<username>/<repo-name> -name "*.md" | head -20
-```
+For a broad question, first locate exports, implementation paths, examples,
+and tests that cover the behavior. Use that map to assign focused reads of
+unresolved paths. Carry earlier findings forward. Investigate independent
+questions in parallel; sequence questions that depend on an earlier answer.
+A single lookup can stay direct when dispatch and reporting would cost more
+than the lookup.
 
-Focus on:
+Run workers in the background when completion notifications are available.
+Continue independent work. With notifications, when only worker results
+remain, tell the user what is running and end the turn so completion brings
+you back. Carry user
+steering into active assignments. Without notifications, use an available
+wait or join operation. If the host only offers status queries, check at
+meaningful work boundaries, without rapid polling. If results remain pending
+and the host cannot await completion, report the pending work and the
+follow-up needed.
 
-- What does the project export or expose?
-- Where are the source files (src/, lib/, packages/)?
-- Are there examples or tests that show real usage patterns?
+Reconcile worker findings against the chosen revision. Trace the relevant
+entry point through the conditions that determine the result. Examples and
+tests show exercised cases; distinguish those from behavior demonstrated
+by the implementation and from promises in documentation. Resolve conflicts
+with targeted reads rather than repeating the whole investigation.
 
-### 5. Read with intent
+## Return the result
 
-Read the specific files, modules, types, tests, or examples directly relevant
-to the code you are about to write. Not browsing — targeted reading driven by
-what the implementation needs.
+Answer the question with source locations and the revision inspected.
+Separate demonstrated behavior, inference, and unresolved claims. Stop
+when the question is answered, or when missing source, access, or a user
+decision prevents the next useful check. For a blocked answer, name that
+check and what would enable it.
 
-### 6. Implement
-
-Write code that mirrors the patterns found. This is the implicit output of the
-skill — the research exists to ground implementation in source truth.
-
-## Rules
-
-- **Inform, never ask** — say "Cloning…" or "Refreshing…" then act immediately
-- **Shallow clone only** — always `--depth 1`. Full clones waste disk space.
-- **Refresh before each research pass** — fetch the latest HEAD before reading.
-  A stale reference is worse than no reference.
-- **Never clone into the project directory** — always use `~/.research/`
-- **Never delete repos** — the store is persistent; cleanup is always a manual
-  user action
-- **Implement from truth** — the output of this skill is working code grounded
-  in the source, not a summary or report
-
-## Delegation
-
-Delegate substantive source investigation with the target, question, relevant
-repository context, bounded scope, and a request for source locations and
-observed evidence. The parent owns target resolution, conclusions, and
-implementation decisions. For broad research, sweep first, then assign focused
-reads for the questions that matter; do not ask workers to repeat discovery.
-
-One owner refreshes a shared clone. Keep its revision stable while workers read
-it. If concurrent refresh or reads could change what they see, use snapshots or
-isolated clones. Do not run duplicate refreshes. Reconcile findings against the
-source before implementing, and report refresh failures or unresolved ambiguity.
-
-Keep scope, user decisions, and the combined result with the parent. Prefer a
-less costly capable worker, honoring the user's model preferences. Include
-applicable guidance and authorization limits in each brief, and use context
-pointers only when the worker can access them. Keep coordination with the
-parent and avoid repeating completed discovery. Parallelize independent work
-and sequence dependencies. Trivial lookups or edits can stay direct when
-worker setup and reporting would outweigh the work.
-
-Run workers in the background when completion notifications are supported.
-When only worker results remain, acknowledge the launch and end the turn;
-let completion bring you back. Carry user steering into active work and keep
-partial worker analysis internal. If notifications are unavailable, use the
-supported completion mechanism and state the limitation. If delegation is
-unavailable, perform the workflow directly and say so.
+If implementation is also requested, apply the demonstrated API and
+version-specific constraints to the requested change. Verify its behavior
+and required repository checks before reporting completion. Source reading
+alone does not prove that the resulting code works, and it does not authorize
+commits, publication, or deployment.

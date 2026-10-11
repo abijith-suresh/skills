@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed — 2026-10-11
 
+- Clarified workflow wording: research answers source-backed questions at
+  the relevant revision and only implements when requested; delegation
+  briefs and completion handling in `implement` and `test-audit` now name
+  concrete actions. Handoffs use the host's temporary directory, and
+  interview and merge-request instructions remove ambiguous phrasing.
 - Retired the standalone `subagents` skill and embedded focused delegation
   guidance in `implement`, `research`, and `test-audit`; added `implement` as a
   standalone workflow for feature and fix requests through verified code.
