@@ -11,8 +11,8 @@ metadata:
 # Open MR (GitLab)
 
 Push the current branch. Create a GitLab merge request if this branch has
-none. Update title and body if it already has one. Work GitLab. The ticket
-lives in Jira. The title must carry that key.
+none. Update title and body if it already has one. This workflow uses GitLab
+and a Jira ticket key, which must lead the title.
 
 This skill does not commit. If the work is uncommitted, stop and tell the
 user to use `commit-work` first.
@@ -139,7 +139,7 @@ line.
 
 Print the URL. Say whether this created an MR or updated one.
 
-## Failure Conditions
+## Failure conditions
 
 | Condition | Message |
 |---|---|
