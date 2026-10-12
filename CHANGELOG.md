@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed - 2026-10-12
 
+- `prove-it` chooses delegation for the whole request before investigating,
+  with a stated direct-work reason and user steering sent to its worker.
+
 - Simplified `prove-it` around worker-owned execution, task-specific evidence,
   and targeted parent review; diagnostic artifacts are no longer routine.
 

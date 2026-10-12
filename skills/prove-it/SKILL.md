@@ -23,13 +23,15 @@ desired outcome; tests or implementation do not replace the contract.
 
 ## Run the check
 
-Delegate substantive verification by default to a less costly capable
-worker, honoring the user's model preference. Assign the first substantive
-check before doing it yourself. A single already-prescribed cheap check may be
-run directly when dispatch costs more than the check. Choosing a behavioral
-check or deciding whether a fix meets the contract is substantive, regardless
-of code or check size. If delegation is unavailable, verify directly and say
-so.
+Before the first substantive verification call, dispatch a worker for the whole
+verification and announce the assignment. Judge the claim as a whole, not the next command's
+cost; honor explicit user delegation requirements. One already-prescribed
+cheap check may run directly when dispatch costs more; state a one-line reason
+first. Otherwise, choosing a check or judging the contract is substantive and
+must be assigned before execution. If delegation is unavailable, verify
+directly and say so. Prefer a less costly capable worker, honoring the user's
+model preference. Forward new logs, evidence, and user requests to the assigned
+worker; do not take over.
 
 Give the worker the claim, starting conditions, relevant context, and a
 request to choose and run the smallest check at the matching boundary, then
