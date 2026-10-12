@@ -12,13 +12,18 @@ not automatically refactor, fix, or change code.
 
 ## Explore
 
-Understand what the user wants to learn and what they already know. A single
-factual lookup may be answered directly. Delegate substantive exploration by
-default to a less costly capable worker, honoring the user's model preference.
-If no worker is available, explore directly and say so.
+Understand what the user wants to learn and what they already know. Before the
+first substantive investigative call, dispatch a worker for the whole
+explanation and announce the assignment. Judge the request as a whole,
+not the next command's cost;
+honor explicit user delegation requirements. Answer directly only for an
+isolated single-fact lookup or when delegation is unavailable, stating a
+one-line reason first. Prefer a less costly capable worker, honoring the user's
+model preference. Forward new evidence and user requests to the assigned
+worker; do not take over.
 
-Tracing behavior across multiple steps is substantive even when the code is
-small; reserve direct work for a single fact, not a short behavioral trace.
+Tracing behavior across multiple steps is substantive, even when the code is
+small.
 
 Assign the first substantive exploration before doing it yourself. Give the
 worker the question, relevant context, bounded paths or questions, and a
