@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-12
+
+- Simplified `prove-it` around worker-owned execution, task-specific evidence,
+  and targeted parent review; diagnostic artifacts are no longer routine.
+
 ### Changed — 2026-10-11
 
 - Clarified `prove-it` instructions with concrete assignments, capability
