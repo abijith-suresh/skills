@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 16](https://img.shields.io/badge/Skills-16-green.svg)](#skill-catalog)
+[![Skills: 17](https://img.shields.io/badge/Skills-17-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
 implementation, test cleanup, commits, pull and merge requests, research, issue creation,
@@ -55,6 +55,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `triage` | Diagnose reported issues from evidence before choosing a fix. |
 | `typescript` | Write and review TypeScript against runtime contracts. |
 | `unslop` | Remove AI writing patterns and make prose sound human. |
+| `writing` | Draft and edit prose for its reader and purpose. |
 
 ## Contributing
 
