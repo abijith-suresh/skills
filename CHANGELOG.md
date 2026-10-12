@@ -6,37 +6,50 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-12
+
+- Simplified `prove-it` around worker-owned execution, task-specific evidence,
+  and targeted parent review; diagnostic artifacts are no longer routine.
+
+- Simplified `explain` around worker-owned execution, task-specific evidence,
+  and targeted parent review; diagnostic artifacts are no longer routine.
+
+- `triage` and `implement` assign the first substantive work to a worker and
+  keep the parent on coordination, review, and targeted evidence gaps.
+  Diagnostic files and log bundles now require a purpose in the task instead
+  of being routine proof artifacts.
+
 ### Changed — 2026-10-11
-
-- Clarified `java` instructions with concrete assignments, capability
-  fallbacks, evidence standards, and standalone workflow boundaries.
-
-- `java` has a shorter discovery description and direct authoring instructions.
-  Its reference file focuses on version compatibility, value copying,
-  resource lifetime, collection semantics, and concurrency decisions.
 
 - `java` delegates substantive research, implementation, and review by default,
   carrying supported JDK and API targets into bounded briefs and independently
   checking the integrated result.
 
-- Clarified `typescript` instructions with concrete assignments, capability
+- `java` has a shorter discovery description and direct authoring instructions.
+  Its reference file focuses on version compatibility, value copying,
+  resource lifetime, collection semantics, and concurrency decisions.
+
+- Clarified `java` instructions with concrete assignments, capability
   fallbacks, evidence standards, and standalone workflow boundaries.
 
 - `typescript` delegates substantive research, implementation, and review by
   default, with bounded worker briefs, one owner for coupled edits, and
   independent verification of integrated changes.
 
-- Clarified `prove-it` instructions with concrete assignments, capability
+- Clarified `typescript` instructions with concrete assignments, capability
   fallbacks, evidence standards, and standalone workflow boundaries.
 
 - `prove-it` delegates substantive execution by default and requires inspection
   of returned evidence; verification findings do not authorize product fixes.
 
-- Clarified `explain` instructions with concrete assignments, capability
+- Clarified `prove-it` instructions with concrete assignments, capability
   fallbacks, evidence standards, and standalone workflow boundaries.
 
 - `explain` delegates substantive exploration by default and checks delegated
   explanations against the source before presenting a coherent account.
+
+- Clarified `explain` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
 
 - Clarified `triage` instructions with concrete assignments, capability
   fallbacks, evidence standards, and standalone workflow boundaries.
