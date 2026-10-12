@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-12
+
+- `triage` and `implement` assign the first substantive work to a worker and
+  keep the parent on coordination, review, and targeted evidence gaps.
+  Diagnostic files and log bundles now require a purpose in the task instead
+  of being routine proof artifacts.
+
 ### Changed — 2026-10-11
 
 - Clarified `triage` instructions with concrete assignments, capability

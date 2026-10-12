@@ -9,75 +9,66 @@ description: >-
 # Implement
 
 Take a feature or fix request, or an existing plan, through implementation and
-verification. Delegate substantive investigation, edits, and verification.
-If delegation is unavailable, perform the same workflow directly and state
-that limitation. The parent owns scope, user decisions, dependencies,
-integration, and the final result.
+verification. The parent owns coordination, user decisions, integration, and
+the final result. If delegation is unavailable, perform the same workflow
+directly and state that limitation.
 
-## Establish the change
+## Assign the work
 
-Use workers to inspect the affected paths, callers, tests, and repository
-guidance. Start with a broad sweep within the requested scope, then close
-specific gaps that affect the approach. Establish the expected behavior,
-constraints, and observable acceptance criteria before assigning edits.
-Carry an existing diagnosis or plan forward instead of rediscovering it.
+Start by delegating substantive work. Prefer a less costly capable worker,
+honoring the user's model preference. Give the worker the request, supplied
+diagnosis or plan, original expected behavior, claimed failure, allowed edit
+scope, known constraints, and relevant repository guidance. Ask it to inspect
+the requested paths and reproduce the reported failure before changing code
+when practical. It owns the assigned edits and runs checks needed for its
+change. Carry forward intended inputs and compatibility constraints. Existing
+behavior on a reported failing input does not redefine the request.
 
-Keep a concise plan with change ownership and dependencies. Ask about missing
-intent or consequential decisions the code cannot settle. Continue independent
-work while answers are pending. Make routine implementation choices within the
-request without adding a plan-approval gate.
+The parent carries forward supplied expectations and decisions, asks only
+about missing intent or consequential choices the code cannot resolve, and
+sets ownership for overlapping work. Use one implementer for a cohesive
+change. Parallelize only independent work. Keep routine choices within the
+request; do not add a plan-approval gate. A narrow single lookup or trivial
+mechanical edit may stay direct only when it needs no investigation or behavior
+judgment. Patch size or cheap checks alone do not make behavior changes direct.
 
-## Delegate and integrate
+Workers return concise findings and relevant command results in the
+conversation. Standard tool output is enough by default. Create diagnostic
+files, logs, or evidence bundles only when the task needs them or an existing
+project convention requires them, and state their purpose. Use context
+pointers only when workers can access them; otherwise provide the needed
+material.
 
-Give each worker a bounded change, the relevant requirements and repository
-rules, the files it may edit, and the checks and evidence it must return.
-Use context pointers only when the worker can access them; otherwise supply
-the needed material.
-Prefer a less costly capable worker, honoring the user's model preferences.
+## Integrate and verify
 
-One implementer can own a cohesive change. Parallelize independent work;
-sequence dependencies and give overlapping edits one owner. Pass established
-contracts and earlier findings forward. Review and integrate the actual changes
-before verifying the combined result. Inspect changes and evidence; repeat
-discovery only to resolve a conflict or verification gap. Trivial lookups or
-edits can stay direct when dispatch and reporting would outweigh the work.
+For every behavior change or bug fix, including a small patch, a separate
+verifier gets the original user request, expected behavior, and claimed failure
+unchanged, plus the integrated diff. The verifier inspects the result, runs
+relevant checks, and compares each requested outcome with observed behavior.
+The implementer's interpretation, summary, or new tests cannot replace that
+contract or its verification. Add a regression check when existing coverage
+would not catch the reported failure. A mechanical edit may use direct,
+proportionate checks.
 
-Run workers in the background when completion notifications are supported.
-Continue independent work. With notifications, when only worker results
-remain, tell the user what is running and end the turn so completion brings
-you back. Carry user
-steering into the active work.
-Report reconciled findings rather than unresolved worker conclusions.
-Without notifications, use an available wait or join operation. If the host
-only offers status queries, check at meaningful work boundaries, without
-rapid polling. If results remain pending and the host cannot await completion,
-report the pending work and the follow-up needed.
+The parent reviews the actual diff and verifier's observations against the
+original request. It does not repeat assigned checks in place of independent
+verification. If a requested outcome and observation conflict, send that
+specific gap to the implementer and verifier to resolve. Required repository
+checks must pass, relevant failures must be resolved, and unexplained failures
+must be investigated. Static checks and mocks support only the contracts they
+exercise. Keep passing evidence unless a new change invalidates it. If missing
+access, prerequisites, or a user decision blocks a check, report the unverified
+claim and next step.
 
-## Verify and correct
-
-Give a separate verifier the original requirements, the integrated artifact or
-diff, and observable acceptance criteria. It must inspect and execute checks
-against the result, returning commands or actions, conditions, observations,
-failures, and gaps. The implementer's summary is context, not proof.
-
-Review that evidence before calling the work green. Green means the requested
-behavior has supporting observations, required repository checks pass, and
-relevant failures are resolved. Static checks and mocks support only the
-contracts they exercise. For a fix, reproduce the failure before the change
-when practical. Add a regression check when existing coverage would not
-detect the same failure.
-
-Return failures with evidence to the implementer, then reverify affected
-behavior and checks. Keep passing evidence unless new changes invalidate it.
-Preserve expectations and investigate unexplained failures. Continue while
-each round makes progress; change approach or report a concrete blocker when
-it does not. Missing access, prerequisites, or user decisions leave affected
-claims unverified.
+While workers run, coordinate and await their results without taking over
+their assignments. If the host supports notifications, yield or end the turn
+when worker results are the only work left. Otherwise use the available wait
+or join operation. If the host cannot wait, report what remains pending; do not
+poll rapidly or present pending results as complete.
 
 ## Finish
 
-Return what changed, supporting verification, remaining limits, and the next
-step. Commit, push, or open a PR or MR when that is part of the authorized
-outcome, following the repository's branch and publishing guidance. Do not
-merge or deploy unless authorized. Delegation never expands the user's
-authorization.
+Return what changed, supporting checks, remaining limits, and the next step.
+Commit, push, or open a PR or MR only when that is part of the authorized
+outcome, following repository guidance. Do not merge or deploy unless
+authorized. Delegation does not expand the user's authorization.
