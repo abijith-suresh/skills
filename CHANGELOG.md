@@ -20,6 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Simplified `explain` around worker-owned execution, task-specific evidence,
   and targeted parent review; diagnostic artifacts are no longer routine.
 
+- Rewrote `triage` and `implement` as ordered delegation, execution, and
+  review steps. Removed repeated rules and restored the implementation
+  retry boundary while retaining request-wide ownership and independent
+  verification.
 - Delegation decisions now precede investigation and apply to the whole
   request, with a stated reason for direct work. New user evidence stays with
   the assigned worker during interactive diagnosis.
