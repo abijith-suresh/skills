@@ -54,7 +54,9 @@ proportionate checks.
 
 The parent reviews the actual diff and verifier's observations against the
 original request. It does not repeat assigned checks in place of independent
-verification. If a requested outcome and observation conflict, send that
+verification. Reuse completed worker checks; reading the diff does not require
+another run. Rerun only if the checked code, inputs, or environment changed,
+or the result leaves a concrete evidence gap. If an outcome and observation conflict, send that
 specific gap to the implementer and verifier to resolve. Required repository
 checks must pass, relevant failures must be resolved, and unexplained failures
 must be investigated. Static checks and mocks support only the contracts they
