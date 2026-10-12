@@ -11,13 +11,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Simplified `explain` around worker-owned execution, task-specific evidence,
   and targeted parent review; diagnostic artifacts are no longer routine.
 
-### Changed — 2026-10-11
+- `triage` and `implement` assign the first substantive work to a worker and
+  keep the parent on coordination, review, and targeted evidence gaps.
+  Diagnostic files and log bundles now require a purpose in the task instead
+  of being routine proof artifacts.
 
-- Clarified `explain` instructions with concrete assignments, capability
-  fallbacks, evidence standards, and standalone workflow boundaries.
+### Changed — 2026-10-11
 
 - `explain` delegates substantive exploration by default and checks delegated
   explanations against the source before presenting a coherent account.
+
+- Clarified `explain` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
 
 - Clarified `triage` instructions with concrete assignments, capability
   fallbacks, evidence standards, and standalone workflow boundaries.
