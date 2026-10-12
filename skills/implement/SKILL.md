@@ -15,24 +15,29 @@ directly and state that limitation.
 
 ## Assign the work
 
-Start by delegating substantive work. Prefer a less costly capable worker,
-honoring the user's model preference. Give the worker the request, supplied
-diagnosis or plan, original expected behavior, claimed failure, allowed edit
-scope, known constraints, and relevant repository guidance. Ask it to inspect
-the requested paths and reproduce the reported failure before changing code
-when practical. It owns the assigned edits and runs checks needed for its
-change. Carry forward intended inputs and compatibility constraints. Existing
-behavior on a reported failing input does not redefine the request.
-Label reported behavior as observations and requested behavior as expectations
-in worker briefs.
+Before the first substantive investigative or execution call, dispatch a
+worker for the complete requested change and announce the assignment.
+Judge the whole request, not the next command's cost; honor explicit user
+delegation requirements. Direct work is limited to an entire isolated fact
+lookup or mechanical task needing no investigation or behavior judgment, or
+unavailable delegation; state a one-line reason first. Prefer a less costly
+capable worker, honoring the user's model preference. Forward new evidence and
+user requests to the assigned worker; do not take over. Give the worker the
+request, supplied diagnosis or plan, original expected behavior, claimed
+failure, allowed edit scope, known
+constraints, and relevant repository guidance. Ask it to inspect the requested
+paths and reproduce the reported failure before changing code when practical.
+It owns the assigned edits and runs checks needed for its change. Carry forward
+intended inputs and compatibility constraints. Existing behavior on a reported
+failing input does not redefine the request. Label reported behavior as
+observations and requested behavior as expectations in worker briefs.
 
 The parent carries forward supplied expectations and decisions, asks only
 about missing intent or consequential choices the code cannot resolve, and
 sets ownership for overlapping work. Use one implementer for a cohesive
 change. Parallelize only independent work. Keep routine choices within the
-request; do not add a plan-approval gate. A narrow single lookup or trivial
-mechanical edit may stay direct only when it needs no investigation or behavior
-judgment. Patch size or cheap checks alone do not make behavior changes direct.
+request; do not add a plan-approval gate. Patch size or cheap checks alone do
+not make behavior changes direct.
 
 Workers return concise findings and relevant command results in the
 conversation. Standard tool output is enough by default. Create diagnostic

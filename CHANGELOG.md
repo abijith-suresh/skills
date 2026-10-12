@@ -14,27 +14,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Simplified `prove-it` around worker-owned execution, task-specific evidence,
   and targeted parent review; diagnostic artifacts are no longer routine.
 
+- `explain` chooses delegation for the whole request before investigating,
+  with a stated direct-work reason and user steering sent to its worker.
+
 - Simplified `explain` around worker-owned execution, task-specific evidence,
   and targeted parent review; diagnostic artifacts are no longer routine.
 
+- Delegation decisions now precede investigation and apply to the whole
+  request, with a stated reason for direct work. New user evidence stays with
+  the assigned worker during interactive diagnosis.
 - `triage` and `implement` assign the first substantive work to a worker and
   keep the parent on coordination, review, and targeted evidence gaps.
   Diagnostic files and log bundles now require a purpose in the task instead
   of being routine proof artifacts.
 
 ### Changed — 2026-10-11
-
-- `prove-it` delegates substantive execution by default and requires inspection
-  of returned evidence; verification findings do not authorize product fixes.
-
-- Clarified `prove-it` instructions with concrete assignments, capability
-  fallbacks, evidence standards, and standalone workflow boundaries.
-
-- `explain` delegates substantive exploration by default and checks delegated
-  explanations against the source before presenting a coherent account.
-
-- Clarified `explain` instructions with concrete assignments, capability
-  fallbacks, evidence standards, and standalone workflow boundaries.
 
 - Clarified `triage` instructions with concrete assignments, capability
   fallbacks, evidence standards, and standalone workflow boundaries.
@@ -52,16 +46,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   standalone workflow for feature and fix requests through verified code.
 
 ### Added — 2026-10-10
-
-- `prove-it` skill: verify feature and fix claims at the boundary that owns the
-  behavior, choose proportionate evidence, define what counts as green, and
-  report actual executions, failures, blocked paths, and remaining gaps. Keep
-  the guidance compact and the description natural; hosts control loading.
-
-- `explain` skill: compact guidance for understanding existing code or system
-  behavior at the user's level, with concrete paths, source locations, state
-  changes, boundaries, relevant failures, and evidence limits. Works standalone
-  and distinguishes observed behavior from inferred intent.
 
 - `triage` skill: compact English guidance for evidence-backed issue diagnosis,
   reproduction, competing hypotheses, affected scope, and confidence. Stop with
