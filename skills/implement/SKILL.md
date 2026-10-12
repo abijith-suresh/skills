@@ -23,6 +23,8 @@ the requested paths and reproduce the reported failure before changing code
 when practical. It owns the assigned edits and runs checks needed for its
 change. Carry forward intended inputs and compatibility constraints. Existing
 behavior on a reported failing input does not redefine the request.
+Label reported behavior as observations and requested behavior as expectations
+in worker briefs.
 
 The parent carries forward supplied expectations and decisions, asks only
 about missing intent or consequential choices the code cannot resolve, and
