@@ -18,9 +18,14 @@ with unapproved external effects.
 
 ## Investigate
 
-Delegate the first substantive investigation. Prefer a less costly capable
-worker, honoring the user's model preference. If delegation is unavailable,
-perform the same bounded investigation directly and state that limitation.
+Before the first investigative tool call, dispatch a worker for the whole
+diagnosis, including source, log, or pipeline inspection and reproduction,
+and announce the assignment.
+Judge the request as a whole, not the next command's cost; honor explicit user
+delegation requirements. Work directly only for an isolated single-fact request
+or when delegation is unavailable, stating a one-line reason first. Prefer a
+less costly capable worker, honoring the user's model preference. Forward new
+logs, evidence, and user requests to the assigned worker; do not take over.
 Give the worker the report, supplied expectations and diagnosis, accessible
 context, authorization limits, and a bounded question. Ask it to start with the
 reported path, inspect relevant evidence, and reproduce the symptom under
@@ -49,8 +54,9 @@ the report and evidence cannot settle, resolves access gaps, and reconciles
 conflicting or incomplete findings. It does not repeat source investigation,
 reproduction, or checks assigned to a worker. It requests bounded follow-up
 only for a concrete evidence gap, and may make a narrow spot-check when that
-gap requires it. A narrow single lookup or check may be done directly when
-dispatch and reporting would outweigh the work.
+gap requires it. Basic authorized workspace or source synchronization may
+precede investigation; reading the skill, locating the workspace, and reading
+the report do not require delegation.
 
 While workers run, coordinate and await their findings without taking over
 their assignments. If the host supports notifications, yield or end the turn

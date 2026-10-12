@@ -8,6 +8,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed - 2026-10-12
 
+- Delegation decisions now precede investigation and apply to the whole
+  request, with a stated reason for direct work. New user evidence stays with
+  the assigned worker during interactive diagnosis.
 - `triage` and `implement` assign the first substantive work to a worker and
   keep the parent on coordination, review, and targeted evidence gaps.
   Diagnostic files and log bundles now require a purpose in the task instead
