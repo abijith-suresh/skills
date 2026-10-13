@@ -13,8 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   and evidence standards into worker briefs, preserve explicit delegation
   requirements, and report blocked explanations without repeated tracing.
   Real-repository execution checks prompted unchanged question scope in
-  worker briefs, inline demonstrations by default, and worker-owned citation
-  checks.
+  worker briefs and inline demonstrations. Focused parent checks are allowed;
+  substantial tracing stays with the worker.
+  A three-field assignment template preserves the request and worker
+  instructions. Explanations build a working mental model of the asked flow.
 
 ### Changed - 2026-10-12
 

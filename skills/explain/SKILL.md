@@ -30,27 +30,30 @@ precede dispatch.
 At dispatch, keep one owner for a coherent flow. Split independent topics when
 useful, naming explorers and one synthesis owner who handles follow-up.
 
-Give workers the user's question unchanged, audience, context, paths, and
-requirements below. The question defines scope; the audience guides wording.
-Include material they cannot access.
+Fill only these fields in each worker assignment:
+
+- Question: the user's request unchanged.
+- Context: audience, workspace, and relevant facts or access limits.
+- Instructions: section 2 verbatim.
 
 ## 2. Trace and explain
 
-The worker traces a concrete input or action to its result, including relevant
-decisions, state changes, and failure behavior. It writes the shortest complete
-answer with source locations beside supported claims.
+Give a working mental model of the asked behavior. Trace input to result,
+highlighting the decisions and failure behavior needed to understand it.
+Use source locations for the key steps.
 
-Separate inspected code, observed execution, and documented promises. Label
-inferred intent with its basis and illustrative values as examples. Name gaps
-or conflicting sources. Use snippets or diagrams only when they clarify.
+Ground the explanation in inspected code. Label execution results and inferred
+intent; name gaps that affect the answer. Use snippets or diagrams when they
+clarify the flow.
 
-Return the answer inline. Run optional demonstrations inline by default.
-Save files only for a stated task need or required project convention.
+Return the answer inline. Use focused demonstrations when they clarify the
+answer. Prefer inline commands; create files only for requested outputs or
+required project tooling.
 
 ## 3. Edit and present
 
 The parent edits the worker's answer for relevance, completeness, and clarity.
-Source inspection, execution, and citation checks belong to the worker.
+It may spot-check a specific claim; the worker owns substantial tracing.
 Send concrete gaps back as bounded follow-up; continue only while resolving
 them. New evidence and user steering go to the same owner.
 
