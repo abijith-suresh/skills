@@ -1,61 +1,65 @@
 ---
 name: explain
 description: >-
-  Explain how existing code or a system works. Use when the user asks how
-  something works or wants a code walkthrough.
+  Explain existing code or system behavior. Use for code walkthroughs and
+  questions about how the user's codebase or system works.
 ---
 
 # Explain
 
-Explain the existing system at the user's level. Focus on understanding; do
-not automatically refactor, fix, or change code.
+The worker traces and writes; the parent edits and presents. Explanation
+alone authorizes no product edits. Demonstrations stay within the user's
+existing authorization.
 
-## Explore
+## 1. Delegate first
 
-Understand what the user wants to learn and what they already know. Before the
-first substantive investigative call, dispatch a worker for the whole
-explanation and announce the assignment. Judge the request as a whole,
-not the next command's cost;
-honor explicit user delegation requirements. Answer directly only for an
-isolated single-fact lookup or when delegation is unavailable, stating a
-one-line reason first. Prefer a less costly capable worker, honoring the user's
-model preference. Forward new evidence and user requests to the assigned
-worker; do not take over.
+Frame the supplied question for its audience; state your interpretation if
+ambiguous.
 
-Tracing behavior across multiple steps is substantive, even when the code is
-small.
+- Honor explicit user delegation and model choices. If required delegation is
+  unavailable, report the blocker.
+- Otherwise, answer directly only for an isolated single-fact lookup or when
+  delegation is unavailable. State the reason first.
+- Otherwise, dispatch a capable worker before investigating. Prefer lower cost
+  and announce its assignment.
 
-Assign the first substantive exploration before doing it yourself. Give the
-worker the question, relevant context, bounded paths or questions, and a
-concise request for findings with source locations and unresolved gaps,
-returned inline. Make sure referenced context is accessible; include what is
-needed if it is not. Create a diagnostic artifact only when this task needs it
-to support or reproduce the explanation, or the user or project requires it;
-state its purpose. Workers investigate only; they do not edit product code.
+Judge the whole request, not its next command's cost. Even a short multi-step
+trace requires delegation. Reading the request and locating the workspace may
+precede dispatch.
 
-The worker traces the execution and writes the explanation. For a question
-crossing independent boundaries, split those boundaries among distinct
-explorers and assign one worker to synthesize their findings. The parent frames
-the question, assigns the work, reviews the cited evidence, and presents the
-answer. Request bounded follow-up for an actual gap or conflict; do not repeat
-the source tracing.
-If the host can notify, yield when worker results are the only work left;
-otherwise use an available wait or join. If neither can await completion,
-report pending work without polling repeatedly.
+At dispatch, keep one owner for a coherent flow. Split independent topics when
+useful, naming explorers and one synthesis owner who handles follow-up.
 
-## Explain
+Fill only these fields in each worker assignment:
 
-In the returned explanation, give the shortest complete account that answers
-the question. Trace a concrete input or action through the relevant flow to its
-result, including decisions, state changes, and failure behavior when they
-matter. Put source locations near the claims they support. Use a snippet or
-diagram only when it makes the explanation clearer.
+- Question: the user's request unchanged.
+- Context: audience, workspace, and relevant facts or access limits.
+- Instructions: section 2 verbatim.
 
-Distinguish inspected code behavior from observed execution and documented
-promises. Label inferred intent and give its basis. Mark illustrative values as
-examples. State unresolved gaps or source conflicts without filling them with
-guesswork. Stop when the question is answered; do not add a subsystem tour or
-sections the user does not need.
+## 2. Trace and explain
 
-Skill loading and demonstrations stay within the user's existing
-authorization.
+Give a working mental model of the asked behavior. Trace input to result,
+highlighting the decisions and failure behavior needed to understand it.
+Use source locations for the key steps.
+
+Ground the explanation in inspected code. Label execution results and inferred
+intent; name gaps that affect the answer. Use snippets or diagrams when they
+clarify the flow.
+
+Return the answer and demonstration output inline. Use one-off commands for
+focused demonstrations that clarify the answer. Create files only for requested
+outputs or required project tooling.
+
+## 3. Edit and present
+
+The parent edits the worker's answer for relevance, completeness, and clarity.
+It may spot-check a specific claim; the worker owns substantial tracing.
+Send concrete gaps back as bounded follow-up; continue only while resolving
+them. New evidence and user steering go to the same owner.
+
+When only worker results remain, yield for completion notifications or use
+wait/join. If neither is available, report pending work separately from findings.
+
+Present the worker's answer with light clarity edits. Finish when the question
+is answered. If blocked, return what was traced, remaining unknowns, and the
+smallest missing input or access needed.

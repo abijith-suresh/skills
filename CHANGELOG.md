@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added - 2026-10-13
+
+- Added standalone `explain` for focused, source-backed explanations with
+  worker-owned tracing and parent editing. Ordered steps carry the audience
+  and evidence standards into worker briefs, preserve explicit delegation
+  requirements, and report blocked explanations without repeated tracing.
+  Real-repository execution checks prompted unchanged question scope in
+  worker briefs and inline demonstration output. Focused parent checks are
+  allowed; substantial tracing stays with the worker.
+  A three-field assignment template preserves the request and worker
+  instructions. Explanations build a working mental model of the asked flow.
+
 ### Changed - 2026-10-12
 
 - `prove-it` chooses delegation for the whole request before investigating,
@@ -14,11 +26,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Simplified `prove-it` around worker-owned execution, task-specific evidence,
   and targeted parent review; diagnostic artifacts are no longer routine.
 
-- `explain` chooses delegation for the whole request before investigating,
-  with a stated direct-work reason and user steering sent to its worker.
+- `explain` assigns the whole explanation before investigating, states reasons
+  for direct lookups, and forwards user steering to its worker.
 
-- Simplified `explain` around worker-owned execution, task-specific evidence,
-  and targeted parent review; diagnostic artifacts are no longer routine.
+- `explain` keeps investigation with workers and diagnostic artifacts tied to
+  a task need, with targeted parent review of the returned explanation.
 
 - Rewrote `triage` and `implement` as ordered delegation, execution, and
   review steps. Removed repeated rules and restored the implementation
