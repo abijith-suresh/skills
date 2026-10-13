@@ -6,10 +6,99 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
-### Added — 2026-10-08
+### Changed - 2026-10-13
 
-- `clarify` skill: rewrite a rough request into a clear, precise prompt.
-  Ported from the retired `prompts` collection.
+- `clarify` now rewrites a specified request in one pass, preserves its
+  terminology, intent, actions, constraints, output requirements, and explicit
+  reuse requests, while leaving unresolved choices open.
+
+### Added - 2026-10-13
+
+- Added standalone `prove-it` with delegated, falsifiable checks at the boundary
+  that owns the claim. Worker instructions preserve original expectations and
+  keep assignment context factual and checks inline. Parent spot checks are
+  allowed. Files serve the tested behavior, required tooling, or requested proof.
+
+- Added standalone `explain` for focused, source-backed explanations with
+  worker-owned tracing and parent editing. Ordered steps carry the audience
+  and evidence standards into worker briefs, preserve explicit delegation
+  requirements, and report blocked explanations without repeated tracing.
+  Real-repository execution checks prompted unchanged question scope in
+  worker briefs and inline demonstration output. Focused parent checks are
+  allowed; substantial tracing stays with the worker.
+  A three-field assignment template preserves the request and worker
+  instructions. Explanations build a working mental model of the asked flow.
+
+### Changed - 2026-10-12
+
+- `prove-it` chooses delegation for the whole request before investigating,
+  with a stated direct-work reason and user steering sent to its worker.
+
+- Simplified `prove-it` around worker-owned execution, task-specific evidence,
+  and targeted parent review; diagnostic artifacts are no longer routine.
+
+- `explain` assigns the whole explanation before investigating, states reasons
+  for direct lookups, and forwards user steering to its worker.
+
+- `explain` keeps investigation with workers and diagnostic artifacts tied to
+  a task need, with targeted parent review of the returned explanation.
+
+- Rewrote `triage` and `implement` as ordered delegation, execution, and
+  review steps. Removed repeated rules and restored the implementation
+  retry boundary while retaining request-wide ownership and independent
+  verification.
+- Delegation decisions now precede investigation and apply to the whole
+  request, with a stated reason for direct work. New user evidence stays with
+  the assigned worker during interactive diagnosis.
+- `triage` and `implement` assign the first substantive work to a worker and
+  keep the parent on coordination, review, and targeted evidence gaps.
+  Diagnostic files and log bundles now require a purpose in the task instead
+  of being routine proof artifacts.
+
+### Changed — 2026-10-11
+
+- Clarified `triage` instructions with concrete assignments, capability
+  fallbacks, evidence standards, and standalone workflow boundaries.
+
+- `triage` delegates substantive investigation by default, tests competing
+  explanations, and removes the optional `subagents` companion dependency.
+
+- Clarified workflow wording: research answers source-backed questions at
+  the relevant revision and only implements when requested; delegation
+  briefs and completion handling in `implement` and `test-audit` now name
+  concrete actions. Handoffs use the host's temporary directory, and
+  interview and merge-request instructions remove ambiguous phrasing.
+- Retired the standalone `subagents` skill and embedded focused delegation
+  guidance in `implement`, `research`, and `test-audit`; added `implement` as a
+  standalone workflow for feature and fix requests through verified code.
+
+### Added — 2026-10-10
+
+- `triage` skill: compact English guidance for evidence-backed issue diagnosis,
+  reproduction, competing hypotheses, affected scope, and confidence. Stop with
+  a diagnosis or a concrete blocked next step. Optional `subagents` and
+  `research` companions have standalone fallbacks. Analysis alone does not
+  authorize fixes or tracker updates.
+
+- `subagents` skill: delegate substantive work while keeping the main
+  conversation available. Explore broadly before narrowing, choose parallel
+  or sequential work, and verify changes until green or blocked. The guidance
+  adapts to the context workers receive and needs no companion skills.
+
+### Changed — 2026-10-09
+
+- Adopted the shared workflow set at `abijith-suresh/workflows` 0.8.0.
+  `ci.yml` calls the shared `ci` and `dependency-review` workflows behind a
+  `gate` job, `pr-title` uses the same revision, and `dependabot-auto-merge`
+  calls the shared auto-merge workflow.
+- Browser tests: Playwright runs the built site on chromium, firefox, and
+  webkit through the `test:e2e` script required by the shared CI.
+- Browser tests reuse the build CI already produces: `test:e2e` runs
+  `playwright test` against the existing `dist/`, so the shared CI's Build
+  step is no longer duplicated. `test:e2e:build` keeps the clean-start local
+  command (`bun run build && bun run test:e2e`).
+- Unit tests fail when no test files match: `test` is `vitest run` without
+  `--passWithNoTests`.
 
 ### Added — 2026-09-25
 
