@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 14](https://img.shields.io/badge/Skills-14-green.svg)](#skill-catalog)
+[![Skills: 15](https://img.shields.io/badge/Skills-15-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
 implementation, test cleanup, commits, pull and merge requests, research, issue creation,
@@ -39,6 +39,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 
 | Skill | Description |
 | --- | --- |
+| `clarify` | Rewrite a specified request as a clear prompt. |
 | `commit` | Create conventional commits from the current diff. |
 | `commit-work` | Create conventional commits with a ticket number in every scope. |
 | `create-issue` | File one GitHub issue to park a later thought. |

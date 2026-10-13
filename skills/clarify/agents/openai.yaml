@@ -1,0 +1,5 @@
+interface:
+  display_name: "Clarify"
+  short_description: "Rewrite a rough request into a precise prompt"
+policy:
+  allow_implicit_invocation: false
