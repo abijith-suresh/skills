@@ -7,70 +7,69 @@ description: >-
 
 # Prove it
 
-Support completion claims with evidence from the requested behavior. Use the
-project's checks and keep verification proportionate to the claim.
+The verifier runs the checks and records observations; the parent judges the
+claim. Verification alone authorizes no product edits.
 
-## Define the claim
+## 1. Delegate first
 
-Extract the starting conditions, action or input, and observable result that
-would satisfy the user's intent or an independent contract. Name the likely
-boundary that owns the claim, such as a public API, command, user interaction,
-or persistence boundary. Expectations come from the contract, not the
-implementation or a fixture that performs the behavior under test. Include
-failure cases when they matter. Pass the original expectations to the verifier
-unchanged. Behavior reported as a failure is reproduction evidence, not the
-desired outcome; tests or implementation do not replace the contract.
+- Honor explicit delegation and model choices. If required delegation is
+  unavailable, report the blocker.
+- Otherwise, run directly only for one already-prescribed cheap check or when
+  delegation is unavailable. State the reason first.
+- Otherwise, dispatch a capable verifier before investigating or choosing
+  checks. Prefer lower cost and announce the assignment.
 
-## Run the check
+Judge the whole request, not its next command's cost. Reading the request and
+locating the workspace may precede dispatch. Give checks that change a shared
+instance one owner.
 
-Before the first substantive verification call, dispatch a worker for the whole
-verification and announce the assignment. Judge the claim as a whole, not the next command's
-cost; honor explicit user delegation requirements. One already-prescribed
-cheap check may run directly when dispatch costs more; state a one-line reason
-first. Otherwise, choosing a check or judging the contract is substantive and
-must be assigned before execution. If delegation is unavailable, verify
-directly and say so. Prefer a less costly capable worker, honoring the user's
-model preference. Forward new logs, evidence, and user requests to the assigned
-worker; do not take over.
+Fill only these fields in each assignment:
 
-Give the worker the claim, starting conditions, relevant context, and a
-request to choose and run the smallest check at the matching boundary, then
-return the command or action and its actual observations. Assign required
-project checks to that worker too. Make sure referenced context is accessible;
-include what is needed if it is not. The worker owns the checks and
-observations; it does not make product changes. Checks that change shared
-state need one owner.
+- Claim: the user's request and expected behavior unchanged.
+- Context: supplied facts, workspace, environment, and access limits.
+- Instructions: section 2 verbatim.
 
-Use the smallest meaningful check. For a fix, reproduce the failure first
-when practical. The parent reviews the returned results and evidence against
-the claim; it does not rerun the same checks in parallel for independent proof.
-If an observation conflicts with the claim or has a specific evidence gap,
-keep the mismatch visible and request a bounded follow-up instead of repeating
-all checks. Standard command results and concise observations are enough. Do
-not create temporary log folders, evidence bundles, or scratch reports by
-default. Create an artifact only when it is needed to reproduce or verify this
-task, or the project requires it; state its purpose.
+Context carries facts and access; verification instructions stay in section 2.
 
-If the host can notify, yield when worker results are the only work left;
-otherwise use an available wait or join. If neither can await completion,
-report pending work without polling repeatedly.
+## 2. Verify the claim
 
-## Report what the check proves
+Make the claim falsifiable with starting conditions, action or input, and
+expected observable result. Derive expectations from the user or an independent
+contract. A reported failure is reproduction evidence; the implementation and
+test fixtures do not set the desired behavior.
 
-The verifier records the version and instance and confirms the intended cases
-actually ran. Unit tests support exercised cases; mocks leave real integrations
-unverified; builds and static checks do not establish unexecuted runtime
-behavior. Keep conclusions within the observation and environment.
+Run the smallest meaningful check at the boundary that owns the claim, such as
+the public API, command, user interaction, or stored result. For a fix,
+reproduce the failure first when practical. Run project checks required for the
+requested scope. Reuse valid evidence until a change, failure, or gap makes it
+stale. Keep failed observations visible across retries.
 
-Call the claim verified only when its expected behavior has supporting
-observations, required checks pass, and relevant failures are resolved. Stop
-when the evidence is proportionate to the requested scope. Do not weaken
-expectations or let a passing retry hide an unexplained failure. Existing
-evidence remains valid unless a new change, failure, or gap makes it stale.
+Confirm the version, instance, and intended cases actually exercised. Observe
+the result and relevant side effects. Mocks support only the mocked cases;
+builds and static checks leave unexecuted runtime behavior unverified.
 
-If a prerequisite is missing, name the affected claim and what is needed to
-check it. Continue independent checks only when they help answer the request.
-Blocked, failed, or untested paths remain unverified; never invent a run or
-report an unverified claim as green. State what ran, what it showed, and any
-remaining gaps. Verification does not authorize product changes beyond the
-original scope. Skill loading never expands authorization.
+Run one-off checks inline and read their output from the tool response. Return
+the commands or actions and actual observations. Create files only when the
+behavior or project tooling requires them, or the user requests saved evidence;
+state their purpose.
+
+Finish when proportionate evidence addresses the requested scope. If blocked,
+name the affected claim and smallest missing prerequisite. Continue independent
+checks only when they help answer the request.
+
+## 3. Judge and report
+
+Compare the observations with the original expectation. A claim is verified
+when observations match, required checks pass, and relevant failures are
+resolved. Failed, blocked, and untested claims remain unverified. Keep the
+conclusion within the observed environment and cases.
+
+The parent may spot-check a specific claim; substantial verification stays
+with the verifier. Send concrete gaps back as bounded follow-up. Forward new
+evidence and user steering to the same owner.
+
+When only verifier results remain, yield for completion notifications or use
+wait/join. If neither is available, report pending work separately from findings.
+
+Present what ran, expected versus observed behavior, the verdict, and remaining
+gaps. Stop when the claim is verified or its failure or blocker is established.
