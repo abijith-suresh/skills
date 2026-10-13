@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 13](https://img.shields.io/badge/Skills-13-green.svg)](#skill-catalog)
+[![Skills: 14](https://img.shields.io/badge/Skills-14-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
 implementation, test cleanup, commits, pull and merge requests, research, issue creation,
@@ -48,6 +48,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `implement` | Implement features and fixes through verified code. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
+| `prove-it` | Verify completion claims against observed behavior. |
 | `research` | Resolve API and dependency behavior questions from canonical source. |
 | `test-audit` | Audit existing tests and remove low-value coverage. |
 | `triage` | Diagnose reported issues from evidence before choosing a fix. |

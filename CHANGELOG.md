@@ -8,6 +8,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added - 2026-10-13
 
+- Added standalone `prove-it` with delegated, falsifiable checks at the boundary
+  that owns the claim. Worker instructions preserve original expectations and
+  keep assignment context factual and checks inline. Parent spot checks are
+  allowed. Files serve the tested behavior, required tooling, or requested proof.
+
 - Added standalone `explain` for focused, source-backed explanations with
   worker-owned tracing and parent editing. Ordered steps carry the audience
   and evidence standards into worker briefs, preserve explicit delegation
@@ -19,6 +24,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   instructions. Explanations build a working mental model of the asked flow.
 
 ### Changed - 2026-10-12
+
+- `prove-it` chooses delegation for the whole request before investigating,
+  with a stated direct-work reason and user steering sent to its worker.
+
+- Simplified `prove-it` around worker-owned execution, task-specific evidence,
+  and targeted parent review; diagnostic artifacts are no longer routine.
 
 - `explain` assigns the whole explanation before investigating, states reasons
   for direct lookups, and forwards user steering to its worker.
