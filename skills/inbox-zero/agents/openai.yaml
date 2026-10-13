@@ -1,5 +1,5 @@
 interface:
   display_name: "Inbox zero"
-  short_description: "Triage a Gmail inbox and cut recurring noise with filters"
+  short_description: "Triage a Gmail inbox and clean up messages with care"
 policy:
   allow_implicit_invocation: false

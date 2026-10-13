@@ -69,14 +69,12 @@ collection, never skills from outside it.
 
 ### 3. Save to temp directory
 
-```bash
-cat << 'EOF' > /tmp/handoff-<topic-slug>.md
-[document content]
-EOF
-```
+Use the host's temporary directory and available file-writing tool. Save as
+`handoff-<topic-slug>.md`, choosing a new name if that file already exists.
 
-Print the path. Tell the user to paste it into the next session. `/tmp`
-does not survive a reboot.
+Print the absolute path so the user can load it in the next session.
+Temporary files may be removed by the host; state that limitation when the
+handoff must last longer than the current machine session.
 
 ## Rules
 

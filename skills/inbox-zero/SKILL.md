@@ -1,9 +1,6 @@
 ---
 name: inbox-zero
-description: >-
-  Triage a Gmail inbox using Inbox Zero. Use when the user asks to clean,
-  review, or triage their inbox, or to reduce recurring email noise with
-  filters.
+description: Triage a Gmail inbox and clean up messages within the user's authorization.
 disable-model-invocation: true
 metadata:
   opencode/autoinvoke: "false"
@@ -11,84 +8,25 @@ metadata:
 
 # Inbox zero
 
-Inbox = requires attention. Keep a message only if the user still needs to
-act, decide, respond, review something important, monitor an open issue, or
-stay aware of something time-sensitive. Otherwise archive it. Unread is not
-the same as important.
+Triage a scoped Gmail inbox, identify what still needs attention, and clean up messages when the user has authorized the change. Work from Gmail access or message data actually available in the current environment. If the needed messages or capability are unavailable, say what is missing and offer a useful next step. Do not claim to have inspected or changed mail you could not access.
 
-## Access
+## Workflow
 
-Use whatever Gmail access the environment provides, such as a Gmail MCP
-server or the `composio` CLI. If nothing is connected, stop and say what is
-missing.
+1. **Set the scope.** Use the inbox, date range, or batch the user named. If the request makes the scope clear, proceed. If it does not and the choice would change what gets reviewed, ask one focused question. For large inboxes, start with a manageable recent batch or the user's stated priority and say what remains out of scope.
+2. **Choose who inspects.** Decide for the whole request whether delegation will help. Delegate substantive inbox or thread analysis when useful and workers are available, with a bounded scope, read-only limits, and a factual brief. The parent retains scope, authorization decisions, and the combined result. Handle small reviews directly; if substantive work must stay direct because delegation is unavailable, state why.
+3. **Read for context.** Review the relevant message and thread context, including newer replies when available. Use the sender, content, dates, and requested next step. An unread marker or subject line alone is not enough to decide a message is unimportant.
+4. **Sort by what happens next.** Identify messages that need the user to act or decide, messages awaiting someone else, useful reference, finished messages that can leave the inbox, and messages whose status is unclear. Surface genuine deadlines or account risks early, based on the message and current dates.
+5. **Make only authorized changes.** A request to review or triage calls for findings and recommendations. When the user asks to clean the inbox, carry out clearly requested, low-risk cleanup if the available Gmail access supports it. Prefer archiving finished mail when appropriate. Do not delete, send or reply, unsubscribe, create filters, or make other unrequested changes unless the session already authorizes that action. Ask only when authorization is missing. Leave uncertain or consequential messages untouched and explain why.
+6. **Report the result.** Briefly state the messages that need attention and why, the cleanup completed, and the important uncertain items or remaining scope. Include proposed actions separately from actions already taken. Mention a recurring noise pattern or a narrow filter idea only when the reviewed mail supports it.
 
-## Rules
+## Judgment
 
-- Use only the existing labels: **Follow Up** (user must act, tracked
-  outside the inbox), **Waiting** (next step belongs to someone else),
-  **Read Through** (worth reading, no action; use sparingly, never for
-  newsletters, promos, or notifications).
-- Never create new labels.
-- Archive, don't delete, unless asked.
-- Prefer reversible actions. When uncertain, leave the message in the inbox.
+- Keep related messages together when a thread explains whether an older request is resolved. Archive an older message only when the newer context clearly closes it.
+- Check whether dates, deadlines, renewals, appointments, or requests are still active before treating them as finished.
+- Do not infer that a message is safe to hide just because it is automated or comes from a recurring sender. Check for account security, payment, legal, medical, employment, travel, or other personal consequences in context.
+- Suggest a filter only for a repeated, well-understood pattern that the user would not want in the inbox. Show its exact Gmail search criteria, intended effect, and any important exclusions. Keep it narrow and create it only when the session authorizes filter creation; otherwise ask first.
+- Use existing labels only when they help the user's stated workflow. Do not require labels, a particular Gmail setup, or a specific connector or command line tool.
 
-## Triage
+## Preferences for this collection's owner
 
-Read each message before classifying; don't rely on the IMPORTANT label,
-unread state, or subject alone. Put each into one category: **Keep in
-Inbox**, **Archive**, **Follow Up**, **Waiting**, **Read Through**, or
-**Filter Candidate** (can combine with Archive).
-
-1. Surface urgent items first: security, failed payments, deadlines,
-   account problems.
-2. Archive anything with no remaining action: receipts, completed
-   confirmations, expired invitations, resolved alerts, routine
-   notifications, unwanted newsletters.
-3. Check whether a newer message resolves an older one ("Payment received"
-   after "Payment failed"). Only archive the older one if the link is
-   clear.
-4. For anything mentioning a deadline, expiry, appointment, renewal, or
-   "action required," confirm the date is past and nothing is outstanding
-   before archiving.
-
-## Never auto-hide
-
-Security or login alerts, authentication changes, failed or unusual
-transactions, fraud, account suspension, expiring resources or deletion
-warnings, bills due, legal, tax, medical, or HR mail, travel changes, exams
-and appointments, and humans requesting action. A recurring sender is not
-enough reason to filter these.
-
-## Filters
-
-If a class of email repeatedly arrives and never needs action (test: would
-the user want to see ten more of these?), propose a filter.
-
-- Behavior: **Skip Inbox + Mark as read**. No label unless requested. Mail
-  stays searchable.
-- Keep them narrow. Combine sender with subject pattern, recipient alias,
-  CC address, or a specific phrase. Don't filter a whole sender that can
-  also send important mail (use
-  `from:notifications@github.com cc:ci_activity@noreply.github.com`, not
-  all of GitHub).
-- Marketing. Suggest unsubscribing first; otherwise use the filter.
-- Developer mail. Filter CI and workflow noise, but keep mentions, review
-  requests, human comments, security advisories, access changes, and
-  billing. Suggest cutting noise at the source when volume is high.
-- Verify what the query matches before proposing it. Never create broad
-  filters silently.
-
-## Output
-
-Keep it concise:
-
-- **Needs attention.** What and why.
-- **Archived.** Types of mail and why they're done.
-- **Filter candidates.** Type, exact Gmail query, behavior, reasoning, and
-  important exclusions.
-- **Observations.** Recurring patterns worth fixing, if any.
-
-## User preferences
-
-Minimal inbox, aggressive archiving, narrow filters, no extra labels,
-fewer decisions. These override generic email advice.
+Carry forward the owner's stated preference for a small inbox, archiving finished messages, narrow filters, few labels, and fewer routine decisions. Treat these as defaults for this collection's owner, not rules for every Gmail user. Follow any newer or more specific preference the user gives.
