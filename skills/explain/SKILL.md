@@ -46,9 +46,9 @@ Ground the explanation in inspected code. Label execution results and inferred
 intent; name gaps that affect the answer. Use snippets or diagrams when they
 clarify the flow.
 
-Return the answer inline. Use focused demonstrations when they clarify the
-answer. Prefer inline commands; create files only for requested outputs or
-required project tooling.
+Return the answer and demonstration output inline. Use one-off commands for
+focused demonstrations that clarify the answer. Create files only for requested
+outputs or required project tooling.
 
 ## 3. Edit and present
 
