@@ -7,86 +7,59 @@ description: >-
 
 # Triage
 
-Diagnose one reported issue from a report, link, identifier, logs, or
-reproduction steps. Return an evidence-backed explanation or a useful blocked
-next step. No tracker or particular tool is required.
+A worker owns the diagnosis; the parent coordinates and reviews evidence.
+Triage is analysis. Product or tracker changes require authorization;
+delegation adds none. Keep probes separate from product edits and within
+effects the user authorized.
 
-Triage covers analysis within the user's scope. It does not authorize fixes,
-commits, publishing, or tracker comments and updates. Loading a skill or
-delegating work never expands that authorization. Keep local probes separate
-from product changes; hold experiments with unapproved external effects.
+## 1. Delegate first
 
-## Establish the report
+- Honor explicit user delegation and model choices. If required delegation is
+  unavailable, report the blocker.
+- Otherwise, work directly only for an isolated single-fact lookup or when
+  delegation is unavailable. State a one-line reason before investigating.
+- For a diagnosis, dispatch one worker before investigating evidence or
+  attempting reproduction. Prefer a lower-cost capable worker and announce
+  the assignment.
 
-Record expected versus observed behavior, the basis for the expectation, and
-the relevant version, environment, trigger, and frequency. Read existing
-replies and artifacts first, and carry every supplied expectation forward
-without asking for it again. Ask only about missing or conflicting
-expectations and decisions the code cannot resolve, one question per decision.
+The exception concerns the whole request, not the cost of its next command.
+Reading the skill and report, locating the workspace, and requested source
+synchronization may precede dispatch.
 
-## Gather evidence
+Give the worker the report, expected behavior, existing findings, accessible
+context, scope, and repository rules. Ask only for missing decisions that
+evidence cannot settle. Give shared-state experiments one owner.
 
-Attempt to reproduce the reported symptom under matching conditions when
-feasible. Record the steps, failure signal, and result. For intermittent or
-performance issues, preserve attempt counts or baseline measurements. If
-reproduction is blocked or unavailable, continue with the supplied logs,
-artifacts, source, and other accessible evidence; name what could not be
-reproduced. A nearby failure is a different finding, and failure to reproduce
-does not show that the issue is absent.
+## 2. Diagnose
 
-## Diagnose
+The worker reproduces the symptom where feasible, matching reported conditions
+and affected versions, including dependencies. It records steps and results,
+with attempt counts or baselines when relevant. If reproduction is blocked,
+it investigates accessible evidence and names the limitation. A failed attempt
+does not establish absence; a different failure is a separate finding.
 
-Delegate substantive investigation by default. Choose a capable worker at the
-lowest cost that fits the task, honoring the user's model preference. If the
-task is a narrow lookup or check whose dispatch and reporting would outweigh
-the work, handle it directly. If delegation is unavailable, run the same
-investigation directly and say so.
+The worker tests competing explanations, including alternatives to the
+reporter's guess. A confirmed cause connects a mechanism to the reported
+symptom through source locations or observed results. It separates reported
+claims, verified observations, hypotheses, and untested impact.
 
-Give each worker a bounded question, the report and other context it can
-access, the evidence to inspect, the authorization limits, and a concrete
-finding with source locations or observations to return. Carry forward the
-report, artifacts, and discovery already available instead of repeating
-completed investigation. Use a broad sweep to map affected paths and the
-version boundary, and identify observations that distinguish the leading
-explanations. Then assign focused reads to answer the gaps it reveals.
-Check that each supplied context pointer is accessible to the worker. If not,
-include the relevant content in the brief; if that is not possible, do that
-part directly or name the access gap.
+Keep findings in the conversation and redact sensitive details. Save diagnostic
+files or log bundles only for a stated task need or required project convention.
 
-If the report implicates a library, verify the claimed behavior in that
-library's own source at the affected version. The default branch and current
-documentation do not establish behavior in an older release.
+## 3. Review
 
-Test plausible explanations against observations that distinguish them.
-Include alternatives to the reporter's guess and revise hypotheses when
-evidence contradicts them. Run independent read-only hypothesis checks in
-parallel, even when they inspect the same files. Assign one owner to
-experiments that change shared state. A worker's conclusion is a lead until
-its evidence connects the mechanism to the reported symptom. Reconcile
-findings against the same symptom, then follow up where evidence conflicts or
-leaves a gap. Assess affected versions, inputs, configurations, and user
-paths; separate confirmed scope from suspected impact and untested cases.
-Preserve source locations, distinguish reporter claims from verified
-observations, name inaccessible evidence, and redact sensitive details from
-shared output.
+The parent reviews the worker's cited observations. Send missing citations,
+conflicting observations, and untested claims back as bounded follow-up. Route
+source inspection, reproduction, and checks through the worker. New logs and
+user steering go to the same owner.
 
-Use background work when the harness supports completion notifications.
-Acknowledge the dispatch and carry user steering into active work. Continue
-useful investigation and reconciliation; with notifications, end the turn for worker completion
-only when worker results are the only work left. If notifications are
-unavailable, use an available wait or join operation when results are the
-only work left. If the harness offers only status queries, check at meaningful work boundaries with time for
-useful work between checks, never in rapid succession. If workers remain
-active at turn end, report that limitation without presenting their findings.
+When only worker results remain, yield for completion notifications or use
+wait/join. If neither is available, report pending work separately from findings.
 
 ## Finish
 
-Stop when the evidence supports a useful diagnosis or progress needs missing
-access, data, permission, or a user decision. When blocked, preserve findings
-and attempted checks, label unverified hypotheses, and identify the smallest
-question or experiment that would separate the remaining explanations.
-
-Return expected versus observed behavior, reproduction status and evidence,
-demonstrated causes versus hypotheses, affected scope, confidence and its
-limits, and a concrete next step. Proposing a fix does not authorize
-implementing it or posting findings to a tracker.
+Finish when evidence supports a diagnosis or the next distinguishing check is
+blocked. Return expected versus observed behavior, reproduction status, cause
+or remaining hypotheses, supporting evidence, confirmed scope, uncertainty,
+and the next step. If blocked, include what was checked and the smallest
+missing input or check needed to proceed.

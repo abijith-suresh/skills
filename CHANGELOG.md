@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-12
+
+- Rewrote `triage` and `implement` as ordered delegation, execution, and
+  review steps. Removed repeated rules and restored the implementation
+  retry boundary while retaining request-wide ownership and independent
+  verification.
+- Delegation decisions now precede investigation and apply to the whole
+  request, with a stated reason for direct work. New user evidence stays with
+  the assigned worker during interactive diagnosis.
+- `triage` and `implement` assign the first substantive work to a worker and
+  keep the parent on coordination, review, and targeted evidence gaps.
+  Diagnostic files and log bundles now require a purpose in the task instead
+  of being routine proof artifacts.
+
 ### Changed — 2026-10-11
 
 - Clarified `triage` instructions with concrete assignments, capability
