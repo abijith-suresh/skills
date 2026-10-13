@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   worker-owned tracing and parent review. Ordered steps carry the audience
   and evidence standards into worker briefs, preserve explicit delegation
   requirements, and report blocked explanations without repeated tracing.
+  Real-repository execution checks prompted unchanged question scope in
+  worker briefs and inline demonstrations by default.
 
 ### Changed - 2026-10-12
 

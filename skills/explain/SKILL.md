@@ -30,7 +30,8 @@ precede dispatch.
 At dispatch, keep one owner for a coherent flow. Split independent topics when
 useful, naming explorers and one synthesis owner who handles follow-up.
 
-Give workers the question, audience, context, paths, and requirements below.
+Give workers the user's question unchanged, audience, context, paths, and
+requirements below. The question defines scope; the audience guides wording.
 Include material they cannot access.
 
 ## 2. Trace and explain
@@ -43,8 +44,8 @@ Separate inspected code, observed execution, and documented promises. Label
 inferred intent with its basis and illustrative values as examples. Name gaps
 or conflicting sources. Use snippets or diagrams only when they clarify.
 
-Return inline. Save diagnostic files only for a stated task need or required
-project convention.
+Return the answer inline. Run optional demonstrations inline by default.
+Save files only for a stated task need or required project convention.
 
 ## 3. Review and present
 
