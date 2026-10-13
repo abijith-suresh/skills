@@ -7,7 +7,7 @@ description: >-
 
 # Explain
 
-The worker traces and writes; the parent reviews and presents. Explanation
+The worker traces and writes; the parent edits and presents. Explanation
 alone authorizes no product edits. Demonstrations stay within the user's
 existing authorization.
 
@@ -47,10 +47,10 @@ or conflicting sources. Use snippets or diagrams only when they clarify.
 Return the answer inline. Run optional demonstrations inline by default.
 Save files only for a stated task need or required project convention.
 
-## 3. Review and present
+## 3. Edit and present
 
-The parent checks the draft against the brief, citations, and evidence labels.
-Route source inspection, execution, and checks through the assigned worker.
+The parent edits the worker's answer for relevance, completeness, and clarity.
+Source inspection, execution, and citation checks belong to the worker.
 Send concrete gaps back as bounded follow-up; continue only while resolving
 them. New evidence and user steering go to the same owner.
 
