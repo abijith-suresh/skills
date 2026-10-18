@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed - 2026-10-18
+
+- Updated `triage` with explicit claim labels and a consistent diagnosis report format.
+
 ### Added - 2026-10-13
 
 - Added standalone `prove-it` with delegated, falsifiable checks at the boundary
