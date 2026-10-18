@@ -1,65 +1,79 @@
 ---
 name: triage
 description: >-
-  Diagnose bug reports, incidents, and unexpected behavior when a cause is
-  needed before deciding on a fix.
+  Find the root cause of a bug report, failing test, incident, regression, or
+  unexpected behavior before anyone proposes a fix. Use whenever the user
+  shares an error, stack trace, or log, says something "stopped working",
+  "broke after X", or "is flaky", or asks "why is this happening", even if they
+  never say "triage" or "diagnose". Produces an evidence-backed diagnosis, not a patch.
 ---
 
 # Triage
 
-A worker owns the diagnosis; the parent coordinates and reviews evidence.
-Triage is analysis. Product or tracker changes require authorization;
-delegation adds none. Keep probes separate from product edits and within
-effects the user authorized.
+Explain why the reported behavior happens, with evidence a reviewer can check.
+Don't fix it. A fix built on a guess is the most common way this goes wrong,
+and a solid diagnosis is what makes the fix easy to review.
 
-## 1. Delegate first
+## Ground rules
 
-- Honor explicit user delegation and model choices. If required delegation is
-  unavailable, report the blocker.
-- Otherwise, work directly only for an isolated single-fact lookup or when
-  delegation is unavailable. State a one-line reason before investigating.
-- For a diagnosis, dispatch one worker before investigating evidence or
-  attempting reproduction. Prefer a lower-cost capable worker and announce
-  the assignment.
+- Stay read-only on the product and its systems. Don't edit product code,
+  update tickets, or touch shared environments (prod, shared DBs, CI) unless
+  the user asked. Scratch scripts and local repros are fine.
+- Tag every claim as one of: **reported** (including the reporter's own guess),
+  **observed** (you saw it), **hypothesis**, or **untested**. Readers act on
+  your confidence, so it has to be legible.
 
-The exception concerns the whole request, not the cost of its next command.
-Reading the skill and report, locating the workspace, and requested source
-synchronization may precede dispatch.
+## Who does the work
 
-Give the worker the report, expected behavior, existing findings, accessible
-context, scope, and repository rules. Ask only for missing decisions that
-evidence cannot settle. Give shared-state experiments one owner.
+If subagents are available, hand the investigation to one worker and keep the
+parent for review. This keeps the parent's context clean and gives you an
+independent check on the evidence. Announce the assignment, then give the
+worker: the report verbatim, expected behavior, anything already known, repo
+rules, and scope limits. Let one worker own any experiment that touches shared
+state so runs don't collide.
 
-## 2. Diagnose
+Work directly if the user asks you to, if there are no subagents, or for a
+single-fact lookup.
 
-The worker reproduces the symptom where feasible, matching reported conditions
-and affected versions, including dependencies. It records steps and results,
-with attempt counts or baselines when relevant. If reproduction is blocked,
-it investigates accessible evidence and names the limitation. A failed attempt
-does not establish absence; a different failure is a separate finding.
+## How to diagnose
 
-The worker tests competing explanations, including alternatives to the
-reporter's guess. A confirmed cause connects a mechanism to the reported
-symptom through source locations or observed results. It separates reported
-claims, verified observations, hypotheses, and untested impact.
+1. **Reproduce** under the reported conditions (versions, dependencies, config,
+   data). Record steps and results. For intermittent bugs, run it enough times
+   to report a rate. If you can't reproduce, say why and work from logs, code,
+   and history. A failed attempt doesn't prove the bug is absent, and a
+   different failure is a separate finding.
+2. **Compete explanations.** Write down at least two, including one the
+   reporter didn't suggest. Choose checks that would tell them apart, not
+   checks that merely confirm the favorite.
+3. **Confirm a cause only with a traceable chain** from mechanism to symptom
+   (file:line, or observed output). Without that chain it's a hypothesis.
+4. **Bound the scope.** Which versions, paths, or users are affected? Mark
+   what you didn't test.
 
-Keep findings in the conversation and redact sensitive details. Save diagnostic
-files or log bundles only for a stated task need or required project convention.
+## Review
 
-## 3. Review
+Open the citations the worker gives you. Send anything uncited, contradictory,
+or overclaimed back to the same worker as a specific question. Don't redo the
+investigation yourself. If work is still running, report that separately from
+findings.
 
-The parent reviews the worker's cited observations. Send missing citations,
-conflicting observations, and untested claims back as bounded follow-up. Route
-source inspection, reproduction, and checks through the worker. New logs and
-user steering go to the same owner.
+## Report
 
-When only worker results remain, yield for completion notifications or use
-wait/join. If neither is available, report pending work separately from findings.
+Use this structure. Omit nothing; write "none" or "not tested" where needed.
 
-## Finish
+**Expected vs observed:**
+**Reproduction:** (reproduced / partial / blocked, and how)
+**Cause:** (confirmed cause, or ranked remaining hypotheses)
+**Evidence:** (citations)
+**Scope:** (confirmed vs untested)
+**Next step:** (if blocked: what was checked and the smallest missing input)
 
-Finish when evidence supports a diagnosis or the next distinguishing check is
-blocked. Return expected versus observed behavior, reproduction status, cause
-or remaining hypotheses, supporting evidence, confirmed scope, uncertainty,
-and the next step. If blocked, include what was checked and the smallest
-missing input or check needed to proceed.
+Keep findings in the conversation. Don't write files unless asked or the repo
+requires it. Redact secrets and personal data.
+
+## Example
+
+Weak: "Probably a race condition in the cache layer."
+Strong: "Confirmed: `cache.py:88` reads the entry after `evict()` at line 74
+releases the lock. Observed in 14 of 50 runs with 8 threads, 0 of 50 with
+1 thread. Untested: whether the async path hits the same code."
