@@ -1,75 +1,76 @@
 ---
 name: implement
 description: >-
-  Turn feature requests, bug fixes, and implementation plans into verified
-  code. Use when the task calls for changing behavior or delivering a
-  working feature.
+  Build a feature, fix a bug, or carry out an implementation plan, and prove
+  it works against what the user actually asked for. Use whenever the task is
+  to change code behavior and deliver something working, including "add X",
+  "fix Y", "make Z do W", or a plan to execute. If the root cause of a bug is
+  still unknown, investigate the cause first. Skip for pure questions, reviews, or
+  explanations.
 ---
 
 # Implement
 
-The parent coordinates, integrates, and reviews; workers investigate, edit,
-and check.
+Deliver a change that does what the user asked, verified against their request
+and not against the implementer's reading of it. The failure mode this guards
+against is code that passes its own tests but misses the point.
 
-## 1. Delegate first
+## Ground rules
 
-- Honor explicit user delegation and model choices. If required delegation is
-  unavailable, report the blocker.
-- Otherwise, work directly only for an isolated fact lookup or a mechanical
-  edit requiring no investigation or behavior judgment. State the reason first.
-- For a feature or fix, dispatch an implementer before investigating or
-  editing. Prefer a lower-cost capable worker and announce the assignment.
-- Otherwise, if delegation is unavailable, perform these steps directly and
-  state that limitation before starting.
+- Edit only what the request needs. Report unrelated problems you find
+  separately instead of fixing them.
+- Authorized by default: edits in the working tree and local checks.
+  Commits, pushes, PRs, merges, and deploys need the user's say-so (or a
+  repo rule that grants it). Delegating to a worker grants nothing extra.
+- Ask the user when the request is ambiguous in a way that changes what gets
+  built. Pick a reasonable default and note it when the choice is routine.
 
-Judge the complete change, not its patch size or next command's cost. Reading
-the skill and request, locating the workspace, and requested source
-synchronization may precede dispatch.
+## Who does the work
 
-The contract is the original request and report. Pass it unchanged to the
-implementer and verifier; separate expectations from reported observations.
-Include any diagnosis or plan, edit scope, constraints, accessible context,
-and repository rules.
+If subagents are available, use an implementer and a separate verifier, and
+keep the parent for integration and review. Separating them gives you an
+independent check; the implementer shouldn't grade its own work.
 
-## 2. Implement
+Skip the workers when the user asks you to work directly, when no subagents
+exist, or when the change is small and mechanical (a rename, a typo, a
+one-line config tweak). Say which path you chose and why. When working
+directly, say verification wasn't independent.
 
-One implementer owns a cohesive change. Parallelize independent assignments;
-give overlapping edits one owner. The implementer reproduces a reported failure
-before editing when practical, makes the change, adds regression coverage where
-existing tests miss the failure, and returns the diff and check results.
+Give each worker the original request unchanged, plus any diagnosis or plan,
+scope limits, and repo rules. Keep reported observations separate from the
+user's expectations. Parallelize independent changes; give overlapping edits to
+one owner.
 
-Keep source investigation, edits, and execution checks with assigned workers.
-The parent resolves missing intent or consequential choices; routine choices
-stay with the implementer. New evidence and user steering go to the same owner.
-Keep edits within the requested change; report unrelated findings separately.
-Keep findings in the conversation. Save diagnostic files or log bundles only
-for a stated task need or required project convention.
+## Implementing
 
-When only worker results remain, yield for completion notifications or use
-wait/join. If neither is available, report pending work separately from results.
+1. Reproduce the reported failure first, where practical, so you know the fix
+   changes something.
+2. Make the change.
+3. Add a regression test if existing tests missed the failure.
+4. Return the diff and the results of the checks you ran.
 
-## 3. Verify
+New evidence and user steering go to the same implementer.
 
-For every behavior change or bug fix, give a separate verifier the contract
-and integrated diff. It derives acceptance criteria from the contract and
-checks supplied interpretations against it, including reported failing inputs.
-It compares requested outcomes with observed behavior and runs required
-repository checks. Static checks and mocks establish only the contracts they
-exercise. Mechanical edits may use direct, proportionate checks.
-When delegation is unavailable, verify the contract directly and state that
-verification was not independent.
+## Verifying
 
-The parent reviews the actual diff and verification evidence against the
-contract. Reuse valid worker checks. Rerun only after code, inputs, or
-environment changes, or to close a concrete evidence gap. Return discrepancies
-and unexplained failures to the implementer, then reverify affected outcomes.
-Continue while each round makes progress; otherwise change approach or report
+Give the verifier the original request and the integrated diff, nothing
+else from the implementer. It should:
+
+- Derive acceptance criteria from the request, then test those, including any
+  inputs the reporter said fail.
+- Run the repo's required checks.
+- Treat mocks and static checks as covering only what they exercise. A passing
+  mocked test says nothing about the real integration.
+
+The parent reads the diff and the verification evidence against the request.
+Reuse valid checks; rerun only after code, inputs, or environment change, or
+to close a specific gap. Send discrepancies back to the implementer, then
+reverify. After three rounds without convergence, change approach or report
 the blocker.
 
-## Finish
+## Report
 
-Complete when requested outcomes have supporting observations, required checks
-pass, and relevant failures are resolved. Report blocked claims as unverified
-with the next check or prerequisite. Return what changed, checks, and remaining
-limits. Complete authorized git or forge actions under repository rules;
-merge or deploy only when authorized. Delegation adds no authorization.
+**Changed:** (files and behavior)
+**Verified:** (each requested outcome and the observation that supports it)
+**Unverified:** (anything blocked, with the next check or prerequisite)
+**Limits:** (known gaps, follow-ups, unrelated findings)
