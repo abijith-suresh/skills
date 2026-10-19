@@ -1,80 +1,44 @@
-# Agent instructions
+# skills — agent brief
 
-Read this file before editing the repository. Keep these rules aligned with
-what the repository actually does.
+A personal collection of standalone agent skills, published as a browsable Astro catalog with install commands. For agents and maintainers changing this repo.
 
-## Where to look
+## The Project
 
-- `README.md` explains the collection, its scope, and installation.
-- `CONTRIBUTING.md` explains local development and contribution workflow.
-- `skills/` contains the installable skills. Each skill's `SKILL.md` is its
-  canonical content.
-- `src/consts.ts` holds site-wide config (URLs, titles, descriptions).
-- `src/styles/` holds the design tokens, base styles, and component styles.
-- `src/components/seo/` holds the SEO meta and structured data components.
-- `CHANGELOG.md` records user-visible repository changes.
+Core promise: `skills/` is the only source of skill content. The site reads each `skills/<name>/SKILL.md` at build time and renders the catalog, per-skill pages, and install commands. Add a skill once; the site picks it up.
 
-There is no separate architecture document. Before changing the Astro site,
-inspect the relevant files under `src/`, `astro.config.ts`, and the package
-scripts.
+Non-goals: no runtime or hosted registry, no duplicated skill copies, no per-skill README, no separate architecture document.
 
-## Repository rules
+Status: live — actively reorganizing, so keep diffs small and local.
 
-- Use `@/` path alias for all imports from `src/`.
-- Keep the `skills/` directory as the only source for skill content. Do not
-  create per-skill README files.
-- Follow the [Agent Skills specification](https://agentskills.io/specification).
-  Skill directories and their frontmatter `name` fields use lowercase
-  kebab-case and must match.
-- A skill must define one repeatable workflow. It must work without another
-  skill being installed or run.
-- Skills must not run other user-invoked skills. A skill may name a follow-on
-  skill in its output so the user can invoke it next.
-- Keep repository prose direct. Use sentence-case headings, concrete claims,
-  and plain punctuation.
+## How I Work Here
 
-## Skill invocation
+- Quality gate: `bun run verify` — runs type-check, lint, format check, unit tests, and build. Run before handoff. Playwright smoke tests are separate (`bun run test:e2e`, needs browsers installed once).
+- Commits: Conventional Commits; types live in `commitlint.config.ts` (72-char header limit, no trailing period). Squash merges; never commit or push to `main`.
+- Import from `src/` with the `@/` alias, not relative climbs.
+- Skill directory names and frontmatter `name` values must match in lowercase kebab-case. Frontmatter stays on spec fields (`name`, `description`, optional `metadata`) plus `disable-model-invocation`; `metadata` values are strings.
+- User-invoked skills carry all three invocation locks together: `disable-model-invocation: true`, `agents/openai.yaml` with `policy.allow_implicit_invocation: false`, and `metadata.opencode/autoinvoke: "false"`. Model-invoked skills omit them.
+- One repeatable workflow per skill. It must work standalone; it may name a follow-on skill in output but never runs one.
+- Adding, removing, or renaming a skill means updating the catalog and count in `README.md` and adding a dated `[Unreleased]` entry in `CHANGELOG.md`.
+- Prose is direct: sentence-case headings, concrete claims, plain punctuation.
+- Git hooks: pre-commit runs lint-staged (Biome), commit-msg runs commitlint, pre-push runs the full verify.
 
-User-invoked skills (git writes, forge writes, interviews, handoffs) use all
-three harness controls together:
+## Sources of Truth
 
-- `disable-model-invocation: true` in `SKILL.md` (Cursor, Claude Code, Pi)
-- `agents/openai.yaml` with `policy.allow_implicit_invocation: false` (Codex)
-- `metadata.opencode/autoinvoke: "false"` (OpenCode)
+| Fact | Where |
+|---|---|
+| Product intent | § The Project (this file) |
+| Runtime behavior | code + tests |
+| Commands & deps | package.json |
+| Commit rules | commitlint.config.ts |
 
-Model-invoked skills (`research`, `unslop`) omit those locks so the agent can
-reach them from context. They still ship `agents/openai.yaml` with display
-metadata only.
+Code and tests are the authority; this file never overrides executable truth.
 
-The description is the discovery API. For model-invoked skills it must say
-what the skill does and when to use it. For user-invoked skills it is a short
-human summary. Do not pad descriptions with "the user may also name this
-skill explicitly."
+## Getting Around
 
-## Adding or updating a skill
-
-- Add a skill only when the workflow is repeated and has clear inputs,
-  outputs, and failure conditions.
-- Keep frontmatter to spec fields (`name`, `description`, optional
-  `metadata`) plus `disable-model-invocation` when the skill is user-invoked.
-  Never add other top-level frontmatter keys. `metadata` values are strings.
-  Site curation uses `featured: "true"`. OpenCode uses
-  `opencode/autoinvoke: "false"`.
-- Every skill ships `agents/openai.yaml` with `interface.display_name` and
-  `interface.short_description`. User-invoked skills also set
-  `policy.allow_implicit_invocation: false`.
-- When adding, removing, or renaming a skill, update the catalog and count in
-  `README.md`.
-- Add a dated entry under `[Unreleased]` in `CHANGELOG.md` for every change.
-  Add to today's section when one already exists.
-- Local installation is optional. Do not commit anything from `~/.agents/`.
-
-## Git and verification
-
-- Work on a feature branch. Never commit or push directly to `main`.
-- Use the `commit` skill for ordinary commits. Use `commit-work` when every
-  commit scope must include a ticket number.
-- Use conventional commit messages and keep each commit focused on one reason
-  to change.
-- Open a pull request for review.
-- Run `bun run verify` before opening the pull request.
+- `skills/<name>/SKILL.md` — canonical skill content; optional `references/`, `scripts/`, `assets/`.
+- `src/content.config.ts` — content collection ingesting `skills/*/SKILL.md`, plus the frontmatter schema.
+- `src/lib/` — catalog, paths, route metadata, heading stripping, OG image rendering; unit tests sit beside sources.
+- `src/pages/` — Astro routes: home, `all`, `[skill]`, `404`, and the OG image endpoint. `trailingSlash` is `always`.
+- `src/components/`, `src/layouts/` — UI, SEO, install command block, site shell.
+- `src/styles/` — design tokens and base styles; `src/consts.ts` — site URL, title, description.
+- `tests/e2e/` — Playwright smoke coverage of the built site.
