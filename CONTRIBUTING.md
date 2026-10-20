@@ -31,16 +31,22 @@ bun run build
 bun run verify
 ```
 
-`bun run verify` runs all checks and the production build.
+Run `bun run verify` before handing off; add focused tests for behavior you
+change and let CI own the full suite.
 
 ## Branches, commits, and pull requests
 
 - Branch from `main` with a descriptive feature branch name.
 - Never push directly to `main`.
 - Keep each commit focused on one reason to change.
-- Use conventional commit messages in the form `type(scope?): summary`.
-- Open a pull request from the feature branch and wait for CI to pass.
-- Squash merge the pull request into `main`.
+- Use conventional commit messages in the form `type(scope?): summary`; the allowed types live in `commitlint.config.ts`.
+- Open a focused pull request from the feature branch and wait for CI to pass.
+- Squash merge the pull request into `main`. Merging is the owner's call — leave it to them.
+- Adding, removing, or renaming a skill means updating the catalog and count in `README.md` and adding a dated `[Unreleased]` entry in `CHANGELOG.md`.
+
+## Prose
+
+Skill text is direct: sentence-case headings, concrete claims, plain punctuation.
 
 ## Add a skill
 
@@ -54,8 +60,11 @@ bun run verify
 4. Write a short description. For model-invoked skills include when to use
    it. For user-invoked skills, keep it a human summary.
 5. Keep the workflow standalone. It must not require or run another skill.
-6. Add `agents/openai.yaml` with display metadata. User-invoked skills also
-   set `policy.allow_implicit_invocation: false`.
+6. Add `agents/openai.yaml` with display metadata. User-invoked skills carry all
+   three invocation locks together: `disable-model-invocation: true`,
+   `agents/openai.yaml` with `policy.allow_implicit_invocation: false`, and
+   `metadata.opencode/autoinvoke: "false"`. Missing one silently changes how the
+   skill is discovered.
 7. Add the skill to the catalog and update the count in `README.md`.
 8. Add a dated entry under `[Unreleased]` in `CHANGELOG.md`.
 
