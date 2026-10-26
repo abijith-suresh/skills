@@ -8,60 +8,32 @@ metadata:
 
 # Grill me
 
-## What this skill does
-Explores the codebase silently, then interviews you one question at a time
-until shared understanding is reached. Produces a decisions summary that can
-feed into planning, implementation, or a handoff to another session.
+Explore the codebase silently, then interview the user one question at a time
+until the choices affecting scope, constraints, design, and edge cases are
+settled. Produce a decisions summary in chat.
 
-## Steps
+## Interview
 
-### 1. Explore the codebase silently
-Read relevant files, grep for related symbols, trace dependencies. Use what
-you find to ask smarter questions and avoid asking things the codebase can
-already answer. Do not narrate what you are reading. Do not summarise
-findings. Go straight to the first question.
+1. Read relevant files, grep related symbols, and trace dependencies. Use what
+   you find to ask sharper questions and skip anything the codebase answers. Do
+   not narrate or summarise the exploration; go straight to the first question.
+2. Ask one question, wait for the answer, and let it shape the next question.
+   Resolve upstream decisions first. For each question, recommend an answer from
+   codebase patterns or common sense, and make it specific to this feature.
+3. Do not reopen settled decisions. If a branch needs missing evidence or an
+   external decision, record it as open and say what would settle it.
 
-### 2. Interview one question at a time
-Ask one question. Wait for the answer. Let the answer shape the next
-question. Walk down each branch of the decision tree, resolving upstream
-decisions before moving to downstream ones.
+When shared understanding is reached, write a compact decisions summary in chat:
 
-For every question:
-- Provide your recommended answer, based on codebase patterns or common sense
-- Make the question specific to this feature — never generic
-- Skip any question the codebase has already answered
-
-### 3. Settle the consequential decisions
-Continue until the choices affecting scope, constraints, design, and edge
-cases have answers. Do not reopen decisions the user has already settled.
-If a branch cannot be resolved without missing evidence or an external
-decision, record it as open and state what would settle it.
-
-### 4. Write a decisions summary in chat
-Once shared understanding is reached, write a compact decisions summary
-directly in chat:
-
----
+```markdown
 **Decisions Summary**
+1. [Decision made, one sentence]
+2. [Decision made, one sentence]
+```
 
-1. [Decision made — one sentence]
-2. [Decision made — one sentence]
-...
----
+End with: "Shared understanding reached. Ready for the next step? You can ask me
+to plan the implementation, start building, or use the handoff skill to persist
+this for another session."
 
-This summary captures every decision made. Use it as the source of truth for
-the next step — whether that's planning, implementation, or a handoff to
-another session.
-
-### 5. Wrap up
-End with:
-> Shared understanding reached. Ready for the next step? You can ask me to
-> plan the implementation, start building, or use the handoff skill to
-> persist this for another session.
-
-## Rules
-- Silent codebase exploration — no narration, go straight to the first question
-- Always include a recommended answer for every question
-- Freeform — no prescribed topic checklist, work from what the user describes
-- Never write to any file
-- Never present an implementation plan — this skill only interviews and produces a decisions summary
+Never write files, present an implementation plan, or use a prescribed topic
+checklist. Work from what the user describes.

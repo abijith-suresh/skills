@@ -7,78 +7,39 @@ metadata:
 
 # Handoff
 
-Write a standalone handoff so a fresh agent can continue. Save to the OS
-temp directory, not the current workspace. Print the path. The user pastes
-that path into the next session.
+Write a standalone handoff a fresh agent can continue from. If the user passed
+arguments, tailor it to that focus.
 
-If the user passed arguments, treat them as a description of what the next
-session will focus on and tailor the document accordingly.
+## Write
 
-## Steps
-
-### 1. Gather context
-
-Collect facts a new session cannot guess:
-
-- Current branch
-- Open PR or MR URL, if one exists
-- Ticket key, if one exists
-- Last command that failed, if one did
-- What not to redo
-- Decisions already made
-- Implementation plan, if one exists
-- Other artifacts worth pointing at
-
-### 2. Write the handoff document
-
-Use this structure. Omit a heading when it has nothing to say.
+Omit a heading when it has nothing to say.
 
 ```markdown
 # Handoff: [Topic]
 
 ## State
-[What phase the work is in. Exploration, planning, implementation,
-review, deployment. One sentence.]
+[Phase and one-sentence status.]
 
 ## Load
 - Branch: [name]
-- PR or MR: [URL, or none]
-- Ticket: [key, or none]
+- PR or MR: [URL or none]
+- Ticket: [key or none]
 - Last failure: [command and error, or none]
-- Do not redo: [work that is already done]
+- Do not redo: [work already done]
 
-## Decisions made
-- [Key decision 1]
-- [Key decision 2]
-
-## Next steps
-1. [Concrete next action]
-2. [Concrete next action]
-
-## Suggested skills
-- [skill-name]: [why this next session needs it]
-
-## Artifacts
-- [Path or URL]
+## Continue
+- Decisions: [settled decision]
+- Next: [concrete action]
+- Skills: [existing collection skill and why; suggestion only, never required]
+- Artifacts: [path or URL]
 ```
 
-Suggested skills are recommendations only. Name skills that exist in this
-collection, never skills from outside it.
+## Save
 
-### 3. Save to temp directory
+Save as `handoff-<topic-slug>.md` to the OS temp directory, using a new name if
+it exists, and print the absolute path for the user to paste into the next
+session. Temp files may be removed; say so when the handoff must outlive the
+machine session.
 
-Use the host's temporary directory and available file-writing tool. Save as
-`handoff-<topic-slug>.md`, choosing a new name if that file already exists.
-
-Print the absolute path so the user can load it in the next session.
-Temporary files may be removed by the host; state that limitation when the
-handoff must last longer than the current machine session.
-
-## Rules
-
-- Save to the OS temp directory, not the workspace, not a project file
-- Do not duplicate content already captured in issues, commits, or diffs.
-  Reference those by path or URL.
-- Redact secrets: API keys, passwords, personally identifiable information
-- Suggested skills are recommendations. Never require a specific skill next
-- Do not modify any files in the workspace
+Do not write to the workspace or duplicate content already in issues, commits,
+or diffs; reference those by path or URL. Redact secrets and personal data.

@@ -7,74 +7,46 @@ metadata:
 
 # Test audit
 
-Audit existing tests in the requested scope and make a focused cleanup. The goal is to remove tests that add no independent evidence and simplify production code that exists only to support them.
+Audit tests in the requested scope, remove those that add no independent
+evidence, and simplify production code that exists only to support them. Do not
+commit, push, or open a PR unless asked.
 
-## Workflow
+## Audit
 
-### 1. Read the project and bound the audit
+Read root and scoped `AGENTS.md`, test docs, and test commands. Bound to the
+user's scope; if broad, work one module or package batch at a time. Read each
+candidate in full, including its behavior, owner, overlapping tests, and
+history. Delegate substantive batches to workers, one owner per file or
+overlap; the parent owns scope, decisions, and integration, and a separate
+verifier checks the combined diff and surviving contracts. Keep discovery
+read-only and share candidates before editing.
 
-Read root and scoped `AGENTS.md` files, test documentation, and the project's test commands. Use the user's scope. If it is broad, group discovery by the repository's real module or package boundaries and choose one coherent batch to edit at a time.
+For each candidate, record the test location, the contract it protects, the
+credible failure it detects, stronger remaining coverage or why none is needed,
+production callers of helpers, and the validation command. Treat as candidates,
+not junk: assertion-free probes, self-comparisons, copied inventories, exact
+source greps, duplicated private-helper checks, one contract replayed at several
+layers, generated values, and mocks that perform the asserted behavior.
 
-Read each candidate test in full. Find the production behavior it claims to protect, its owner and entry point, relevant callers and sibling implementations, overlapping tests, and test selection in CI. Check history when the reason for a test or test-support seam is unclear. Inspect the pinned dependency's source or types when a test claims dependency-backed behavior.
+A test that fails under a behavior-preserving refactor is suspect, not
+disposable. Keep source checks for durable external keys, bytes, or paths, and
+tests for public APIs, protocols, config, migrations, storage, security,
+compatibility, defaults, and observable call ordering when they enforce a
+distinct contract. Static or slow tests are not deletion reasons. If a test
+fails on current code, investigate before removing it; do not delete it on that
+failure alone, report a possible product bug instead of changing product
+behavior, and fix stale setup only within scope.
 
-For substantive audits, delegate real module or package batches to workers.
-If delegation is unavailable, audit and validate directly and state that
-limitation.
-Give each the scope, project guidance and commands, relevant boundaries, and
-the evidence required below. Use independent workers for independent batches;
-the parent owns scope, batch boundaries, cleanup decisions, and integration.
-Assign each file or overlapping cleanup to one owner. Ask workers for exact
-test contracts, retained coverage, candidates, and focused checks. A separate
-verifier checks the combined diff and remaining behavior contracts against the
-original scope. Return failures to the cleanup owner and recheck affected
-coverage before reporting completion.
+## Clean up and report
 
-Prefer a less costly capable worker, honoring the user's model preferences.
-State which tests and supporting code each worker may change and which
-behavior must survive. Use context pointers only when the worker can access
-them; otherwise supply the needed material. Pass established coverage
-findings forward rather than sending another worker through the same
-discovery. Trivial lookups or edits can stay direct when worker setup and
-reporting would outweigh the work.
+Remove a test only when it duplicates stronger coverage or protects no
+meaningful contract. Work at the owning boundary, move valuable regressions to
+their canonical owner, and remove test-only exports or hooks only after checking
+production callers. Do not add replacement tests or delete tests for a count,
+coverage, or runtime target.
 
-Run workers in the background when completion notifications are supported.
-Continue independent work. With notifications, when only worker results
-remain, tell the user what is running and end the turn so completion brings
-you back. Carry user
-steering into active work and keep
-worker findings tied to the retained behavior contracts. Without
-notifications, use an available wait or join operation. If the host only
-offers status queries, check at meaningful work boundaries, without rapid
-polling. If results remain pending and the host cannot await completion,
-report the pending work and the follow-up needed.
-
-Keep discovery read-only. Share a short summary of high-confidence candidates and the evidence for them before editing. Continue without waiting for approval unless scope or risk is genuinely unclear.
-
-### 2. Establish each candidate's value
-
-For every possible removal, record:
-
-- the exact test name and location;
-- the behavior or contract it protects and the credible failure it detects;
-- stronger remaining coverage for that behavior, or why no test is needed;
-- production callers of any helper, export, wrapper, flag, or injection hook involved;
-- relevant history, when it explains why the test or seam exists;
-- what the removal simplifies, the risk, and the focused validation command.
-
-Treat a test as a candidate, not as junk, when it matches patterns such as assertion-free probes, self-comparisons, copied inventories or export lists, exact source greps, private-helper checks duplicated at a real boundary, the same contract replayed at several layers, expected values generated by the code under test, or mocks and fixtures that perform the behavior being asserted.
-
-A test that would fail under a behavior-preserving refactor is suspect, but that alone does not make it disposable. Retain source checks when they independently guard a durable external key, byte, or path and survive identifier-only refactors. Keep tests for public APIs, protocols, configuration, migrations, storage, security, compatibility, defaults, architecture, and observable call ordering when they enforce a distinct contract. Static or slow tests are not deletion reasons by themselves.
-
-If an existing test fails on the current code, investigate before removing it. It may expose a product bug, an environment failure, or stale setup. Do not delete it on that failure alone. Keep and report a possible product bug instead of changing product behavior under a cleanup request. Correct stale test setup only when it falls within the requested cleanup.
-
-### 3. Make a focused cleanup
-
-Work at the behavior's owning boundary. Remove a test only when its evidence shows that it duplicates stronger coverage or protects no meaningful contract. Move a valuable regression to its canonical owner when that improves the proof. Consolidate repeated cases or setup when that preserves distinct behavior coverage.
-
-Remove test-only exports, globals, wrappers, injection hooks, or dead production paths only after checking that no production caller needs them. Do not add replacement tests that repeat the same contract. Do not delete tests to meet a count, coverage percentage, or runtime target.
-
-### 4. Validate and report
-
-Have the verifier follow the repository's test and formatting guidance and run the smallest relevant owner and sibling tests against the integrated changes. Reuse valid execution evidence; rerun only when a subsequent change, failure, or gap requires it. If removing a source-level check, run the executable test, script, or dry run that owns the real contract. Run focused formatting and diff checks as appropriate. Report exactly what ran and what could not be checked.
-
-Summarize the behavior covered by removed tests, the remaining proof, production or test-support code simplified, candidates retained with reasons, and the validation results. Do not commit or push, and do not open or merge a pull request, unless the user separately asks for those actions.
+Have the verifier run the smallest relevant owner and sibling tests under
+repository guidance. Reuse valid evidence; rerun on a change, failure, or gap.
+For a removed source-level check, run the executable test or dry run that owns
+the contract. Report what ran, what could not be checked, removed coverage,
+remaining proof, simplified code, and retained candidates.
