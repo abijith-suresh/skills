@@ -5,7 +5,7 @@ import InstallCommandBlock from "@/components/InstallCommandBlock.astro";
 import PageHeader from "@/components/ui/PageHeader.astro";
 import PageShell from "@/components/ui/PageShell.astro";
 import SiteLayout from "@/layouts/SiteLayout.astro";
-import { buildInstallCommand, SKILLS_REPOSITORY } from "@/lib/skill-catalog";
+import { buildInstallCommand, getSkillSummary, SKILLS_REPOSITORY } from "@/lib/skill-catalog";
 import { buildPageTitle } from "@/lib/route-metadata";
 
 export async function getStaticPaths() {
@@ -27,13 +27,14 @@ if (!definition) {
 
 const { Content } = await render(definition);
 const installCommand = buildInstallCommand(SKILLS_REPOSITORY, slug);
+const summary = getSkillSummary(definition.data);
 ---
 
-<SiteLayout title={buildPageTitle(definition.data.name)} description={definition.data.description}>
+<SiteLayout title={buildPageTitle(definition.data.name)} description={summary}>
   <article>
     <PageShell>
       <Fragment slot="header">
-        <PageHeader title={definition.data.name} subtitle={definition.data.description} />
+        <PageHeader title={definition.data.name} subtitle={summary} />
         <div class="detail-install rise" style="--d: 80ms">
           <InstallCommandBlock command={installCommand} />
         </div>

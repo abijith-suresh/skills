@@ -1,12 +1,9 @@
 ---
 name: grill-me
-description: >-
-  Interview the user one question at a time until a plan or design reaches
-  shared understanding.
-disable-model-invocation: true
+description: 'Use when the user says "grill me".'
 metadata:
+  summary: "Interview the user until a plan or design is settled."
   featured: "true"
-  opencode/autoinvoke: "false"
 ---
 
 # Grill me

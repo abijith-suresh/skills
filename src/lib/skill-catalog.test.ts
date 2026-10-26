@@ -5,6 +5,7 @@ import {
   buildSkillSourceUrl,
   buildSkillSummaries,
   directorySlugFromEntry,
+  getSkillSummary,
   isFeaturedMetadata,
 } from "@/lib/skill-catalog";
 
@@ -48,8 +49,22 @@ describe("buildSkillSummaries", () => {
   it("sorts skills by display name and builds install/source metadata", () => {
     const summaries = buildSkillSummaries(
       [
-        { id: "handoff", data: { name: "Handoff", description: "Handoff context." } },
-        { id: "commit", data: { name: "Commit", description: "Commit changes." } },
+        {
+          id: "handoff",
+          data: {
+            name: "Handoff",
+            description: 'Use when the user says "handoff".',
+            metadata: { summary: "Handoff context." },
+          },
+        },
+        {
+          id: "commit",
+          data: {
+            name: "Commit",
+            description: 'Use when the user says "commit".',
+            metadata: { summary: "Commit changes." },
+          },
+        },
       ],
       "owner/repo"
     );
@@ -58,7 +73,7 @@ describe("buildSkillSummaries", () => {
       {
         slug: "commit",
         name: "Commit",
-        description: "Commit changes.",
+        summary: "Commit changes.",
         installCommand: "npx skills@latest add owner/repo --skill commit",
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/commit",
         featured: false,
@@ -66,7 +81,7 @@ describe("buildSkillSummaries", () => {
       {
         slug: "handoff",
         name: "Handoff",
-        description: "Handoff context.",
+        summary: "Handoff context.",
         installCommand: "npx skills@latest add owner/repo --skill handoff",
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/handoff",
         featured: false,
@@ -80,16 +95,16 @@ describe("buildSkillSummaries", () => {
         id: "commit",
         data: {
           name: "Commit",
-          description: "Commit changes.",
-          metadata: { featured: "true" },
+          description: 'Use when the user says "commit".',
+          metadata: { summary: "Commit changes.", featured: "true" },
         },
       },
       {
         id: "handoff",
         data: {
           name: "Handoff",
-          description: "Handoff context.",
-          metadata: { featured: "false" },
+          description: 'Use when the user says "handoff".',
+          metadata: { summary: "Handoff context.", featured: "false" },
         },
       },
     ]);
@@ -98,6 +113,22 @@ describe("buildSkillSummaries", () => {
       ["commit", true],
       ["handoff", false],
     ]);
+  });
+});
+
+describe("getSkillSummary", () => {
+  it("uses the metadata summary", () => {
+    expect(
+      getSkillSummary({
+        metadata: { summary: "Commit changes." },
+      })
+    ).toBe("Commit changes.");
+  });
+
+  it("rejects metadata without a summary", () => {
+    expect(() => getSkillSummary({ metadata: { featured: "true" } })).toThrow(
+      "Skill metadata.summary is required"
+    );
   });
 });
 

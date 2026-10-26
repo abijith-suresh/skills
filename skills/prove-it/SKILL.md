@@ -1,8 +1,8 @@
 ---
 name: prove-it
-description: >-
-  Verify that features and fixes behave as intended. Use during implementation,
-  before declaring work complete, or when asked to prove it works.
+description: 'Use when the user says "prove it".'
+metadata:
+  summary: "Verify completion claims against observed behavior."
 ---
 
 # Prove it

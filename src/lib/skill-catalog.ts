@@ -3,7 +3,7 @@ export const SKILLS_REPOSITORY = "abijith-suresh/skills";
 export interface SkillSummary {
   slug: string;
   name: string;
-  description: string;
+  summary: string;
   installCommand: string;
   sourceUrl: string;
   featured: boolean;
@@ -33,10 +33,18 @@ export function isFeaturedMetadata(featured: string | undefined): boolean {
   return featured === "true";
 }
 
+export function getSkillSummary(data: { metadata: Record<string, string> }): string {
+  const summary = data.metadata.summary;
+  if (!summary) {
+    throw new Error("Skill metadata.summary is required");
+  }
+  return summary;
+}
+
 export function buildSkillSummaries(
   definitions: {
     id: string;
-    data: { name: string; description: string; metadata?: Record<string, string> };
+    data: { name: string; description: string; metadata: Record<string, string> };
   }[],
   repository = SKILLS_REPOSITORY
 ) {
@@ -44,7 +52,7 @@ export function buildSkillSummaries(
     .map((definition) => ({
       slug: definition.id,
       name: definition.data.name,
-      description: definition.data.description,
+      summary: getSkillSummary(definition.data),
       installCommand: buildInstallCommand(repository, definition.id),
       sourceUrl: buildSkillSourceUrl(repository, definition.id),
       featured: isFeaturedMetadata(definition.data.metadata?.featured),

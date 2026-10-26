@@ -1,11 +1,8 @@
 ---
 name: open-pr
-description: >-
-  Pushes the current branch and creates or updates the GitHub pull request
-  for it.
-disable-model-invocation: true
+description: 'Use when the user says "open PR".'
 metadata:
-  opencode/autoinvoke: "false"
+  summary: "Create or update the GitHub pull request for this branch."
 ---
 
 # Open PR

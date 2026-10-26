@@ -1,11 +1,8 @@
 ---
 name: triage
-description: >-
-  Find the root cause of a bug report, failing test, incident, regression, or
-  unexpected behavior before anyone proposes a fix. Use whenever the user
-  shares an error, stack trace, or log, says something "stopped working",
-  "broke after X", or "is flaky", or asks "why is this happening", even if they
-  never say "triage" or "diagnose". Produces an evidence-backed diagnosis, not a patch.
+description: 'Use when the user says "triage".'
+metadata:
+  summary: "Diagnose reported issues from evidence before choosing a fix."
 ---
 
 # Triage

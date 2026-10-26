@@ -1,8 +1,8 @@
 ---
 name: explain
-description: >-
-  Explain existing code or system behavior. Use for code walkthroughs and
-  questions about how the user's codebase or system works.
+description: 'Use when the user says "explain".'
+metadata:
+  summary: "Explain existing behavior through a concrete execution path."
 ---
 
 # Explain

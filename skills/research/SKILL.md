@@ -1,10 +1,8 @@
 ---
 name: research
-description: >-
-  Resolve API and dependency behavior questions from canonical source. Use
-  when an answer or implementation depends on how a library, framework, or
-  tool works, including behavior specific to a release.
+description: 'Use when the user says "research".'
 metadata:
+  summary: "Resolve API and dependency questions from canonical source."
   featured: "true"
 ---
 

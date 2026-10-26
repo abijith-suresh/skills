@@ -1,5 +1,0 @@
-interface:
-  display_name: "Open PR"
-  short_description: "Create or update the GitHub pull request for this branch"
-policy:
-  allow_implicit_invocation: false

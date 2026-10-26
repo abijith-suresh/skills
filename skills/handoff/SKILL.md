@@ -1,10 +1,8 @@
 ---
 name: handoff
-description: >-
-  Write a loadable handoff for the next session.
-disable-model-invocation: true
+description: 'Use when the user says "handoff".'
 metadata:
-  opencode/autoinvoke: "false"
+  summary: "Write a compact handoff for another agent or session."
 ---
 
 # Handoff

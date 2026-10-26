@@ -1,5 +1,6 @@
 import { SITE } from "@/consts";
 import { normalizePagePath } from "@/lib/site-paths";
+import { getSkillSummary } from "@/lib/skill-catalog";
 
 export interface OgRoute {
   slug: string;
@@ -13,6 +14,7 @@ type SkillDefinition = {
   data: {
     name: string;
     description: string;
+    metadata: Record<string, string>;
   };
 };
 
@@ -47,7 +49,7 @@ export function buildOgRoutes(definitions: SkillDefinition[]): OgRoute[] {
     ...definitions.map((definition) => ({
       slug: definition.id,
       title: definition.data.name,
-      description: definition.data.description,
+      description: getSkillSummary(definition.data),
       label: "skill" as const,
     })),
   ];

@@ -40,7 +40,16 @@ describe("getOgImagePath", () => {
 describe("buildOgRoutes", () => {
   it("creates catalog, all-skills, and per-skill routes", () => {
     expect(
-      buildOgRoutes([{ id: "commit", data: { name: "Commit", description: "Create commits." } }])
+      buildOgRoutes([
+        {
+          id: "commit",
+          data: {
+            name: "Commit",
+            description: 'Use when the user says "commit".',
+            metadata: { summary: "Create commits." },
+          },
+        },
+      ])
     ).toEqual([
       {
         slug: "index",

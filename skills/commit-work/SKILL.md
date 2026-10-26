@@ -1,11 +1,8 @@
 ---
 name: commit-work
-description: >-
-  Creates conventional commits from the current diff with a ticket number in
-  every scope.
-disable-model-invocation: true
+description: 'Use when the user says "commit work".'
 metadata:
-  opencode/autoinvoke: "false"
+  summary: "Create conventional commits with a ticket number in every scope."
 ---
 
 # Commit Work

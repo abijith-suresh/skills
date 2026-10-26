@@ -37,7 +37,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
         <li class="rise" style={`--d: ${160 + Math.min(index, 7) * 70}ms`}>
           <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="skill-card">
             <span class="skill-card-title" translate="no">{skill.name}</span>
-            <span class="skill-card-description">{skill.description}</span>
+            <span class="skill-card-description">{skill.summary}</span>
             <span class="skill-card-foot">
               read
               <span class="arrow" aria-hidden="true">&rarr;</span>
