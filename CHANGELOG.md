@@ -14,6 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added - 2026-10-13
 
+- `inbox-zero` skill: triage Gmail messages, clean up within the user's
+  authorization, delegate substantive review when useful, and report what
+  remains unresolved or uncertain.
+
 - Added standalone `prove-it` with delegated, falsifiable checks at the boundary
   that owns the claim. Worker instructions preserve original expectations and
   keep assignment context factual and checks inline. Parent spot checks are

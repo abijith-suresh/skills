@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 14](https://img.shields.io/badge/Skills-14-green.svg)](#skill-catalog)
+[![Skills: 15](https://img.shields.io/badge/Skills-15-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
 implementation, test cleanup, commits, pull and merge requests, research, issue creation,
@@ -45,6 +45,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `explain` | Explain existing code through concrete execution paths. |
 | `grill-me` | Ask one question at a time to settle a plan or design. |
 | `handoff` | Write a compact handoff document for another agent or session. |
+| `inbox-zero` | Triage a Gmail inbox and clean up messages with care. |
 | `implement` | Implement features and fixes through verified code. |
 | `open-mr` | Create or update the GitLab merge request for this branch. |
 | `open-pr` | Create or update the GitHub pull request for this branch. |
