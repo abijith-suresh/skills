@@ -12,13 +12,17 @@ const skillDefinitions = defineCollection({
   }),
   schema: z.object({
     name: z.string(),
+    // The user-said phrase that invokes the skill.
     description: z.string(),
-    // Harness extension, not part of the Agent Skills spec. Cursor, Claude
-    // Code, and Pi honor it; Codex uses agents/openai.yaml instead.
-    "disable-model-invocation": z.boolean().optional(),
-    // The spec reserves `metadata` for string-to-string pairs. Site flags
-    // (`featured`) and OpenCode invocation (`opencode/autoinvoke`) live here.
-    metadata: z.record(z.string(), z.string()).optional(),
+    // The spec reserves `metadata` for string-to-string pairs. `summary` is
+    // the human summary shown on the site, and `featured: "true"` controls
+    // site curation.
+    metadata: z
+      .record(z.string(), z.string())
+      .refine(
+        (metadata) => typeof metadata.summary === "string" && metadata.summary.length > 0,
+        "metadata.summary is required"
+      ),
   }),
 });
 

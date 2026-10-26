@@ -1,9 +1,8 @@
 ---
 name: test-audit
-description: Audit existing tests and remove low-value coverage.
-disable-model-invocation: true
+description: 'Use when the user says "test audit".'
 metadata:
-  opencode/autoinvoke: "false"
+  summary: "Audit existing tests and remove low-value coverage."
 ---
 
 # Test audit

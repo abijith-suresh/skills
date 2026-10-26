@@ -42,7 +42,7 @@ change and let CI own the full suite.
 - Use conventional commit messages in the form `type(scope?): summary`; the allowed types live in `commitlint.config.ts`.
 - Open a focused pull request from the feature branch and wait for CI to pass.
 - Squash merge the pull request into `main`. Merging is the owner's call — leave it to them.
-- Adding, removing, or renaming a skill means updating the catalog and count in `README.md` and adding a dated `[Unreleased]` entry in `CHANGELOG.md`.
+- Adding, removing, or renaming a skill means updating the catalog and count in `README.md`.
 
 ## Prose
 
@@ -52,31 +52,33 @@ Skill text is direct: sentence-case headings, concrete claims, plain punctuation
 
 1. Create `skills/<skill-name>/SKILL.md`.
 2. Follow the [Agent Skills specification](https://agentskills.io/specification).
-   Use YAML frontmatter with `name`, `description`, and optional `metadata`.
-   Add `disable-model-invocation: true` when the skill should only run when
-   named. Put site flags and OpenCode invocation in `metadata` as strings.
+   Use frontmatter with `name`, `description` as the trigger
+   (`Use when the user says "<say>".`), and `metadata.summary` as the
+   one-line human summary. Add `metadata.featured: "true"` only when the skill
+   belongs in site curation.
 3. Make the directory name and frontmatter `name` match in lowercase
    kebab-case.
-4. Write a short description. For model-invoked skills include when to use
-   it. For user-invoked skills, keep it a human summary.
-5. Keep the workflow standalone. It must not require or run another skill.
-6. Add `agents/openai.yaml` with display metadata. User-invoked skills carry all
-   three invocation locks together: `disable-model-invocation: true`,
-   `agents/openai.yaml` with `policy.allow_implicit_invocation: false`, and
-   `metadata.opencode/autoinvoke: "false"`. Missing one silently changes how the
-   skill is discovered.
-7. Add the skill to the catalog and update the count in `README.md`.
-8. Add a dated entry under `[Unreleased]` in `CHANGELOG.md`.
+4. Keep the workflow standalone. It must not require or run another skill.
+5. Add a catalog row to `README.md` using the same say phrase and summary, and
+   update the count.
+6. Run `bun run verify`.
 
 Supporting `references/`, `scripts/`, or `assets/` directories are allowed
 when a skill needs them. Do not add a per-skill README.
 
+### Body
+
+Keep the body to the core workflow: put the contract and authorization
+boundary in the first paragraph, then steps, output, and only non-obvious stop
+conditions. Cut goals that restate steps, generic advice, repeated rules, and
+harness wait mechanics. Aim for 60 lines or fewer, with complex forge skills
+allowed up to 90.
+
 ## Update a skill
 
 1. Edit the relevant `SKILL.md` and supporting files.
-2. Update the README catalog if the skill name or catalog description changes.
-3. Add a dated entry under `[Unreleased]` in `CHANGELOG.md`.
-4. Run `bun run verify`.
+2. Keep the trigger and summary in sync with the `README.md` catalog.
+3. Run `bun run verify`.
 
 ## Change the site
 

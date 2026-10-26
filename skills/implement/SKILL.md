@@ -1,12 +1,8 @@
 ---
 name: implement
-description: >-
-  Build a feature, fix a bug, or carry out an implementation plan, and prove
-  it works against what the user actually asked for. Use whenever the task is
-  to change code behavior and deliver something working, including "add X",
-  "fix Y", "make Z do W", or a plan to execute. If the root cause of a bug is
-  still unknown, investigate the cause first. Skip for pure questions, reviews, or
-  explanations.
+description: 'Use when the user says "implement".'
+metadata:
+  summary: "Implement a change and verify it against the original request."
 ---
 
 # Implement

@@ -1,6 +1,8 @@
 ---
 name: unslop
-description: Cut AI tells from any writing. Must always apply.
+description: 'Use when the user says "unslop".'
+metadata:
+  summary: "Remove AI writing patterns and make prose sound human."
 ---
 
 # Unslop

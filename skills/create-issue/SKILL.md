@@ -1,11 +1,8 @@
 ---
 name: create-issue
-description: >-
-  Files one GitHub issue to capture a later thought from the current work so
-  it is not lost.
-disable-model-invocation: true
+description: 'Use when the user says "create issue".'
 metadata:
-  opencode/autoinvoke: "false"
+  summary: "File one GitHub issue to park a later thought."
 ---
 
 # Create issue

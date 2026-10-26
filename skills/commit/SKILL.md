@@ -1,11 +1,9 @@
 ---
 name: commit
-description: >-
-  Creates conventional commits from the current diff, one intent per commit.
-disable-model-invocation: true
+description: 'Use when the user says "commit".'
 metadata:
+  summary: "Create conventional commits from the current diff, one intent per commit."
   featured: "true"
-  opencode/autoinvoke: "false"
 ---
 
 # Commit

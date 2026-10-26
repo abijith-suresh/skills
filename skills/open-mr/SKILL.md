@@ -1,11 +1,8 @@
 ---
 name: open-mr
-description: >-
-  Pushes the current branch and creates or updates the GitLab merge request
-  for it. Requires a ticket number.
-disable-model-invocation: true
+description: 'Use when the user says "open MR".'
 metadata:
-  opencode/autoinvoke: "false"
+  summary: "Create or update the GitLab merge request for this branch."
 ---
 
 # Open MR (GitLab)
