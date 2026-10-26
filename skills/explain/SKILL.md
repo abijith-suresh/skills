@@ -7,59 +7,34 @@ metadata:
 
 # Explain
 
-The worker traces and writes; the parent edits and presents. Explanation
-alone authorizes no product edits. Demonstrations stay within the user's
-existing authorization.
+Explain existing behavior through a concrete execution path. The worker traces
+and writes; the parent edits and presents. Explanation authorizes no product
+edits, and demonstrations stay within the user's existing authorization.
 
-## 1. Delegate first
+Dispatch a capable worker before substantial investigation, honoring explicit
+user delegation and model choices; report the blocker if required delegation is
+unavailable. Answer directly only for an isolated single-fact lookup or when no
+worker can be dispatched, stating the reason first.
 
-Frame the supplied question for its audience; state your interpretation if
-ambiguous.
+Give the worker the question unchanged, the audience/workspace/access context,
+and the trace rules below verbatim. Give each coherent flow one owner.
 
-- Honor explicit user delegation and model choices. If required delegation is
-  unavailable, report the blocker.
-- Otherwise, answer directly only for an isolated single-fact lookup or when
-  delegation is unavailable. State the reason first.
-- Otherwise, dispatch a capable worker before investigating. Prefer lower cost
-  and announce its assignment.
-
-Judge the whole request, not its next command's cost. Even a short multi-step
-trace requires delegation. Reading the request and locating the workspace may
-precede dispatch.
-
-At dispatch, keep one owner for a coherent flow. Split independent topics when
-useful, naming explorers and one synthesis owner who handles follow-up.
-
-Fill only these fields in each worker assignment:
-
-- Question: the user's request unchanged.
-- Context: audience, workspace, and relevant facts or access limits.
-- Instructions: section 2 verbatim.
-
-## 2. Trace and explain
+## Trace
 
 Give a working mental model of the asked behavior. Trace input to result,
-highlighting the decisions and failure behavior needed to understand it.
-Use source locations for the key steps.
+highlighting the decisions and failure behavior needed to understand it, with
+source locations for the key steps.
 
 Ground the explanation in inspected code. Label execution results and inferred
-intent; name gaps that affect the answer. Use snippets or diagrams when they
-clarify the flow.
+intent; name gaps that affect the answer. Return the answer and demonstration
+output inline; use one-off commands for focused demonstrations. Create files
+only for requested outputs or required project tooling.
 
-Return the answer and demonstration output inline. Use one-off commands for
-focused demonstrations that clarify the answer. Create files only for requested
-outputs or required project tooling.
+## Present
 
-## 3. Edit and present
+The parent edits for relevance, completeness, and clarity, and may spot-check a
+claim; the worker owns substantial tracing. Send concrete gaps back as bounded
+follow-up, and forward new evidence and user steering to the same owner.
 
-The parent edits the worker's answer for relevance, completeness, and clarity.
-It may spot-check a specific claim; the worker owns substantial tracing.
-Send concrete gaps back as bounded follow-up; continue only while resolving
-them. New evidence and user steering go to the same owner.
-
-When only worker results remain, yield for completion notifications or use
-wait/join. If neither is available, report pending work separately from findings.
-
-Present the worker's answer with light clarity edits. Finish when the question
-is answered. If blocked, return what was traced, remaining unknowns, and the
-smallest missing input or access needed.
+Finish when the question is answered. If blocked, return what was traced,
+remaining unknowns, and the smallest missing input or access needed.
