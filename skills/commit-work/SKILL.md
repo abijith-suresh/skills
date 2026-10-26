@@ -7,121 +7,42 @@ metadata:
 
 # Commit Work
 
-Split by intent. One commit per reason to change.
+Turn the current diff into conventional commits with a ticket number in every
+scope. Do not push, and do not commit on `main`, `master`, `develop`, or the
+remote default branch unless the user explicitly overrides this guardrail.
+Execute the split without asking.
 
-## Goals
+## Steps
 
-- One intent per commit
-- Conventional commit messages, imperative mood
-- Honest splits — never bundle unrelated changes behind a broad message
-- Branch safety — never commit directly on `main`, `master`, `develop`, or
-  the remote default branch
-- Ticket number in every commit scope
+1. Check `git branch --show-current` against the remote default from
+   `git symbolic-ref refs/remotes/origin/HEAD --short`. If it is the default or
+   a shared integration branch, stop and ask for a feature branch.
 
-## Workflow
+2. Resolve the ticket. Use the key from the branch, MR, or conversation. Ask
+   for it only when none of them has one.
 
-### 1. Check branch safety first
+3. Read `git status` and `git diff HEAD`; read every changed file. Do not include
+   `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md` unless the user
+   explicitly asks.
 
-Run:
+4. Group the changes by intent. Separate a feature from the refactor that made
+   room for it, a fix from unrelated cleanup, generated files from hand-written
+   code, and unrelated modules with different reasons to change. When in doubt,
+   split.
 
-- `git branch --show-current`
-- `git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'`
-- or `git remote show origin` if `origin/HEAD` is unavailable
+5. For each group:
 
-If the current branch is `main`, `master`, `develop`, or the remote
-default branch, stop.
+   ```bash
+   git add <files>
+   git commit -m "type(TICKET-123): imperative summary"
+   ```
 
-Warn the user and ask whether to create or switch to a feature branch
-before committing. Do not commit on those branches unless the user
-explicitly overrides the guardrail.
+   Stage explicit paths; never `git add .` or `git add -A`. Use imperative,
+   lowercase summaries with no trailing period. The ticket belongs in the scope
+   position. Add a body only when the why is not obvious. Common types are
+   `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`,
+   and `chore`. If a message needs `and` to join unrelated ideas, split the
+   commit.
 
-### 2. Resolve the ticket number
-
-A ticket number is required in every commit scope:
-`type(TICKET-123): summary`
-
-If the ticket number is not already known from the branch, MR, or
-conversation, ask for it before continuing.
-
-### 3. Inspect the diff
-
-Run `git status` and `git diff HEAD`. Read every changed file.
-
-Never include these agent-generated working files unless the user
-explicitly asks:
-
-- `PLAN.md`
-- `IMPROVE.md`
-- `REVIEW.md`
-- `INVESTIGATION.md`
-
-### 4. Plan the split
-
-Group changes by intent. A good split separates things like:
-
-- a new feature from the refactoring that made room for it
-- a bug fix from unrelated formatting or cleanup changes
-- generated files from hand-written code
-- changes in unrelated modules with different reasons to change
-
-When in doubt, split. A slightly smaller commit is easier to review and
-safer to revert.
-
-Plan the split, then proceed directly to committing. Do not ask for
-permission — make a good judgement call and execute.
-
-### 5. Stage and commit each group
-
-For each group in order:
-
-1. Stage only the relevant files: `git add <files>`
-2. Write the commit message
-3. Commit: `git commit -m "message"` (or add a body when the why is not obvious)
-
-**Format**
-
-`type(TICKET-123): imperative summary`
-
-Examples:
-
-- `feat(PROJ-214): add investigation workflow`
-- `fix(PROJ-214): correct GitLab target option`
-
-Common types:
-
-- `feat`
-- `fix`
-- `docs`
-- `style`
-- `refactor`
-- `perf`
-- `test`
-- `build`
-- `ci`
-- `chore`
-
-Conventional Commits gives semantic meaning primarily to `feat`, `fix`,
-and `BREAKING CHANGE`. The rest are common types used by convention, not
-a hard mandatory list from the spec.
-
-Message rules:
-
-- Imperative mood: `add X`, not `added X` or `adding X`
-- Lowercase summary, no period at the end
-- Ticket number is required in the scope position
-- Use a body only when the why is not obvious from the summary alone
-- If the message needs `and` to connect unrelated ideas, split the commit
-
-### 6. Report
-
-After all commits, show the list of commits made and confirm whether any
-staged or unstaged changes remain.
-
-## Rules
-
-- Never commit unrelated changes together
-- Never push — that is a separate step
-- Never include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or `INVESTIGATION.md`
-  unless the user explicitly asks
-- Do not ask for permission to commit — plan the split, make a judgement call, and execute
-- Call out risky git operations before taking them
+6. Report the commits you made and whether any staged or unstaged changes
+   remain.

@@ -5,144 +5,73 @@ metadata:
   summary: "Create or update the GitLab merge request for this branch."
 ---
 
-# Open MR (GitLab)
+# Open MR
 
-Push the current branch. Create a GitLab merge request if this branch has
-none. Update title and body if it already has one. This workflow uses GitLab
-and a Jira ticket key, which must lead the title.
+Push the current branch, then create or update its GitLab merge request. This
+uses GitLab and a Jira ticket key, which must lead the title. This skill does
+not commit. If the work is uncommitted, stop and tell the user to run
+`commit-work` first.
 
-This skill does not commit. If the work is uncommitted, stop and tell the
-user to use `commit-work` first.
+## Title and body
 
-## Prerequisites
+Use the ticket key from the branch or conversation. If neither has one, stop
+and ask. Derive the description from the **net diff**, not the first commit.
 
-- `glab` CLI must be installed and authenticated. Verify with `glab auth status`.
-- If `glab` is missing: "glab CLI is required. Install it from https://gitlab.com/gitlab-org/cli#installation."
-- Ticket number from the branch name or the conversation. If neither has
-  one, stop and ask.
+`TICKET-123: Short description`
 
-## Title
-
-```
-TICKET-123: Short description
-```
-
-Examples:
-
-- `PROJ-214: Retry payment webhooks`
-- `PROJ-214: Fix target branch detection`
-
-Do not use conventional-commit types in the title. The Jira key is the
-prefix. Derive the description from the **net diff**, not from the first
-commit on the branch.
-
-## Body
+Do not use conventional-commit types in the title.
 
 ```markdown
 ## Summary
 [Why this ticket needed code, and what is now true. Two or three sentences.
 Do not write "this MR implements the ticket."]
-
-## What changed
-- [User-visible behaviour, API or data contract, or risk]
-- [Same bar. Not a file name.]
 ```
 
-Omit **What changed** when every bullet would only name a file. Then Summary
-is enough.
+Add a `## What changed` bullet list only when a bullet would name user-visible
+behaviour, an API or data contract change, or a risk. Omit it when every
+bullet would only name a file. Do not add a Testing checklist, a References or
+Jira link section, or local paths. One concrete QA line under Summary is
+allowed only when you will actually do that step.
 
-Forbidden:
-
-- File-list bullets (`Updated Foo.ts`, `Added tests`)
-- A Testing checklist. CI is the automated record. One concrete QA line
-  under Summary is allowed only when you will actually do that step
-  ("Refund a captured payment in staging.")
-- A References or Jira link section. The key is already in the title
-- Local disk paths
-
-Write the body to a temp file. Pass it as the description. Do not interpolate
-markdown through a quoted `--description`.
+Write the body to a temp file and pass it as the description. Do not
+interpolate markdown through a quoted `--description`.
 
 ## Steps
 
-### 1. Check branch state
+1. Check the branch and CLI:
+   ```bash
+   git branch --show-current
+   git symbolic-ref refs/remotes/origin/HEAD --short
+   git status --porcelain
+   glab auth status
+   ```
+   On the default branch, stop: "Cannot open an MR from the default branch.
+   Switch to a feature branch first." If `git status --porcelain` prints
+   anything, stop: "Uncommitted changes detected. Commit or stash them before
+   opening an MR." If `glab` is missing: "glab CLI is required. Install it
+   from https://gitlab.com/gitlab-org/cli#installation." If it is not
+   authenticated: "glab CLI is not authenticated. Run glab auth login first."
 
-```bash
-git branch --show-current
-git remote show origin | grep "HEAD branch"
-git status --porcelain
-```
+2. Push, and do not pass `--push` to `glab mr create`:
+   ```bash
+   git push -u origin <branch-name>
+   ```
+   Stop with the exact error if the push fails.
 
-- Default branch: stop. "Cannot open an MR from the default branch. Switch
-  to a feature branch first."
-- `git status --porcelain` has output: stop. "Uncommitted changes detected.
-  Commit or stash them before opening an MR."
+3. Look for an existing MR, then read the full net diff:
+   ```bash
+   glab mr list --source-branch <branch-name> -F json
+   git diff origin/<default-branch>..HEAD
+   ```
+   A non-empty array means the MR exists; note the `iid` and URL. Never create
+   a second MR. Regenerate the title and description from the net diff.
 
-### 2. Push
+4. Create with the first command if there is no MR; update with the second:
+   ```bash
+   glab mr create --title "<title>" --description-file <temp-body> --yes
+   glab mr update <iid> --title "<title>" --description-file <temp-body> --yes
+   ```
+   Open ready, not draft. If `glab` rejects `--description-file` on update,
+   pass the file contents with `--description`, never a hand-quoted body.
 
-```bash
-git push -u origin <branch-name>
-```
-
-If push fails, stop and show the exact error. Do not pass `--push` to
-`glab mr create` after this.
-
-### 3. Find an existing MR
-
-```bash
-glab mr list --source-branch <branch-name> -F json
-```
-
-If the array is non-empty, note the `iid` and URL. Do not create a second MR.
-
-### 4. Derive title and body
-
-```bash
-git log origin/<default-branch>..HEAD --oneline
-git diff origin/<default-branch>..HEAD
-git diff origin/<default-branch>..HEAD --stat
-```
-
-Read the **full diff**. Regenerate title and body from scratch every time,
-including updates.
-
-### 5. Create or update
-
-**No MR:**
-
-```bash
-glab mr create \
-  --title "<title>" \
-  --description-file <temp-body> \
-  --yes
-```
-
-Open ready, not draft.
-
-**MR exists:**
-
-```bash
-glab mr update <iid> \
-  --title "<title>" \
-  --description-file <temp-body> \
-  --yes
-```
-
-If `glab` rejects `--description-file` on update, pass the file contents
-with `--description`. Do not hand-quote a multiline body on the command
-line.
-
-### 6. Report
-
-Print the URL. Say whether this created an MR or updated one.
-
-## Failure conditions
-
-| Condition | Message |
-|---|---|
-| `glab` CLI not installed | "glab CLI is required. Install it from https://gitlab.com/gitlab-org/cli#installation." |
-| Not authenticated | "glab CLI is not authenticated. Run glab auth login first." |
-| On default branch | "Cannot open an MR from the default branch. Switch to a feature branch first." |
-| Uncommitted changes | "Uncommitted changes detected. Commit or stash them before opening an MR." |
-| No ticket number | "A ticket number is required in the branch name or conversation." |
-| Push failed | Show the exact git error and stop. |
+5. Print the URL and say whether you created or updated the MR.

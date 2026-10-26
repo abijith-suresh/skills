@@ -7,62 +7,27 @@ metadata:
 
 # Create issue
 
-Capture one follow-up as a GitHub issue on the current repo. This is a
-parking lot, not a plan breakdown. Personal GitHub only. Do not use this
-on GitLab.
-
-## Prerequisites
-
-- `git` must be available
-- `gh` CLI must be installed and authenticated — verify with `gh auth status`
-- If `gh` is missing: "gh CLI is required. Install it from https://cli.github.com/."
-- Origin must be GitHub. Run `git remote get-url origin`. If the URL contains
-  `gitlab`, stop: "create-issue is GitHub-only. This remote is GitLab."
+File one GitHub issue for a follow-up the user named, or for an out-of-scope
+leftover the conversation turned up. This is a parking lot, not a plan
+breakdown. GitHub only. If nothing is worth parking, say so and stop.
 
 ## Steps
+1. Verify `gh auth status`. If `gh` is missing: "gh CLI is required. Install it
+   from https://cli.github.com/." Check `git remote get-url origin`; if it
+   contains `gitlab`, stop: "create-issue is GitHub-only. This remote is GitLab."
+2. Draft one issue with an imperative title under 72 characters:
+   ```markdown
+   ## What
+   [The follow-up, one or two sentences.]
 
-### 1. Identify the thought
+   ## Why later
+   [Why it is not part of the current change.]
 
-Use what the user just named, or a leftover the conversation turned up that
-is out of scope for the current work. One issue, one thought. If nothing is
-worth parking, say so and stop.
-
-### 2. Draft
-
-**Title** — imperative, under 72 characters.
-
-**Body:**
-
-```markdown
-## What
-[The follow-up, one or two sentences.]
-
-## Why later
-[Why it is not part of the current change.]
-
-## Notes
-[File, symbol, or constraint to remember. Omit this section if empty.]
-```
-
-Show the draft in chat and wait for approval. Do not create anything yet.
-
-### 3. Create
-
-```bash
-gh issue create --title "<title>" --body "<body>" --assignee @me
-```
-
-Add labels only when the user names them. Do not invent a label vocabulary.
-
-### 4. Report
-
-Print the issue URL. Then continue the original work. Do not start
-implementing the parked item.
-
-## Rules
-
-- One issue per invocation
-- Never create issues before the user approves the draft
-- Never turn a plan into a set of tickets
-- Never switch the current branch or commit
-- Never create GitLab issues
+   ## Notes
+   [File, symbol, or constraint to remember. Omit if empty.]
+   ```
+3. Show the draft in chat and wait for approval. Do not create it yet.
+4. Create it with `gh issue create --title "<title>" --body "<body>"
+   --assignee @me`. Add labels only when the user names them.
+5. Print the issue URL and continue the original work. Do not start the parked
+   item.
