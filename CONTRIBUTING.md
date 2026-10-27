@@ -3,8 +3,7 @@
 ## Prerequisites
 
 - [mise](https://mise.jdx.dev/) for managing tool versions
-- Node `24.19.0`, pinned in `.node-version`
-- Bun `1.3.14`, pinned in `.bun-version` and `mise.toml`
+- Node `24.20.0` and Bun `1.4.1`, pinned in `mise.toml`
 
 ```bash
 mise install
@@ -43,6 +42,25 @@ change and let CI own the full suite.
 - Open a focused pull request from the feature branch and wait for CI to pass.
 - Squash merge the pull request into `main`. Merging is the owner's call — leave it to them.
 - Adding, removing, or renaming a skill means updating the catalog and count in `README.md`.
+
+## Releases
+
+The collection is versioned as one package with
+[Changesets](https://changesets.dev/). Add a changeset to any pull request that
+changes a skill or the site:
+
+```bash
+bun run changeset
+```
+
+Choose `patch` for fixes and corrections, `minor` for new skills or workflow
+changes, and `major` only when you mean `1.0.0`. The release workflow opens or
+updates a `chore: version skills` pull request. Merge that pull request when you
+want to cut a release. It updates `CHANGELOG.md` and `package.json`, then tags
+`vX.Y.Z` and creates a GitHub Release.
+
+Do not edit `CHANGELOG.md` or the package version by hand. Use
+`bun run changeset --empty` when a pull request needs no release.
 
 ## Prose
 
