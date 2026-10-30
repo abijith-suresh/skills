@@ -13,13 +13,10 @@ const skillNames = readdirSync(skillsRoot, { withFileTypes: true })
   .map((entry) => entry.name)
   .sort();
 
-const sayOverrides: Record<string, string> = {
-  "open-mr": "open MR",
-  "open-pr": "open PR",
-};
+const agentInvoked = new Set(["mr", "pr"]);
 
 function expectedSay(directoryName: string): string {
-  return sayOverrides[directoryName] ?? directoryName.replaceAll("-", " ");
+  return directoryName.replaceAll("-", " ");
 }
 
 function readFile(path: string): string {
@@ -96,7 +93,14 @@ describe("skill frontmatter", () => {
 
     expect(Object.keys(frontmatter).sort()).toEqual(["description", "metadata", "name"]);
     expect(frontmatter.name).toBe(directoryName);
-    expect(frontmatter.description).toBe(`Use when the user says "${expectedSay(directoryName)}".`);
+    if (agentInvoked.has(directoryName)) {
+      expect(frontmatter.description).toMatch(/^Use when .+\.$/);
+      expect(frontmatter.description).not.toContain("the user says");
+    } else {
+      expect(frontmatter.description).toBe(
+        `Use when the user says "${expectedSay(directoryName)}".`
+      );
+    }
 
     const metadata = frontmatter.metadata;
     expect(isStringMap(metadata)).toBe(true);
@@ -154,7 +158,7 @@ describe("README catalog", () => {
       throw new Error(`README is missing a catalog row for ${directoryName}`);
     }
 
-    expect(row.say).toBe(expectedSay(directoryName));
+    expect(row.say).toBe(agentInvoked.has(directoryName) ? "agent" : expectedSay(directoryName));
 
     const metadataMap = requireStringMap(frontmatter.metadata, `${directoryName} metadata`);
     expect(row.summary).toBe(metadataMap.summary);

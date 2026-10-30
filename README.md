@@ -43,13 +43,15 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `grill-me` | "grill me" | Interview the user until a plan or design is settled. |
 | `handoff` | "handoff" | Write a compact handoff for another agent or session. |
 | `implement` | "implement" | Implement a change and verify it against the original request. |
-| `open-mr` | "open MR" | Create or update the GitLab merge request for this branch. |
-| `open-pr` | "open PR" | Create or update the GitHub pull request for this branch. |
+| `mr` | "agent" | Open or update the GitLab merge request for this branch with a description reviewers can scan. |
+| `pr` | "agent" | Open or update the GitHub pull request for this branch with a body reviewers can scan. |
 | `prove-it` | "prove it" | Verify completion claims against observed behavior. |
 | `research` | "research" | Resolve API and dependency questions from canonical source. |
 | `test-audit` | "test audit" | Audit existing tests and remove low-value coverage. |
 | `triage` | "triage" | Diagnose reported issues from evidence before choosing a fix. |
 | `unslop` | "unslop" | Remove AI writing patterns and make prose sound human. |
+
+> `"agent"` in the Say column marks agent-invoked skills: the agent calls them when the workflow applies, in response to a user phrase for the rest.
 
 ## Contributing
 
