@@ -10,7 +10,7 @@ Non-negotiables:
 - Every skill is standalone: one repeatable workflow, usable without another skill installed, and it never runs another skill.
 - `skills/` is canonical. No per-skill README, no duplicated copies elsewhere.
 - Directory names and frontmatter `name` values match in lowercase kebab-case and follow the Agent Skills spec.
-- Every skill is user-invoked. Frontmatter is `name`, `description` (`Use when the user says "<say>".`), and `metadata.summary` plus optional `metadata.featured`.
+- Each skill is user-invoked — `name`, `description` (`Use when the user says "<say>".`), and `metadata.summary` plus optional `metadata.featured` — or agent-invoked, where the `description` states when the agent should apply the skill (`Use when <situation>.`), decided by the agent. The curated agent-invoked set (`pr`, `mr`) lives in the skill-structure test; new skills default to user-invoked.
 - No invocation locks: no `disable-model-invocation`, no `metadata.opencode/autoinvoke`, no `agents/openai.yaml`.
 
 Status: live — actively reorganizing, so keep diffs small and local.
