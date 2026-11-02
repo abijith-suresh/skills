@@ -30,16 +30,16 @@
     "verify": "bun run type-check && bun run lint && bun run format:check && bun run test && bun run build"
   },
   "dependencies": {
-    "@astrojs/markdown-satteri": "^0.4.5",
+    "@astrojs/markdown-satteri": "^0.4.6",
     "@astrojs/sitemap": "^3.7.4",
     "@fontsource-variable/bricolage-grotesque": "^5.3.0",
     "@fontsource-variable/geist": "^5.3.0",
-    "astro": "^7.4.2",
-    "satteri-expressive-code": "^0.1.24"
+    "astro": "^7.4.4",
+    "satteri-expressive-code": "^0.1.31"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "@biomejs/biome": "^2.6.2",
+    "@biomejs/biome": "^2.6.4",
     "@changesets/changelog-github": "^1.0.1",
     "@changesets/cli": "^3.0.3",
     "@commitlint/cli": "^21.2.4",
