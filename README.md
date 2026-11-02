@@ -37,7 +37,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | Skill | Say | What it does |
 | --- | --- | --- |
 | `commit` | "commit" | Create conventional commits from the current diff, one intent per commit. |
-| `commit-work` | "commit work" | Create conventional commits with a ticket number in every scope. |
+| `commit-work` | "commit or commit work" | Commit work as TICKET-123: short description; conventional commits only when a change has no ticket. |
 | `create-issue` | "create issue" | File one GitHub issue to park a later thought. |
 | `explain` | "explain" | Explain existing behavior through a concrete execution path. |
 | `grill-me` | "grill me" | Interview the user until a plan or design is settled. |
