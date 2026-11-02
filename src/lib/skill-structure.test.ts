@@ -15,8 +15,13 @@ const skillNames = readdirSync(skillsRoot, { withFileTypes: true })
 
 const agentInvoked = new Set(["mr", "pr"]);
 
+const sayOverrides = new Map([["commit-work", "commit or commit work"]]);
+const descriptionOverrides = new Map([
+  ["commit-work", 'Use when the user says "commit" or "commit work".'],
+]);
+
 function expectedSay(directoryName: string): string {
-  return directoryName.replaceAll("-", " ");
+  return sayOverrides.get(directoryName) ?? directoryName.replaceAll("-", " ");
 }
 
 function readFile(path: string): string {
@@ -98,7 +103,8 @@ describe("skill frontmatter", () => {
       expect(frontmatter.description).not.toContain("the user says");
     } else {
       expect(frontmatter.description).toBe(
-        `Use when the user says "${expectedSay(directoryName)}".`
+        descriptionOverrides.get(directoryName) ??
+          `Use when the user says "${expectedSay(directoryName)}".`
       );
     }
 

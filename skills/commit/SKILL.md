@@ -20,10 +20,10 @@ without asking.
    a shared integration branch, stop and ask for a feature branch.
 
 2. Read `git status` and `git diff HEAD`; read every changed file, tracked and
-   untracked. Do not include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or
-   `INVESTIGATION.md` unless the user explicitly asks. Scan the diff for
-   secrets, tokens, and private details; if any appear, stop and ask before
-   committing anything.
+   untracked. Commit only what the requested work covers; leave scratch and
+   working files out unless the user names them. Scan the diff for secrets,
+   tokens, and private details; if any appear, stop and ask before committing
+   anything.
 
 3. Group the changes by intent. Separate a feature from the refactor that made
    room for it, a fix from unrelated cleanup, generated files from hand-written

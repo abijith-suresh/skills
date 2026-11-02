@@ -1,6 +1,6 @@
 ---
 name: commit-work
-description: 'Use when the user says "commit work".'
+description: 'Use when the user says "commit" or "commit work".'
 metadata:
   summary: "Commit work as TICKET-123: short description; conventional commits only when a change has no ticket."
 ---
@@ -25,10 +25,10 @@ explicitly overrides this guardrail. Execute the split without asking.
    for it only when none of them has one.
 
 3. Read `git status` and `git diff HEAD`; read every changed file, tracked and
-   untracked. Do not include `PLAN.md`, `IMPROVE.md`, `REVIEW.md`, or
-   `INVESTIGATION.md` unless the user explicitly asks. Scan the diff for
-   secrets, tokens, and private details; if any appear, stop and ask before
-   committing anything.
+   untracked. Commit only what the requested work covers; leave scratch and
+   working files out unless the user names them. Scan the diff for secrets,
+   tokens, and private details; if any appear, stop and ask before committing
+   anything.
 
 4. Group the changes by intent. Separate a feature from the refactor that made
    room for it, a fix from unrelated cleanup, generated files from hand-written
