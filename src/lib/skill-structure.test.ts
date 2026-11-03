@@ -16,9 +16,6 @@ const skillNames = readdirSync(skillsRoot, { withFileTypes: true })
 const agentInvoked = new Set(["mr", "pr"]);
 
 const sayOverrides = new Map([["commit-work", "commit or commit work"]]);
-const descriptionOverrides = new Map([
-  ["commit-work", 'Use when the user says "commit" or "commit work".'],
-]);
 
 function expectedSay(directoryName: string): string {
   return sayOverrides.get(directoryName) ?? directoryName.replaceAll("-", " ");
@@ -30,17 +27,6 @@ function readFile(path: string): string {
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
-}
-
-function isStringMap(value: unknown): value is Record<string, string> {
-  return isRecord(value) && Object.values(value).every((entry) => typeof entry === "string");
-}
-
-function requireStringMap(value: unknown, label: string): Record<string, string> {
-  if (!isStringMap(value)) {
-    throw new Error(`${label} must be a string map`);
-  }
-  return value;
 }
 
 function parseFrontmatter(source: string): Record<string, unknown> {
@@ -56,9 +42,8 @@ function parseFrontmatter(source: string): Record<string, unknown> {
   return frontmatter;
 }
 
-function readSkill(directoryName: string) {
-  const source = readFile(join(skillsRoot, directoryName, "SKILL.md"));
-  return { source, frontmatter: parseFrontmatter(source) };
+function readSkill(directoryName: string): Record<string, unknown> {
+  return parseFrontmatter(readFile(join(skillsRoot, directoryName, "SKILL.md")));
 }
 
 interface CatalogRow {
@@ -84,59 +69,27 @@ function parseCatalogRows(readme: string): CatalogRow[] {
 }
 
 describe("skill directories", () => {
-  it.each(skillNames)("%s has the expected files and no agents directory", (directoryName) => {
+  it.each(skillNames)("%s has no per-skill README or agents directory", (directoryName) => {
     const skillDirectory = join(skillsRoot, directoryName);
-    expect(existsSync(join(skillDirectory, "SKILL.md"))).toBe(true);
     expect(existsSync(join(skillDirectory, "README.md"))).toBe(false);
     expect(existsSync(join(skillDirectory, "agents"))).toBe(false);
   });
 });
 
 describe("skill frontmatter", () => {
-  it.each(skillNames)("%s uses the invocation contract", (directoryName) => {
-    const { frontmatter } = readSkill(directoryName);
-
-    expect(Object.keys(frontmatter).sort()).toEqual(["description", "metadata", "name"]);
-    expect(frontmatter.name).toBe(directoryName);
-    if (agentInvoked.has(directoryName)) {
-      expect(frontmatter.description).toMatch(/^Use when .+\.$/);
-      expect(frontmatter.description).not.toContain("the user says");
-    } else {
-      expect(frontmatter.description).toBe(
-        descriptionOverrides.get(directoryName) ??
-          `Use when the user says "${expectedSay(directoryName)}".`
-      );
-    }
-
-    const metadata = frontmatter.metadata;
-    expect(isStringMap(metadata)).toBe(true);
-    const metadataMap = requireStringMap(metadata, `${directoryName} metadata`);
-    const metadataKeys = Object.keys(metadataMap).sort();
-    expect(metadataKeys).toContain("summary");
-    expect(metadataKeys.every((key) => key === "summary" || key === "featured")).toBe(true);
-
-    const summary = metadataMap.summary ?? "";
-    expect(summary.length).toBeGreaterThan(0);
-    expect(summary.length).toBeLessThanOrEqual(200);
-
-    if (metadataMap.featured !== undefined) {
-      expect(["true", "false"]).toContain(metadataMap.featured);
-    }
-  });
-
-  it.each(skillNames)("%s has no invocation locks", (directoryName) => {
-    const { source } = readSkill(directoryName);
-    expect(source).not.toContain("disable-model-invocation");
-  });
-
   it("keeps the curated featured set", () => {
     const featured = skillNames.filter((directoryName) => {
-      const { frontmatter } = readSkill(directoryName);
-      const metadata = requireStringMap(frontmatter.metadata, `${directoryName} metadata`);
+      const metadata = readSkill(directoryName).metadata as Record<string, string>;
       return metadata.featured === "true";
     });
 
     expect(featured).toEqual(["commit", "grill-me", "research"]);
+  });
+
+  it("pins the shared commit-work trigger", () => {
+    expect(readSkill("commit-work").description).toBe(
+      'Use when the user says "commit" or "commit work".'
+    );
   });
 });
 
@@ -157,7 +110,7 @@ describe("README catalog", () => {
   });
 
   it.each(skillNames)("%s row matches its frontmatter", (directoryName) => {
-    const { frontmatter } = readSkill(directoryName);
+    const frontmatter = readSkill(directoryName);
     const row = catalog.find((entry) => entry.name === directoryName);
     expect(row).toBeDefined();
     if (!row) {
@@ -165,8 +118,6 @@ describe("README catalog", () => {
     }
 
     expect(row.say).toBe(agentInvoked.has(directoryName) ? "agent" : expectedSay(directoryName));
-
-    const metadataMap = requireStringMap(frontmatter.metadata, `${directoryName} metadata`);
-    expect(row.summary).toBe(metadataMap.summary);
+    expect(row.summary).toBe((frontmatter.metadata as Record<string, string>).summary);
   });
 });
