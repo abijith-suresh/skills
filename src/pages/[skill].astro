@@ -35,6 +35,7 @@ const summary = getSkillSummary(definition.data);
     <PageShell>
       <Fragment slot="header">
         <PageHeader title={definition.data.name} subtitle={summary} />
+        <p class="eyebrow">Scope: {definition.data.metadata.scope}</p>
         <div class="detail-install rise" style="--d: 80ms">
           <InstallCommandBlock command={installCommand} />
         </div>

@@ -2,6 +2,7 @@
 name: commit
 description: 'Use when the user says "commit".'
 metadata:
+  scope: "personal"
   summary: "Create conventional commits from the current diff, one intent per commit."
   featured: "true"
 ---

@@ -1,28 +1,32 @@
-# skills — agent brief
+# Skills agent brief
 
-A personal collection of standalone agent skills for the workflows I use every day: implementation, commits, pull and merge requests, handoffs, and writing cleanup. Each skill is platform-agnostic and installs on its own, and the repo publishes a browsable Astro catalog so the collection can be read and copied from the web.
+This collection turns short request keywords into composable workflows. Requests
+such as "implement X", "verify branch Y", or "grill me" trigger skills.
+"Implement, verify and open a PR" chains skills and ends with the PR or MR link.
 
-## The Project
+The main agent plans, dispatches subagents, integrates their work and reports.
+Subagents do the actual work and never start their own subagents. Skills do not
+hardcode a model, provider or harness. Use the model the user names per request,
+such as "using deepseek". If unavailable, say so without substituting. Otherwise
+use the harness default.
 
-Core promise: `skills/` is the only source of skill content. The site reads it at build time, so a skill is written once and appears in the catalog, on its own page, and in its install command.
+## Content rules
 
-Non-negotiables:
-- Every skill is standalone: one repeatable workflow, usable without another skill installed, and it never runs another skill.
-- `skills/` is canonical. No per-skill README, no duplicated copies elsewhere.
-- Directory names and frontmatter `name` values match in lowercase kebab-case and follow the Agent Skills spec.
-- Each skill is user-invoked — `name`, `description` (`Use when the user says "<say>".`), and `metadata.summary` plus optional `metadata.featured` — or agent-invoked, where the `description` states when the agent should apply the skill (`Use when <situation>.`), decided by the agent. The curated agent-invoked set (`pr`, `mr`) lives in the skill-structure test; new skills default to user-invoked.
-- No invocation locks: no `disable-model-invocation`, no `metadata.opencode/autoinvoke`, no `agents/openai.yaml`.
+- `skills/` is canonical. The Astro site reads it at build time. Do not duplicate
+  skill content or add per-skill READMEs.
+- Directory names and frontmatter `name` values match in lowercase kebab-case.
+  Follow the Agent Skills specification.
+- Frontmatter includes `name`, `description`, `metadata.summary` and
+  `metadata.scope`. Optional `metadata.featured: "true"` curates the site.
+- Scope is `personal`, `work`, or `personal work`. Personal means the GitHub
+  laptop; work means the separate GitLab and Jira laptop. There is no `common` tag.
+- Attribute adapted skills only through `metadata.author: "<original author>"`.
+  Do not add attribution license files or credit sections.
+- Install through the `skills` CLI with `--skill <name> ...`. No global loader files.
 
-Status: live — actively reorganizing, so keep diffs small and local.
+## Working here
 
-## Sources of Truth
-
-| Fact | Where |
-|---|---|
-| Product intent | § The Project (this file) |
-| Runtime behavior | code + tests |
-| Commands & deps | package.json |
-| How to work here | `CONTRIBUTING.md` |
-| Commit rules | commitlint.config.ts |
-
-Code and tests are the authority; this file never overrides executable truth.
+Keep diffs small and focused while the collection is reorganized. Read
+`CONTRIBUTING.md` for checks, changesets and review rules. `package.json` defines
+commands and dependencies; `commitlint.config.ts` defines commit rules. Code and
+tests define runtime behavior.
