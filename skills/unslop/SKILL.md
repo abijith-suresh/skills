@@ -2,6 +2,7 @@
 name: unslop
 description: 'Use when the user says "unslop".'
 metadata:
+  scope: "personal work"
   summary: "Remove AI writing patterns and make prose sound human."
 ---
 
