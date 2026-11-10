@@ -1,11 +1,10 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 14](https://img.shields.io/badge/Skills-14-green.svg)](#skill-catalog)
+[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
 
 A personal collection of standalone skills for the workflows I use every day:
-implementation, test cleanup, commits, pull and merge requests, research, issue creation,
-handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
+implementation, commits, pull and merge requests, handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
 and work with compatible coding agents.
 
 ## Browse
@@ -38,16 +37,12 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | --- | --- | --- |
 | `commit` | "commit" | Create conventional commits from the current diff, one intent per commit. |
 | `commit-work` | "commit or commit work" | Commit work as TICKET-123: short description; conventional commits only when a change has no ticket. |
-| `create-issue` | "create issue" | File one GitHub issue to park a later thought. |
-| `explain` | "explain" | Explain existing behavior through a concrete execution path. |
 | `grill-me` | "grill me" | Interview the user until a plan or design is settled. |
 | `handoff` | "handoff" | Write a compact handoff for another agent or session. |
 | `implement` | "implement" | Implement a change and verify it against the original request. |
 | `mr` | "agent" | Open or update the GitLab merge request for this branch with a description reviewers can scan. |
 | `pr` | "agent" | Open or update the GitHub pull request for this branch with a body reviewers can scan. |
 | `prove-it` | "prove it" | Verify completion claims against observed behavior. |
-| `research` | "research" | Resolve API and dependency questions from canonical source. |
-| `test-audit` | "test audit" | Audit existing tests and remove low-value coverage. |
 | `triage` | "triage" | Diagnose reported issues from evidence before choosing a fix. |
 | `unslop` | "unslop" | Remove AI writing patterns and make prose sound human. |
 

@@ -1,6 +1,6 @@
 # skills — agent brief
 
-A personal collection of standalone agent skills for the workflows I use every day: implementation, test cleanup, commits, pull and merge requests, research, issue creation, handoffs, and writing cleanup. Each skill is platform-agnostic and installs on its own, and the repo publishes a browsable Astro catalog so the collection can be read and copied from the web.
+A personal collection of standalone agent skills for the workflows I use every day: implementation, commits, pull and merge requests, handoffs, and writing cleanup. Each skill is platform-agnostic and installs on its own, and the repo publishes a browsable Astro catalog so the collection can be read and copied from the web.
 
 ## The Project
 
