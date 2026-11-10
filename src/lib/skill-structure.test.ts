@@ -83,7 +83,7 @@ describe("skill frontmatter", () => {
       return metadata.featured === "true";
     });
 
-    expect(featured).toEqual(["commit", "grill-me", "research"]);
+    expect(featured).toEqual(["commit", "grill-me"]);
   });
 
   it("pins the shared commit-work trigger", () => {
