@@ -98,7 +98,7 @@ describe("skill frontmatter", () => {
     }));
     const prefix = "npx skills@latest add abijith-suresh/skills --skill ";
     expect(buildScopeInstallCommand(skills, "personal")).toBe(
-      `${prefix}commit grill-me handoff implement pr prove-it triage unslop`
+      `${prefix}commit grill-me handoff how-i-work implement pr prove-it triage unslop`
     );
     expect(buildScopeInstallCommand(skills, "work")).toBe(
       `${prefix}commit-work grill-me handoff implement mr prove-it triage unslop`
