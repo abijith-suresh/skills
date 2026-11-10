@@ -50,7 +50,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | --- | --- | --- | --- |
 | `commit` | "commit" | personal | Create conventional commits from the current diff, one intent per commit. |
 | `commit-work` | "commit or commit work" | work | Commit work as TICKET-123: short description; conventional commits only when a change has no ticket. |
-| `grill-me` | "grill me" | personal work | Interview the user until a plan or design is settled. |
+| `grill-me` | "grill me, help me figure out, or I'm not sure what I want" | personal work | Discuss a problem, challenge assumptions, and settle decisions before building. |
 | `handoff` | "handoff" | personal work | Write a compact handoff for another agent or session. |
 | `implement` | "implement" | personal work | Implement a change and verify it against the original request. |
 | `mr` | "open an MR" | work | Open or update the GitLab merge request for this branch with a description reviewers can scan. |
