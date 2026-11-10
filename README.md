@@ -1,7 +1,7 @@
 # Agent skills
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
+[![Skills: 11](https://img.shields.io/badge/Skills-11-green.svg)](#skill-catalog)
 
 Skills for everyday coding work, triggered by short request keywords such as
 "implement X", "verify branch Y", or "grill me". Compose them in one sentence:
@@ -52,6 +52,7 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 | `commit-work` | "commit or commit work" | work | Commit work as TICKET-123: short description; conventional commits only when a change has no ticket. |
 | `grill-me` | "grill me" | personal work | Interview the user until a plan or design is settled. |
 | `handoff` | "handoff" | personal work | Write a compact handoff for another agent or session. |
+| `how-i-work` | "always loaded" | personal | Know who Abijith is and how to work for him on his personal laptop. |
 | `implement` | "implement" | personal work | Implement a change and verify it against the original request. |
 | `mr` | "open an MR" | work | Open or update the GitLab merge request for this branch with a description reviewers can scan. |
 | `pr` | "open a PR" | personal | Open or update the GitHub pull request for this branch with a body reviewers can scan. |
