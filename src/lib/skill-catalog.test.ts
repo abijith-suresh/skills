@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { buildSkillSummaries, getSkillSummary } from "@/lib/skill-catalog";
+import {
+  buildInstallCommand,
+  buildSkillSummaries,
+  getSkillSummary,
+  isValidScope,
+} from "@/lib/skill-catalog";
 
 describe("buildSkillSummaries", () => {
   it("sorts skills by display name and builds install/source metadata", () => {
@@ -10,7 +15,7 @@ describe("buildSkillSummaries", () => {
           data: {
             name: "Handoff",
             description: 'Use when the user says "handoff".',
-            metadata: { summary: "Handoff context." },
+            metadata: { scope: "personal work", summary: "Handoff context." },
           },
         },
         {
@@ -18,7 +23,7 @@ describe("buildSkillSummaries", () => {
           data: {
             name: "Commit",
             description: 'Use when the user says "commit".',
-            metadata: { summary: "Commit changes." },
+            metadata: { scope: "personal", summary: "Commit changes." },
           },
         },
       ],
@@ -30,6 +35,7 @@ describe("buildSkillSummaries", () => {
         slug: "commit",
         name: "Commit",
         summary: "Commit changes.",
+        scope: "personal",
         installCommand: "npx skills@latest add owner/repo --skill commit",
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/commit",
         featured: false,
@@ -38,6 +44,7 @@ describe("buildSkillSummaries", () => {
         slug: "handoff",
         name: "Handoff",
         summary: "Handoff context.",
+        scope: "personal work",
         installCommand: "npx skills@latest add owner/repo --skill handoff",
         sourceUrl: "https://github.com/owner/repo/tree/main/skills/handoff",
         featured: false,
@@ -52,7 +59,7 @@ describe("buildSkillSummaries", () => {
         data: {
           name: "Commit",
           description: 'Use when the user says "commit".',
-          metadata: { summary: "Commit changes.", featured: "true" },
+          metadata: { scope: "personal", summary: "Commit changes.", featured: "true" },
         },
       },
       {
@@ -60,7 +67,7 @@ describe("buildSkillSummaries", () => {
         data: {
           name: "Handoff",
           description: 'Use when the user says "handoff".',
-          metadata: { summary: "Handoff context.", featured: "false" },
+          metadata: { scope: "personal work", summary: "Handoff context.", featured: "false" },
         },
       },
     ]);
@@ -76,6 +83,33 @@ describe("getSkillSummary", () => {
   it("rejects metadata without a summary", () => {
     expect(() => getSkillSummary({ metadata: { featured: "true" } })).toThrow(
       "Skill metadata.summary is required"
+    );
+  });
+});
+
+describe("scope validation", () => {
+  it.each(["personal", "work", "personal work", "work personal"])("accepts %s", (scope) => {
+    expect(isValidScope(scope)).toBe(true);
+  });
+
+  it.each([
+    undefined,
+    "",
+    "common",
+    "personal common",
+    "personal personal",
+    "personal  work",
+    " personal",
+    "work ",
+  ])("rejects %s", (scope) => {
+    expect(isValidScope(scope)).toBe(false);
+  });
+});
+
+describe("buildInstallCommand", () => {
+  it("uses one variadic skill flag for multiple skills", () => {
+    expect(buildInstallCommand("owner/repo", ["commit", "pr"])).toBe(
+      "npx skills@latest add owner/repo --skill commit pr"
     );
   });
 });

@@ -2,6 +2,7 @@
 name: commit-work
 description: 'Use when the user says "commit" or "commit work".'
 metadata:
+  scope: "work"
   summary: "Commit work as TICKET-123: short description; conventional commits only when a change has no ticket."
 ---
 

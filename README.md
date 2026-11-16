@@ -3,9 +3,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Skills: 10](https://img.shields.io/badge/Skills-10-green.svg)](#skill-catalog)
 
-A personal collection of standalone skills for the workflows I use every day:
-implementation, commits, pull and merge requests, handoffs, and writing cleanup. The skills follow the [Agent Skills specification](https://agentskills.io/specification)
-and work with compatible coding agents.
+Skills for everyday coding work, triggered by short request keywords such as
+"implement X", "verify branch Y", or "grill me". Compose them in one sentence:
+"implement, verify and open a PR" chains the work and ends with the PR or MR link.
+The collection follows the [Agent Skills specification](https://agentskills.io/specification).
 
 ## Browse
 
@@ -13,11 +14,23 @@ Browse the skills and copy install commands on the [skills site](https://skills.
 
 ## Scope
 
-The `skills/` directory is the canonical collection. The Astro site reads
-those files at build time and provides a browsable catalog with install
-commands.
+`skills/` is the canonical collection. The Astro site reads it at build time to
+build the catalog, skill pages and install commands.
 
-Each skill is standalone and uses spec-only frontmatter. Invoke a skill by saying its phrase. Skills do not run one another. A skill may name a follow-up skill in its output.
+The main agent plans, dispatches subagents, integrates results and reports.
+Subagents do the actual work and never start their own subagents. Skills do not
+hardcode a model, provider or harness. Name a model per request, such as "using
+deepseek", or use the harness default. If the named model is unavailable, the
+agent says so without substituting.
+
+Each skill has a `metadata.scope` tag: `personal` for the GitHub laptop, `work`
+for the separate GitLab and Jira laptop, or `personal work` for both. There is
+no `common` tag. Adapted skills credit the original author only in
+`metadata.author`, with no license files or credit sections.
+
+Install through the `skills` CLI. No global loader files are needed. The
+[site](https://skills.abijith.sh/) builds separate laptop commands from scope tags.
+Skill bodies and descriptions are moving to this design in later PRs.
 
 ## Install all skills
 
@@ -33,20 +46,18 @@ npx skills@latest add abijith-suresh/skills --skill <skill-name>
 
 ## Skill catalog
 
-| Skill | Say | What it does |
-| --- | --- | --- |
-| `commit` | "commit" | Create conventional commits from the current diff, one intent per commit. |
-| `commit-work` | "commit or commit work" | Commit work as TICKET-123: short description; conventional commits only when a change has no ticket. |
-| `grill-me` | "grill me" | Interview the user until a plan or design is settled. |
-| `handoff` | "handoff" | Write a compact handoff for another agent or session. |
-| `implement` | "implement" | Implement a change and verify it against the original request. |
-| `mr` | "agent" | Open or update the GitLab merge request for this branch with a description reviewers can scan. |
-| `pr` | "agent" | Open or update the GitHub pull request for this branch with a body reviewers can scan. |
-| `prove-it` | "prove it" | Verify completion claims against observed behavior. |
-| `triage` | "triage" | Diagnose reported issues from evidence before choosing a fix. |
-| `unslop` | "unslop" | Remove AI writing patterns and make prose sound human. |
-
-> `"agent"` in the Say column marks agent-invoked skills: the agent calls them when the workflow applies, in response to a user phrase for the rest.
+| Skill | Say | Scope | What it does |
+| --- | --- | --- | --- |
+| `commit` | "commit" | personal | Create conventional commits from the current diff, one intent per commit. |
+| `commit-work` | "commit or commit work" | work | Commit work as TICKET-123: short description; conventional commits only when a change has no ticket. |
+| `grill-me` | "grill me" | personal work | Interview the user until a plan or design is settled. |
+| `handoff` | "handoff" | personal work | Write a compact handoff for another agent or session. |
+| `implement` | "implement" | personal work | Implement a change and verify it against the original request. |
+| `mr` | "open an MR" | work | Open or update the GitLab merge request for this branch with a description reviewers can scan. |
+| `pr` | "open a PR" | personal | Open or update the GitHub pull request for this branch with a body reviewers can scan. |
+| `prove-it` | "prove it" | personal work | Verify completion claims against observed behavior. |
+| `triage` | "triage" | personal work | Diagnose reported issues from evidence before choosing a fix. |
+| `unslop` | "unslop" | personal work | Remove AI writing patterns and make prose sound human. |
 
 ## Contributing
 

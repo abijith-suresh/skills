@@ -2,6 +2,7 @@
 name: handoff
 description: 'Use when the user says "handoff".'
 metadata:
+  scope: "personal work"
   summary: "Write a compact handoff for another agent or session."
 ---
 

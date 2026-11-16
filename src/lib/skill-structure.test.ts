@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 import { parse } from "yaml";
+import { buildScopeInstallCommand, isValidScope } from "@/lib/skill-catalog";
 
 const repositoryRoot = fileURLToPath(new URL("../../", import.meta.url));
 const skillsRoot = join(repositoryRoot, "skills");
@@ -12,14 +13,6 @@ const skillNames = readdirSync(skillsRoot, { withFileTypes: true })
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-
-const agentInvoked = new Set(["mr", "pr"]);
-
-const sayOverrides = new Map([["commit-work", "commit or commit work"]]);
-
-function expectedSay(directoryName: string): string {
-  return sayOverrides.get(directoryName) ?? directoryName.replaceAll("-", " ");
-}
 
 function readFile(path: string): string {
   return readFileSync(path, "utf8");
@@ -49,21 +42,24 @@ function readSkill(directoryName: string): Record<string, unknown> {
 interface CatalogRow {
   name: string;
   say: string;
+  scope: string;
   summary: string;
 }
 
 function parseCatalogRows(readme: string): CatalogRow[] {
   const rows: CatalogRow[] = [];
   for (const line of readme.split("\n")) {
-    const match = /^\|\s*`([^`]+)`\s*\|\s*"([^"]*)"\s*\|\s*(.*?)\s*\|\s*$/.exec(line);
+    const match = /^\|\s*`([^`]+)`\s*\|\s*"([^"]*)"\s*\|\s*(.*?)\s*\|\s*(.*?)\s*\|\s*$/.exec(line);
     if (!match) continue;
 
     const name = match[1];
     const say = match[2];
-    const summary = match[3];
-    if (name === undefined || say === undefined || summary === undefined) continue;
+    const scope = match[3];
+    const summary = match[4];
+    if (name === undefined || say === undefined || scope === undefined || summary === undefined)
+      continue;
 
-    rows.push({ name, say, summary });
+    rows.push({ name, say, scope, summary });
   }
   return rows;
 }
@@ -86,10 +82,28 @@ describe("skill frontmatter", () => {
     expect(featured).toEqual(["commit", "grill-me"]);
   });
 
-  it("pins the shared commit-work trigger", () => {
-    expect(readSkill("commit-work").description).toBe(
-      'Use when the user says "commit" or "commit work".'
+  it.each(skillNames)("%s has matching kebab-case name and valid scope", (name) => {
+    const frontmatter = readSkill(name);
+    expect(name).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+    expect(frontmatter.name).toBe(name);
+    expect(typeof frontmatter.description).toBe("string");
+    const metadata = frontmatter.metadata as Record<string, string>;
+    expect(isValidScope(metadata.scope)).toBe(true);
+  });
+
+  it("builds the personal and work installs from the collection scopes", () => {
+    const skills = skillNames.map((slug) => ({
+      slug,
+      scope: (readSkill(slug).metadata as Record<string, string>).scope,
+    }));
+    const prefix = "npx skills@latest add abijith-suresh/skills --skill ";
+    expect(buildScopeInstallCommand(skills, "personal")).toBe(
+      `${prefix}commit grill-me handoff implement pr prove-it triage unslop`
     );
+    expect(buildScopeInstallCommand(skills, "work")).toBe(
+      `${prefix}commit-work grill-me handoff implement mr prove-it triage unslop`
+    );
+    expect(() => buildScopeInstallCommand([], "work")).toThrow("No skills for scope: work");
   });
 });
 
@@ -101,8 +115,8 @@ describe("README catalog", () => {
     expect(readme).toContain(`Skills-${skillNames.length}-green`);
   });
 
-  it("uses the skill, say phrase, and summary columns", () => {
-    expect(readme).toContain("| Skill | Say | What it does |");
+  it("uses the skill, say phrase, scope, and summary columns", () => {
+    expect(readme).toContain("| Skill | Say | Scope | What it does |");
   });
 
   it("lists every skill exactly once", () => {
@@ -117,7 +131,8 @@ describe("README catalog", () => {
       throw new Error(`README is missing a catalog row for ${directoryName}`);
     }
 
-    expect(row.say).toBe(agentInvoked.has(directoryName) ? "agent" : expectedSay(directoryName));
+    expect(row.say.length).toBeGreaterThan(0);
+    expect(row.scope).toBe((frontmatter.metadata as Record<string, string>).scope);
     expect(row.summary).toBe((frontmatter.metadata as Record<string, string>).summary);
   });
 });

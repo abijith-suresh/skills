@@ -2,6 +2,7 @@
 name: triage
 description: 'Use when the user says "triage".'
 metadata:
+  scope: "personal work"
   summary: "Diagnose reported issues from evidence before choosing a fix."
 ---
 

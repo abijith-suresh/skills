@@ -2,6 +2,7 @@
 name: pr
 description: 'Use when opening or updating a pull request.'
 metadata:
+  scope: "personal"
   summary: "Open or update the GitHub pull request for this branch with a body reviewers can scan."
 ---
 
