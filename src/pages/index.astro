@@ -5,14 +5,15 @@ import PageHeader from "@/components/ui/PageHeader.astro";
 import PageShell from "@/components/ui/PageShell.astro";
 import SiteLayout from "@/layouts/SiteLayout.astro";
 import { SITE } from "@/consts";
-import { buildInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from "@/lib/skill-catalog";
+import { buildScopeInstallCommand, buildSkillSummaries, SKILLS_REPOSITORY } from "@/lib/skill-catalog";
 import { buildPageTitle } from "@/lib/route-metadata";
 import { buildAllPath, buildSkillPath } from "@/lib/site-paths";
 
 const definitions = await getCollection("skillDefinitions");
 const skills = buildSkillSummaries(definitions, SKILLS_REPOSITORY);
 const featuredSkills = skills.filter((skill) => skill.featured);
-const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
+const personalInstallCommand = buildScopeInstallCommand(skills, "personal");
+const workInstallCommand = buildScopeInstallCommand(skills, "work");
 ---
 
 <SiteLayout title={buildPageTitle()} description={SITE.description}>
@@ -20,7 +21,8 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
     <Fragment slot="header">
       <PageHeader title="skills" hero subtitle={SITE.description} />
       <div class="install-block rise" style="--d: 80ms">
-        <InstallCommandBlock command={installEverythingCommand} label="Install the full collection" />
+        <InstallCommandBlock command={personalInstallCommand} label="Install for the personal laptop" />
+        <InstallCommandBlock command={workInstallCommand} label="Install for the work laptop" />
       </div>
     </Fragment>
 
@@ -38,6 +40,7 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
           <a href={buildSkillPath(import.meta.env.BASE_URL, skill.slug)} class="skill-card">
             <span class="skill-card-title" translate="no">{skill.name}</span>
             <span class="skill-card-description">{skill.summary}</span>
+            <span class="skill-card-foot">Scope: {skill.scope}</span>
             <span class="skill-card-foot">
               read
               <span class="arrow" aria-hidden="true">&rarr;</span>
@@ -51,6 +54,9 @@ const installEverythingCommand = buildInstallCommand(SKILLS_REPOSITORY);
 
 <style>
   .install-block {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-s);
     margin-top: var(--space-m);
   }
 </style>

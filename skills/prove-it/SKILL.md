@@ -2,6 +2,7 @@
 name: prove-it
 description: 'Use when the user says "prove it".'
 metadata:
+  scope: "personal work"
   summary: "Verify completion claims against observed behavior."
 ---
 

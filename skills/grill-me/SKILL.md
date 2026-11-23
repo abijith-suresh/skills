@@ -2,6 +2,7 @@
 name: grill-me
 description: 'Use when the user says "grill me".'
 metadata:
+  scope: "personal work"
   summary: "Interview the user until a plan or design is settled."
   featured: "true"
 ---

@@ -2,6 +2,7 @@
 name: mr
 description: 'Use when opening or updating a merge request.'
 metadata:
+  scope: "work"
   summary: "Open or update the GitLab merge request for this branch with a description reviewers can scan."
 ---
 

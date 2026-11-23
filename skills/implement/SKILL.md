@@ -2,6 +2,7 @@
 name: implement
 description: 'Use when the user says "implement".'
 metadata:
+  scope: "personal work"
   summary: "Implement a change and verify it against the original request."
 ---
 
